@@ -13,7 +13,7 @@
 <body>
   <div id="loginView" class="login-wrap">
     <div class="login-card">
-      <img src="assets/serenity155-logo.png" alt="SERENITY 155">
+      <img src="serenity155-logo.png" alt="SERENITY 155">
       <h1>ADMIN <span style="color:#28e7f0">155</span></h1>
       <p>Panel pengelolaan website SERENITY 155</p>
       <label>Username</label>
@@ -29,7 +29,7 @@
   <div id="adminView" class="admin-shell" hidden>
     <div class="admin-top">
       <div>
-        <p class="eyebrow">CONTENT MANAGEMENT</p><span class="version-badge">ONLINE V10.1</span>
+        <p class="eyebrow">CONTENT MANAGEMENT</p><span class="version-badge">ONLINE V10.3</span>
         <h1>SERENITY <span>ADMIN</span></h1>
       </div>
       <div class="admin-actions">
@@ -45,16 +45,27 @@
     <div class="admin-grid">
 
     <section class="admin-card full cloud-migration-card">
-      <h2>ONLINE DATA / MIGRATION</h2>
+      <h2>ONLINE DATA / BACKUP & MIGRATION</h2>
       <p class="hint">
-        Gunakan browser yang masih menyimpan data lama. Tombol MIGRATE akan mengirim roster,
-        foto, achievement, match, sponsor, dan contact dari browser ini ke database online.
+        Gunakan EXPORT BACKUP pada browser/perangkat lama yang masih menyimpan data SERENITY.
+        File backup kemudian bisa di-import di Admin Online dan langsung dikirim ke database.
       </p>
+
       <div class="admin-actions">
-        <button class="btn primary" id="migrateLocalToCloud" type="button">MIGRATE DATA LAMA KE ONLINE</button>
+        <button class="btn primary" id="exportLocalBackup" type="button">EXPORT BACKUP DATA LAMA</button>
+        <label class="small-btn" style="cursor:pointer">
+          IMPORT BACKUP KE ONLINE
+          <input id="importBackupFile" type="file" accept=".json,application/json" hidden>
+        </label>
+        <button class="small-btn" id="migrateLocalToCloud" type="button">MIGRATE LOCAL STORAGE</button>
         <button class="small-btn" id="loadCloudToAdmin" type="button">AMBIL DATA ONLINE</button>
       </div>
+
       <p id="cloudStatus" class="hint"></p>
+
+      <div class="notice" style="margin-top:14px">
+        Alur paling aman: buka versi lama → EXPORT BACKUP → buka Admin Online → IMPORT BACKUP KE ONLINE.
+      </div>
     </section>
 
       <section class="admin-card full">
