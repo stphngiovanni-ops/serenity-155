@@ -12,6 +12,12 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div class="esports-bg" aria-hidden="true">
+    <div class="bg-grid"></div><div class="bg-vignette"></div><div class="bg-scanlines"></div>
+    <div class="bg-orb orb-cyan"></div><div class="bg-orb orb-pink"></div>
+    <div class="bg-beam beam-a"></div><div class="bg-beam beam-b"></div>
+    <div class="bg-particles" id="bgParticles"></div>
+  </div>
   <div class="noise"></div>
   <div class="cursor-glow" id="cursorGlow"></div>
 
@@ -38,7 +44,10 @@
   </header>
 
   <main>
-    <section id="home" class="hero">
+    <section id="home" class="hero esports-hero">
+      <div class="hero-hud hero-hud-left"><span>TACTICAL UNIT</span><b>SRNTY-155</b></div>
+      <div class="hero-hud hero-hud-right"><span>STATUS</span><b>ONLINE</b></div>
+      <div class="hero-corner tl"></div><div class="hero-corner tr"></div><div class="hero-corner bl"></div><div class="hero-corner br"></div>
       <div class="hero-grid"></div>
       <div class="hero-light cyan"></div>
       <div class="hero-light pink"></div>
@@ -69,8 +78,8 @@
       <a class="scroll-hint" href="#about">SCROLL <span>↓</span></a>
     </section>
 
-    <section id="about" class="section dark-section">
-      <div class="section-head reveal">
+    <section id="about" data-section-code="PROFILE_01" class="section dark-section">
+      <div class="section-head reveal"><div class="section-scan"></div>
         <p>WHO WE ARE</p>
         <h2>ABOUT <span>SERENITY</span></h2>
       </div>
@@ -92,8 +101,8 @@
       </div>
     </section>
 
-    <section id="roster" class="section roster-section">
-      <div class="section-head reveal">
+    <section id="roster" data-section-code="ROSTER_02" class="section roster-section">
+      <div class="section-head reveal"><div class="section-scan"></div>
         <p>ACTIVE LINEUP</p>
         <h2>OUR <span>ROSTER</span></h2>
       </div>
@@ -123,8 +132,8 @@
       <p class="edit-note reveal">Roster Competitive dan War dapat dikelola terpisah melalui <b>Halaman Admin</b>.</p>
     </section>
 
-    <section id="achievement" class="section dark-section">
-      <div class="section-head reveal">
+    <section id="achievement" data-section-code="ACHV_03" class="section dark-section">
+      <div class="section-head reveal"><div class="section-scan"></div>
         <p>OUR JOURNEY</p>
         <h2>ACHIEVE<span>MENT</span></h2>
       </div>
@@ -145,8 +154,8 @@
       <div class="achievement-preview-grid" id="achievementPreviewGrid"></div>
     </section>
 
-    <section id="matches" class="section matches-section">
-      <div class="section-head reveal">
+    <section id="matches" data-section-code="MATCH_04" class="section matches-section">
+      <div class="section-head reveal"><div class="section-scan"></div>
         <p>BATTLE SCHEDULE</p>
         <h2>NEXT <span>MATCH</span></h2>
       </div>
@@ -185,8 +194,8 @@
       <div class="match-list" id="matchList"></div>
     </section>
 
-    <section id="sponsors" class="section dark-section">
-      <div class="section-head reveal">
+    <section id="sponsors" data-section-code="PARTNERS_05" class="section dark-section">
+      <div class="section-head reveal"><div class="section-scan"></div>
         <p>POWERED BY</p>
         <h2>OUR <span>SPONSORS</span></h2>
       </div>
@@ -194,7 +203,7 @@
       <p class="sponsor-caption reveal">Sponsor dapat ditambah atau diubah melalui halaman Admin.</p>
     </section>
 
-    <section id="contact" class="section contact-section">
+    <section id="contact" data-section-code="CONTACT_06" class="section contact-section">
       <div class="contact-box reveal">
         <p class="eyebrow">BUSINESS • SCRIM • PARTNERSHIP</p>
         <h2>READY TO <span>CONNECT?</span></h2>

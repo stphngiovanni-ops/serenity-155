@@ -62,3 +62,6 @@ if (!isNaN(matchDate)) {
   tick();
   setInterval(tick, 1000);
 }
+
+(function createEsportsParticles(){const wrap=document.getElementById("bgParticles");if(!wrap)return;const count=window.innerWidth<700?20:42;for(let i=0;i<count;i++){const p=document.createElement("i");p.className="bg-particle"+(i%5===0?" pink":"");p.style.left=(Math.random()*100)+"%";p.style.top=(Math.random()*100)+"%";p.style.animationDuration=(8+Math.random()*12)+"s";p.style.animationDelay=(-Math.random()*16)+"s";p.style.opacity=(.15+Math.random()*.5).toFixed(2);wrap.appendChild(p)}})();
+(function esportsParallax(){if(window.matchMedia("(pointer: coarse)").matches)return;const logo=document.querySelector(".hero-logo-wrap"),copy=document.querySelector(".hero-copy");window.addEventListener("pointermove",e=>{const x=e.clientX/window.innerWidth-.5,y=e.clientY/window.innerHeight-.5;if(logo)logo.style.transform=`translate3d(${x*12}px,${y*8}px,0)`;if(copy)copy.style.transform=`translate3d(${x*-5}px,${y*-3}px,0)`},{passive:true})})();
