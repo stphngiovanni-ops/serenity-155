@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#05060a" />
+  <meta name="description" content="Official website Squad SERENITY 155 - esports team." />
+  <title>SERENITY 155 | Official Esports Squad</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <header class="site-header">
+    <a href="#home" class="brand" aria-label="SERENITY 155 Home">
+      <img src="assets/serenity155-logo.png" alt="Logo SERENITY 155" />
+      <span>SERENITY <b>155</b></span>
+    </a>
+
+    <button class="menu-btn" id="menuBtn" aria-label="Buka menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav id="mainNav">
+      <a href="#home">HOME</a>
+      <a href="#about">ABOUT</a>
+      <a href="#roster">ROSTER</a>
+      <a href="#achievement">ACHIEVEMENT</a>
+      <a href="#matches">MATCH</a>
+      <a href="#sponsors">SPONSOR</a>
+      <a href="#contact">CONTACT</a>
+      <a href="admin.html" class="admin-link">ADMIN</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="hero-grid"></div>
+      <div class="hero-light cyan"></div>
+      <div class="hero-light pink"></div>
+
+      <div class="hero-copy reveal">
+        <p class="eyebrow">OFFICIAL ESPORTS SQUAD</p>
+        <h1>SERENITY <span>155</span></h1>
+        <p class="hero-sub">
+          Tactical. Fearless. United.<br />
+          Satu squad, satu tujuan, satu nama: <strong>SERENITY.</strong>
+        </p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#roster">MEET THE SQUAD</a>
+          <a class="btn ghost" href="#matches">NEXT MATCH</a>
+        </div>
+        <div class="hero-stats">
+          <div><strong>155</strong><span>IDENTITY</span></div>
+          <div><strong>PB</strong><span>COMPETITIVE</span></div>
+          <div><strong>ONE</strong><span>FAMILY</span></div>
+        </div>
+      </div>
+
+      <div class="hero-logo-wrap reveal">
+        <div class="logo-orbit"></div>
+        <img class="hero-logo" src="assets/serenity155-logo.png" alt="SERENITY 155" />
+      </div>
+
+      <a class="scroll-hint" href="#about">SCROLL <span>↓</span></a>
+    </section>
+
+    <section id="about" class="section dark-section">
+      <div class="section-head reveal">
+        <p>WHO WE ARE</p>
+        <h2>ABOUT <span>SERENITY</span></h2>
+      </div>
+      <div class="about-grid">
+        <div class="glass-card reveal">
+          <h3>More Than A Squad</h3>
+          <p>
+            <span id="aboutText1">SERENITY 155 adalah squad esports yang dibangun dari kekompakan, disiplin, komunikasi, dan mental kompetitif. Kami bertanding bukan hanya untuk menang, tetapi untuk membangun nama, keluarga, dan perjalanan yang layak dikenang.</span>
+          </p>
+          <p>
+            <span id="aboutText2">Website ini dapat kamu edit untuk menampilkan profil resmi squad, perjalanan turnamen, roster aktif, sponsor, jadwal pertandingan, serta pencapaian SERENITY.</span>
+          </p>
+        </div>
+        <div class="values reveal">
+          <article><span>01</span><h3>UNITY</h3><p>Saling percaya, saling backup, satu komando.</p></article>
+          <article><span>02</span><h3>DISCIPLINE</h3><p>Latihan konsisten, evaluasi, dan fokus objektif.</p></article>
+          <article><span>03</span><h3>MENTALITY</h3><p>Tetap tenang di bawah tekanan dan bermain sampai akhir.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="roster" class="section roster-section">
+      <div class="section-head reveal">
+        <p>ACTIVE LINEUP</p>
+        <h2>OUR <span>ROSTER</span></h2>
+      </div>
+
+      <div class="roster-group reveal">
+        <div class="roster-group-head">
+          <div>
+            <p class="eyebrow">MAIN TEAM</p>
+            <h3>SQUAD <span>COMPETITIVE</span></h3>
+          </div>
+          <span class="roster-limit">5 PLAYERS</span>
+        </div>
+        <div class="roster-grid roster-grid-competitive" id="competitiveRosterGrid"></div>
+      </div>
+
+      <div class="roster-group reveal">
+        <div class="roster-group-head">
+          <div>
+            <p class="eyebrow">WAR TEAM</p>
+            <h3>SQUAD <span>WAR</span></h3>
+          </div>
+          <span class="roster-limit">12 PLAYERS</span>
+        </div>
+        <div class="roster-grid roster-grid-war" id="warRosterGrid"></div>
+      </div>
+
+      <p class="edit-note reveal">Roster Competitive dan War dapat dikelola terpisah melalui <b>Halaman Admin</b>.</p>
+    </section>
+
+    <section id="achievement" class="section dark-section">
+      <div class="section-head reveal">
+        <p>OUR JOURNEY</p>
+        <h2>ACHIEVE<span>MENT</span></h2>
+      </div>
+
+      <div class="achievement-showcase reveal">
+        <div class="achievement-showcase-copy">
+          <p class="eyebrow">SERENITY 155 HISTORY</p>
+          <h3>OUR ACHIEVEMENTS</h3>
+          <p>Lihat seluruh perjalanan, gelar, qualification, dan pencapaian SERENITY 155 dalam satu tampilan.</p>
+          <button class="btn primary" type="button" id="openAllAchievements">LIHAT SEMUA ACHIEVEMENT</button>
+        </div>
+        <div class="achievement-showcase-count">
+          <strong id="achievementCount">0</strong>
+          <span>TOTAL ACHIEVEMENTS</span>
+        </div>
+      </div>
+
+      <div class="achievement-preview-grid" id="achievementPreviewGrid"></div>
+    </section>
+
+    <section id="matches" class="section matches-section">
+      <div class="section-head reveal">
+        <p>BATTLE SCHEDULE</p>
+        <h2>NEXT <span>MATCH</span></h2>
+      </div>
+
+      <div class="match-card reveal">
+        <div class="match-top">
+          <span>UPCOMING MATCH</span>
+          <span class="live-dot">SCHEDULE</span>
+        </div>
+        <div class="match-main">
+          <div class="team-block">
+            <img src="assets/serenity155-logo.png" alt="SERENITY 155" />
+            <strong>SERENITY 155</strong>
+          </div>
+          <div class="vs">
+            <span>VS</span>
+            <div id="countdown">00D : 00H : 00M : 00S</div>
+            <small id="matchDateLabel">SET YOUR MATCH DATE</small>
+          </div>
+          <div class="team-block opponent">
+            <div class="opponent-logo" id="opponentLogoBox">?</div>
+            <strong id="opponentName">OPPONENT</strong>
+          </div>
+        </div>
+        <div class="match-bottom">
+          <span id="gameName">POINT BLANK</span>
+          <span id="matchFormat">BO3 / BO5</span>
+          <span id="streamLabel">LIVE STREAM</span>
+        </div>
+      </div>
+
+      <div class="section-head mini-head reveal">
+        <p>MATCH MANAGEMENT</p>
+        <h2>ALL <span>MATCHES</span></h2>
+      </div>
+      <div class="match-list" id="matchList"></div>
+    </section>
+
+    <section id="sponsors" class="section dark-section">
+      <div class="section-head reveal">
+        <p>POWERED BY</p>
+        <h2>OUR <span>SPONSORS</span></h2>
+      </div>
+      <div class="sponsor-grid reveal" id="sponsorGrid"></div>
+      <p class="sponsor-caption reveal">Sponsor dapat ditambah atau diubah melalui halaman Admin.</p>
+    </section>
+
+    <section id="contact" class="section contact-section">
+      <div class="contact-box reveal">
+        <p class="eyebrow">BUSINESS • SCRIM • PARTNERSHIP</p>
+        <h2>READY TO <span>CONNECT?</span></h2>
+        <p>Hubungi SERENITY 155 untuk partnership, sponsorship, scrim, atau kebutuhan kompetitif.</p>
+        <div class="contact-actions">
+          <a id="emailLink" href="mailto:serenity155@example.com" class="btn primary">EMAIL US</a>
+          <a id="instagramLink" href="https://instagram.com/" target="_blank" rel="noopener" class="btn ghost">INSTAGRAM</a>
+          <a id="youtubeLink" href="https://youtube.com/" target="_blank" rel="noopener" class="btn ghost">YOUTUBE</a>
+        </div>
+        <small>Ganti link email, Instagram, dan YouTube sesuai akun resmi SERENITY.</small>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-brand">
+      <img src="assets/serenity155-logo.png" alt="SERENITY 155" />
+      <div><strong>SERENITY 155</strong><span>OFFICIAL ESPORTS SQUAD</span></div>
+    </div>
+    <p>© <span id="year"></span> SERENITY 155. ALL RIGHTS RESERVED.</p>
+    <a href="#home">BACK TO TOP ↑</a>
+  </footer>
+
+
+
+  <div class="achievement-gallery-modal" id="achievementGalleryModal" hidden>
+    <div class="detail-modal-backdrop" data-close-achievements></div>
+    <div class="achievement-gallery-panel">
+      <div class="achievement-gallery-top">
+        <div>
+          <p class="eyebrow">SERENITY 155</p>
+          <h2>ALL ACHIEVEMENTS</h2>
+          <p>Seluruh pencapaian SERENITY dalam satu galeri.</p>
+        </div>
+        <button class="detail-modal-close" type="button" data-close-achievements>×</button>
+      </div>
+      <div class="achievement-gallery-grid" id="achievementGalleryGrid"></div>
+    </div>
+  </div>
+
+  <div class="detail-modal" id="detailModal" hidden>
+    <div class="detail-modal-backdrop" data-close-modal></div>
+    <div class="detail-modal-card" role="dialog" aria-modal="true" aria-labelledby="detailModalTitle">
+      <button class="detail-modal-close" type="button" data-close-modal aria-label="Tutup">×</button>
+      <div class="detail-modal-media" id="detailModalMedia"></div>
+      <div class="detail-modal-content">
+        <p class="eyebrow" id="detailModalEyebrow">SERENITY 155</p>
+        <h3 id="detailModalTitle">DETAIL</h3>
+        <p id="detailModalText"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="cloud-sync.js"></script>
+<script>
+(async()=>{
+  const cloud=await serenityCloudLoad();
+  if(cloud) localStorage.setItem("serenity155Data",JSON.stringify(cloud));
+  const s=document.createElement("script");s.src="site-data.js";document.body.appendChild(s);
+})();
+</script>
+</body>
+</html>

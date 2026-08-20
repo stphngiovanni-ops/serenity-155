@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#05060a">
+  <title>Admin | SERENITY 155</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="loginView" class="login-wrap">
+    <div class="login-card">
+      <img src="assets/serenity155-logo.png" alt="SERENITY 155">
+      <h1>ADMIN <span style="color:#28e7f0">155</span></h1>
+      <p>Panel pengelolaan website SERENITY 155</p>
+      <label>Username</label>
+      <input id="loginUser" value="admin" autocomplete="username">
+      <label>Password</label>
+      <input id="loginPass" type="password" placeholder="Masukkan password" autocomplete="current-password">
+      <button class="btn primary" id="loginBtn" type="button" style="width:100%">LOGIN</button>
+      <div class="status" id="loginStatus"></div>
+      <small style="display:block;color:#656e7a;margin-top:12px;text-align:center">Default demo: admin / serenity155</small>
+    </div>
+  </div>
+
+  <div id="adminView" class="admin-shell" hidden>
+    <div class="admin-top">
+      <div>
+        <p class="eyebrow">CONTENT MANAGEMENT</p>
+        <h1>SERENITY <span>ADMIN</span></h1>
+      </div>
+      <div class="admin-actions">
+        <a href="index.html" class="btn ghost">LIHAT WEBSITE</a>
+        <button class="small-btn" id="logoutBtn" type="button">LOGOUT</button>
+      </div>
+    </div>
+
+    <div class="notice">
+      Perubahan disimpan di browser ini menggunakan Local Storage. Cocok untuk versi offline/demo. Untuk admin online multi-perangkat diperlukan backend/database.
+    </div>
+
+    <div class="admin-grid">
+      <section class="admin-card full">
+        <h2>ABOUT SERENITY</h2>
+        <div class="form-grid">
+          <div class="full"><label>Paragraf 1</label><textarea id="about1"></textarea></div>
+          <div class="full"><label>Paragraf 2</label><textarea id="about2"></textarea></div>
+        </div>
+      </section>
+
+      <section class="admin-card full">
+        <h2>ROSTER MANAGEMENT + FOTO</h2>
+
+        <div class="form-grid">
+          <div>
+            <label>Jenis Squad</label>
+            <select id="playerSquad">
+              <option value="competitive">SQUAD COMPETITIVE</option>
+              <option value="war">SQUAD WAR</option>
+            </select>
+          </div>
+          <div><label>Nickname</label><input id="playerName" placeholder="ZEED"></div>
+          <div><label>Role</label><input id="playerRole" placeholder="RIFLER"></div>
+          <div><label>Detail</label><input id="playerDetail" placeholder="ENTRY • AGGRESSIVE"></div>
+          <div class="full">
+            <label>Foto pemain</label>
+            <input class="file-input" id="playerPhoto" type="file" accept="image/*">
+            <img id="playerPhotoPreview" class="image-preview" hidden alt="Preview foto pemain">
+            <div class="image-tools">
+              <button class="small-btn danger" type="button" id="clearPlayerPhoto">HAPUS PILIHAN FOTO</button>
+            </div>
+            <p class="hint">Competitive maksimal 5 pemain. War maksimal 12 pemain. Setelah memilih foto, Photo Crop Editor akan terbuka untuk mengatur zoom dan posisi.</p>
+          </div>
+        </div>
+
+        <div class="admin-actions">
+          <button class="small-btn" id="addPlayer" type="button">+ TAMBAH PEMAIN</button>
+        </div>
+
+        <div class="roster-admin-columns">
+          <div class="roster-admin-box">
+            <h3>SQUAD COMPETITIVE</h3>
+            <div class="roster-counter" id="competitiveCounter">0 / 5</div>
+            <div id="competitiveRosterList" class="edit-list"></div>
+          </div>
+
+          <div class="roster-admin-box">
+            <h3>SQUAD WAR</h3>
+            <div class="roster-counter" id="warCounter">0 / 12</div>
+            <div id="warRosterList" class="edit-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="admin-card">
+        <h2>ACHIEVEMENT GALLERY + FOTO</h2>
+        <div class="form-grid">
+          <div><label>Tahun</label><input id="achYear" placeholder="2026"></div>
+          <div><label>Badge</label><input id="achBadge" placeholder="CHAMPION"></div>
+          <div class="full"><label>Judul</label><input id="achTitle" placeholder="PBRS SEMARANG"></div>
+          <div class="full"><label>Deskripsi</label><textarea id="achDesc"></textarea></div>
+          <div class="full">
+            <label>Foto achievement</label>
+            <input class="file-input" id="achPhoto" type="file" accept="image/*">
+            <img id="achPhotoPreview" class="image-preview" hidden alt="Preview achievement">
+            <div class="image-tools">
+              <button class="small-btn danger" type="button" id="clearAchPhoto">HAPUS PILIHAN FOTO</button>
+            </div>
+          </div>
+        </div>
+        <div class="admin-actions"><button class="small-btn" id="addAchievement" type="button">+ TAMBAH ACHIEVEMENT</button></div><p class="hint">Achievement dapat ditambahkan sebanyak yang diperlukan. Di website, pengunjung cukup klik satu tombol untuk melihat semuanya.</p>
+        <div id="achievementAdminList" class="edit-list"></div>
+      </section>
+
+      <section class="admin-card full">
+        <h2>MATCH MANAGEMENT</h2>
+        <div class="form-grid">
+          <div><label>Tanggal & Jam</label><input id="matchDate" type="datetime-local"></div>
+          <div><label>Nama Lawan</label><input id="opponent" placeholder="FORTIS"></div>
+          <div><label>Game</label><input id="game" value="POINT BLANK"></div>
+          <div><label>Format</label><input id="format" placeholder="BO3 / BO5"></div>
+          <div><label>Stream Label</label><input id="stream" placeholder="LIVE YOUTUBE"></div>
+          <div>
+            <label>Status</label>
+            <select id="matchStatus">
+              <option value="UPCOMING">UPCOMING</option>
+              <option value="LIVE">LIVE</option>
+              <option value="COMPLETED">COMPLETED</option>
+            </select>
+          </div>
+          <div class="full">
+            <label>Logo Lawan</label>
+            <input class="file-input" id="opponentLogo" type="file" accept="image/*">
+            <img id="opponentLogoPreview" class="image-preview" hidden alt="Preview logo lawan">
+            <div class="image-tools">
+              <button class="small-btn danger" type="button" id="clearOpponentLogo">HAPUS PILIHAN LOGO</button>
+            </div>
+          </div>
+        </div>
+        <div class="admin-actions">
+          <button class="small-btn" id="saveMatch" type="button">+ TAMBAH MATCH</button>
+          <button class="small-btn" id="cancelMatchEdit" type="button" hidden>BATAL EDIT</button>
+        </div>
+        <p class="hint">Gunakan tombol <b>JADIKAN NEXT</b> pada daftar match untuk menentukan pertandingan utama di website.</p>
+        <div id="matchAdminList" class="edit-list match-admin-list"></div>
+      </section>
+
+      <section class="admin-card">
+        <h2>SPONSOR + LOGO</h2>
+        <div class="form-grid">
+          <div class="full"><label>Nama Sponsor</label><input id="sponsorName" placeholder="NKJ"></div>
+          <div class="full">
+            <label>Logo Sponsor</label>
+            <input class="file-input" id="sponsorLogo" type="file" accept="image/*">
+            <img id="sponsorLogoPreview" class="image-preview" hidden alt="Preview logo sponsor">
+            <div class="image-tools">
+              <button class="small-btn danger" type="button" id="clearSponsorLogo">HAPUS PILIHAN LOGO</button>
+            </div>
+            <p class="hint">Logo sponsor akan dibuka di Photo Crop Editor rasio 1:1.</p>
+          </div>
+        </div>
+        <div class="admin-actions"><button class="small-btn" id="addSponsor" type="button">+ TAMBAH SPONSOR</button></div>
+        <div id="sponsorList" class="edit-list"></div>
+      </section>
+
+      <section class="admin-card full">
+        <h2>CONTACT & SOCIAL</h2>
+        <div class="form-grid">
+          <div><label>Email</label><input id="email" type="email"></div>
+          <div><label>Instagram URL</label><input id="instagram"></div>
+          <div class="full"><label>YouTube URL</label><input id="youtube"></div>
+        </div>
+      </section>
+    </div>
+
+    <div class="admin-actions" style="margin-top:22px">
+      <button class="btn primary" id="saveAll" type="button">SIMPAN SEMUA</button>
+      <button class="btn ghost" id="resetAll" type="button">RESET DEFAULT</button>
+      <span class="status" id="saveStatus"></span>
+    </div>
+  </div>
+
+
+  <div class="crop-modal" id="cropModal" hidden>
+    <div class="crop-backdrop"></div>
+    <div class="crop-panel">
+      <div class="crop-panel-top">
+        <div>
+          <p class="eyebrow">PHOTO CROP EDITOR</p>
+          <h2 id="cropTitle">ATUR FOTO</h2>
+        </div>
+        <button class="detail-modal-close" type="button" id="cropClose">×</button>
+      </div>
+
+      <div class="crop-workspace">
+        <div class="crop-stage-wrap">
+          <canvas id="cropCanvas" width="720" height="900"></canvas>
+        </div>
+
+        <div class="crop-controls">
+          <label>Zoom</label>
+          <input id="cropZoom" type="range" min="1" max="3" step="0.01" value="1">
+
+          <label>Geser Horizontal</label>
+          <input id="cropX" type="range" min="-1" max="1" step="0.01" value="0">
+
+          <label>Geser Vertikal</label>
+          <input id="cropY" type="range" min="-1" max="1" step="0.01" value="0">
+
+          <label>Rotasi</label>
+          <input id="cropRotate" type="range" min="-20" max="20" step="1" value="0">
+
+          <div class="crop-preview-note" id="cropRatioLabel">Rasio: 4:5</div>
+
+          <div class="admin-actions">
+            <button class="small-btn" type="button" id="cropReset">RESET</button>
+            <button class="btn primary" type="button" id="cropApply">PAKAI HASIL CROP</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="cloud-sync.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
