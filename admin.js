@@ -16,11 +16,12 @@ const DEFAULT_DATA={
     {year:"NEXT",badge:"MISSION",title:"PBNC",desc:"Target besar berikutnya. Keep grinding. Keep fighting.",photo:""}
   ],
   matches:[{date:"2026-09-12T20:00",opponent:"OPPONENT",game:"POINT BLANK",format:"BO3 / BO5",stream:"LIVE STREAM",status:"UPCOMING",logo:"",featured:true}],
+  matchHistory:[],
   sponsors:[{name:"NKJ",logo:""},{name:"AJ1",logo:""},{name:"2K",logo:""},{name:"PARTNER",logo:""}],
   contact:{email:"serenity155@example.com",instagram:"https://instagram.com/",youtube:"https://youtube.com/"}
 };
 const $=id=>document.getElementById(id),cloneDefault=()=>JSON.parse(JSON.stringify(DEFAULT_DATA));
-let data=cloneDefault(),pendingPlayerPhoto="",pendingAchPhoto="",pendingOpponentLogo="",editingMatchIndex=-1,editingPlayerGroup="",editingPlayerIndex=-1,pendingSponsorLogo="";
+let data=cloneDefault(),pendingPlayerPhoto="",pendingAchPhoto="",pendingOpponentLogo="",editingMatchIndex=-1,editingPlayerGroup="",editingPlayerIndex=-1,pendingSponsorLogo="",pendingHistoryLogo="",editingHistoryIndex=-1;
 
 function migrate(x){
   if(!x)return cloneDefault();
@@ -30,6 +31,7 @@ function migrate(x){
   x.competitiveRoster=(x.competitiveRoster||[]).slice(0,5).map(p=>({...p,photo:p.photo||""}));
   x.warRoster=(x.warRoster||[]).slice(0,12).map(p=>({...p,photo:p.photo||""}));
   x.matches=(x.matches||[]).map(m=>({...m,logo:m.logo||"",status:m.status||"UPCOMING",featured:!!m.featured}));
+  x.matchHistory=(x.matchHistory||[]).map(h=>({...h,logo:h.logo||"",result:h.result||"WIN",ourScore:Number(h.ourScore||0),opponentScore:Number(h.opponentScore||0)}));
   x.achievements=(x.achievements||[]).map(a=>({...a,photo:a.photo||""}));
   x.sponsors=(x.sponsors||[]).map(v=>typeof v==="string"?{name:v,logo:""}:{name:v.name||"SPONSOR",logo:v.logo||""});
   return x;
@@ -182,6 +184,8 @@ function renderLists(){
       </div>
       <button class="small-btn danger" type="button" data-remove-match="${i}">HAPUS</button>
     </div>`).join("");
+
+  $("historyAdminList").innerHTML=(data.matchHistory||[]).map((h,i)=>`<div class="edit-row with-thumb">${matchLogo(h.logo)}<div><b>SERENITY 155 ${esc(h.ourScore)} - ${esc(h.opponentScore)} ${esc(h.opponent)}</b><br><small>${esc(h.date||"DATE TBA")} • ${esc(h.event||"MATCH")} • ${esc(h.result)}</small><div class="match-actions"><button class="small-btn" type="button" data-edit-history="${i}">EDIT</button><label class="small-btn" style="cursor:pointer">GANTI LOGO<input type="file" accept="image/*" data-change-history-logo="${i}" hidden></label>${h.logo?`<button class="small-btn danger" type="button" data-delete-history-logo="${i}">HAPUS LOGO</button>`:""}</div></div><button class="small-btn danger" type="button" data-remove-history="${i}">HAPUS</button></div>`).join("");
 }
 function parseGroupIndex(value){
   const [group,index]=String(value).split(":");
@@ -322,6 +326,10 @@ function editMatch(i){
   window.scrollTo({top:$("matchDate").getBoundingClientRect().top+window.scrollY-120,behavior:"smooth"});
 }
 function featureMatch(i){data.matches.forEach((m,idx)=>m.featured=idx===i);renderLists()}
+function resetHistoryForm(){editingHistoryIndex=-1;pendingHistoryLogo="";$("historyDate").value="";$("historyOpponent").value="";$("historyEvent").value="";$("historyFormat").value="";$("historyOurScore").value="0";$("historyOpponentScore").value="0";$("historyResult").value="WIN";$("historyGame").value="POINT BLANK";$("historyNote").value="";$("historyLogo").value="";$("historyLogoPreview").hidden=true;$("saveHistory").textContent="+ TAMBAH RIWAYAT";$("cancelHistoryEdit").hidden=true}
+function saveHistory(){const opponent=$("historyOpponent").value.trim();if(!opponent){$("saveStatus").textContent="Nama lawan riwayat wajib diisi.";return}const existing=editingHistoryIndex>=0?data.matchHistory[editingHistoryIndex]:null;const item={date:$("historyDate").value,opponent,event:$("historyEvent").value.trim(),format:$("historyFormat").value.trim(),ourScore:Number($("historyOurScore").value||0),opponentScore:Number($("historyOpponentScore").value||0),result:$("historyResult").value,game:$("historyGame").value.trim()||"POINT BLANK",note:$("historyNote").value.trim(),logo:pendingHistoryLogo||(existing?.logo||"")};if(editingHistoryIndex>=0)data.matchHistory[editingHistoryIndex]=item;else data.matchHistory.push(item);try{saveSilent()}catch(e){}resetHistoryForm();renderLists()}
+function editHistory(i){const h=data.matchHistory[i];editingHistoryIndex=i;pendingHistoryLogo="";$("historyDate").value=h.date||"";$("historyOpponent").value=h.opponent||"";$("historyEvent").value=h.event||"";$("historyFormat").value=h.format||"";$("historyOurScore").value=h.ourScore??0;$("historyOpponentScore").value=h.opponentScore??0;$("historyResult").value=h.result||"WIN";$("historyGame").value=h.game||"POINT BLANK";$("historyNote").value=h.note||"";if(h.logo){$("historyLogoPreview").src=h.logo;$("historyLogoPreview").hidden=false}else $("historyLogoPreview").hidden=true;$("saveHistory").textContent="SIMPAN PERUBAHAN RIWAYAT";$("cancelHistoryEdit").hidden=false;window.scrollTo({top:$("historyDate").getBoundingClientRect().top+window.scrollY-120,behavior:"smooth"})}
+
 async function saveAll(){
   data.about1=$("about1").value;data.about2=$("about2").value;
   data.contact={email:$("email").value,instagram:$("instagram").value,youtube:$("youtube").value};
@@ -375,16 +383,18 @@ document.addEventListener("DOMContentLoaded",()=>{
   $("loginBtn").addEventListener("click",login);$("loginPass").addEventListener("keydown",e=>{if(e.key==="Enter")login()});
   $("logoutBtn").addEventListener("click",()=>{try{sessionStorage.removeItem("serenity155Admin")}catch(e){}location.reload()});
   $("addPlayer").addEventListener("click",addPlayer);$("addAchievement").addEventListener("click",addAchievement);$("addSponsor").addEventListener("click",addSponsor);
-  $("saveMatch").addEventListener("click",saveMatch);$("cancelMatchEdit").addEventListener("click",resetMatchForm);
+  $("saveMatch").addEventListener("click",saveMatch);$("cancelMatchEdit").addEventListener("click",resetMatchForm);$("saveHistory").addEventListener("click",saveHistory);$("cancelHistoryEdit").addEventListener("click",resetHistoryForm);
   $("saveAll").addEventListener("click",saveAll);$("resetAll").addEventListener("click",resetAll);
 
   $("playerPhoto").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,900,900,.82);if(cropped){pendingPlayerPhoto=cropped;$("playerPhotoPreview").src=pendingPlayerPhoto;$("playerPhotoPreview").hidden=false}else{$("playerPhoto").value=""}});
   $("achPhoto").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,1200,850,.82);if(cropped){pendingAchPhoto=cropped;$("achPhotoPreview").src=pendingAchPhoto;$("achPhotoPreview").hidden=false}else{$("achPhoto").value=""}});
   $("opponentLogo").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,700,700,.88);if(cropped){pendingOpponentLogo=cropped;$("opponentLogoPreview").src=pendingOpponentLogo;$("opponentLogoPreview").hidden=false}else{$("opponentLogo").value=""}});
+  $("historyLogo").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,700,700,.88);if(cropped){pendingHistoryLogo=cropped;$("historyLogoPreview").src=cropped;$("historyLogoPreview").hidden=false}else $("historyLogo").value=""});
   $("sponsorLogo").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,700,700,.88);if(cropped){pendingSponsorLogo=cropped;$("sponsorLogoPreview").src=pendingSponsorLogo;$("sponsorLogoPreview").hidden=false}else{$("sponsorLogo").value=""}});
   $("clearPlayerPhoto").addEventListener("click",()=>{pendingPlayerPhoto="";$("playerPhoto").value="";$("playerPhotoPreview").hidden=true});
   $("clearAchPhoto").addEventListener("click",()=>{pendingAchPhoto="";$("achPhoto").value="";$("achPhotoPreview").hidden=true});
   $("clearOpponentLogo").addEventListener("click",()=>{pendingOpponentLogo="";$("opponentLogo").value="";$("opponentLogoPreview").hidden=true});
+  $("clearHistoryLogo").addEventListener("click",()=>{pendingHistoryLogo="";$("historyLogo").value="";$("historyLogoPreview").hidden=true});
   $("clearSponsorLogo").addEventListener("click",()=>{pendingSponsorLogo="";$("sponsorLogo").value="";$("sponsorLogoPreview").hidden=true});
 
   document.body.addEventListener("click",e=>{
@@ -399,6 +409,9 @@ document.addEventListener("DOMContentLoaded",()=>{
     else if(t.matches("[data-delete-ach-photo]")){data.achievements[Number(t.dataset.deleteAchPhoto)].photo="";renderLists()}
     else if(t.matches("[data-delete-sponsor-logo]")){data.sponsors[Number(t.dataset.deleteSponsorLogo)].logo="";try{saveSilent()}catch(e){};renderLists()}
     else if(t.matches("[data-remove-sponsor]")){data.sponsors.splice(Number(t.dataset.removeSponsor),1);try{saveSilent()}catch(e){};renderLists()}
+    else if(t.matches("[data-edit-history]"))editHistory(Number(t.dataset.editHistory))
+    else if(t.matches("[data-delete-history-logo]")){data.matchHistory[Number(t.dataset.deleteHistoryLogo)].logo="";try{saveSilent()}catch(e){};renderLists()}
+    else if(t.matches("[data-remove-history]")){const i=Number(t.dataset.removeHistory);data.matchHistory.splice(i,1);if(editingHistoryIndex===i)resetHistoryForm();try{saveSilent()}catch(e){};renderLists()}
     else if(t.matches("[data-edit-match]"))editMatch(Number(t.dataset.editMatch))
     else if(t.matches("[data-feature-match]"))featureMatch(Number(t.dataset.featureMatch))
     else if(t.matches("[data-delete-match-logo]")){data.matches[Number(t.dataset.deleteMatchLogo)].logo="";renderLists()}
@@ -415,6 +428,7 @@ document.addEventListener("DOMContentLoaded",()=>{
       const {group,index}=parseGroupIndex(t.dataset.changePlayerPhoto);
       const cropped=await imageToDataURL(f,900,900,.82);if(cropped){getRoster(group)[index].photo=cropped;try{saveSilent()}catch(e){};renderLists()}
     } else if(t.matches("[data-change-ach-photo]")){const cropped=await imageToDataURL(f,1200,850,.82);if(cropped){data.achievements[Number(t.dataset.changeAchPhoto)].photo=cropped;try{saveSilent()}catch(e){};renderLists()}}
+    else if(t.matches("[data-change-history-logo]")){const cropped=await imageToDataURL(f,700,700,.88);if(cropped){data.matchHistory[Number(t.dataset.changeHistoryLogo)].logo=cropped;try{saveSilent()}catch(e){};renderLists()}}
     else if(t.matches("[data-change-match-logo]")){const cropped=await imageToDataURL(f,700,700,.88);if(cropped){data.matches[Number(t.dataset.changeMatchLogo)].logo=cropped;try{saveSilent()}catch(e){};renderLists()}}
     else if(t.matches("[data-change-sponsor-logo]")){const cropped=await imageToDataURL(f,700,700,.88);if(cropped){data.sponsors[Number(t.dataset.changeSponsorLogo)].logo=cropped;try{saveSilent()}catch(e){};renderLists()}}
   });

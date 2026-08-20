@@ -173,6 +173,25 @@
         <div id="matchAdminList" class="edit-list match-admin-list"></div>
       </section>
 
+      <section class="admin-card full">
+        <h2>MATCH HISTORY MANAGEMENT</h2>
+        <p class="hint">Khusus pertandingan yang sudah selesai. Data ini tampil di menu HISTORY pada website.</p>
+        <div class="form-grid">
+          <div><label>Tanggal & Jam</label><input id="historyDate" type="datetime-local"></div>
+          <div><label>Nama Lawan</label><input id="historyOpponent" placeholder="FORTIS"></div>
+          <div><label>Kompetisi / Event</label><input id="historyEvent" placeholder="PBRS / PBSB / FRIENDLY MATCH"></div>
+          <div><label>Format</label><input id="historyFormat" placeholder="BO3 / BO5"></div>
+          <div><label>Skor SERENITY</label><input id="historyOurScore" type="number" min="0" value="0"></div>
+          <div><label>Skor Lawan</label><input id="historyOpponentScore" type="number" min="0" value="0"></div>
+          <div><label>Hasil</label><select id="historyResult"><option value="WIN">WIN</option><option value="LOSE">LOSE</option><option value="DRAW">DRAW</option></select></div>
+          <div><label>Game</label><input id="historyGame" value="POINT BLANK"></div>
+          <div class="full"><label>Catatan</label><input id="historyNote" placeholder="Grand Final / Semifinal / Keterangan lainnya"></div>
+          <div class="full"><label>Logo Lawan</label><input class="file-input" id="historyLogo" type="file" accept="image/*"><img id="historyLogoPreview" class="image-preview" hidden alt="Preview logo lawan"><div class="image-tools"><button class="small-btn danger" type="button" id="clearHistoryLogo">HAPUS PILIHAN LOGO</button></div></div>
+        </div>
+        <div class="admin-actions"><button class="small-btn" id="saveHistory" type="button">+ TAMBAH RIWAYAT</button><button class="small-btn" id="cancelHistoryEdit" type="button" hidden>BATAL EDIT</button></div>
+        <div id="historyAdminList" class="edit-list match-admin-list"></div>
+      </section>
+
       <section class="admin-card">
         <h2>SPONSOR + LOGO</h2>
         <div class="form-grid">

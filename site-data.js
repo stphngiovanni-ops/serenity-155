@@ -29,6 +29,7 @@ const DEFAULT_DATA = {
   matches: [
     {date:"2026-09-12T20:00", opponent:"OPPONENT", game:"POINT BLANK", format:"BO3 / BO5", stream:"LIVE STREAM", status:"UPCOMING", logo:"", featured:true}
   ],
+  matchHistory: [],
   sponsors:[{name:"NKJ",logo:""},{name:"AJ1",logo:""},{name:"2K",logo:""},{name:"PARTNER",logo:""}],
   contact:{email:"serenity155@example.com", instagram:"https://instagram.com/", youtube:"https://youtube.com/"}
 };
@@ -59,7 +60,8 @@ function migrateData(x){
     warRoster:(x.warRoster||DEFAULT_DATA.warRoster).slice(0,12).map(p=>({...p,photo:p.photo||""})),
     achievements:(x.achievements||DEFAULT_DATA.achievements).map(a=>({...a,photo:a.photo||""})),
     sponsors:(x.sponsors||DEFAULT_DATA.sponsors).map(s=>typeof s==="string"?{name:s,logo:""}:{name:s.name||"SPONSOR",logo:s.logo||""}),
-    matches:(x.matches||DEFAULT_DATA.matches).map(m=>({...m,logo:m.logo||"",featured:!!m.featured,status:m.status||"UPCOMING"}))
+    matches:(x.matches||DEFAULT_DATA.matches).map(m=>({...m,logo:m.logo||"",featured:!!m.featured,status:m.status||"UPCOMING"})),
+    matchHistory:(x.matchHistory||[]).map(h=>({...h,logo:h.logo||"",result:h.result||"WIN",ourScore:Number(h.ourScore||0),opponentScore:Number(h.opponentScore||0)}))
   };
 }
 function getSiteData(){
@@ -197,6 +199,21 @@ function renderRoster(targetId, players, groupName){
       <div class="match-mini-main"><div class="match-mini-logo">${logo}</div><div><h3>SERENITY 155 <span style="color:#657080">VS</span> ${escapeHtml(m.opponent)}</h3><p>${escapeHtml(m.game)} • ${escapeHtml(m.format)}</p></div></div>
       <div class="match-mini-bottom"><span>${fmtDate(m.date)}</span><span>${escapeHtml(m.stream||"")}</span></div>`;
       matchList.appendChild(card);
+    });
+  }
+
+  const historyGrid=document.getElementById("historyGrid"),historyEmpty=document.getElementById("historyEmpty"),historyStats=document.getElementById("historyStats");
+  if(historyGrid){
+    const history=[...(d.matchHistory||[])].sort((a,b)=>new Date(b.date)-new Date(a.date));
+    historyGrid.innerHTML="";
+    if(historyEmpty)historyEmpty.hidden=history.length>0;
+    const wins=history.filter(h=>h.result==="WIN").length, losses=history.filter(h=>h.result==="LOSE").length, draws=history.filter(h=>h.result==="DRAW").length;
+    if(historyStats)historyStats.innerHTML=`<div><strong>${history.length}</strong><span>TOTAL MATCH</span></div><div class="win"><strong>${wins}</strong><span>WIN</span></div><div class="lose"><strong>${losses}</strong><span>LOSE</span></div><div><strong>${draws}</strong><span>DRAW</span></div>`;
+    history.forEach(h=>{
+      const card=document.createElement("article");card.className="history-card reveal show";
+      const oppLogo=h.logo?`<img src="${h.logo}" alt="${escapeHtml(h.opponent)}">`:`<span>${escapeHtml((h.opponent||"?").charAt(0))}</span>`;
+      card.innerHTML=`<div class="history-card-top"><span>${escapeHtml(h.event||"MATCH")}</span><b class="history-result ${escapeHtml(h.result)}">${escapeHtml(h.result)}</b></div><div class="history-versus"><div class="history-team"><img src="./serenity155-logo.png" alt="SERENITY 155"><strong>SERENITY 155</strong></div><div class="history-score"><b>${Number(h.ourScore||0)} <i>:</i> ${Number(h.opponentScore||0)}</b><span>${fmtDate(h.date)}</span></div><div class="history-team"><div class="history-opponent-logo">${oppLogo}</div><strong>${escapeHtml(h.opponent)}</strong></div></div><div class="history-meta"><span>${escapeHtml(h.game||"POINT BLANK")}</span><span>${escapeHtml(h.format||"")}</span><span>${escapeHtml(h.note||"")}</span></div>`;
+      historyGrid.appendChild(card);
     });
   }
 
