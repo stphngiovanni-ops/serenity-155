@@ -29,7 +29,7 @@
   <div id="adminView" class="admin-shell" hidden>
     <div class="admin-top">
       <div>
-        <p class="eyebrow">CONTENT MANAGEMENT</p><span class="version-badge">ONLINE V10.9</span>
+        <p class="eyebrow">CONTENT MANAGEMENT</p><span class="version-badge">ONLINE V10.9.1</span>
         <h1>SERENITY <span>ADMIN</span></h1>
       </div>
       <div class="admin-actions">
@@ -220,7 +220,27 @@
       </section>
     </div>
 
-    <div class="admin-actions" style="margin-top:22px">
+    
+      <section class="admin-card full announcement-admin-card" id="announcementManagement">
+        <h2>ANNOUNCEMENT MANAGEMENT</h2>
+        <p class="hint">Tambah, edit, hapus, pin, dan aktif/nonaktif pengumuman.</p>
+        <div class="form-grid">
+          <input type="hidden" id="announcementEditId">
+          <div><label>Judul</label><input id="announcementAdminTitle" placeholder="MATCH DAY SERENITY"></div>
+          <div><label>Kategori</label><select id="announcementAdminCategory"><option>IMPORTANT</option><option>MATCH</option><option>TEAM</option><option>EVENT</option><option>SPONSOR</option><option>INFO</option></select></div>
+          <div><label>Tanggal</label><input id="announcementAdminDate" type="date"></div>
+          <div class="full"><label>Isi Pengumuman</label><textarea id="announcementAdminMessage" rows="4"></textarea></div>
+          <div><label><input id="announcementAdminPinned" type="checkbox"> PINNED</label></div>
+          <div><label><input id="announcementAdminActive" type="checkbox" checked> AKTIF</label></div>
+        </div>
+        <div class="admin-actions">
+          <button class="small-btn" id="announcementSave" type="button">SIMPAN PENGUMUMAN</button>
+          <button class="small-btn" id="announcementCancelEdit" type="button">BATAL EDIT</button>
+        </div>
+        <div id="announcementAdminList" class="edit-list"></div>
+      </section>
+
+<div class="admin-actions" style="margin-top:22px">
       <button class="btn primary" id="saveAll" type="button">SIMPAN SEMUA</button>
       <button class="btn ghost" id="resetAll" type="button">RESET DEFAULT</button>
       <span class="status" id="saveStatus"></span>
@@ -270,27 +290,5 @@
 
   <script src="cloud-sync.js"></script>
   <script src="admin.js"></script>
-
-  <!-- V10.9 ANNOUNCEMENT CENTER -->
-  <button id="announcementFloatBtn" class="announcement-float-btn" type="button" aria-label="Open announcements">
-    <span class="announcement-speaker">!</span>
-    <span>ANNOUNCEMENT</span>
-    <i id="announcementFloatBadge">NEW</i>
-  </button>
-
-  <div id="announcementModal" class="announcement-modal" aria-hidden="true">
-    <div class="announcement-backdrop" data-close-announcement></div>
-    <section class="announcement-panel" role="dialog" aria-modal="true" aria-labelledby="announcementTitle">
-      <header class="announcement-panel-head">
-        <div>
-          <small>SERENITY 155 // INFO CENTER</small>
-          <h2 id="announcementTitle">ANNOUNCEMENT</h2>
-        </div>
-        <button id="announcementCloseBtn" class="announcement-close" type="button" aria-label="Close">×</button>
-      </header>
-      <div id="announcementList" class="announcement-list"></div>
-    </section>
-  </div>
-
 </body>
 </html>

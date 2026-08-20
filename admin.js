@@ -437,81 +437,18 @@ document.addEventListener("DOMContentLoaded",()=>{
 });
 
 
-// ===== V10.9 ANNOUNCEMENT MANAGEMENT =====
-(function announcementAdmin(){
-  const form=document.getElementById("announcementForm");
-  const list=document.getElementById("announcementAdminList");
-  if(!form || !list || !window.SerenityAnnouncements) return;
-
-  const el=id=>document.getElementById(id);
+// ===== V10.9.1 ANNOUNCEMENT MANAGEMENT FIX =====
+document.addEventListener("DOMContentLoaded",function(){
+  const KEY="serenity_announcements_v109";
+  const defaults=[{id:"welcome-v109",title:"WELCOME TO SERENITY 155",category:"TEAM",date:"2026-08-20",message:"Selamat datang di official website SQUAD SERENITY 155.",pinned:true,active:true}];
+  const get=()=>{try{const r=localStorage.getItem(KEY);return r?JSON.parse(r):defaults}catch(e){return defaults}};
+  const save=x=>localStorage.setItem(KEY,JSON.stringify(x));
+  const q=id=>document.getElementById(id), list=q("announcementAdminList"), btn=q("announcementSave");
+  if(!list||!btn)return;
   const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
-
-  function rows(){ return window.SerenityAnnouncements.get(); }
-  function resetForm(){
-    form.reset();
-    el("announcementEditId").value="";
-    el("announcementAdminActive").checked=true;
-    el("announcementAdminDate").value=new Date().toISOString().slice(0,10);
-  }
-  function render(){
-    const items=rows().sort((a,b)=>(b.pinned===true)-(a.pinned===true)||String(b.date||"").localeCompare(String(a.date||"")));
-    list.innerHTML=items.length?items.map(a=>`
-      <article class="announcement-admin-item">
-        <div>
-          <span>${esc(a.category||"INFO")}</span>
-          ${a.pinned?" <b>PINNED</b>":""}
-          ${a.active===false?" <em>NONAKTIF</em>":""}
-          <h3>${esc(a.title||"")}</h3>
-          <small>${esc(a.date||"")}</small>
-          <p>${esc(a.message||"")}</p>
-        </div>
-        <div class="announcement-item-actions">
-          <button type="button" data-ann-edit="${esc(a.id)}">EDIT</button>
-          <button type="button" data-ann-delete="${esc(a.id)}">HAPUS</button>
-        </div>
-      </article>`).join(""):'<p>Belum ada pengumuman.</p>';
-  }
-
-  form.addEventListener("submit",e=>{
-    e.preventDefault();
-    const items=rows();
-    const id=el("announcementEditId").value || ("ann-"+Date.now());
-    const item={
-      id,
-      title:el("announcementAdminTitle").value.trim(),
-      category:el("announcementAdminCategory").value,
-      date:el("announcementAdminDate").value,
-      message:el("announcementAdminMessage").value.trim(),
-      pinned:el("announcementAdminPinned").checked,
-      active:el("announcementAdminActive").checked
-    };
-    const i=items.findIndex(x=>x.id===id);
-    if(i>=0)items[i]=item;else items.unshift(item);
-    window.SerenityAnnouncements.save(items);
-    resetForm(); render();
-  });
-
-  list.addEventListener("click",e=>{
-    const edit=e.target.closest("[data-ann-edit]");
-    const del=e.target.closest("[data-ann-delete]");
-    if(edit){
-      const a=rows().find(x=>x.id===edit.dataset.annEdit);
-      if(!a)return;
-      el("announcementEditId").value=a.id;
-      el("announcementAdminTitle").value=a.title||"";
-      el("announcementAdminCategory").value=a.category||"INFO";
-      el("announcementAdminDate").value=a.date||"";
-      el("announcementAdminMessage").value=a.message||"";
-      el("announcementAdminPinned").checked=!!a.pinned;
-      el("announcementAdminActive").checked=a.active!==false;
-      form.scrollIntoView({behavior:"smooth",block:"center"});
-    }
-    if(del && confirm("Hapus pengumuman ini?")){
-      window.SerenityAnnouncements.save(rows().filter(x=>x.id!==del.dataset.annDelete));
-      render();
-    }
-  });
-
-  el("announcementCancelEdit")?.addEventListener("click",resetForm);
-  resetForm(); render();
-})();
+  function reset(){q("announcementEditId").value="";q("announcementAdminTitle").value="";q("announcementAdminCategory").value="INFO";q("announcementAdminDate").value=new Date().toISOString().slice(0,10);q("announcementAdminMessage").value="";q("announcementAdminPinned").checked=false;q("announcementAdminActive").checked=true}
+  function render(){const rows=get();list.innerHTML=rows.map(a=>`<div class="edit-row"><div><b>${esc(a.title)}</b><br><small>${esc(a.category)} • ${esc(a.date||"")} ${a.pinned?"• PINNED":""} ${a.active===false?"• NONAKTIF":""}</small><p>${esc(a.message||"")}</p></div><div><button class="small-btn" data-ann-edit="${esc(a.id)}">EDIT</button> <button class="small-btn danger" data-ann-delete="${esc(a.id)}">HAPUS</button></div></div>`).join("")}
+  btn.addEventListener("click",()=>{const rows=get(),id=q("announcementEditId").value||"ann-"+Date.now();const item={id,title:q("announcementAdminTitle").value.trim(),category:q("announcementAdminCategory").value,date:q("announcementAdminDate").value,message:q("announcementAdminMessage").value.trim(),pinned:q("announcementAdminPinned").checked,active:q("announcementAdminActive").checked};if(!item.title)return;const i=rows.findIndex(x=>x.id===id);if(i>=0)rows[i]=item;else rows.unshift(item);save(rows);reset();render()});
+  list.addEventListener("click",e=>{const edit=e.target.closest("[data-ann-edit]"),del=e.target.closest("[data-ann-delete]");if(edit){const a=get().find(x=>x.id===edit.dataset.annEdit);if(!a)return;q("announcementEditId").value=a.id;q("announcementAdminTitle").value=a.title||"";q("announcementAdminCategory").value=a.category||"INFO";q("announcementAdminDate").value=a.date||"";q("announcementAdminMessage").value=a.message||"";q("announcementAdminPinned").checked=!!a.pinned;q("announcementAdminActive").checked=a.active!==false}if(del&&confirm("Hapus pengumuman ini?")){save(get().filter(x=>x.id!==del.dataset.annDelete));render()}});
+  q("announcementCancelEdit")?.addEventListener("click",reset);reset();render();
+});
