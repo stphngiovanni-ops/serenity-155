@@ -53,13 +53,13 @@ function openCropEditor(file,mode="player"){
       img.onload=()=>{
         cropState={
           file,img,mode,resolve,
-          outputW: mode==="achievement" ? 1200 : mode==="logo" ? 700 : 720,
-          outputH: mode==="achievement" ? 800 : mode==="logo" ? 700 : 900,
+          outputW: mode==="achievement" ? 1200 : mode==="logo" ? 700 : mode==="announcement" ? 1280 : 720,
+          outputH: mode==="achievement" ? 800 : mode==="logo" ? 700 : mode==="announcement" ? 720 : 900,
           quality: mode==="logo" ? .92 : .88,
           zoom:1,x:0,y:0,rotate:0
         };
-        $("cropTitle").textContent = mode==="achievement" ? "CROP FOTO ACHIEVEMENT" : mode==="logo" ? "CROP LOGO" : "CROP FOTO PEMAIN";
-        $("cropRatioLabel").textContent = mode==="achievement" ? "Rasio: 3:2" : mode==="logo" ? "Rasio: 1:1" : "Rasio: 4:5";
+        $("cropTitle").textContent = mode==="achievement" ? "CROP FOTO ACHIEVEMENT" : mode==="logo" ? "CROP LOGO" : mode==="announcement" ? "CROP FOTO ANNOUNCEMENT" : "CROP FOTO PEMAIN";
+        $("cropRatioLabel").textContent = mode==="achievement" ? "Rasio: 3:2" : mode==="logo" ? "Rasio: 1:1" : mode==="announcement" ? "Rasio: 16:9" : "Rasio: 4:5";
         $("cropZoom").value="1";$("cropX").value="0";$("cropY").value="0";$("cropRotate").value="0";
         const canvas=$("cropCanvas");
         canvas.width=cropState.outputW;
@@ -123,7 +123,7 @@ function resetCrop(){
 }
 
 function imageToDataURL(file,maxW=900,maxH=900,quality=.82){
-  const mode=(maxW===1200&&maxH===850)?"achievement":(maxW===700&&maxH===700)?"logo":"player";
+  const mode=(maxW===1200&&maxH===850)?"achievement":(maxW===700&&maxH===700)?"logo":(maxW===1280&&maxH===720)?"announcement":"player";
   return openCropEditor(file,mode);
 }
 function login(){if(($("loginUser").value||"").trim()==="admin"&&($("loginPass").value||"")==="serenity155"){try{sessionStorage.setItem("serenity155Admin","1")}catch(e){}showAdmin()}else $("loginStatus").textContent="Username atau password salah."}
@@ -437,18 +437,115 @@ document.addEventListener("DOMContentLoaded",()=>{
 });
 
 
-// ===== V10.9.1 ANNOUNCEMENT MANAGEMENT FIX =====
+
+// ===== V10.9.2 ANNOUNCEMENT IMAGE + CROP =====
 document.addEventListener("DOMContentLoaded",function(){
   const KEY="serenity_announcements_v109";
-  const defaults=[{id:"welcome-v109",title:"WELCOME TO SERENITY 155",category:"TEAM",date:"2026-08-20",message:"Selamat datang di official website SQUAD SERENITY 155.",pinned:true,active:true}];
+  const defaults=[{id:"welcome-v109",title:"WELCOME TO SERENITY 155",category:"TEAM",date:"2026-08-20",message:"Selamat datang di official website SQUAD SERENITY 155.",pinned:true,active:true,image:""}];
   const get=()=>{try{const r=localStorage.getItem(KEY);return r?JSON.parse(r):defaults}catch(e){return defaults}};
   const save=x=>localStorage.setItem(KEY,JSON.stringify(x));
   const q=id=>document.getElementById(id), list=q("announcementAdminList"), btn=q("announcementSave");
   if(!list||!btn)return;
   const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
-  function reset(){q("announcementEditId").value="";q("announcementAdminTitle").value="";q("announcementAdminCategory").value="INFO";q("announcementAdminDate").value=new Date().toISOString().slice(0,10);q("announcementAdminMessage").value="";q("announcementAdminPinned").checked=false;q("announcementAdminActive").checked=true}
-  function render(){const rows=get();list.innerHTML=rows.map(a=>`<div class="edit-row"><div><b>${esc(a.title)}</b><br><small>${esc(a.category)} • ${esc(a.date||"")} ${a.pinned?"• PINNED":""} ${a.active===false?"• NONAKTIF":""}</small><p>${esc(a.message||"")}</p></div><div><button class="small-btn" data-ann-edit="${esc(a.id)}">EDIT</button> <button class="small-btn danger" data-ann-delete="${esc(a.id)}">HAPUS</button></div></div>`).join("")}
-  btn.addEventListener("click",()=>{const rows=get(),id=q("announcementEditId").value||"ann-"+Date.now();const item={id,title:q("announcementAdminTitle").value.trim(),category:q("announcementAdminCategory").value,date:q("announcementAdminDate").value,message:q("announcementAdminMessage").value.trim(),pinned:q("announcementAdminPinned").checked,active:q("announcementAdminActive").checked};if(!item.title)return;const i=rows.findIndex(x=>x.id===id);if(i>=0)rows[i]=item;else rows.unshift(item);save(rows);reset();render()});
-  list.addEventListener("click",e=>{const edit=e.target.closest("[data-ann-edit]"),del=e.target.closest("[data-ann-delete]");if(edit){const a=get().find(x=>x.id===edit.dataset.annEdit);if(!a)return;q("announcementEditId").value=a.id;q("announcementAdminTitle").value=a.title||"";q("announcementAdminCategory").value=a.category||"INFO";q("announcementAdminDate").value=a.date||"";q("announcementAdminMessage").value=a.message||"";q("announcementAdminPinned").checked=!!a.pinned;q("announcementAdminActive").checked=a.active!==false}if(del&&confirm("Hapus pengumuman ini?")){save(get().filter(x=>x.id!==del.dataset.annDelete));render()}});
-  q("announcementCancelEdit")?.addEventListener("click",reset);reset();render();
+  let pendingImage="";
+
+  function reset(){
+    q("announcementEditId").value="";
+    q("announcementAdminTitle").value="";
+    q("announcementAdminCategory").value="INFO";
+    q("announcementAdminDate").value=new Date().toISOString().slice(0,10);
+    q("announcementAdminMessage").value="";
+    q("announcementAdminPinned").checked=false;
+    q("announcementAdminActive").checked=true;
+    pendingImage="";
+    q("announcementAdminImage").value="";
+    q("announcementAdminImagePreview").hidden=true;
+  }
+
+  function render(){
+    const rows=get();
+    list.innerHTML=rows.map(a=>`<div class="edit-row announcement-edit-row">
+      ${a.image?`<img class="announcement-admin-thumb" src="${a.image}" alt="">`:`<div class="announcement-admin-thumb empty">NO IMG</div>`}
+      <div><b>${esc(a.title)}</b><br><small>${esc(a.category)} • ${esc(a.date||"")} ${a.pinned?"• PINNED":""} ${a.active===false?"• NONAKTIF":""}</small><p>${esc(a.message||"")}</p>
+        <div class="image-tools">
+          <label class="small-btn" style="cursor:pointer">GANTI FOTO<input type="file" accept="image/*" data-ann-change-image="${esc(a.id)}" hidden></label>
+          ${a.image?`<button class="small-btn danger" type="button" data-ann-delete-image="${esc(a.id)}">HAPUS FOTO</button>`:""}
+        </div>
+      </div>
+      <div><button class="small-btn" data-ann-edit="${esc(a.id)}">EDIT</button> <button class="small-btn danger" data-ann-delete="${esc(a.id)}">HAPUS</button></div>
+    </div>`).join("");
+  }
+
+  q("announcementAdminImage").addEventListener("change",async e=>{
+    const f=e.target.files?.[0]; if(!f)return;
+    const cropped=await imageToDataURL(f,1280,720,.88);
+    if(cropped){
+      pendingImage=cropped;
+      q("announcementAdminImagePreview").src=cropped;
+      q("announcementAdminImagePreview").hidden=false;
+    }else{
+      e.target.value="";
+    }
+  });
+
+  q("announcementClearImage").addEventListener("click",()=>{
+    pendingImage="";
+    q("announcementAdminImage").value="";
+    q("announcementAdminImagePreview").hidden=true;
+  });
+
+  btn.addEventListener("click",()=>{
+    const rows=get(),id=q("announcementEditId").value||"ann-"+Date.now();
+    const existing=rows.find(x=>x.id===id);
+    const item={
+      id,
+      title:q("announcementAdminTitle").value.trim(),
+      category:q("announcementAdminCategory").value,
+      date:q("announcementAdminDate").value,
+      message:q("announcementAdminMessage").value.trim(),
+      pinned:q("announcementAdminPinned").checked,
+      active:q("announcementAdminActive").checked,
+      image:pendingImage || existing?.image || ""
+    };
+    if(!item.title)return;
+    const i=rows.findIndex(x=>x.id===id);
+    if(i>=0)rows[i]=item;else rows.unshift(item);
+    save(rows);reset();render();
+  });
+
+  list.addEventListener("click",async e=>{
+    const edit=e.target.closest("[data-ann-edit]"),del=e.target.closest("[data-ann-delete]");
+    const delImg=e.target.closest("[data-ann-delete-image]");
+    if(edit){
+      const a=get().find(x=>x.id===edit.dataset.annEdit);if(!a)return;
+      q("announcementEditId").value=a.id;
+      q("announcementAdminTitle").value=a.title||"";
+      q("announcementAdminCategory").value=a.category||"INFO";
+      q("announcementAdminDate").value=a.date||"";
+      q("announcementAdminMessage").value=a.message||"";
+      q("announcementAdminPinned").checked=!!a.pinned;
+      q("announcementAdminActive").checked=a.active!==false;
+      pendingImage=a.image||"";
+      if(a.image){q("announcementAdminImagePreview").src=a.image;q("announcementAdminImagePreview").hidden=false}else q("announcementAdminImagePreview").hidden=true;
+    }
+    if(del&&confirm("Hapus pengumuman ini?")){save(get().filter(x=>x.id!==del.dataset.annDelete));render()}
+    if(delImg){
+      const rows=get(),a=rows.find(x=>x.id===delImg.dataset.annDeleteImage);
+      if(a){a.image="";save(rows);render()}
+    }
+  });
+
+  list.addEventListener("change",async e=>{
+    const input=e.target.closest("[data-ann-change-image]");
+    if(!input)return;
+    const f=input.files?.[0];if(!f)return;
+    const cropped=await imageToDataURL(f,1280,720,.88);
+    if(cropped){
+      const rows=get(),a=rows.find(x=>x.id===input.dataset.annChangeImage);
+      if(a){a.image=cropped;save(rows);render()}
+    }
+  });
+
+  q("announcementCancelEdit")?.addEventListener("click",reset);
+  reset();render();
 });

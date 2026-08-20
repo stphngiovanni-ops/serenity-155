@@ -29,7 +29,7 @@
   <div id="adminView" class="admin-shell" hidden>
     <div class="admin-top">
       <div>
-        <p class="eyebrow">CONTENT MANAGEMENT</p><span class="version-badge">ONLINE V10.9.1</span>
+        <p class="eyebrow">CONTENT MANAGEMENT</p><span class="version-badge">ONLINE V10.9.2</span>
         <h1>SERENITY <span>ADMIN</span></h1>
       </div>
       <div class="admin-actions">
@@ -230,6 +230,15 @@
           <div><label>Kategori</label><select id="announcementAdminCategory"><option>IMPORTANT</option><option>MATCH</option><option>TEAM</option><option>EVENT</option><option>SPONSOR</option><option>INFO</option></select></div>
           <div><label>Tanggal</label><input id="announcementAdminDate" type="date"></div>
           <div class="full"><label>Isi Pengumuman</label><textarea id="announcementAdminMessage" rows="4"></textarea></div>
+          <div class="full">
+            <label>Foto / Poster Announcement</label>
+            <input class="file-input" id="announcementAdminImage" type="file" accept="image/*">
+            <img id="announcementAdminImagePreview" class="image-preview" hidden alt="Preview announcement">
+            <div class="image-tools">
+              <button class="small-btn danger" type="button" id="announcementClearImage">HAPUS FOTO</button>
+            </div>
+            <p class="hint">Setelah memilih gambar, Photo Crop Editor akan terbuka. Rasio announcement: 16:9.</p>
+          </div>
           <div><label><input id="announcementAdminPinned" type="checkbox"> PINNED</label></div>
           <div><label><input id="announcementAdminActive" type="checkbox" checked> AKTIF</label></div>
         </div>

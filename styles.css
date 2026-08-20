@@ -887,3 +887,23 @@ body{
 .announcement-panel{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(780px,92vw);max-height:82vh;overflow:hidden;background:#070c12;border:1px solid rgba(34,231,242,.25);box-shadow:0 30px 100px #000}
 .announcement-panel-head{display:flex;justify-content:space-between;align-items:center;padding:20px 22px;border-bottom:1px solid rgba(255,255,255,.08)}.announcement-close{width:38px;height:38px;background:#0a1018;color:#fff;border:1px solid rgba(255,255,255,.12);font-size:24px;cursor:pointer}
 .announcement-list{padding:18px;max-height:65vh;overflow:auto;display:grid;gap:12px}.announcement-card{padding:18px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(145deg,#0d1722,#060b11)}.announcement-card.is-pinned{box-shadow:inset 3px 0 #ff176f}.announcement-meta{display:flex;gap:8px;font-size:9px;color:#778492}.announcement-category{color:#22e7f2}.announcement-card p{color:#aab5c1;white-space:pre-line}.announcement-open{overflow:hidden}
+
+
+/* ===== V10.9.2 ANNOUNCEMENT IMAGE ===== */
+.announcement-card{overflow:hidden;padding:0!important}
+.announcement-card-body{padding:18px}
+.announcement-image-wrap{display:block;width:100%;border:0;padding:0;background:#02060b;cursor:zoom-in}
+.announcement-image{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.announcement-image-viewer{position:fixed;inset:0;z-index:12000}
+.announcement-image-viewer-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(8px)}
+.announcement-image-viewer-box{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(1000px,94vw);background:#070c12;border:1px solid rgba(34,231,242,.25);padding:12px}
+.announcement-image-viewer-box img{width:100%;max-height:76vh;object-fit:contain;display:block;background:#000}
+.announcement-image-viewer-box h3{margin:12px 4px 4px}
+.announcement-image-viewer-close{position:absolute;right:18px;top:18px;width:40px;height:40px;border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.75);color:#fff;font-size:25px;cursor:pointer;z-index:2}
+.announcement-edit-row{align-items:flex-start}
+.announcement-admin-thumb{width:130px;height:74px;object-fit:cover;border:1px solid rgba(34,231,242,.15);background:#05090d;flex:0 0 auto}
+.announcement-admin-thumb.empty{display:grid;place-items:center;color:#53606b;font-size:9px;letter-spacing:1px}
+@media(max-width:720px){
+  .announcement-edit-row{flex-direction:column}
+  .announcement-admin-thumb{width:100%;height:auto;aspect-ratio:16/9}
+}
