@@ -292,8 +292,12 @@
 <script>
 (async()=>{
   const cloud=await serenityCloudLoad();
-  if(cloud) localStorage.setItem("serenity155Data",JSON.stringify(cloud));
-  const s=document.createElement("script");s.src="site-data.js";document.body.appendChild(s);
+  if(cloud){
+    window.__SERENITY_CLOUD_DATA__=cloud;
+    try{localStorage.setItem("serenity155Data",JSON.stringify(cloud))}
+    catch(e){console.warn("Local cache penuh; website tetap memakai cloud.",e)}
+  }
+  const s=document.createElement("script");s.src="site-data.js?v=11.1";document.body.appendChild(s);
 })();
 </script>
 

@@ -21,6 +21,15 @@ const DEFAULT_DATA={
   contact:{email:"serenity155@example.com",instagram:"https://instagram.com/",youtube:"https://youtube.com/"}
 };
 const $=id=>document.getElementById(id),cloneDefault=()=>JSON.parse(JSON.stringify(DEFAULT_DATA));
+const SERENITY_MEDIA_ENDPOINT="https://vcmbthekmltociajzsdx.supabase.co/functions/v1/serenity-media";
+async function uploadImageToCloud(dataUrl,folder="uploads"){
+  if(!dataUrl || !String(dataUrl).startsWith("data:image/")) return dataUrl||"";
+  const r=await fetch(SERENITY_MEDIA_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({dataUrl,folder})});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok || !j.url) throw new Error(j.error||"Upload foto ke cloud gagal");
+  return j.url;
+}
+
 let data=cloneDefault(),pendingPlayerPhoto="",pendingAchPhoto="",pendingOpponentLogo="",editingMatchIndex=-1,editingPlayerGroup="",editingPlayerIndex=-1,pendingSponsorLogo="",pendingHistoryLogo="",editingHistoryIndex=-1;
 
 function migrate(x){
@@ -139,6 +148,8 @@ async function showAdmin(){
     loadData();
   }
   fillForm();renderLists();
+  const hasAnyPhoto=[...(data.competitiveRoster||[]).map(x=>x.photo),...(data.warRoster||[]).map(x=>x.photo),...(data.achievements||[]).map(x=>x.photo),...(data.sponsors||[]).map(x=>x.logo),...(data.matches||[]).map(x=>x.logo),...(data.matchHistory||[]).map(x=>x.logo)].some(Boolean);
+  const warn=document.getElementById("cloudPhotoWarning"); if(warn)warn.hidden=hasAnyPhoto;
 }
 function fillForm(){
   $("about1").value=data.about1||"";$("about2").value=data.about2||"";
@@ -414,6 +425,7 @@ async function migrateLocalToCloud(){
     if(!raw){status.textContent="Tidak ditemukan data lama di browser ini.";return}
     const local=migrate(JSON.parse(raw));
     status.textContent="Mengirim data lama ke online...";
+    await migrateBase64ImagesToCloud(local,"serenity155-migrate");
     await serenityAdminCloudSave(local,"serenity155");
     data=local;fillForm();renderLists();
     status.textContent="BERHASIL ✓ Data lama sudah online.";
