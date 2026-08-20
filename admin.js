@@ -203,6 +203,19 @@ function getRoster(group){
   if(!Array.isArray(data.warRoster)) data.warRoster=[];
   return group==="war"?data.warRoster:data.competitiveRoster;
 }
+
+async function migrateBase64ImagesToCloud(obj,path="data"){
+  if(!obj || typeof obj!=="object") return;
+  for(const k of Object.keys(obj)){
+    const v=obj[k];
+    if(typeof v==="string" && v.startsWith("data:image/")){
+      obj[k]=await uploadImageToCloud(v,path.replace(/[^a-zA-Z0-9_-]/g,"-"));
+    }else if(v && typeof v==="object"){
+      await migrateBase64ImagesToCloud(v,path+"-"+k);
+    }
+  }
+}
+
 let cloudSaveTimer=null;
 function makeLightLocalCopy(obj){
   const copy=JSON.parse(JSON.stringify(obj));
@@ -221,6 +234,7 @@ function scheduleCloudSave(){
   clearTimeout(cloudSaveTimer);
   cloudSaveTimer=setTimeout(async()=>{
     try{
+      await migrateBase64ImagesToCloud(data,"serenity155");
       await serenityAdminCloudSave(data,"serenity155");
       const s=document.getElementById("saveStatus");
       if(s)s.textContent="Tersimpan ONLINE ✓";
@@ -379,7 +393,8 @@ async function saveAll(){
   data.about1=$("about1").value;data.about2=$("about2").value;
   data.contact={email:$("email").value,instagram:$("instagram").value,youtube:$("youtube").value};
   try{
-    await serenityAdminCloudSave(data,"serenity155");
+    await migrateBase64ImagesToCloud(data,"serenity155");
+      await serenityAdminCloudSave(data,"serenity155");
     try{localStorage.setItem("serenity155Data",JSON.stringify(data))}catch(e){
       try{localStorage.setItem("serenity155Data",JSON.stringify(makeLightLocalCopy(data)))}catch(_){}
     }
@@ -530,8 +545,9 @@ document.addEventListener("DOMContentLoaded",function(){
     const f=e.target.files?.[0]; if(!f)return;
     const cropped=await imageToDataURL(f,1280,720,.72);
     if(cropped){
-      pendingImage=cropped;
-      q("announcementAdminImagePreview").src=cropped;
+      try{ pendingImage=await uploadImageToCloud(cropped,"announcement"); }
+      catch(err){ alert("Upload foto announcement gagal: "+err.message); return; }
+      q("announcementAdminImagePreview").src=pendingImage;
       q("announcementAdminImagePreview").hidden=false;
     }else{
       e.target.value="";
@@ -591,8 +607,11 @@ document.addEventListener("DOMContentLoaded",function(){
     const f=input.files?.[0];if(!f)return;
     const cropped=await imageToDataURL(f,1280,720,.72);
     if(cropped){
+      let url="";
+      try{ url=await uploadImageToCloud(cropped,"announcement"); }
+      catch(err){ alert("Upload foto announcement gagal: "+err.message); return; }
       const rows=get(),a=rows.find(x=>x.id===input.dataset.annChangeImage);
-      if(a){a.image=cropped;save(rows);render()}
+      if(a){a.image=url;save(rows);render()}
     }
   });
 
