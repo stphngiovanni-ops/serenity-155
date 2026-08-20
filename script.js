@@ -182,3 +182,56 @@ if (!isNaN(matchDate)) {
 
   paint();
 })();
+
+
+// ===== V10.9 ANNOUNCEMENT CENTER =====
+(function announcementCenter(){
+  const modal=document.getElementById("announcementModal");
+  const list=document.getElementById("announcementList");
+  const navBtn=document.getElementById("announcementNavBtn");
+  const floatBtn=document.getElementById("announcementFloatBtn");
+  const closeBtn=document.getElementById("announcementCloseBtn");
+  if(!modal || !list) return;
+
+  const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+
+  function getItems(){
+    return window.SerenityAnnouncements ? window.SerenityAnnouncements.get() : [];
+  }
+  function render(){
+    const data=getItems()
+      .filter(x=>x.active!==false)
+      .sort((a,b)=>(b.pinned===true)-(a.pinned===true)||String(b.date||"").localeCompare(String(a.date||"")));
+    list.innerHTML=data.length?data.map(a=>`
+      <article class="announcement-card ${a.pinned?'is-pinned':''}">
+        <div class="announcement-meta">
+          <span class="announcement-category">${esc(a.category||"INFO")}</span>
+          <time>${esc(a.date||"")}</time>
+          ${a.pinned?'<b>PINNED</b>':''}
+        </div>
+        <h3>${esc(a.title||"ANNOUNCEMENT")}</h3>
+        <p>${esc(a.message||"")}</p>
+      </article>`).join(""):'<div class="announcement-empty">Belum ada pengumuman aktif.</div>';
+  }
+  function open(){
+    render();
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden","false");
+    document.body.classList.add("announcement-open");
+    localStorage.setItem("serenity_announcement_seen","1");
+    document.querySelectorAll(".announcement-badge,#announcementFloatBadge").forEach(x=>x.style.display="none");
+  }
+  function close(){
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden","true");
+    document.body.classList.remove("announcement-open");
+  }
+  [navBtn,floatBtn].forEach(b=>b&&b.addEventListener("click",open));
+  closeBtn&&closeBtn.addEventListener("click",close);
+  modal.querySelectorAll("[data-close-announcement]").forEach(x=>x.addEventListener("click",close));
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")close()});
+  if(localStorage.getItem("serenity_announcement_seen")==="1"){
+    document.querySelectorAll(".announcement-badge,#announcementFloatBadge").forEach(x=>x.style.display="none");
+  }
+  window.addEventListener("serenity-announcements-updated",render);
+})();

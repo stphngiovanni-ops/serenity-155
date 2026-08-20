@@ -29,7 +29,7 @@
   <div id="adminView" class="admin-shell" hidden>
     <div class="admin-top">
       <div>
-        <p class="eyebrow">CONTENT MANAGEMENT</p><span class="version-badge">ONLINE V10.7</span>
+        <p class="eyebrow">CONTENT MANAGEMENT</p><span class="version-badge">ONLINE V10.9</span>
         <h1>SERENITY <span>ADMIN</span></h1>
       </div>
       <div class="admin-actions">
@@ -270,5 +270,27 @@
 
   <script src="cloud-sync.js"></script>
   <script src="admin.js"></script>
+
+  <!-- V10.9 ANNOUNCEMENT CENTER -->
+  <button id="announcementFloatBtn" class="announcement-float-btn" type="button" aria-label="Open announcements">
+    <span class="announcement-speaker">!</span>
+    <span>ANNOUNCEMENT</span>
+    <i id="announcementFloatBadge">NEW</i>
+  </button>
+
+  <div id="announcementModal" class="announcement-modal" aria-hidden="true">
+    <div class="announcement-backdrop" data-close-announcement></div>
+    <section class="announcement-panel" role="dialog" aria-modal="true" aria-labelledby="announcementTitle">
+      <header class="announcement-panel-head">
+        <div>
+          <small>SERENITY 155 // INFO CENTER</small>
+          <h2 id="announcementTitle">ANNOUNCEMENT</h2>
+        </div>
+        <button id="announcementCloseBtn" class="announcement-close" type="button" aria-label="Close">×</button>
+      </header>
+      <div id="announcementList" class="announcement-list"></div>
+    </section>
+  </div>
+
 </body>
 </html>

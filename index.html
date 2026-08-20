@@ -40,7 +40,8 @@
       <a href="#history">HISTORY</a>
       <a href="#sponsors">SPONSOR</a>
       <a href="#contact">CONTACT</a>
-      <a href="admin.html" class="admin-link">ADMIN</a>
+      <button class="nav-announcement" id="announcementNavBtn" type="button">ANNOUNCEMENT <span id="announcementBadge" class="announcement-badge">NEW</span></button>
+<a href="admin.html" class="admin-link">ADMIN</a>
     </nav>
   </header>
 
@@ -289,6 +290,28 @@
       <span id="musicLabel">MUSIC ON</span>
     </button>
     <input id="musicVolume" class="music-volume" type="range" min="0" max="100" value="22" aria-label="Music volume">
+  </div>
+
+
+  <!-- V10.9 ANNOUNCEMENT CENTER -->
+  <button id="announcementFloatBtn" class="announcement-float-btn" type="button" aria-label="Open announcements">
+    <span class="announcement-speaker">!</span>
+    <span>ANNOUNCEMENT</span>
+    <i id="announcementFloatBadge">NEW</i>
+  </button>
+
+  <div id="announcementModal" class="announcement-modal" aria-hidden="true">
+    <div class="announcement-backdrop" data-close-announcement></div>
+    <section class="announcement-panel" role="dialog" aria-modal="true" aria-labelledby="announcementTitle">
+      <header class="announcement-panel-head">
+        <div>
+          <small>SERENITY 155 // INFO CENTER</small>
+          <h2 id="announcementTitle">ANNOUNCEMENT</h2>
+        </div>
+        <button id="announcementCloseBtn" class="announcement-close" type="button" aria-label="Close">×</button>
+      </header>
+      <div id="announcementList" class="announcement-list"></div>
+    </section>
   </div>
 
 </body>

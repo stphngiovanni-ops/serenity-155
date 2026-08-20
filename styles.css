@@ -877,3 +877,25 @@ body{
   .music-toggle{padding:0 5px}
   #musicLabel{display:none}
 }
+
+
+/* ===== V10.9 ANNOUNCEMENT CENTER ===== */
+.nav-announcement{font:inherit;color:inherit;background:none;border:0;cursor:pointer;position:relative;padding:8px}
+.announcement-badge{position:absolute;top:-5px;right:-13px;background:#ff176f;color:#fff;font-size:7px;padding:3px 5px;border-radius:8px;box-shadow:0 0 12px rgba(255,23,111,.55)}
+.announcement-float-btn{position:fixed;left:18px;bottom:18px;z-index:9998;display:flex;align-items:center;gap:8px;border:1px solid rgba(255,35,126,.42);background:rgba(4,8,14,.9);color:#fff;padding:10px 13px;cursor:pointer;font-size:9px;font-weight:800;letter-spacing:1.4px;box-shadow:0 12px 35px rgba(0,0,0,.45),0 0 25px rgba(255,35,126,.08)}
+.announcement-speaker{display:grid;place-items:center;width:23px;height:23px;border:1px solid #22e7f2;color:#22e7f2;border-radius:50%}
+.announcement-float-btn i{font-style:normal;font-size:7px;background:#ff176f;padding:3px 5px;border-radius:7px}
+.announcement-modal{position:fixed;inset:0;z-index:10050;visibility:hidden;opacity:0;transition:.25s}
+.announcement-modal.is-open{visibility:visible;opacity:1}
+.announcement-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(8px)}
+.announcement-panel{position:absolute;top:50%;left:50%;transform:translate(-50%,-47%);width:min(780px,92vw);max-height:82vh;overflow:hidden;background:linear-gradient(145deg,#0a111b,#04070c);border:1px solid rgba(34,231,242,.22);box-shadow:0 30px 100px rgba(0,0,0,.75),0 0 45px rgba(34,231,242,.08);transition:.25s}
+.announcement-modal.is-open .announcement-panel{transform:translate(-50%,-50%)}
+.announcement-panel-head{display:flex;justify-content:space-between;align-items:center;padding:20px 22px;border-bottom:1px solid rgba(255,255,255,.08);background:linear-gradient(90deg,rgba(255,23,111,.07),transparent,rgba(34,231,242,.07))}
+.announcement-panel-head small{font-size:8px;letter-spacing:2px;color:#657586}.announcement-panel-head h2{margin:4px 0 0;font-size:25px}.announcement-close{width:38px;height:38px;border:1px solid rgba(255,255,255,.12);background:#080d13;color:#fff;font-size:24px;cursor:pointer}
+.announcement-list{padding:18px;overflow:auto;max-height:calc(82vh - 82px);display:grid;gap:12px}
+.announcement-card{position:relative;padding:18px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(145deg,rgba(13,23,34,.92),rgba(6,11,17,.92));clip-path:polygon(0 0,calc(100% - 13px) 0,100% 13px,100% 100%,13px 100%,0 calc(100% - 13px))}
+.announcement-card.is-pinned{border-color:rgba(255,23,111,.3);box-shadow:inset 3px 0 #ff176f}.announcement-card h3{margin:8px 0;font-size:19px}.announcement-card p{margin:0;color:#aab5c1;line-height:1.65;white-space:pre-line}
+.announcement-meta{display:flex;align-items:center;gap:8px;font-size:8px;letter-spacing:1.2px;color:#71808d}.announcement-category{color:#22e7f2;border:1px solid rgba(34,231,242,.25);padding:4px 6px}.announcement-meta b{color:#ff438c}.announcement-empty{text-align:center;padding:45px;color:#74818c}
+body.announcement-open{overflow:hidden}
+.announcement-admin-card{margin-top:24px}.announcement-admin-form{display:grid;grid-template-columns:1.4fr .7fr .7fr;gap:12px}.announcement-admin-form label{display:grid;gap:6px}.announcement-admin-form input,.announcement-admin-form select,.announcement-admin-form textarea{width:100%;box-sizing:border-box}.announcement-message-field{grid-column:1/-1}.announcement-admin-actions{grid-column:1/-1;display:flex;gap:10px}.announcement-admin-list{display:grid;gap:10px;margin-top:20px}.announcement-admin-item{display:flex;justify-content:space-between;gap:20px;padding:15px;border:1px solid rgba(255,255,255,.08);background:#070c12}.announcement-admin-item h3{margin:6px 0}.announcement-admin-item p{color:#8d9aa6}.announcement-admin-item span{color:#22e7f2}.announcement-admin-item b{color:#ff438c}.announcement-admin-item em{color:#e8b04c}.announcement-item-actions{display:flex;gap:7px;align-items:flex-start}.announcement-item-actions button{cursor:pointer;background:#0c131c;border:1px solid rgba(255,255,255,.12);color:#fff;padding:7px 9px}
+@media(max-width:720px){.announcement-float-btn{left:10px;bottom:10px}.announcement-float-btn>span:nth-child(2){display:none}.announcement-admin-form{grid-template-columns:1fr}.announcement-message-field,.announcement-admin-actions{grid-column:auto}.announcement-admin-item{flex-direction:column}.nav-announcement{font-size:12px}}

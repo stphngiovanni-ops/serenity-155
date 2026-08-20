@@ -280,3 +280,33 @@ function renderRoster(targetId, players, groupName){
     if(e.key==="Escape"&&!modal.hidden)closeGallery();
   });
 })();
+
+
+// ===== V10.9 ANNOUNCEMENTS =====
+(function(){
+  const KEY = "serenity_announcements_v109";
+  const defaults = [
+    {
+      id: "welcome-v109",
+      title: "WELCOME TO SERENITY 155",
+      category: "TEAM",
+      date: "2026-08-20",
+      message: "Selamat datang di official website SQUAD SERENITY 155. Pantau roster, achievement, jadwal pertandingan, match history, sponsor, dan informasi terbaru kami di sini.",
+      pinned: true,
+      active: true
+    }
+  ];
+  window.SerenityAnnouncements = {
+    get(){
+      try {
+        const raw = localStorage.getItem(KEY);
+        return raw ? JSON.parse(raw) : defaults;
+      } catch(e){ return defaults; }
+    },
+    save(items){
+      localStorage.setItem(KEY, JSON.stringify(items || []));
+      window.dispatchEvent(new CustomEvent("serenity-announcements-updated"));
+    },
+    defaults
+  };
+})();
