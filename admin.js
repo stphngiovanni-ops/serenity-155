@@ -322,17 +322,44 @@ function editMatch(i){
   window.scrollTo({top:$("matchDate").getBoundingClientRect().top+window.scrollY-120,behavior:"smooth"});
 }
 function featureMatch(i){data.matches.forEach((m,idx)=>m.featured=idx===i);renderLists()}
-function saveAll(){
+async function saveAll(){
   data.about1=$("about1").value;data.about2=$("about2").value;
   data.contact={email:$("email").value,instagram:$("instagram").value,youtube:$("youtube").value};
   try{
     saveSilent();
-    $("saveStatus").textContent="Tersimpan di perangkat ✓";
-  }catch(e){$("saveStatus").textContent="Penyimpanan browser penuh. Gunakan gambar lebih kecil."}
-  setTimeout(()=>$("saveStatus").textContent="",2400);
+    await serenityAdminCloudSave(data,"serenity155");
+    $("saveStatus").textContent="Tersimpan ONLINE ✓";
+  }catch(e){
+    $("saveStatus").textContent="Cloud gagal: "+e.message;
+  }
+  setTimeout(()=>$("saveStatus").textContent="",3500);
 }
+
 function resetAll(){if(confirm("Reset seluruh data ke default?")){data=cloneDefault();saveSilent();fillForm();renderLists();resetMatchForm();$("saveStatus").textContent="Data direset."}}
 
+async function migrateLocalToCloud(){
+  const status=$("cloudStatus");
+  try{
+    const raw=localStorage.getItem("serenity155Data");
+    if(!raw){status.textContent="Tidak ditemukan data lama di browser ini.";return}
+    const local=migrate(JSON.parse(raw));
+    status.textContent="Mengirim data lama ke online...";
+    await serenityAdminCloudSave(local,"serenity155");
+    data=local;fillForm();renderLists();
+    status.textContent="BERHASIL ✓ Data lama sudah online.";
+  }catch(e){status.textContent="Migrasi gagal: "+e.message}
+}
+async function loadCloudToAdmin(){
+  const status=$("cloudStatus");
+  try{
+    status.textContent="Mengambil data online...";
+    const cloud=await serenityCloudLoad();
+    if(!cloud){status.textContent="Database online masih kosong.";return}
+    localStorage.setItem("serenity155Data",JSON.stringify(cloud));
+    data=migrate(cloud);fillForm();renderLists();
+    status.textContent="Data online berhasil dimuat ✓";
+  }catch(e){status.textContent="Gagal: "+e.message}
+}
 document.addEventListener("DOMContentLoaded",()=>{
   $("cropZoom").addEventListener("input",e=>{cropState.zoom=Number(e.target.value);drawCrop()});
   $("cropX").addEventListener("input",e=>{cropState.x=Number(e.target.value);drawCrop()});
@@ -344,6 +371,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   $("cropModal").querySelector(".crop-backdrop").addEventListener("click",()=>closeCropEditor(""));
   document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("cropModal").hidden)closeCropEditor("")});
 
+  $("migrateLocalToCloud").addEventListener("click",migrateLocalToCloud);$("loadCloudToAdmin").addEventListener("click",loadCloudToAdmin);
   $("loginBtn").addEventListener("click",login);$("loginPass").addEventListener("keydown",e=>{if(e.key==="Enter")login()});
   $("logoutBtn").addEventListener("click",()=>{try{sessionStorage.removeItem("serenity155Admin")}catch(e){}location.reload()});
   $("addPlayer").addEventListener("click",addPlayer);$("addAchievement").addEventListener("click",addAchievement);$("addSponsor").addEventListener("click",addSponsor);

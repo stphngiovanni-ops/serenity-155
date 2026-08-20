@@ -18,3 +18,14 @@ async function serenityCloudSave(data,accessToken){
   if(!r.ok)throw new Error("Cloud save gagal: "+r.status);
   return true;
 }
+
+async function serenityAdminCloudSave(data,password){
+  const r=await fetch(SERENITY_SUPABASE_URL+"/functions/v1/serenity-admin-save",{
+    method:"POST",
+    headers:{"Content-Type":"application/json","apikey":SERENITY_SUPABASE_KEY},
+    body:JSON.stringify({password,data})
+  });
+  const out=await r.json().catch(()=>({}));
+  if(!r.ok) throw new Error(out.error||("HTTP "+r.status));
+  return out;
+}
