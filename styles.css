@@ -675,3 +675,147 @@ body::before{
   body::before,body::after{display:none}
   .section,.dark-section,.roster-section,.matches-section,.contact-section{backdrop-filter:none}
 }
+
+/* ===== V10.6 OBVIOUS ESPORTS BACKGROUND ===== */
+body{
+  background:#02050a !important;
+}
+.esports-bg{
+  z-index:-10 !important;
+  opacity:1 !important;
+  background:
+    radial-gradient(circle at 78% 18%,rgba(0,224,255,.22),transparent 26%),
+    radial-gradient(circle at 14% 58%,rgba(255,0,102,.20),transparent 30%),
+    linear-gradient(135deg,#02050a 0%,#07101a 44%,#02050a 100%) !important;
+}
+.esports-bg::before{
+  content:"SERENITY 155";
+  position:absolute;
+  left:-2vw;
+  top:36vh;
+  font-family:"Anton",sans-serif;
+  font-size:clamp(110px,19vw,330px);
+  line-height:.8;
+  letter-spacing:-5px;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(34,231,242,.07);
+  transform:rotate(-7deg);
+  white-space:nowrap;
+}
+.esports-bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(115deg,transparent 0 19%,rgba(255,10,108,.08) 19% 31%,transparent 31% 100%),
+    linear-gradient(70deg,transparent 0 67%,rgba(34,231,242,.085) 67% 80%,transparent 80% 100%),
+    repeating-linear-gradient(90deg,transparent 0 95px,rgba(34,231,242,.025) 96px),
+    repeating-linear-gradient(0deg,transparent 0 95px,rgba(255,255,255,.018) 96px);
+  animation:bgShift 14s ease-in-out infinite alternate;
+}
+.bg-grid{
+  opacity:.82 !important;
+  background-size:44px 44px !important;
+}
+.bg-orb{opacity:.25 !important}
+.orb-cyan{width:620px!important;height:620px!important;right:-8%!important;top:4%!important}
+.orb-pink{width:520px!important;height:520px!important;left:-12%!important;top:44%!important}
+.bg-beam{opacity:.38!important;height:3px!important}
+.bg-scanlines{opacity:.09!important}
+
+/* Hero gets an unmistakable esports angular backdrop */
+.esports-hero{
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(90deg,rgba(2,5,10,.92) 0%,rgba(2,5,10,.48) 47%,rgba(2,5,10,.22) 72%,rgba(2,5,10,.76) 100%),
+    radial-gradient(circle at 75% 45%,rgba(0,224,255,.22),transparent 32%),
+    radial-gradient(circle at 18% 68%,rgba(255,0,102,.18),transparent 28%) !important;
+}
+.esports-hero .hero-grid{opacity:.82!important}
+.esports-hero::before{
+  background:
+    linear-gradient(116deg,transparent 0 56%,rgba(34,231,242,.08) 56% 69%,transparent 69%),
+    linear-gradient(64deg,transparent 0 23%,rgba(255,10,108,.07) 23% 34%,transparent 34%) !important;
+}
+.esports-hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,transparent 0 7%,rgba(255,10,108,.18) 7% 7.15%,transparent 7.15% 92%,rgba(34,231,242,.16) 92% 92.15%,transparent 92.15%),
+    linear-gradient(0deg,transparent 0 14%,rgba(34,231,242,.12) 14% 14.1%,transparent 14.1%);
+  opacity:1!important;
+}
+
+/* Section backgrounds are visibly different */
+#roster{
+  background:
+    linear-gradient(180deg,rgba(3,7,13,.72),rgba(4,9,16,.82)),
+    radial-gradient(circle at 88% 35%,rgba(34,231,242,.15),transparent 30%),
+    radial-gradient(circle at 7% 60%,rgba(255,10,108,.12),transparent 30%) !important;
+}
+#achievement{
+  background:
+    linear-gradient(180deg,rgba(5,8,14,.78),rgba(3,6,11,.86)),
+    radial-gradient(circle at 20% 30%,rgba(255,10,108,.13),transparent 27%),
+    radial-gradient(circle at 78% 70%,rgba(34,231,242,.12),transparent 30%) !important;
+}
+#matches{
+  background:
+    linear-gradient(180deg,rgba(2,7,13,.76),rgba(2,5,9,.90)),
+    radial-gradient(circle at 50% 30%,rgba(34,231,242,.18),transparent 34%) !important;
+}
+#sponsors{
+  background:
+    linear-gradient(180deg,rgba(4,8,13,.80),rgba(3,6,10,.88)),
+    linear-gradient(110deg,rgba(255,10,108,.07),transparent 32%,transparent 68%,rgba(34,231,242,.08)) !important;
+}
+#contact{
+  background:
+    radial-gradient(circle at 50% 50%,rgba(34,231,242,.15),transparent 38%),
+    linear-gradient(180deg,rgba(2,5,9,.80),rgba(2,4,8,.94)) !important;
+}
+
+/* Neon frame accents around sections */
+.section{
+  border-top:1px solid rgba(34,231,242,.07);
+}
+.section:nth-of-type(even){
+  border-top-color:rgba(255,10,108,.08);
+}
+
+/* Stronger player cards */
+.player-card{
+  border:1px solid rgba(34,231,242,.16)!important;
+  box-shadow:0 22px 60px rgba(0,0,0,.55),0 0 34px rgba(34,231,242,.04)!important;
+}
+.player-card:nth-child(odd){
+  border-color:rgba(255,10,108,.16)!important;
+}
+
+/* visible cyber diagonal decoration */
+.roster-group::before{
+  content:"";
+  position:absolute;
+  right:-3%;
+  top:4%;
+  width:28%;
+  height:70%;
+  opacity:.16;
+  pointer-events:none;
+  background:repeating-linear-gradient(135deg,rgba(34,231,242,.4) 0 1px,transparent 1px 16px);
+  clip-path:polygon(35% 0,100% 0,65% 100%,0 100%);
+}
+.roster-group{position:relative}
+
+@keyframes bgShift{
+  from{transform:translate3d(-1.5%,0,0)}
+  to{transform:translate3d(1.5%,1%,0)}
+}
+@media(max-width:700px){
+  .esports-bg::before{font-size:34vw;top:48vh}
+  .bg-orb{opacity:.18!important}
+  .roster-group::before{display:none}
+}
