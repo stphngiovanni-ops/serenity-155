@@ -278,5 +278,18 @@
   const s=document.createElement("script");s.src="site-data.js";document.body.appendChild(s);
 })();
 </script>
+
+  <!-- V10.8 SERENITY BACKSOUND -->
+  <audio id="serenityBgMusic" loop preload="metadata">
+    <source src="./serenity-backsound.mpeg" type="audio/mpeg">
+  </audio>
+  <div class="music-control" id="musicControl">
+    <button type="button" id="musicToggle" class="music-toggle" aria-label="Toggle background music">
+      <span id="musicIcon">♪</span>
+      <span id="musicLabel">MUSIC ON</span>
+    </button>
+    <input id="musicVolume" class="music-volume" type="range" min="0" max="100" value="22" aria-label="Music volume">
+  </div>
+
 </body>
 </html>
