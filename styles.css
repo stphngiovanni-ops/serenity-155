@@ -520,3 +520,158 @@ body{background:#03050a;position:relative}
 .btn{position:relative;overflow:hidden}.btn::after{content:"";position:absolute;top:0;bottom:0;width:60px;left:-80px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transform:skewX(-18deg);transition:.45s}.btn:hover::after{left:120%}
 @keyframes gridDrift{from{background-position:0 0,0 0}to{background-position:0 52px,52px 0}}@keyframes scanMove{from{background-position:0 0}to{background-position:0 120px}}@keyframes orbFloat{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(24px,-20px,0) scale(1.08)}}@keyframes particleRise{0%{transform:translateY(110vh);opacity:0}10%{opacity:.7}90%{opacity:.25}100%{transform:translateY(-15vh);opacity:0}}@keyframes spinReverse{to{transform:rotate(-360deg)}}
 @media(max-width:820px){.hero-hud,.hero-corner{display:none}.bg-grid{opacity:.3}.section::before{display:none}.hero-logo-wrap::after{font-size:7px;letter-spacing:2px}}
+
+/* ===== V10.5 STRONG ESPORTS BACKGROUND FIX ===== */
+body{
+  background:
+    radial-gradient(circle at 18% 18%,rgba(255,10,108,.13),transparent 28%),
+    radial-gradient(circle at 82% 22%,rgba(34,231,242,.15),transparent 30%),
+    #020409 !important;
+}
+
+/* Make sections semi-transparent so global esports background is actually visible */
+.section,
+.roster-section,
+.matches-section,
+.contact-section{
+  background:rgba(3,6,10,.64) !important;
+  backdrop-filter:blur(2px);
+}
+.dark-section{
+  background:linear-gradient(180deg,rgba(5,9,14,.76),rgba(2,5,9,.82)) !important;
+}
+
+/* Strong cyber pattern behind all sections */
+.section::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    linear-gradient(135deg,transparent 0 46%,rgba(34,231,242,.055) 46.2% 46.7%,transparent 47% 100%),
+    linear-gradient(45deg,transparent 0 67%,rgba(255,10,108,.045) 67.2% 67.8%,transparent 68% 100%),
+    repeating-linear-gradient(90deg,transparent 0 79px,rgba(255,255,255,.018) 80px);
+  opacity:.9;
+}
+
+/* Large visible tactical shapes */
+#roster::before,
+#achievement::before,
+#matches::before,
+#sponsors::before,
+#contact::before{
+  position:absolute;
+  font-size:9px;
+  letter-spacing:3px;
+  color:#52616f;
+  z-index:1;
+}
+#roster{
+  background:
+    radial-gradient(circle at 8% 32%,rgba(255,10,108,.12),transparent 24%),
+    radial-gradient(circle at 94% 62%,rgba(34,231,242,.12),transparent 28%),
+    rgba(3,6,10,.68) !important;
+}
+#roster > *{position:relative;z-index:2}
+#roster::after{
+  background:
+    linear-gradient(105deg,transparent 0 16%,rgba(255,10,108,.035) 16% 29%,transparent 29% 100%),
+    linear-gradient(75deg,transparent 0 73%,rgba(34,231,242,.04) 73% 86%,transparent 86% 100%),
+    repeating-linear-gradient(0deg,transparent 0 48px,rgba(34,231,242,.018) 49px);
+}
+
+#achievement{
+  background:
+    radial-gradient(circle at 75% 25%,rgba(255,10,108,.10),transparent 27%),
+    radial-gradient(circle at 20% 78%,rgba(34,231,242,.10),transparent 26%),
+    rgba(5,9,14,.73) !important;
+}
+#matches{
+  background:
+    radial-gradient(circle at 50% 30%,rgba(34,231,242,.13),transparent 28%),
+    linear-gradient(180deg,rgba(3,6,11,.74),rgba(2,4,8,.84)) !important;
+}
+#sponsors{
+  background:
+    radial-gradient(circle at 15% 50%,rgba(255,10,108,.10),transparent 25%),
+    radial-gradient(circle at 85% 50%,rgba(34,231,242,.10),transparent 25%),
+    rgba(4,8,13,.78) !important;
+}
+#contact{
+  background:
+    radial-gradient(circle at 50% 50%,rgba(34,231,242,.11),transparent 35%),
+    rgba(3,6,10,.72) !important;
+}
+
+/* Visible moving HUD rails on page edges */
+body::after{
+  content:"";
+  position:fixed;
+  left:12px;
+  top:110px;
+  bottom:28px;
+  width:2px;
+  z-index:-5;
+  background:linear-gradient(180deg,transparent,#22e7f2 18%,transparent 48%,#ff0a6c 72%,transparent);
+  box-shadow:0 0 18px rgba(34,231,242,.28);
+  opacity:.55;
+}
+body::before{
+  content:"";
+  position:fixed;
+  right:12px;
+  top:150px;
+  bottom:50px;
+  width:1px;
+  z-index:-5;
+  background:linear-gradient(180deg,transparent,#ff0a6c 28%,transparent 58%,#22e7f2 82%,transparent);
+  opacity:.45;
+}
+
+/* stronger hero */
+.esports-hero{
+  background:
+    linear-gradient(90deg,rgba(2,4,8,.82),rgba(2,4,8,.18) 52%,rgba(2,4,8,.72)),
+    radial-gradient(circle at 73% 48%,rgba(34,231,242,.18),transparent 26%),
+    radial-gradient(circle at 17% 62%,rgba(255,10,108,.14),transparent 22%) !important;
+}
+.esports-hero .hero-grid{
+  opacity:.7;
+}
+.esports-hero::after{
+  opacity:.6 !important;
+}
+
+/* animated diagonal radar sweep */
+.esports-bg::after{
+  content:"";
+  position:absolute;
+  width:160vw;
+  height:22vh;
+  left:-30vw;
+  top:38%;
+  background:linear-gradient(90deg,transparent,rgba(34,231,242,.055),rgba(255,10,108,.04),transparent);
+  transform:rotate(-11deg);
+  filter:blur(12px);
+  animation:radarSweep 9s ease-in-out infinite;
+}
+@keyframes radarSweep{
+  0%,100%{transform:translateY(-120px) rotate(-11deg);opacity:.2}
+  50%{transform:translateY(120px) rotate(-11deg);opacity:.8}
+}
+
+/* Cards contrast so background and cards both read clearly */
+.player-card,
+.match-card,
+.achievement-preview-card,
+.sponsor-grid > div,
+.contact-box{
+  background:linear-gradient(145deg,rgba(12,22,32,.92),rgba(5,10,16,.92)) !important;
+  border-color:rgba(34,231,242,.12) !important;
+}
+
+@media(max-width:700px){
+  body::before,body::after{display:none}
+  .section,.dark-section,.roster-section,.matches-section,.contact-section{backdrop-filter:none}
+}
