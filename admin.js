@@ -130,8 +130,15 @@ function login(){if(($("loginUser").value||"").trim()==="admin"&&($("loginPass")
 async function showAdmin(){
   $("loginView").hidden=true;$("loginView").style.display="none";$("adminView").hidden=false;$("adminView").style.display="block";
   const cloud=await serenityCloudLoad();
-  if(cloud){try{localStorage.setItem("serenity155Data",JSON.stringify(cloud))}catch(e){}}
-  loadData();fillForm();renderLists();
+  if(cloud){
+    data=migrate(cloud);
+    try{localStorage.setItem("serenity155Data",JSON.stringify(cloud))}catch(e){
+      try{localStorage.setItem("serenity155Data",JSON.stringify(makeLightLocalCopy(cloud)))}catch(_){}
+    }
+  }else{
+    loadData();
+  }
+  fillForm();renderLists();
 }
 function fillForm(){
   $("about1").value=data.about1||"";$("about2").value=data.about2||"";
@@ -196,7 +203,45 @@ function getRoster(group){
   if(!Array.isArray(data.warRoster)) data.warRoster=[];
   return group==="war"?data.warRoster:data.competitiveRoster;
 }
-function saveSilent(){localStorage.setItem("serenity155Data",JSON.stringify(data))}
+let cloudSaveTimer=null;
+function makeLightLocalCopy(obj){
+  const copy=JSON.parse(JSON.stringify(obj));
+  const strip=v=>{
+    if(!v||typeof v!=="object")return;
+    for(const k of Object.keys(v)){
+      const x=v[k];
+      if(typeof x==="string" && x.startsWith("data:image/")) v[k]="";
+      else if(x&&typeof x==="object") strip(x);
+    }
+  };
+  strip(copy);
+  return copy;
+}
+function scheduleCloudSave(){
+  clearTimeout(cloudSaveTimer);
+  cloudSaveTimer=setTimeout(async()=>{
+    try{
+      await serenityAdminCloudSave(data,"serenity155");
+      const s=document.getElementById("saveStatus");
+      if(s)s.textContent="Tersimpan ONLINE ✓";
+    }catch(e){
+      const s=document.getElementById("saveStatus");
+      if(s)s.textContent="Cloud gagal: "+e.message;
+    }
+  },500);
+}
+function saveSilent(){
+  try{
+    localStorage.setItem("serenity155Data",JSON.stringify(data));
+  }catch(e){
+    if(e && (e.name==="QuotaExceededError" || String(e.message).includes("quota"))){
+      try{
+        localStorage.setItem("serenity155Data",JSON.stringify(makeLightLocalCopy(data)));
+      }catch(_){}
+    }else{throw e}
+  }
+  scheduleCloudSave();
+}
 async function addPlayer(){
   const name=$("playerName").value.trim();
   if(!name){
@@ -334,8 +379,10 @@ async function saveAll(){
   data.about1=$("about1").value;data.about2=$("about2").value;
   data.contact={email:$("email").value,instagram:$("instagram").value,youtube:$("youtube").value};
   try{
-    saveSilent();
     await serenityAdminCloudSave(data,"serenity155");
+    try{localStorage.setItem("serenity155Data",JSON.stringify(data))}catch(e){
+      try{localStorage.setItem("serenity155Data",JSON.stringify(makeLightLocalCopy(data)))}catch(_){}
+    }
     $("saveStatus").textContent="Tersimpan ONLINE ✓";
   }catch(e){
     $("saveStatus").textContent="Cloud gagal: "+e.message;
@@ -363,8 +410,11 @@ async function loadCloudToAdmin(){
     status.textContent="Mengambil data online...";
     const cloud=await serenityCloudLoad();
     if(!cloud){status.textContent="Database online masih kosong.";return}
-    localStorage.setItem("serenity155Data",JSON.stringify(cloud));
-    data=migrate(cloud);fillForm();renderLists();
+    data=migrate(cloud);
+    try{localStorage.setItem("serenity155Data",JSON.stringify(cloud))}catch(e){
+      try{localStorage.setItem("serenity155Data",JSON.stringify(makeLightLocalCopy(cloud)))}catch(_){}
+    }
+    fillForm();renderLists();
     status.textContent="Data online berhasil dimuat ✓";
   }catch(e){status.textContent="Gagal: "+e.message}
 }
@@ -478,7 +528,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
   q("announcementAdminImage").addEventListener("change",async e=>{
     const f=e.target.files?.[0]; if(!f)return;
-    const cropped=await imageToDataURL(f,1280,720,.88);
+    const cropped=await imageToDataURL(f,1280,720,.72);
     if(cropped){
       pendingImage=cropped;
       q("announcementAdminImagePreview").src=cropped;
@@ -539,7 +589,7 @@ document.addEventListener("DOMContentLoaded",function(){
     const input=e.target.closest("[data-ann-change-image]");
     if(!input)return;
     const f=input.files?.[0];if(!f)return;
-    const cropped=await imageToDataURL(f,1280,720,.88);
+    const cropped=await imageToDataURL(f,1280,720,.72);
     if(cropped){
       const rows=get(),a=rows.find(x=>x.id===input.dataset.annChangeImage);
       if(a){a.image=cropped;save(rows);render()}
