@@ -29,7 +29,7 @@
   <div id="adminView" class="admin-shell" hidden>
     <div class="admin-top">
       <div>
-        <p class="eyebrow">CONTENT MANAGEMENT</p>
+        <p class="eyebrow">CONTENT MANAGEMENT</p><span class="version-badge">ONLINE V10.1</span>
         <h1>SERENITY <span>ADMIN</span></h1>
       </div>
       <div class="admin-actions">
@@ -43,6 +43,20 @@
     </div>
 
     <div class="admin-grid">
+
+    <section class="admin-card full cloud-migration-card">
+      <h2>ONLINE DATA / MIGRATION</h2>
+      <p class="hint">
+        Gunakan browser yang masih menyimpan data lama. Tombol MIGRATE akan mengirim roster,
+        foto, achievement, match, sponsor, dan contact dari browser ini ke database online.
+      </p>
+      <div class="admin-actions">
+        <button class="btn primary" id="migrateLocalToCloud" type="button">MIGRATE DATA LAMA KE ONLINE</button>
+        <button class="small-btn" id="loadCloudToAdmin" type="button">AMBIL DATA ONLINE</button>
+      </div>
+      <p id="cloudStatus" class="hint"></p>
+    </section>
+
       <section class="admin-card full">
         <h2>ABOUT SERENITY</h2>
         <div class="form-grid">

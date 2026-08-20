@@ -487,3 +487,8 @@ input:focus,textarea:focus,select:focus{border-color:var(--cyan);box-shadow:0 0 
   .achievement-showcase-count{border-left:0;border-top:1px solid var(--line)}
   .achievement-gallery-grid,.achievement-preview-grid{grid-template-columns:1fr}
 }
+
+.version-badge{
+  display:inline-block;margin-top:8px;padding:4px 8px;border:1px solid rgba(40,231,240,.35);
+  color:#28e7f0;font-size:10px;letter-spacing:1.5px
+}
