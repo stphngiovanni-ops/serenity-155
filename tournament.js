@@ -32,10 +32,21 @@ async function loadParticipants(id){
 $("switchAuth").onclick=()=>{authMode=authMode==="login"?"register":"login";$("authTitle").textContent=authMode==="login"?"LOGIN":"REGISTER";$("authSubmit").textContent=authMode==="login"?"LOGIN":"CREATE ACCOUNT";$("switchAuth").textContent=authMode==="login"?"Belum punya akun? REGISTER":"Sudah punya akun? LOGIN";$("authMsg").textContent=""};
 $("authForm").onsubmit=async e=>{e.preventDefault();$("authMsg").textContent="PROCESSING...";
  const email=$("authEmail").value.trim(),password=$("authPassword").value;
- let res=authMode==="login"?await sb.auth.signInWithPassword({email,password}):await sb.auth.signUp({email,password,options:{emailRedirectTo:location.origin+"/tournament.html"}});
- if(res.error){$("authMsg").textContent=res.error.message;return}
- if(authMode==="register"&&!res.data.session){$("authMsg").textContent="Akun dibuat. Cek email untuk konfirmasi, lalu LOGIN.";return}
- session=res.data.session;closeAll();await showDashboard();
+ let res;
+ if(authMode==="login"){
+   res=await sb.auth.signInWithPassword({email,password});
+   if(res.error){$("authMsg").textContent="LOGIN GAGAL: "+res.error.message;return}
+   session=res.data.session;closeAll();await showDashboard();return;
+ }
+ try{
+   const rr=await fetch(URL+"/functions/v1/serenity-tournament-auth",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email,password})});
+   const out=await rr.json().catch(()=>({}));
+   if(!rr.ok){$("authMsg").textContent=out.error||"Gagal membuat akun.";return}
+   $("authMsg").textContent="AKUN BERHASIL DIBUAT ✓ Sedang login...";
+   res=await sb.auth.signInWithPassword({email,password});
+   if(res.error){$("authMsg").textContent="Akun sudah dibuat. Klik LOGIN lalu masuk dengan email & password tadi.";authMode="login";$("authTitle").textContent="LOGIN";$("authSubmit").textContent="LOGIN";$("switchAuth").textContent="Belum punya akun? REGISTER";return}
+   session=res.data.session;closeAll();await showDashboard();
+ }catch(err){$("authMsg").textContent="REGISTER GAGAL: "+(err.message||err)}
 };
 $("logoutBtn").onclick=async()=>{await sb.auth.signOut();session=null;currentTeam=null;closeAll();$("accountBtn").textContent="LOGIN / REGISTER"};
 
