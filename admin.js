@@ -19,7 +19,7 @@ const DEFAULT_DATA={
   matchHistory:[],
   announcements:[{id:"welcome-v112",title:"WELCOME TO SERENITY 155",category:"TEAM",date:"2026-08-21",message:"Selamat datang di official website SQUAD SERENITY 155.",pinned:true,active:true,image:""}],
   sponsors:[{name:"NKJ",logo:""},{name:"AJ1",logo:""},{name:"2K",logo:""},{name:"PARTNER",logo:""}],
-  contact:{email:"serenitymei2025@example.com",instagram:"https://instagram.com/",youtube:"https://youtube.com/"}
+  contact:{email:"serenity155@example.com",instagram:"https://instagram.com/",youtube:"https://youtube.com/"}
 };
 const $=id=>document.getElementById(id),cloneDefault=()=>JSON.parse(JSON.stringify(DEFAULT_DATA));
 const SERENITY_MEDIA_ENDPOINT="https://vcmbthekmltociajzsdx.supabase.co/functions/v1/serenity-media";
@@ -137,7 +137,7 @@ function imageToDataURL(file,maxW=900,maxH=900,quality=.82){
   const mode=(maxW===1200&&maxH===850)?"achievement":(maxW===700&&maxH===700)?"logo":(maxW===1280&&maxH===720)?"announcement":"player";
   return openCropEditor(file,mode);
 }
-function login(){if(($("loginUser").value||"").trim()==="admin"&&($("loginPass").value||"")==="serenitymei2025"){try{sessionStorage.setItem("serenitymei2025Admin","1")}catch(e){}showAdmin()}else $("loginStatus").textContent="Username atau password salah."}
+function login(){if(($("loginUser").value||"").trim()==="admin"&&($("loginPass").value||"")==="serenitymei2025"){try{sessionStorage.setItem("serenity155Admin","1")}catch(e){}showAdmin()}else $("loginStatus").textContent="Username atau password salah."}
 
 async function mergeLegacyAnnouncementsIntoCloud(){
   try{
@@ -167,7 +167,7 @@ async function mergeLegacyAnnouncementsIntoCloud(){
       }
     }
     if(changed){
-      await serenityAdminCloudSave(data,"serenitymei2025");
+      await serenityAdminCloudSave(data,"serenity155");
       try{localStorage.setItem("serenity155Data",JSON.stringify(data))}catch(e){}
     }
     return changed;
@@ -292,8 +292,8 @@ function scheduleCloudSave(){
   clearTimeout(cloudSaveTimer);
   cloudSaveTimer=setTimeout(async()=>{
     try{
-      await migrateBase64ImagesToCloud(data,"serenitymei2025");
-      await serenityAdminCloudSave(data,"serenitymei2025");
+      await migrateBase64ImagesToCloud(data,"serenity155");
+      await serenityAdminCloudSave(data,"serenity155");
       const s=document.getElementById("saveStatus");
       if(s)s.textContent="Tersimpan ONLINE ✓";
     }catch(e){
@@ -451,8 +451,8 @@ async function saveAll(){
   data.about1=$("about1").value;data.about2=$("about2").value;
   data.contact={email:$("email").value,instagram:$("instagram").value,youtube:$("youtube").value};
   try{
-    await migrateBase64ImagesToCloud(data,"serenitymei2025");
-      await serenityAdminCloudSave(data,"serenitymei2025");
+    await migrateBase64ImagesToCloud(data,"serenity155");
+      await serenityAdminCloudSave(data,"serenity155");
     try{localStorage.setItem("serenity155Data",JSON.stringify(data))}catch(e){
       try{localStorage.setItem("serenity155Data",JSON.stringify(makeLightLocalCopy(data)))}catch(_){}
     }
@@ -472,8 +472,8 @@ async function migrateLocalToCloud(){
     if(!raw){status.textContent="Tidak ditemukan data lama di browser ini.";return}
     const local=migrate(JSON.parse(raw));
     status.textContent="Mengirim data lama ke online...";
-    await migrateBase64ImagesToCloud(local,"serenitymei2025-migrate");
-    await serenityAdminCloudSave(local,"serenitymei2025");
+    await migrateBase64ImagesToCloud(local,"serenity155-migrate");
+    await serenityAdminCloudSave(local,"serenity155");
     data=local;fillForm();renderLists();
     status.textContent="BERHASIL ✓ Data lama sudah online.";
   }catch(e){status.textContent="Migrasi gagal: "+e.message}
@@ -505,7 +505,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 
   $("migrateLocalToCloud").addEventListener("click",migrateLocalToCloud);$("loadCloudToAdmin").addEventListener("click",loadCloudToAdmin);
   $("loginBtn").addEventListener("click",login);$("loginPass").addEventListener("keydown",e=>{if(e.key==="Enter")login()});
-  $("logoutBtn").addEventListener("click",()=>{try{sessionStorage.removeItem("serenitymei2025Admin")}catch(e){}location.reload()});
+  $("logoutBtn").addEventListener("click",()=>{try{sessionStorage.removeItem("serenity155Admin")}catch(e){}location.reload()});
   $("addPlayer").addEventListener("click",addPlayer);$("addAchievement").addEventListener("click",addAchievement);$("addSponsor").addEventListener("click",addSponsor);
   $("saveMatch").addEventListener("click",saveMatch);$("cancelMatchEdit").addEventListener("click",resetMatchForm);$("saveHistory").addEventListener("click",saveHistory);$("cancelHistoryEdit").addEventListener("click",resetHistoryForm);
   $("saveAll").addEventListener("click",saveAll);$("resetAll").addEventListener("click",resetAll);
@@ -557,7 +557,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     else if(t.matches("[data-change-sponsor-logo]")){const cropped=await imageToDataURL(f,700,700,.88);if(cropped){data.sponsors[Number(t.dataset.changeSponsorLogo)].logo=cropped;try{saveSilent()}catch(e){};renderLists()}}
   });
 
-  try{if(sessionStorage.getItem("serenitymei2025Admin")==="1")showAdmin()}catch(e){}
+  try{if(sessionStorage.getItem("serenity155Admin")==="1")showAdmin()}catch(e){}
 });
 
 
@@ -711,7 +711,7 @@ document.addEventListener("DOMContentLoaded",()=>{
       }
       data.announcements=Array.from(byId.values());
       await migrateBase64ImagesToCloud(data,"announcement-legacy");
-      await serenityAdminCloudSave(data,"serenitymei2025");
+      await serenityAdminCloudSave(data,"serenity155");
       try{localStorage.setItem("serenity155Data",JSON.stringify(data))}catch(e){}
       if(window.refreshSerenityAnnouncementAdmin) window.refreshSerenityAnnouncementAdmin();
       if(status)status.textContent=`BERHASIL ✓ ${legacy.length} announcement lama sudah ONLINE`;
