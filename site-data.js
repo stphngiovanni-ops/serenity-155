@@ -30,6 +30,7 @@ const DEFAULT_DATA = {
     {date:"2026-09-12T20:00", opponent:"OPPONENT", game:"POINT BLANK", format:"BO3 / BO5", stream:"LIVE STREAM", status:"UPCOMING", logo:"", featured:true}
   ],
   matchHistory: [],
+  announcements:[{id:"welcome-v112",title:"WELCOME TO SERENITY 155",category:"TEAM",date:"2026-08-21",message:"Selamat datang di official website SQUAD SERENITY 155.",pinned:true,active:true,image:""}],
   sponsors:[{name:"NKJ",logo:""},{name:"AJ1",logo:""},{name:"2K",logo:""},{name:"PARTNER",logo:""}],
   contact:{email:"serenity155@example.com", instagram:"https://instagram.com/", youtube:"https://youtube.com/"}
 };
@@ -61,7 +62,8 @@ function migrateData(x){
     achievements:(x.achievements||DEFAULT_DATA.achievements).map(a=>({...a,photo:a.photo||""})),
     sponsors:(x.sponsors||DEFAULT_DATA.sponsors).map(s=>typeof s==="string"?{name:s,logo:""}:{name:s.name||"SPONSOR",logo:s.logo||""}),
     matches:(x.matches||DEFAULT_DATA.matches).map(m=>({...m,logo:m.logo||"",featured:!!m.featured,status:m.status||"UPCOMING"})),
-    matchHistory:(x.matchHistory||[]).map(h=>({...h,logo:h.logo||"",result:h.result||"WIN",ourScore:Number(h.ourScore||0),opponentScore:Number(h.opponentScore||0)}))
+    matchHistory:(x.matchHistory||[]).map(h=>({...h,logo:h.logo||"",result:h.result||"WIN",ourScore:Number(h.ourScore||0),opponentScore:Number(h.opponentScore||0)})),
+    announcements:(x.announcements||DEFAULT_DATA.announcements||[]).map(a=>({...a,image:a.image||"",active:a.active!==false,pinned:!!a.pinned}))
   };
 }
 function getSiteData(){

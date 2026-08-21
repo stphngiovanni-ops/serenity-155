@@ -184,20 +184,27 @@ if (!isNaN(matchDate)) {
 })();
 
 
-// ===== V10.9.1 ANNOUNCEMENT CENTER FIX =====
+// ===== V11.2 ANNOUNCEMENT CLOUD PUBLIC =====
 document.addEventListener("DOMContentLoaded", function(){
-  const KEY="serenity_announcements_v109";
-  const defaults=[{
-    id:"welcome-v109",title:"WELCOME TO SERENITY 155",category:"TEAM",date:"2026-08-20",
-    message:"Selamat datang di official website SQUAD SERENITY 155. Pantau roster, achievement, jadwal pertandingan, match history, sponsor, dan informasi terbaru kami di sini.",
-    pinned:true,active:true
-  }];
-  const getItems=()=>{try{const r=localStorage.getItem(KEY);return r?JSON.parse(r):defaults}catch(e){return defaults}};
   const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
   const modal=document.getElementById("announcementModal"),list=document.getElementById("announcementList");
   const navBtn=document.getElementById("announcementNavBtn"),floatBtn=document.getElementById("announcementFloatBtn");
   const closeBtn=document.getElementById("announcementCloseBtn");
   if(!modal||!list)return;
+
+  function getItems(){
+    const cloud=window.__SERENITY_CLOUD_DATA__;
+    if(cloud && Array.isArray(cloud.announcements)) return cloud.announcements;
+    if(window.SITE_DATA && Array.isArray(window.SITE_DATA.announcements)) return window.SITE_DATA.announcements;
+    try{
+      const main=JSON.parse(localStorage.getItem("serenity155Data")||"null");
+      if(main && Array.isArray(main.announcements)) return main.announcements;
+      const legacy=JSON.parse(localStorage.getItem("serenity_announcements_v109")||"null");
+      if(Array.isArray(legacy)) return legacy;
+    }catch(e){}
+    return [];
+  }
+
   function render(){
     const rows=getItems().filter(x=>x.active!==false).sort((a,b)=>(b.pinned===true)-(a.pinned===true)||String(b.date||"").localeCompare(String(a.date||"")));
     list.innerHTML=rows.length?rows.map(a=>`<article class="announcement-card ${a.pinned?'is-pinned':''}">
@@ -208,24 +215,25 @@ document.addEventListener("DOMContentLoaded", function(){
       </div>
     </article>`).join(""):'<div class="announcement-empty">Belum ada pengumuman aktif.</div>';
   }
-  function open(){render();modal.classList.add("is-open");modal.setAttribute("aria-hidden","false");document.body.classList.add("announcement-open");localStorage.setItem("serenity_announcement_seen","1");document.querySelectorAll(".announcement-badge,#announcementFloatBadge").forEach(x=>x.style.display="none")}
+
+  function open(){
+    render();modal.classList.add("is-open");modal.setAttribute("aria-hidden","false");
+    document.body.classList.add("announcement-open");
+    localStorage.setItem("serenity_announcement_seen","1");
+    document.querySelectorAll(".announcement-badge,#announcementFloatBadge").forEach(x=>x.style.display="none");
+  }
   function close(){modal.classList.remove("is-open");modal.setAttribute("aria-hidden","true");document.body.classList.remove("announcement-open")}
   if(navBtn)navBtn.addEventListener("click",open);
   if(floatBtn)floatBtn.addEventListener("click",open);
   if(closeBtn)closeBtn.addEventListener("click",close);
   modal.querySelectorAll("[data-close-announcement]").forEach(x=>x.addEventListener("click",close));
   list.addEventListener("click",e=>{
-    const btn=e.target.closest("[data-ann-image]");
-    if(!btn)return;
-    const a=getItems().find(x=>x.id===btn.dataset.annImage);
-    if(!a?.image)return;
-    const viewer=document.createElement("div");
-    viewer.className="announcement-image-viewer";
+    const btn=e.target.closest("[data-ann-image]");if(!btn)return;
+    const a=getItems().find(x=>x.id===btn.dataset.annImage);if(!a?.image)return;
+    const viewer=document.createElement("div");viewer.className="announcement-image-viewer";
     viewer.innerHTML=`<div class="announcement-image-viewer-backdrop"></div><div class="announcement-image-viewer-box"><button type="button" class="announcement-image-viewer-close">×</button><img src="${a.image}" alt="${esc(a.title||"Announcement")}"><h3>${esc(a.title||"ANNOUNCEMENT")}</h3></div>`;
     document.body.appendChild(viewer);
-    viewer.addEventListener("click",ev=>{
-      if(ev.target.classList.contains("announcement-image-viewer-backdrop")||ev.target.classList.contains("announcement-image-viewer-close"))viewer.remove();
-    });
+    viewer.addEventListener("click",ev=>{if(ev.target.classList.contains("announcement-image-viewer-backdrop")||ev.target.classList.contains("announcement-image-viewer-close"))viewer.remove()});
   });
   document.addEventListener("keydown",e=>{if(e.key==="Escape")close()});
   if(localStorage.getItem("serenity_announcement_seen")==="1")document.querySelectorAll(".announcement-badge,#announcementFloatBadge").forEach(x=>x.style.display="none");

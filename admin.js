@@ -17,6 +17,7 @@ const DEFAULT_DATA={
   ],
   matches:[{date:"2026-09-12T20:00",opponent:"OPPONENT",game:"POINT BLANK",format:"BO3 / BO5",stream:"LIVE STREAM",status:"UPCOMING",logo:"",featured:true}],
   matchHistory:[],
+  announcements:[{id:"welcome-v112",title:"WELCOME TO SERENITY 155",category:"TEAM",date:"2026-08-21",message:"Selamat datang di official website SQUAD SERENITY 155.",pinned:true,active:true,image:""}],
   sponsors:[{name:"NKJ",logo:""},{name:"AJ1",logo:""},{name:"2K",logo:""},{name:"PARTNER",logo:""}],
   contact:{email:"serenity155@example.com",instagram:"https://instagram.com/",youtube:"https://youtube.com/"}
 };
@@ -41,6 +42,7 @@ function migrate(x){
   x.warRoster=(x.warRoster||[]).slice(0,12).map(p=>({...p,photo:p.photo||""}));
   x.matches=(x.matches||[]).map(m=>({...m,logo:m.logo||"",status:m.status||"UPCOMING",featured:!!m.featured}));
   x.matchHistory=(x.matchHistory||[]).map(h=>({...h,logo:h.logo||"",result:h.result||"WIN",ourScore:Number(h.ourScore||0),opponentScore:Number(h.opponentScore||0)}));
+  x.announcements=(x.announcements||[]).map(a=>({...a,image:a.image||"",active:a.active!==false,pinned:!!a.pinned}));
   x.achievements=(x.achievements||[]).map(a=>({...a,photo:a.photo||""}));
   x.sponsors=(x.sponsors||[]).map(v=>typeof v==="string"?{name:v,logo:""}:{name:v.name||"SPONSOR",logo:v.logo||""});
   return x;
@@ -514,17 +516,25 @@ document.addEventListener("DOMContentLoaded",()=>{
 });
 
 
-
-// ===== V10.9.2 ANNOUNCEMENT IMAGE + CROP =====
+// ===== V11.2 ANNOUNCEMENT CLOUD SYNC =====
 document.addEventListener("DOMContentLoaded",function(){
-  const KEY="serenity_announcements_v109";
-  const defaults=[{id:"welcome-v109",title:"WELCOME TO SERENITY 155",category:"TEAM",date:"2026-08-20",message:"Selamat datang di official website SQUAD SERENITY 155.",pinned:true,active:true,image:""}];
-  const get=()=>{try{const r=localStorage.getItem(KEY);return r?JSON.parse(r):defaults}catch(e){return defaults}};
-  const save=x=>localStorage.setItem(KEY,JSON.stringify(x));
+  const LEGACY_KEY="serenity_announcements_v109";
   const q=id=>document.getElementById(id), list=q("announcementAdminList"), btn=q("announcementSave");
   if(!list||!btn)return;
   const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
   let pendingImage="";
+
+  // Migrate announcement lama dari Local Storage PC ke data cloud utama sekali.
+  try{
+    const legacy=JSON.parse(localStorage.getItem(LEGACY_KEY)||"null");
+    if((!data.announcements || !data.announcements.length) && Array.isArray(legacy) && legacy.length){
+      data.announcements=legacy.map(a=>({...a,image:a.image||"",active:a.active!==false,pinned:!!a.pinned}));
+      saveSilent();
+    }
+  }catch(e){}
+  if(!Array.isArray(data.announcements)) data.announcements=[];
+
+  function rows(){ return data.announcements; }
 
   function reset(){
     q("announcementEditId").value="";
@@ -540,30 +550,27 @@ document.addEventListener("DOMContentLoaded",function(){
   }
 
   function render(){
-    const rows=get();
-    list.innerHTML=rows.map(a=>`<div class="edit-row announcement-edit-row">
+    list.innerHTML=rows().map(a=>`<div class="edit-row announcement-edit-row">
       ${a.image?`<img class="announcement-admin-thumb" src="${a.image}" alt="">`:`<div class="announcement-admin-thumb empty">NO IMG</div>`}
-      <div><b>${esc(a.title)}</b><br><small>${esc(a.category)} • ${esc(a.date||"")} ${a.pinned?"• PINNED":""} ${a.active===false?"• NONAKTIF":""}</small><p>${esc(a.message||"")}</p>
+      <div><b>${esc(a.title||"")}</b><br><small>${esc(a.category||"INFO")} • ${esc(a.date||"")} ${a.pinned?"• PINNED":""} ${a.active===false?"• NONAKTIF":""}</small><p>${esc(a.message||"")}</p>
         <div class="image-tools">
           <label class="small-btn" style="cursor:pointer">GANTI FOTO<input type="file" accept="image/*" data-ann-change-image="${esc(a.id)}" hidden></label>
           ${a.image?`<button class="small-btn danger" type="button" data-ann-delete-image="${esc(a.id)}">HAPUS FOTO</button>`:""}
         </div>
       </div>
-      <div><button class="small-btn" data-ann-edit="${esc(a.id)}">EDIT</button> <button class="small-btn danger" data-ann-delete="${esc(a.id)}">HAPUS</button></div>
-    </div>`).join("");
+      <div><button class="small-btn" type="button" data-ann-edit="${esc(a.id)}">EDIT</button> <button class="small-btn danger" type="button" data-ann-delete="${esc(a.id)}">HAPUS</button></div>
+    </div>`).join("") || '<p class="hint">Belum ada pengumuman.</p>';
   }
 
   q("announcementAdminImage").addEventListener("change",async e=>{
     const f=e.target.files?.[0]; if(!f)return;
     const cropped=await imageToDataURL(f,1280,720,.72);
-    if(cropped){
-      try{ pendingImage=await uploadImageToCloud(cropped,"announcement"); }
-      catch(err){ alert("Upload foto announcement gagal: "+err.message); return; }
+    if(!cropped)return;
+    try{
+      pendingImage=await uploadImageToCloud(cropped,"announcement");
       q("announcementAdminImagePreview").src=pendingImage;
       q("announcementAdminImagePreview").hidden=false;
-    }else{
-      e.target.value="";
-    }
+    }catch(err){ alert("Upload foto announcement gagal: "+err.message); }
   });
 
   q("announcementClearImage").addEventListener("click",()=>{
@@ -573,8 +580,8 @@ document.addEventListener("DOMContentLoaded",function(){
   });
 
   btn.addEventListener("click",()=>{
-    const rows=get(),id=q("announcementEditId").value||"ann-"+Date.now();
-    const existing=rows.find(x=>x.id===id);
+    const id=q("announcementEditId").value||("ann-"+Date.now());
+    const existing=rows().find(x=>x.id===id);
     const item={
       id,
       title:q("announcementAdminTitle").value.trim(),
@@ -586,16 +593,20 @@ document.addEventListener("DOMContentLoaded",function(){
       image:pendingImage || existing?.image || ""
     };
     if(!item.title)return;
-    const i=rows.findIndex(x=>x.id===id);
-    if(i>=0)rows[i]=item;else rows.unshift(item);
-    save(rows);reset();render();
+    const i=rows().findIndex(x=>x.id===id);
+    if(i>=0)rows()[i]=item; else rows().unshift(item);
+    saveSilent();
+    reset();render();
+    $("saveStatus").textContent="Announcement tersimpan ONLINE ✓";
+    setTimeout(()=>$("saveStatus").textContent="",2400);
   });
 
-  list.addEventListener("click",async e=>{
-    const edit=e.target.closest("[data-ann-edit]"),del=e.target.closest("[data-ann-delete]");
+  list.addEventListener("click",e=>{
+    const edit=e.target.closest("[data-ann-edit]");
+    const del=e.target.closest("[data-ann-delete]");
     const delImg=e.target.closest("[data-ann-delete-image]");
     if(edit){
-      const a=get().find(x=>x.id===edit.dataset.annEdit);if(!a)return;
+      const a=rows().find(x=>x.id===edit.dataset.annEdit); if(!a)return;
       q("announcementEditId").value=a.id;
       q("announcementAdminTitle").value=a.title||"";
       q("announcementAdminCategory").value=a.category||"INFO";
@@ -606,25 +617,27 @@ document.addEventListener("DOMContentLoaded",function(){
       pendingImage=a.image||"";
       if(a.image){q("announcementAdminImagePreview").src=a.image;q("announcementAdminImagePreview").hidden=false}else q("announcementAdminImagePreview").hidden=true;
     }
-    if(del&&confirm("Hapus pengumuman ini?")){save(get().filter(x=>x.id!==del.dataset.annDelete));render()}
+    if(del && confirm("Hapus pengumuman ini?")){
+      data.announcements=rows().filter(x=>x.id!==del.dataset.annDelete);
+      saveSilent();render();
+    }
     if(delImg){
-      const rows=get(),a=rows.find(x=>x.id===delImg.dataset.annDeleteImage);
-      if(a){a.image="";save(rows);render()}
+      const a=rows().find(x=>x.id===delImg.dataset.annDeleteImage);
+      if(a){a.image="";saveSilent();render();}
     }
   });
 
   list.addEventListener("change",async e=>{
     const input=e.target.closest("[data-ann-change-image]");
     if(!input)return;
-    const f=input.files?.[0];if(!f)return;
+    const f=input.files?.[0]; if(!f)return;
     const cropped=await imageToDataURL(f,1280,720,.72);
-    if(cropped){
-      let url="";
-      try{ url=await uploadImageToCloud(cropped,"announcement"); }
-      catch(err){ alert("Upload foto announcement gagal: "+err.message); return; }
-      const rows=get(),a=rows.find(x=>x.id===input.dataset.annChangeImage);
-      if(a){a.image=url;save(rows);render()}
-    }
+    if(!cropped)return;
+    try{
+      const url=await uploadImageToCloud(cropped,"announcement");
+      const a=rows().find(x=>x.id===input.dataset.annChangeImage);
+      if(a){a.image=url;saveSilent();render();}
+    }catch(err){alert("Upload foto announcement gagal: "+err.message);}
   });
 
   q("announcementCancelEdit")?.addEventListener("click",reset);
