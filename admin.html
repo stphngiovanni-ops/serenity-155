@@ -121,6 +121,29 @@
         </div>
       </section>
 
+      
+
+      <section class="admin-card full" id="familyManagement">
+        <h2>FAMILY SERENITY GALLERY</h2>
+        <p class="hint">Upload foto kebersamaan FAMILY SERENITY. Foto akan tampil di halaman FAMILY pada website utama.</p>
+        <div class="form-grid">
+          <div><label>Tanggal / Tahun</label><input id="familyDate" placeholder="21 AGUSTUS 2026"></div>
+          <div><label>Judul Foto</label><input id="familyTitle" placeholder="KELUARGA BESAR SERENITY"></div>
+          <div class="full"><label>Caption</label><textarea id="familyCaption" placeholder="Cerita singkat momen FAMILY SERENITY..."></textarea></div>
+          <div class="full">
+            <label>Foto Family</label>
+            <input class="file-input" id="familyPhoto" type="file" accept="image/*">
+            <img id="familyPhotoPreview" class="image-preview" hidden alt="Preview Family Serenity">
+            <div class="image-tools"><button class="small-btn danger" id="clearFamilyPhoto" type="button">HAPUS PILIHAN FOTO</button></div>
+          </div>
+        </div>
+        <div class="admin-actions">
+          <button class="small-btn" id="addFamilyPhoto" type="button">+ TAMBAH FOTO FAMILY</button>
+          <a class="small-btn" href="family.html" target="_blank" style="text-decoration:none">LIHAT FAMILY WEBSITE</a>
+        </div>
+        <div id="familyAdminList" class="edit-list"></div>
+      </section>
+
       <section class="admin-card">
         <h2>ACHIEVEMENT GALLERY + FOTO</h2>
         <div class="form-grid">

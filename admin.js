@@ -10,6 +10,7 @@ const DEFAULT_DATA={
     {name:"DEMON",role:"DUAL / FLEX",detail:"PRESSURE • FLEX",photo:""}
   ],
   warRoster:[],
+  familyGallery:[],
   achievements:[
     {year:"2026",badge:"CHAMPION",title:"PBRS SEMARANG",desc:"Menjadi juara dan melanjutkan perjalanan kompetitif SERENITY ke level berikutnya.",photo:""},
     {year:"2026",badge:"QUALIFIED",title:"PBSB DIVISI 1",desc:"Lolos ke PBSB Divisi 1 dengan target berikutnya: melangkah menuju PBNC.",photo:""},
@@ -31,7 +32,7 @@ async function uploadImageToCloud(dataUrl,folder="uploads"){
   return j.url;
 }
 
-let data=cloneDefault(),pendingPlayerPhoto="",pendingAchPhoto="",pendingOpponentLogo="",editingMatchIndex=-1,editingPlayerGroup="",editingPlayerIndex=-1,pendingSponsorLogo="",pendingHistoryLogo="",editingHistoryIndex=-1;
+let data=cloneDefault(),pendingFamilyPhoto="",pendingPlayerPhoto="",pendingAchPhoto="",pendingOpponentLogo="",editingMatchIndex=-1,editingPlayerGroup="",editingPlayerIndex=-1,pendingSponsorLogo="",pendingHistoryLogo="",editingHistoryIndex=-1;
 
 function migrate(x){
   if(!x)return cloneDefault();
@@ -40,6 +41,7 @@ function migrate(x){
   if(!x.matches&&x.match)x.matches=[{...x.match,status:"UPCOMING",logo:"",featured:true}];
   x.competitiveRoster=(x.competitiveRoster||[]).slice(0,5).map(p=>({...p,photo:p.photo||""}));
   x.warRoster=(x.warRoster||[]).slice(0,12).map(p=>({...p,photo:p.photo||""}));
+  x.familyGallery=(x.familyGallery||[]).map(f=>({...f,photo:f.photo||"",title:f.title||"FAMILY SERENITY",caption:f.caption||"",date:f.date||""}));
   x.matches=(x.matches||[]).map(m=>({...m,logo:m.logo||"",status:m.status||"UPCOMING",featured:!!m.featured}));
   x.matchHistory=(x.matchHistory||[]).map(h=>({...h,logo:h.logo||"",result:h.result||"WIN",ourScore:Number(h.ourScore||0),opponentScore:Number(h.opponentScore||0)}));
   x.announcements=(x.announcements||[]).map(a=>({...a,image:a.image||"",active:a.active!==false,pinned:!!a.pinned}));
@@ -251,6 +253,8 @@ function renderLists(){
     </div>`).join("");
 
   $("historyAdminList").innerHTML=(data.matchHistory||[]).map((h,i)=>`<div class="edit-row with-thumb">${matchLogo(h.logo)}<div><b>SERENITY 155 ${esc(h.ourScore)} - ${esc(h.opponentScore)} ${esc(h.opponent)}</b><br><small>${esc(h.date||"DATE TBA")} • ${esc(h.event||"MATCH")} • ${esc(h.result)}</small><div class="match-actions"><button class="small-btn" type="button" data-edit-history="${i}">EDIT</button><label class="small-btn" style="cursor:pointer">GANTI LOGO<input type="file" accept="image/*" data-change-history-logo="${i}" hidden></label>${h.logo?`<button class="small-btn danger" type="button" data-delete-history-logo="${i}">HAPUS LOGO</button>`:""}</div></div><button class="small-btn danger" type="button" data-remove-history="${i}">HAPUS</button></div>`).join("");
+  const familyList=$("familyAdminList");
+  if(familyList)familyList.innerHTML=(data.familyGallery||[]).map((f,i)=>`<div class="edit-row with-thumb">${thumb(f.photo,"F")}<div><b>${esc(f.title||"FAMILY SERENITY")}</b><br><small>${esc(f.date||"")} • ${esc(f.caption||"")}</small><div class="image-tools"><label class="small-btn" style="cursor:pointer">GANTI FOTO<input type="file" accept="image/*" data-change-family-photo="${i}" hidden></label>${f.photo?`<button class="small-btn danger" type="button" data-delete-family-photo="${i}">HAPUS FOTO</button>`:""}</div></div><button class="small-btn danger" type="button" data-remove-family="${i}">HAPUS</button></div>`).join("");
 }
 function parseGroupIndex(value){
   const [group,index]=String(value).split(":");
@@ -314,6 +318,25 @@ function saveSilent(){
   }
   scheduleCloudSave();
 }
+
+function resetFamilyForm(){
+  pendingFamilyPhoto="";
+  if($("familyDate"))$("familyDate").value="";
+  if($("familyTitle"))$("familyTitle").value="";
+  if($("familyCaption"))$("familyCaption").value="";
+  if($("familyPhoto"))$("familyPhoto").value="";
+  const pr=$("familyPhotoPreview");if(pr){pr.hidden=true;pr.src=""}
+}
+async function addFamilyMoment(){
+  const title=$("familyTitle").value.trim()||"FAMILY SERENITY";
+  if(!pendingFamilyPhoto){$("saveStatus").textContent="Pilih foto Family terlebih dahulu.";return}
+  if(!Array.isArray(data.familyGallery))data.familyGallery=[];
+  data.familyGallery.unshift({date:$("familyDate").value.trim(),title,caption:$("familyCaption").value.trim(),photo:pendingFamilyPhoto});
+  try{saveSilent()}catch(e){}
+  resetFamilyForm();renderLists();
+  $("saveStatus").textContent="Foto FAMILY ditambahkan & disimpan ONLINE.";
+}
+
 async function addPlayer(){
   const name=$("playerName").value.trim();
   if(!name){
@@ -536,6 +559,8 @@ document.addEventListener("DOMContentLoaded",()=>{
     else if(t.matches("[data-edit-history]"))editHistory(Number(t.dataset.editHistory))
     else if(t.matches("[data-delete-history-logo]")){data.matchHistory[Number(t.dataset.deleteHistoryLogo)].logo="";try{saveSilent()}catch(e){};renderLists()}
     else if(t.matches("[data-remove-history]")){const i=Number(t.dataset.removeHistory);data.matchHistory.splice(i,1);if(editingHistoryIndex===i)resetHistoryForm();try{saveSilent()}catch(e){};renderLists()}
+    else if(t.matches("[data-remove-family]")){data.familyGallery.splice(Number(t.dataset.removeFamily),1);try{saveSilent()}catch(e){};renderLists()}
+    else if(t.matches("[data-delete-family-photo]")){data.familyGallery[Number(t.dataset.deleteFamilyPhoto)].photo="";try{saveSilent()}catch(e){};renderLists()}
     else if(t.matches("[data-edit-match]"))editMatch(Number(t.dataset.editMatch))
     else if(t.matches("[data-feature-match]"))featureMatch(Number(t.dataset.featureMatch))
     else if(t.matches("[data-delete-match-logo]")){data.matches[Number(t.dataset.deleteMatchLogo)].logo="";renderLists()}
@@ -555,6 +580,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     else if(t.matches("[data-change-history-logo]")){const cropped=await imageToDataURL(f,700,700,.88);if(cropped){data.matchHistory[Number(t.dataset.changeHistoryLogo)].logo=cropped;try{saveSilent()}catch(e){};renderLists()}}
     else if(t.matches("[data-change-match-logo]")){const cropped=await imageToDataURL(f,700,700,.88);if(cropped){data.matches[Number(t.dataset.changeMatchLogo)].logo=cropped;try{saveSilent()}catch(e){};renderLists()}}
     else if(t.matches("[data-change-sponsor-logo]")){const cropped=await imageToDataURL(f,700,700,.88);if(cropped){data.sponsors[Number(t.dataset.changeSponsorLogo)].logo=cropped;try{saveSilent()}catch(e){};renderLists()}}
+    else if(t.matches("[data-change-family-photo]")){const cropped=await imageToDataURL(f,1600,1200,.86);if(cropped){data.familyGallery[Number(t.dataset.changeFamilyPhoto)].photo=cropped;try{saveSilent()}catch(e){};renderLists()}}
   });
 
   try{if(sessionStorage.getItem("serenity155Admin")==="1")showAdmin()}catch(e){}
@@ -719,4 +745,17 @@ document.addEventListener("DOMContentLoaded",()=>{
       if(status)status.textContent="Migrasi announcement gagal: "+e.message;
     }
   });
+});
+
+
+// ===== FAMILY SERENITY GALLERY ADMIN =====
+document.addEventListener("DOMContentLoaded",()=>{
+  const fp=$("familyPhoto");
+  if(fp)fp.addEventListener("change",async()=>{
+    const f=fp.files?.[0];if(!f)return;
+    pendingFamilyPhoto=await imageToDataURL(f,1600,1200,.86);
+    const pr=$("familyPhotoPreview");if(pr){pr.src=pendingFamilyPhoto;pr.hidden=false}
+  });
+  $("clearFamilyPhoto")?.addEventListener("click",resetFamilyForm);
+  $("addFamilyPhoto")?.addEventListener("click",addFamilyMoment);
 });
