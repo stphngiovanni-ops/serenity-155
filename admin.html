@@ -29,7 +29,7 @@
   <div id="adminView" class="admin-shell" hidden>
     <div class="admin-top">
       <div>
-        <p class="eyebrow">CONTENT MANAGEMENT</p><span class="version-badge">ONLINE V11.2</span>
+        <p class="eyebrow">CONTENT MANAGEMENT</p><span class="version-badge">ONLINE V11.2.3</span>
         <h1>SERENITY <span>ADMIN</span></h1>
       </div>
       <div class="admin-actions">
@@ -61,7 +61,7 @@
         <button class="small-btn" id="loadCloudToAdmin" type="button">AMBIL DATA ONLINE</button>
       </div>
 
-      <p id="cloudStatus" class="hint"></p><div id="cloudPhotoWarning" class="notice" hidden style="margin-top:12px;border-color:#ff4a77"><strong>PERINGATAN FOTO:</strong> Data cloud saat ini tidak memiliki foto. Jangan tekan RESET. Gunakan backup/foto lama untuk recovery.</div><p class="hint" style="margin-top:8px">V11: Foto baru dipindahkan ke Cloud Image Storage. Database menyimpan URL foto, bukan Base64.</p><p class="hint" style="margin-top:8px">V10.9.3: foto besar tidak lagi wajib disimpan penuh di Local Storage. Data utama otomatis disinkronkan ke cloud untuk mencegah error storage quota.</p>
+      <p id="cloudStatus" class="hint"></p><p class="hint">V11.2.1: Announcement lama dari browser komputer akan dimigrasikan setelah data cloud selesai dimuat.</p><div id="cloudPhotoWarning" class="notice" hidden style="margin-top:12px;border-color:#ff4a77"><strong>PERINGATAN FOTO:</strong> Data cloud saat ini tidak memiliki foto. Jangan tekan RESET. Gunakan backup/foto lama untuk recovery.</div><p class="hint" style="margin-top:8px">V11: Foto baru dipindahkan ke Cloud Image Storage. Database menyimpan URL foto, bukan Base64.</p><p class="hint" style="margin-top:8px">V10.9.3: foto besar tidak lagi wajib disimpan penuh di Local Storage. Data utama otomatis disinkronkan ke cloud untuk mencegah error storage quota.</p>
 
       <div class="notice" style="margin-top:14px">
         Alur paling aman: buka versi lama → EXPORT BACKUP → buka Admin Online → IMPORT BACKUP KE ONLINE.
@@ -210,17 +210,6 @@
         <div id="sponsorList" class="edit-list"></div>
       </section>
 
-      <section class="admin-card full">
-        <h2>CONTACT & SOCIAL</h2>
-        <div class="form-grid">
-          <div><label>Email</label><input id="email" type="email"></div>
-          <div><label>Instagram URL</label><input id="instagram"></div>
-          <div class="full"><label>YouTube URL</label><input id="youtube"></div>
-        </div>
-      </section>
-    </div>
-
-    
       <section class="admin-card full announcement-admin-card" id="announcementManagement">
         <h2>ANNOUNCEMENT MANAGEMENT</h2>
         <p class="hint">Tambah, edit, hapus, pin, dan aktif/nonaktif pengumuman.</p>
@@ -245,11 +234,20 @@
         <div class="admin-actions">
           <button class="small-btn" id="announcementSave" type="button">SIMPAN PENGUMUMAN</button>
           <button class="small-btn" id="announcementCancelEdit" type="button">BATAL EDIT</button>
+          <button class="small-btn" id="forceMigrateLegacyAnnouncements" type="button">PAKSA MIGRASI ANNOUNCEMENT LAMA</button>
         </div>
         <div id="announcementAdminList" class="edit-list"></div>
       </section>
 
-<div class="admin-actions" style="margin-top:22px">
+      <section class="admin-card full">
+        <h2>CONTACT & SOCIAL</h2>
+        <div class="form-grid">
+          <div><label>Email</label><input id="email" type="email"></div>
+          <div><label>Instagram URL</label><input id="instagram"></div>
+          <div class="full"><label>YouTube URL</label><input id="youtube"></div>
+        </div>
+      </section>
+    </div><div class="admin-actions" style="margin-top:22px">
       <button class="btn primary" id="saveAll" type="button">SIMPAN SEMUA</button>
       <button class="btn ghost" id="resetAll" type="button">RESET DEFAULT</button>
       <span class="status" id="saveStatus"></span>

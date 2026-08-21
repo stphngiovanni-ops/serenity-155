@@ -138,6 +138,45 @@ function imageToDataURL(file,maxW=900,maxH=900,quality=.82){
   return openCropEditor(file,mode);
 }
 function login(){if(($("loginUser").value||"").trim()==="admin"&&($("loginPass").value||"")==="serenity155"){try{sessionStorage.setItem("serenity155Admin","1")}catch(e){}showAdmin()}else $("loginStatus").textContent="Username atau password salah."}
+
+async function mergeLegacyAnnouncementsIntoCloud(){
+  try{
+    const legacy=JSON.parse(localStorage.getItem("serenity_announcements_v109")||"null");
+    if(!Array.isArray(legacy) || !legacy.length) return false;
+    if(!Array.isArray(data.announcements)) data.announcements=[];
+
+    const byId=new Map(data.announcements.map(a=>[String(a.id||""),a]));
+    let changed=false;
+    for(const raw of legacy){
+      const a={...raw,image:raw?.image||"",active:raw?.active!==false,pinned:!!raw?.pinned};
+      const id=String(a.id||"ann-"+Date.now()+"-"+Math.random().toString(36).slice(2));
+      a.id=id;
+      const existing=byId.get(id);
+      if(!existing){
+        data.announcements.push(a);
+        byId.set(id,a);
+        changed=true;
+      }else{
+        // Prefer legacy values when cloud copy is only empty/default.
+        const merged={...existing,...a};
+        const idx=data.announcements.findIndex(x=>String(x.id||"")===id);
+        if(idx>=0 && JSON.stringify(data.announcements[idx])!==JSON.stringify(merged)){
+          data.announcements[idx]=merged;
+          changed=true;
+        }
+      }
+    }
+    if(changed){
+      await serenityAdminCloudSave(data,"serenity155");
+      try{localStorage.setItem("serenity155Data",JSON.stringify(data))}catch(e){}
+    }
+    return changed;
+  }catch(e){
+    console.warn("Legacy announcement migration failed",e);
+    return false;
+  }
+}
+
 async function showAdmin(){
   $("loginView").hidden=true;$("loginView").style.display="none";$("adminView").hidden=false;$("adminView").style.display="block";
   const cloud=await serenityCloudLoad();
@@ -149,7 +188,13 @@ async function showAdmin(){
   }else{
     loadData();
   }
+  const migratedAnnouncements=await mergeLegacyAnnouncementsIntoCloud();
   fillForm();renderLists();
+  if(window.refreshSerenityAnnouncementAdmin) window.refreshSerenityAnnouncementAdmin();
+  if(migratedAnnouncements){
+    const s=document.getElementById("saveStatus");
+    if(s)s.textContent="Announcement lama berhasil dipindahkan ke ONLINE ✓";
+  }
   const hasAnyPhoto=[...(data.competitiveRoster||[]).map(x=>x.photo),...(data.warRoster||[]).map(x=>x.photo),...(data.achievements||[]).map(x=>x.photo),...(data.sponsors||[]).map(x=>x.logo),...(data.matches||[]).map(x=>x.logo),...(data.matchHistory||[]).map(x=>x.logo)].some(Boolean);
   const warn=document.getElementById("cloudPhotoWarning"); if(warn)warn.hidden=hasAnyPhoto;
 }
@@ -524,14 +569,6 @@ document.addEventListener("DOMContentLoaded",function(){
   const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
   let pendingImage="";
 
-  // Migrate announcement lama dari Local Storage PC ke data cloud utama sekali.
-  try{
-    const legacy=JSON.parse(localStorage.getItem(LEGACY_KEY)||"null");
-    if((!data.announcements || !data.announcements.length) && Array.isArray(legacy) && legacy.length){
-      data.announcements=legacy.map(a=>({...a,image:a.image||"",active:a.active!==false,pinned:!!a.pinned}));
-      saveSilent();
-    }
-  }catch(e){}
   if(!Array.isArray(data.announcements)) data.announcements=[];
 
   function rows(){ return data.announcements; }
@@ -641,5 +678,45 @@ document.addEventListener("DOMContentLoaded",function(){
   });
 
   q("announcementCancelEdit")?.addEventListener("click",reset);
+  window.refreshSerenityAnnouncementAdmin=render;
+  window.resetSerenityAnnouncementAdmin=reset;
   reset();render();
+});
+
+
+// ===== V11.2.3 FORCE LEGACY ANNOUNCEMENT MIGRATION =====
+document.addEventListener("DOMContentLoaded",()=>{
+  const btn=document.getElementById("forceMigrateLegacyAnnouncements");
+  if(!btn)return;
+  btn.addEventListener("click",async()=>{
+    const status=document.getElementById("saveStatus");
+    try{
+      const raw=localStorage.getItem("serenity_announcements_v109");
+      if(!raw){
+        if(status)status.textContent="Tidak ditemukan announcement lama di browser ini.";
+        return;
+      }
+      const legacy=JSON.parse(raw);
+      if(!Array.isArray(legacy)||!legacy.length){
+        if(status)status.textContent="Announcement lama kosong.";
+        return;
+      }
+      if(!Array.isArray(data.announcements)) data.announcements=[];
+      const byId=new Map(data.announcements.map(a=>[String(a.id||""),a]));
+      for(const item of legacy){
+        const a={...item,image:item?.image||"",active:item?.active!==false,pinned:!!item?.pinned};
+        const id=String(a.id||("ann-"+Date.now()+"-"+Math.random().toString(36).slice(2)));
+        a.id=id;
+        byId.set(id,{...(byId.get(id)||{}),...a});
+      }
+      data.announcements=Array.from(byId.values());
+      await migrateBase64ImagesToCloud(data,"announcement-legacy");
+      await serenityAdminCloudSave(data,"serenity155");
+      try{localStorage.setItem("serenity155Data",JSON.stringify(data))}catch(e){}
+      if(window.refreshSerenityAnnouncementAdmin) window.refreshSerenityAnnouncementAdmin();
+      if(status)status.textContent=`BERHASIL ✓ ${legacy.length} announcement lama sudah ONLINE`;
+    }catch(e){
+      if(status)status.textContent="Migrasi announcement gagal: "+e.message;
+    }
+  });
 });
