@@ -1,0 +1,25 @@
+<!doctype html><html lang="id"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin Tournament | SERENITY 155</title><link rel="icon" href="serenity155-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin-tournament.css?v=13.1"></head><body>
+<div id="login" class="login"><div class="login-card"><img src="serenity155-logo.png"><span>SECURE MANAGEMENT</span><h1>TOURNAMENT<br><i>ADMIN</i></h1><input id="pass" type="password" placeholder="Admin password"><button id="loginBtn">ACCESS SYSTEM</button><p id="loginMsg"></p><a href="admin.html">← ADMIN WEBSITE</a></div></div>
+<div id="app" hidden>
+<header><a href="index.html" class="brand"><img src="serenity155-logo.png">SERENITY <b>155</b></a><nav><a href="tournament.html">PUBLIC PORTAL</a><a href="admin.html">WEBSITE ADMIN</a><button id="logout">LOGOUT</button></nav></header>
+<main>
+<section class="intro"><div><span>V13.1 // CONTROL CENTER</span><h1>TOURNAMENT<br><i>MANAGEMENT</i></h1><p>Buat event, atur slot, biaya, hadiah, rules, dan verifikasi pendaftaran team.</p></div><div class="stats"><article><b id="sTour">0</b><small>TOURNAMENT</small></article><article><b id="sPending">0</b><small>PENDING</small></article><article><b id="sApproved">0</b><small>APPROVED</small></article></div></section>
+<section class="panel">
+<div class="panel-head"><div><span>01 // EVENT CONTROL</span><h2>TOURNAMENT LIST</h2></div><button class="primary" id="newBtn">+ CREATE TOURNAMENT</button></div>
+<div id="tourList" class="tour-list"></div>
+</section>
+<section class="panel">
+<div class="panel-head"><div><span>02 // REGISTRATION CONTROL</span><h2>TEAM REGISTRATIONS</h2></div><select id="filter"><option value="">ALL TOURNAMENTS</option></select></div>
+<div class="tabs"><button class="tab active" data-status="">ALL</button><button class="tab" data-status="PENDING">PENDING</button><button class="tab" data-status="APPROVED">APPROVED</button><button class="tab" data-status="REJECTED">REJECTED</button><button class="tab" data-status="WAITLIST">WAITLIST</button></div>
+<div id="regList" class="reg-list"></div>
+</section></main></div>
+
+<div id="editor" class="modal"><div class="modal-card"><button class="x">×</button><span>EVENT EDITOR</span><h2 id="editorTitle">CREATE TOURNAMENT</h2><input id="tid" type="hidden">
+<div class="grid"><label>TOURNAMENT NAME<input id="name"></label><label>GAME<input id="game" value="POINT BLANK"></label><label>EVENT DATE<input id="date" type="datetime-local"></label><label>REGISTRATION DEADLINE<input id="deadline" type="datetime-local"></label><label>MAX TEAM<input id="max" type="number" min="1" value="16"></label><label>ENTRY FEE (IDR)<input id="fee" type="number" min="0" value="0"></label><label>PRIZE<input id="prize" placeholder="Rp 5.000.000 / TBA"></label><label>STATUS<select id="status"><option>DRAFT</option><option selected>OPEN</option><option>CLOSED</option><option>ONGOING</option><option>FINISHED</option></select></label><label class="full">BANNER URL<input id="banner"></label><label class="full">DESCRIPTION<textarea id="desc"></textarea></label><label class="full">RULES<textarea id="rules"></textarea></label></div><button class="primary wide" id="save">SAVE TOURNAMENT</button><p id="editMsg"></p></div></div>
+
+<div id="detail" class="modal"><div class="modal-card detail-card"><button class="x">×</button><span>TEAM INSPECTION</span><h2 id="detailName">TEAM</h2><div id="detailBody"></div></div></div>
+<script src="admin-tournament.js?v=13.1"></script></body></html>
