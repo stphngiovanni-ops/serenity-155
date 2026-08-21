@@ -1235,3 +1235,294 @@ footer{
   .contact-box h2{font-size:54px!important}
   footer{padding-bottom:82px!important}
 }
+
+
+/* =========================================================
+   SERENITY 155 V12.1 — MODERN PRO PLAYER CARDS
+   ========================================================= */
+
+/* Grid refinement */
+.roster-grid{
+  align-items:stretch!important;
+}
+.roster-grid-competitive{
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+}
+.roster-grid-war{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+}
+
+/* New card shell */
+.player-card{
+  position:relative!important;
+  isolation:isolate;
+  min-height:540px!important;
+  padding:0!important;
+  overflow:hidden!important;
+  border:1px solid rgba(139,164,184,.12)!important;
+  background:
+    linear-gradient(180deg,rgba(10,18,28,.96),rgba(4,8,13,.99))!important;
+  clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px))!important;
+  transition:transform .32s cubic-bezier(.2,.8,.2,1),border-color .32s ease,box-shadow .32s ease!important;
+  box-shadow:
+    0 24px 60px rgba(0,0,0,.36),
+    inset 0 1px rgba(255,255,255,.03)!important;
+}
+
+/* accent rails */
+.player-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:5;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,var(--v12-pink) 0 0) top left/0 2px no-repeat,
+    linear-gradient(180deg,var(--v12-cyan) 0 0) top right/2px 0 no-repeat,
+    linear-gradient(90deg,var(--v12-cyan) 0 0) bottom right/0 2px no-repeat,
+    linear-gradient(180deg,var(--v12-pink) 0 0) bottom left/2px 0 no-repeat;
+  transition:background-size .34s ease;
+}
+.player-card:hover::after{
+  background-size:52% 2px,2px 34%,52% 2px,2px 34%;
+}
+.player-card:hover{
+  transform:translateY(-10px) scale(1.012)!important;
+  border-color:rgba(32,231,243,.28)!important;
+  box-shadow:
+    0 34px 90px rgba(0,0,0,.52),
+    0 0 38px rgba(32,231,243,.055),
+    0 0 26px rgba(255,23,111,.04)!important;
+}
+
+/* number watermark */
+.player-card .player-number,
+.player-card .number,
+.player-card [class*="number"]{
+  position:absolute!important;
+  top:18px!important;
+  left:18px!important;
+  z-index:4!important;
+  font-family:"Anton",sans-serif!important;
+  font-size:66px!important;
+  line-height:1!important;
+  letter-spacing:-1px!important;
+  color:rgba(122,143,159,.14)!important;
+  text-shadow:none!important;
+  pointer-events:none;
+}
+
+/* Photo zone */
+.player-card .player-photo,
+.player-card .photo-wrap,
+.player-card .player-image,
+.player-card > img{
+  position:relative!important;
+  display:block!important;
+  width:calc(100% - 28px)!important;
+  height:330px!important;
+  margin:86px 14px 0!important;
+  border:1px solid rgba(255,255,255,.07)!important;
+  background:#0a1018!important;
+  overflow:hidden!important;
+}
+.player-card .player-photo img,
+.player-card .photo-wrap img,
+.player-card .player-image img,
+.player-card > img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center 20%!important;
+  display:block!important;
+  transform:scale(1.001);
+  transition:transform .55s cubic-bezier(.2,.8,.2,1),filter .4s ease!important;
+  filter:saturate(.96) contrast(1.02)!important;
+}
+
+/* Modern photo overlay */
+.player-card .player-photo::after,
+.player-card .photo-wrap::after,
+.player-card .player-image::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(180deg,transparent 58%,rgba(2,5,9,.86) 100%),
+    linear-gradient(90deg,rgba(255,23,111,.05),transparent 26%,transparent 72%,rgba(32,231,243,.05));
+}
+
+/* If image is direct child, overlay with card gradient */
+.player-card::before{
+  content:"";
+  position:absolute;
+  left:14px;
+  right:14px;
+  top:86px;
+  height:330px;
+  z-index:2;
+  pointer-events:none;
+  opacity:1!important;
+  background:
+    linear-gradient(180deg,transparent 57%,rgba(3,6,10,.12) 68%,rgba(3,6,10,.86) 100%),
+    radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(32,231,243,.085),transparent 35%);
+}
+.player-card:hover .player-photo img,
+.player-card:hover .photo-wrap img,
+.player-card:hover .player-image img,
+.player-card:hover > img{
+  transform:scale(1.045)!important;
+  filter:saturate(1.04) contrast(1.04)!important;
+}
+
+/* Click profile overlay becomes sleek tag */
+.player-card .click-profile,
+.player-card .profile-cta,
+.player-card [class*="profile"]{
+  position:absolute!important;
+  left:28px!important;
+  right:28px!important;
+  top:382px!important;
+  z-index:6!important;
+  height:auto!important;
+  padding:8px 12px!important;
+  margin:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  color:#f4f8fb!important;
+  background:linear-gradient(90deg,rgba(3,7,12,.88),rgba(3,7,12,.48))!important;
+  border-left:2px solid var(--v12-cyan)!important;
+  font-size:8px!important;
+  letter-spacing:2.4px!important;
+  text-transform:uppercase!important;
+  backdrop-filter:blur(7px);
+}
+.player-card .click-profile::after,
+.player-card .profile-cta::after,
+.player-card [class*="profile"]::after{
+  content:"↗";
+  color:var(--v12-pink);
+  font-size:13px;
+}
+
+/* Text/content area */
+.player-card .player-info,
+.player-card .info,
+.player-card .content{
+  padding:22px 22px 24px!important;
+  position:relative!important;
+  z-index:4!important;
+}
+.player-card h3{
+  margin:0!important;
+  font-family:"Anton",sans-serif!important;
+  font-size:clamp(31px,2.3vw,42px)!important;
+  line-height:.95!important;
+  letter-spacing:.2px!important;
+  color:#f5f7fa!important;
+  text-transform:uppercase!important;
+}
+.player-card .role{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  margin-top:12px!important;
+  padding:5px 8px!important;
+  border:1px solid rgba(32,231,243,.20)!important;
+  background:rgba(32,231,243,.045)!important;
+  color:var(--v12-cyan)!important;
+  font-size:10px!important;
+  font-weight:700!important;
+  letter-spacing:2px!important;
+  line-height:1!important;
+}
+.player-card .role::before{
+  content:"";
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:var(--v12-cyan);
+  box-shadow:0 0 9px rgba(32,231,243,.72);
+}
+.player-card .subrole,
+.player-card .desc,
+.player-card small{
+  display:block!important;
+  margin-top:10px!important;
+  color:#697786!important;
+  font-size:11px!important;
+  letter-spacing:1px!important;
+  text-transform:uppercase!important;
+}
+
+/* Decorative bottom tech line */
+.player-card .player-info::after,
+.player-card .info::after,
+.player-card .content::after{
+  content:"";
+  display:block;
+  margin-top:18px;
+  height:1px;
+  background:linear-gradient(90deg,var(--v12-pink),rgba(255,23,111,.12) 22%,transparent 42%,rgba(32,231,243,.13) 78%,var(--v12-cyan));
+  opacity:.42;
+}
+
+/* War team slightly more compact */
+.roster-grid-war .player-card{
+  min-height:500px!important;
+}
+.roster-grid-war .player-card .player-photo,
+.roster-grid-war .player-card .photo-wrap,
+.roster-grid-war .player-card .player-image,
+.roster-grid-war .player-card > img{
+  height:295px!important;
+}
+.roster-grid-war .player-card::before{
+  height:295px!important;
+}
+.roster-grid-war .player-card .click-profile,
+.roster-grid-war .player-card .profile-cta,
+.roster-grid-war .player-card [class*="profile"]{
+  top:347px!important;
+}
+
+/* mobile */
+@media(max-width:1300px){
+  .roster-grid-competitive{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .roster-grid-war{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+@media(max-width:900px){
+  .roster-grid-competitive,
+  .roster-grid-war{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .player-card{min-height:520px!important}
+}
+@media(max-width:560px){
+  .roster-grid-competitive,
+  .roster-grid-war{grid-template-columns:1fr!important}
+  .player-card{
+    min-height:auto!important;
+    max-width:430px;
+    margin-inline:auto;
+  }
+  .player-card .player-photo,
+  .player-card .photo-wrap,
+  .player-card .player-image,
+  .player-card > img{
+    height:auto!important;
+    aspect-ratio:4/5!important;
+    margin-top:78px!important;
+  }
+  .player-card::before{
+    top:78px!important;
+    height:auto!important;
+    aspect-ratio:4/5!important;
+  }
+  .player-card .click-profile,
+  .player-card .profile-cta,
+  .player-card [class*="profile"]{
+    top:auto!important;
+    bottom:118px!important;
+  }
+}
