@@ -32,7 +32,7 @@ const DEFAULT_DATA = {
   matchHistory: [],
   announcements:[{id:"welcome-v112",title:"WELCOME TO SERENITY 155",category:"TEAM",date:"2026-08-21",message:"Selamat datang di official website SQUAD SERENITY 155.",pinned:true,active:true,image:""}],
   sponsors:[{name:"NKJ",logo:""},{name:"AJ1",logo:""},{name:"2K",logo:""},{name:"PARTNER",logo:""}],
-  contact:{email:"serenity155@example.com", instagram:"https://instagram.com/", youtube:"https://youtube.com/"}
+  contact:{email:"serenitymei2025@example.com", instagram:"https://instagram.com/", youtube:"https://youtube.com/"}
 };
 
 function escapeHtml(s){
