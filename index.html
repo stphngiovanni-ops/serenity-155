@@ -9,9 +9,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=12.0" />
 </head>
-<body>
+<body class="v12-body">
+  <div class="v12-preloader" id="v12Preloader" aria-hidden="true">
+    <div class="v12-preloader-core">
+      <img src="./serenity155-logo.png" alt="">
+      <div class="v12-preloader-copy">
+        <span>SERENITY 155</span>
+        <b>INITIALIZING TACTICAL SYSTEM</b>
+      </div>
+      <div class="v12-loadbar"><i></i></div>
+    </div>
+  </div>
+  <div class="v12-scroll-progress" id="v12ScrollProgress"></div>
   <div class="esports-bg" aria-hidden="true">
     <div class="bg-grid"></div><div class="bg-vignette"></div><div class="bg-scanlines"></div>
     <div class="bg-orb orb-cyan"></div><div class="bg-orb orb-pink"></div>
@@ -46,6 +57,8 @@
   </header>
 
   <main>
+    <div class="v12-section-rail v12-rail-left" aria-hidden="true"></div>
+    <div class="v12-section-rail v12-rail-right" aria-hidden="true"></div>
     <section id="home" class="hero esports-hero">
       <div class="hero-hud hero-hud-left"><span>TACTICAL UNIT</span><b>SRNTY-155</b></div>
       <div class="hero-hud hero-hud-right"><span>STATUS</span><b>ONLINE</b></div>
@@ -54,7 +67,11 @@
       <div class="hero-light cyan"></div>
       <div class="hero-light pink"></div>
 
-      <div class="hero-copy reveal">
+      <div class="v12-hero-kicker">
+          <span><i></i> SYSTEM ONLINE</span>
+          <span>POINT BLANK // COMPETITIVE UNIT</span>
+        </div>
+        <div class="hero-copy reveal">
         <p class="eyebrow">OFFICIAL ESPORTS SQUAD</p>
         <h1>SERENITY <span>155</span></h1>
         <p class="hero-sub">
@@ -77,6 +94,13 @@
         <img class="hero-logo" src="/serenity155-logo.webp" alt="SERENITY 155" />
       </div>
 
+      <div class="v12-hero-ticker" aria-hidden="true">
+        <div>
+          <span>SERENITY 155</span><b>•</b><span>ONE SQUAD</span><b>•</b><span>ONE FAMILY</span><b>•</b>
+          <span>TACTICAL</span><b>•</b><span>FEARLESS</span><b>•</b><span>UNITED</span><b>•</b>
+          <span>SERENITY 155</span><b>•</b><span>ONE SQUAD</span><b>•</b><span>ONE FAMILY</span>
+        </div>
+      </div>
       <a class="scroll-hint" href="#about">SCROLL <span>↓</span></a>
     </section>
 
@@ -238,6 +262,7 @@
     </div>
     <p>© <span id="year"></span> SERENITY 155. ALL RIGHTS RESERVED.</p>
     <a href="#home">BACK TO TOP ↑</a>
+    <div class="v12-footer-signature">TACTICAL • FEARLESS • UNITED // SRNTY-155</div>
   </footer>
 
 
@@ -287,7 +312,7 @@
     </section>
   </div>
 
-<script src="script.js?v=11.2"></script>
+<script src="script.js?v=12.0"></script>
   <script src="cloud-sync.js"></script>
 <script>
 (async()=>{
@@ -297,7 +322,7 @@
     try{localStorage.setItem("serenity155Data",JSON.stringify(cloud))}
     catch(e){console.warn("Local cache penuh; website tetap memakai cloud.",e)}
   }
-  const s=document.createElement("script");s.src="site-data.js?v=11.2";document.body.appendChild(s);
+  const s=document.createElement("script");s.src="site-data.js?v=12.0";document.body.appendChild(s);
 })();
 </script>
 
@@ -312,6 +337,52 @@
     </button>
     <input id="musicVolume" class="music-volume" type="range" min="0" max="100" value="22" aria-label="Music volume">
   </div>
+
+
+<script>
+/* ===== V12 UI SYSTEM ===== */
+document.addEventListener("DOMContentLoaded",()=>{
+  const pre=document.getElementById("v12Preloader");
+  const progress=document.getElementById("v12ScrollProgress");
+  const header=document.querySelector(".site-header");
+  const navLinks=[...document.querySelectorAll('#mainNav a[href^="#"]')];
+
+  setTimeout(()=>pre?.classList.add("is-done"),650);
+  setTimeout(()=>pre?.remove(),1350);
+
+  const updateScroll=()=>{
+    const max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
+    const pct=Math.min(100,(scrollY/max)*100);
+    if(progress)progress.style.width=pct+"%";
+    header?.classList.toggle("is-scrolled",scrollY>24);
+  };
+  updateScroll();
+  addEventListener("scroll",updateScroll,{passive:true});
+
+  const sections=[...document.querySelectorAll("main section[id]")];
+  if("IntersectionObserver" in window){
+    const io=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(!entry.isIntersecting)return;
+        navLinks.forEach(a=>a.classList.toggle("is-active",a.getAttribute("href")==="#"+entry.target.id));
+      });
+    },{rootMargin:"-38% 0px -55% 0px",threshold:0});
+    sections.forEach(s=>io.observe(s));
+  }
+
+  if(matchMedia("(pointer:fine)").matches){
+    document.querySelectorAll(".player-card,.match-card,.achievement-showcase,.history-card,.sponsor-grid > *").forEach(card=>{
+      card.addEventListener("pointermove",e=>{
+        const r=card.getBoundingClientRect();
+        const x=(e.clientX-r.left)/r.width-.5;
+        const y=(e.clientY-r.top)/r.height-.5;
+        card.style.setProperty("--mx",(x*100+50)+"%");
+        card.style.setProperty("--my",(y*100+50)+"%");
+      });
+    });
+  }
+});
+</script>
 
 </body>
 </html>
