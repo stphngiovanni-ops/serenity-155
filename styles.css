@@ -1526,3 +1526,112 @@ footer{
     bottom:118px!important;
   }
 }
+
+
+/* =========================================================
+   V12.1.1 — PLAYER PHOTO CROP FIX
+   Fix direct <img> being stretched to 100% card height.
+   ========================================================= */
+
+/* Competitive cards: show upper body, not only head */
+.roster-grid-competitive .player-card > img{
+  position:relative!important;
+  display:block!important;
+  width:calc(100% - 28px)!important;
+  height:330px!important;
+  min-height:330px!important;
+  max-height:330px!important;
+  margin:86px 14px 0!important;
+  object-fit:cover!important;
+  object-position:center 28%!important;
+  border:1px solid rgba(255,255,255,.07)!important;
+  background:#0a1018!important;
+  z-index:1!important;
+}
+
+/* War cards */
+.roster-grid-war .player-card > img{
+  position:relative!important;
+  display:block!important;
+  width:calc(100% - 28px)!important;
+  height:310px!important;
+  min-height:310px!important;
+  max-height:310px!important;
+  margin:78px 14px 0!important;
+  object-fit:cover!important;
+  object-position:center 28%!important;
+  border:1px solid rgba(255,255,255,.07)!important;
+  background:#0a1018!important;
+  z-index:1!important;
+}
+
+/* Keep the dark fade exactly over the photo frame */
+.roster-grid-competitive .player-card::before{
+  top:86px!important;
+  left:14px!important;
+  right:14px!important;
+  height:330px!important;
+}
+.roster-grid-war .player-card::before{
+  top:78px!important;
+  left:14px!important;
+  right:14px!important;
+  height:310px!important;
+}
+
+/* CTA placement aligned to bottom edge of photo */
+.roster-grid-competitive .player-card .click-profile,
+.roster-grid-competitive .player-card .profile-cta,
+.roster-grid-competitive .player-card [class*="profile"]{
+  top:374px!important;
+}
+.roster-grid-war .player-card .click-profile,
+.roster-grid-war .player-card .profile-cta,
+.roster-grid-war .player-card [class*="profile"]{
+  top:344px!important;
+}
+
+/* Allow portrait photos to show more torso on narrower screens */
+@media(max-width:1300px){
+  .roster-grid-competitive .player-card > img{
+    height:350px!important;
+    min-height:350px!important;
+    max-height:350px!important;
+    object-position:center 24%!important;
+  }
+  .roster-grid-competitive .player-card::before{height:350px!important}
+  .roster-grid-competitive .player-card .click-profile,
+  .roster-grid-competitive .player-card .profile-cta,
+  .roster-grid-competitive .player-card [class*="profile"]{top:394px!important}
+}
+
+@media(max-width:560px){
+  .roster-grid-competitive .player-card > img,
+  .roster-grid-war .player-card > img{
+    width:calc(100% - 24px)!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    aspect-ratio:4/5!important;
+    margin:72px 12px 0!important;
+    object-fit:cover!important;
+    object-position:center 20%!important;
+  }
+  .roster-grid-competitive .player-card::before,
+  .roster-grid-war .player-card::before{
+    top:72px!important;
+    left:12px!important;
+    right:12px!important;
+    height:auto!important;
+    aspect-ratio:4/5!important;
+  }
+  .roster-grid-competitive .player-card .click-profile,
+  .roster-grid-competitive .player-card .profile-cta,
+  .roster-grid-competitive .player-card [class*="profile"],
+  .roster-grid-war .player-card .click-profile,
+  .roster-grid-war .player-card .profile-cta,
+  .roster-grid-war .player-card [class*="profile"]{
+    top:auto!important;
+    bottom:118px!important;
+  }
+}
