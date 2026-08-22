@@ -2012,3 +2012,5 @@ body.v12-body::before{
   }
   .hud-live span{display:none}
 }
+
+/* V15.1 SOUND + DYNAMIC THEMES */.v15-sound-control{position:fixed;right:16px;bottom:16px;z-index:10020;display:flex;align-items:center;gap:8px;background:#03080de8;border:1px solid #ffffff17;padding:7px 10px;backdrop-filter:blur(10px)}.v15-sound-control button{width:30px;height:30px;border:1px solid #20e7f344;background:#07121b;color:#20e7f3;cursor:pointer}.v15-sound-control span{font-size:7px;letter-spacing:1.5px;color:#778692}body[data-theme="MATCH DAY"]{--v15-cyan:#ff174f}body[data-theme="CHAMPION"]{--v15-cyan:#ffd65a}body[data-theme="PRAY FOR KALIMANTAN"]{--v15-cyan:#fff;--v15-red:#e51b35}body[data-theme="CHAMPION"] .esports-hero{filter:sepia(.12)}@media(max-width:600px){body{padding-bottom:58px}.v15-sound-control{bottom:8px;right:8px}.topbar{box-shadow:0 10px 35px #0008}}

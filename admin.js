@@ -11,6 +11,10 @@ const DEFAULT_DATA={
   ],
   warRoster:[],
   familyGallery:[],
+  serenityTV:[],
+  roadToPBNC:[],
+  siteTheme:"SERENITY",
+  backgroundMusic:"",
   achievements:[
     {year:"2026",badge:"CHAMPION",title:"PBRS SEMARANG",desc:"Menjadi juara dan melanjutkan perjalanan kompetitif SERENITY ke level berikutnya.",photo:""},
     {year:"2026",badge:"QUALIFIED",title:"PBSB DIVISI 1",desc:"Lolos ke PBSB Divisi 1 dengan target berikutnya: melangkah menuju PBNC.",photo:""},
@@ -758,4 +762,23 @@ document.addEventListener("DOMContentLoaded",()=>{
   });
   $("clearFamilyPhoto")?.addEventListener("click",resetFamilyForm);
   $("addFamilyPhoto")?.addEventListener("click",addFamilyMoment);
+});
+
+
+// ===== V15.1 COMPLETE IMMERSIVE MANAGEMENT =====
+document.addEventListener("DOMContentLoaded",()=>{
+  if(!Array.isArray(data.serenityTV))data.serenityTV=[];
+  if(!Array.isArray(data.roadToPBNC))data.roadToPBNC=[];
+  const theme=$("siteTheme"),music=$("backgroundMusic");
+  if(theme)theme.value=data.siteTheme||"SERENITY";if(music)music.value=data.backgroundMusic||"";
+  function renderV151(){
+    const tv=$("tvAdminList"),road=$("roadAdminList");
+    if(tv)tv.innerHTML=data.serenityTV.map((v,i)=>`<div class="edit-row"><div><b>${esc(v.title||"VIDEO")}</b><br><small>${esc(v.category||"")} • ${esc(v.url||"")}</small></div><button class="small-btn danger" data-v151-tv="${i}">HAPUS</button></div>`).join("");
+    if(road)road.innerHTML=data.roadToPBNC.map((v,i)=>`<div class="edit-row"><div><b>${esc(v.title||"JOURNEY")}</b><br><small>${esc(v.date||"")} • ${esc(v.status||"")}</small></div><button class="small-btn danger" data-v151-road="${i}">HAPUS</button></div>`).join("");
+  }
+  $("addTV")?.addEventListener("click",()=>{const url=$("tvUrl").value.trim();if(!url){$("saveStatus").textContent="Isi URL video.";return}data.serenityTV.unshift({title:$("tvTitle").value.trim(),category:$("tvCategory").value.trim(),url,thumbnail:$("tvThumbnail").value.trim(),caption:$("tvCaption").value.trim()});try{saveSilent()}catch(e){};["tvTitle","tvCategory","tvUrl","tvThumbnail","tvCaption"].forEach(x=>$(x).value="");renderV151()});
+  $("addRoad")?.addEventListener("click",()=>{data.roadToPBNC.push({date:$("roadDate").value.trim(),status:$("roadStatus").value.trim(),title:$("roadTitle").value.trim(),description:$("roadDesc").value.trim()});try{saveSilent()}catch(e){};["roadDate","roadStatus","roadTitle","roadDesc"].forEach(x=>$(x).value="");renderV151()});
+  $("saveV151")?.addEventListener("click",()=>{data.siteTheme=$("siteTheme").value;data.backgroundMusic=$("backgroundMusic").value.trim();try{saveSilent();$("saveStatus").textContent="Theme & Sound tersimpan ONLINE."}catch(e){}});
+  document.addEventListener("click",e=>{let t=e.target;if(t.matches("[data-v151-tv]")){data.serenityTV.splice(+t.dataset.v151Tv,1);try{saveSilent()}catch(e){};renderV151()}if(t.matches("[data-v151-road]")){data.roadToPBNC.splice(+t.dataset.v151Road,1);try{saveSilent()}catch(e){};renderV151()}});
+  renderV151();
 });

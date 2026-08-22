@@ -69,4 +69,16 @@ document.addEventListener("DOMContentLoaded",()=>{
       });
     }
   }
+
+  // V15.1 Dynamic Theme + persistent sound controller
+  loadCloud().then(data=>{
+    const theme=data?.siteTheme||"SERENITY";
+    document.body.dataset.theme=theme;
+    const audioUrl=data?.backgroundMusic||data?.musicUrl||"";
+    const btn=document.getElementById("v15SoundBtn"),label=document.getElementById("v15SoundLabel");
+    if(!btn)return;
+    const audio=new Audio(audioUrl);audio.loop=true;audio.volume=.32;
+    let on=false;
+    btn.onclick=async()=>{if(!audioUrl){label.textContent="NO MUSIC";return}try{if(on){audio.pause();on=false;label.textContent="SOUND OFF"}else{await audio.play();on=true;label.textContent="SOUND ON"}}catch(e){label.textContent="TAP AGAIN"}};
+  });
 });
