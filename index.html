@@ -9,9 +9,29 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=13.2" />
+  <link rel="stylesheet" href="styles.css?v=15.0" />
 </head>
 <body class="v12-body">
+  <div class="v15-opening" id="v15Opening">
+    <div class="v15-noise"></div>
+    <div class="v15-opening-core">
+      <img src="serenity155-logo.webp" onerror="this.src='serenity155-logo.png'" alt="SERENITY 155">
+      <span>INITIALIZING SERENITY NETWORK</span>
+      <h1>SERENITY <b>155</b></h1>
+      <div class="v15-opening-line"><i></i></div>
+      <small>TACTICAL • FEARLESS • UNITED</small>
+    </div>
+  </div>
+
+  <div class="v15-match-hud" id="v15MatchHud">
+    <div class="hud-live"><i></i><span>NEXT MATCH</span></div>
+    <div class="hud-main">
+      <b>SERENITY 155</b><strong>VS</strong><b id="v15HudOpponent">TBA</b>
+    </div>
+    <div class="hud-countdown" id="v15HudCountdown">--:--:--</div>
+    <a href="#match">MATCH CENTER →</a>
+  </div>
+
   <div class="kalimantan-tribute-bg" id="kalimantanTribute" aria-hidden="true">
     <div class="kalimantan-map-mark">KALIMANTAN</div>
     <div class="kalimantan-ribbon"></div>
@@ -115,6 +135,7 @@
           <span>SERENITY 155</span><b>•</b><span>ONE SQUAD</span><b>•</b><span>ONE FAMILY</span>
         </div>
       </div>
+      <div class="v15-cinematic-tag"><span>SRNTY // 155</span><b>WALK NEVER ALONE</b></div>
       <a class="scroll-hint" href="#about">SCROLL <span>↓</span></a>
     </section>
 
@@ -398,5 +419,6 @@ document.addEventListener("DOMContentLoaded",()=>{
 });
 </script>
 
+<script src="immersive.js?v=15.0"></script>
 </body>
 </html>
