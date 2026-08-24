@@ -457,23 +457,46 @@ function addSponsor(){
 function resetMatchForm(){
   editingMatchIndex=-1;pendingOpponentLogo="";
   $("matchDate").value="";$("opponent").value="";$("game").value="POINT BLANK";$("format").value="";$("stream").value="";$("matchStatus").value="UPCOMING";
+  if($("matchOurScore"))$("matchOurScore").value="0";if($("matchOpponentScore"))$("matchOpponentScore").value="0";if($("matchMvp"))$("matchMvp").value="";if($("matchEvent"))$("matchEvent").value="";
   $("opponentLogo").value="";$("opponentLogoPreview").hidden=true;
   $("saveMatch").textContent="+ TAMBAH MATCH";$("cancelMatchEdit").hidden=true;
 }
 function saveMatch(){
   const opponent=$("opponent").value.trim();if(!opponent){$("saveStatus").textContent="Nama lawan wajib diisi.";return}
   const existing=editingMatchIndex>=0?data.matches[editingMatchIndex]:null;
+  const ourScore=Math.max(0,Number($("matchOurScore")?.value||0));
+  const opponentScore=Math.max(0,Number($("matchOpponentScore")?.value||0));
+  const status=$("matchStatus").value;
   const item={
     date:$("matchDate").value,opponent,game:$("game").value.trim()||"POINT BLANK",format:$("format").value.trim(),
-    stream:$("stream").value.trim(),status:$("matchStatus").value,
-    logo:pendingOpponentLogo || (existing?.logo||""),featured:existing?.featured||false
+    stream:$("stream").value.trim(),status,
+    ourScore,opponentScore,mvp:$("matchMvp")?.value.trim()||"",event:$("matchEvent")?.value.trim()||"",
+    logo:pendingOpponentLogo || (existing?.logo||""),featured:status==="COMPLETED"?false:(existing?.featured||false)
   };
   if(editingMatchIndex>=0)data.matches[editingMatchIndex]=item;else data.matches.push(item);
+
+  // FINISHED -> automatically create/update Match History, avoiding duplicate input.
+  if(status==="COMPLETED"){
+    if(!Array.isArray(data.matchHistory))data.matchHistory=[];
+    const result=ourScore>opponentScore?"WIN":ourScore<opponentScore?"LOSE":"DRAW";
+    const historyItem={
+      date:item.date,opponent:item.opponent,event:item.event||item.game,format:item.format,
+      ourScore:item.ourScore,opponentScore:item.opponentScore,result,game:item.game,
+      note:item.mvp?`MVP: ${item.mvp}`:"",logo:item.logo||""
+    };
+    const hi=data.matchHistory.findIndex(h=>h.sourceMatchKey===`${item.date}|${item.opponent}`);
+    historyItem.sourceMatchKey=`${item.date}|${item.opponent}`;
+    if(hi>=0)data.matchHistory[hi]=historyItem;else data.matchHistory.unshift(historyItem);
+  }
+  try{saveSilent()}catch(e){}
   resetMatchForm();renderLists();
+  $("saveStatus").textContent=status==="COMPLETED"?"Match FINISHED + skor tersimpan & masuk History ✓":"Match berhasil disimpan ✓";
+  setTimeout(()=>$("saveStatus").textContent="",2600);
 }
 function editMatch(i){
   const m=data.matches[i];editingMatchIndex=i;pendingOpponentLogo="";
   $("matchDate").value=m.date||"";$("opponent").value=m.opponent||"";$("game").value=m.game||"POINT BLANK";$("format").value=m.format||"";$("stream").value=m.stream||"";$("matchStatus").value=m.status||"UPCOMING";
+  if($("matchOurScore"))$("matchOurScore").value=Number(m.ourScore||0);if($("matchOpponentScore"))$("matchOpponentScore").value=Number(m.opponentScore||0);if($("matchMvp"))$("matchMvp").value=m.mvp||"";if($("matchEvent"))$("matchEvent").value=m.event||"";
   if(m.logo){$("opponentLogoPreview").src=m.logo;$("opponentLogoPreview").hidden=false}else $("opponentLogoPreview").hidden=true;
   $("saveMatch").textContent="SIMPAN PERUBAHAN MATCH";$("cancelMatchEdit").hidden=false;
   window.scrollTo({top:$("matchDate").getBoundingClientRect().top+window.scrollY-120,behavior:"smooth"});

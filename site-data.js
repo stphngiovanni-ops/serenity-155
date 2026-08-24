@@ -61,7 +61,7 @@ function migrateData(x){
     warRoster:(x.warRoster||DEFAULT_DATA.warRoster).slice(0,12).map(p=>({...p,photo:p.photo||""})),
     achievements:(x.achievements||DEFAULT_DATA.achievements).map(a=>({...a,photo:a.photo||""})),
     sponsors:(x.sponsors||DEFAULT_DATA.sponsors).map(s=>typeof s==="string"?{name:s,logo:""}:{name:s.name||"SPONSOR",logo:s.logo||""}),
-    matches:(x.matches||DEFAULT_DATA.matches).map(m=>({...m,logo:m.logo||"",featured:!!m.featured,status:m.status||"UPCOMING"})),
+    matches:(x.matches||DEFAULT_DATA.matches).map(m=>({...m,logo:m.logo||"",featured:!!m.featured,status:m.status||"UPCOMING",ourScore:Number(m.ourScore||0),opponentScore:Number(m.opponentScore||0),mvp:m.mvp||"",event:m.event||""})),
     matchHistory:(x.matchHistory||[]).map(h=>({...h,logo:h.logo||"",result:h.result||"WIN",ourScore:Number(h.ourScore||0),opponentScore:Number(h.opponentScore||0)})),
     announcements:(x.announcements||DEFAULT_DATA.announcements||[]).map(a=>({...a,image:a.image||"",active:a.active!==false,pinned:!!a.pinned}))
   };
@@ -203,7 +203,7 @@ function renderRoster(targetId, players, groupName){
         label.textContent=fmtDate(featured.date);
         const tick=()=>{
           const diff=dt-new Date();
-          if(featured.status==="COMPLETED"){cd.textContent="MATCH FINISHED";return}
+          if(featured.status==="COMPLETED"){cd.textContent=`FINAL ${Number(featured.ourScore||0)} : ${Number(featured.opponentScore||0)}`;return}
           if(featured.status==="LIVE"){cd.textContent="LIVE NOW";return}
           if(diff<=0){cd.textContent="MATCH TIME";return}
           const day=Math.floor(diff/86400000),hr=Math.floor(diff/3600000)%24,min=Math.floor(diff/60000)%60,sec=Math.floor(diff/1000)%60;
@@ -221,9 +221,11 @@ function renderRoster(targetId, players, groupName){
       const card=document.createElement("article");
       card.className="match-mini-card"+(m.featured?" featured":"");
       const logo=m.logo?`<img src="${m.logo}" alt="${escapeHtml(m.opponent)}">`:"?";
-      card.innerHTML=`<div class="match-mini-top"><span class="match-status ${escapeHtml(m.status)}">${escapeHtml(m.status)}</span>${m.featured?'<span class="featured-tag">NEXT MATCH</span>':""}</div>
-      <div class="match-mini-main"><div class="match-mini-logo">${logo}</div><div><h3>SERENITY 155 <span style="color:#657080">VS</span> ${escapeHtml(m.opponent)}</h3><p>${escapeHtml(m.game)} • ${escapeHtml(m.format)}</p></div></div>
-      <div class="match-mini-bottom"><span>${fmtDate(m.date)}</span><span>${escapeHtml(m.stream||"")}</span></div>`;
+      const finished=m.status==="COMPLETED";
+      const result=Number(m.ourScore||0)>Number(m.opponentScore||0)?"VICTORY":Number(m.ourScore||0)<Number(m.opponentScore||0)?"DEFEAT":"DRAW";
+      card.innerHTML=`<div class="match-mini-top"><span class="match-status ${escapeHtml(m.status)}">${finished?"FINISHED":escapeHtml(m.status)}</span>${m.featured?'<span class="featured-tag">NEXT MATCH</span>':""}${finished?`<span class="match-result-badge ${result.toLowerCase()}">${result}</span>`:""}</div>
+      <div class="match-mini-main"><div class="match-mini-logo">${logo}</div><div><h3>SERENITY 155 <span style="color:#657080">VS</span> ${escapeHtml(m.opponent)}</h3>${finished?`<div class="match-final-score"><b>${Number(m.ourScore||0)}</b><span>:</span><b>${Number(m.opponentScore||0)}</b></div>`:""}<p>${escapeHtml(m.event||m.game)} • ${escapeHtml(m.format)}${m.mvp?` • MVP ${escapeHtml(m.mvp)}`:""}</p></div></div>
+      <div class="match-mini-bottom"><span>${fmtDate(m.date)}</span><span>${finished?"MATCH FINISHED":escapeHtml(m.stream||"")}</span></div>`;
       matchList.appendChild(card);
     });
   }

@@ -29,7 +29,7 @@
   <div id="adminView" class="admin-shell" hidden>
     <div class="admin-top">
       <div>
-        <p class="eyebrow">CONTENT MANAGEMENT</p><span class="version-badge">ONLINE V16.1</span>
+        <p class="eyebrow">CONTENT MANAGEMENT</p><span class="version-badge">ONLINE V17.2</span>
         <h1>SERENITY <span>ADMIN</span></h1>
       </div>
       <div class="admin-actions">
@@ -177,8 +177,13 @@
             <select id="matchStatus">
               <option value="UPCOMING">UPCOMING</option>
               <option value="LIVE">LIVE</option>
-              <option value="COMPLETED">COMPLETED</option>
+              <option value="COMPLETED">FINISHED</option>
             </select>
+          </div>
+          <div><label>Skor SERENITY</label><input id="matchOurScore" type="number" min="0" value="0"></div>
+          <div><label>Skor Lawan</label><input id="matchOpponentScore" type="number" min="0" value="0"></div>
+          <div><label>MVP / Player of the Match</label><input id="matchMvp" placeholder="Contoh: ZEED"></div>
+          <div><label>Round / Event</label><input id="matchEvent" placeholder="PBSB DIV 1 / GRAND FINAL">
           </div>
           <div class="full">
             <label>Logo Lawan</label>
@@ -193,7 +198,7 @@
           <button class="small-btn" id="saveMatch" type="button">+ TAMBAH MATCH</button>
           <button class="small-btn" id="cancelMatchEdit" type="button" hidden>BATAL EDIT</button>
         </div>
-        <p class="hint">Gunakan tombol <b>JADIKAN NEXT</b> pada daftar match untuk menentukan pertandingan utama di website.</p>
+        <p class="hint">Saat pertandingan selesai pilih <b>FINISHED</b>, isi skor, lalu simpan. Hasil otomatis masuk ke Match History. Gunakan <b>JADIKAN NEXT</b> untuk menentukan pertandingan utama.</p>
         <div id="matchAdminList" class="edit-list match-admin-list"></div>
       </section>
 
@@ -322,6 +327,6 @@
   </div>
 
   <script src="cloud-sync.js"></script>
-  <script src="admin.js"></script>
+  <script src="admin.js?v=17.2"></script>
 </body>
 </html>
