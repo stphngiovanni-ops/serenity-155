@@ -2014,3 +2014,59 @@ body.v12-body::before{
 }
 
 /* V15.1 SOUND + DYNAMIC THEMES */.v15-sound-control{position:fixed;right:16px;bottom:16px;z-index:10020;display:flex;align-items:center;gap:8px;background:#03080de8;border:1px solid #ffffff17;padding:7px 10px;backdrop-filter:blur(10px)}.v15-sound-control button{width:30px;height:30px;border:1px solid #20e7f344;background:#07121b;color:#20e7f3;cursor:pointer}.v15-sound-control span{font-size:7px;letter-spacing:1.5px;color:#778692}body[data-theme="MATCH DAY"]{--v15-cyan:#ff174f}body[data-theme="CHAMPION"]{--v15-cyan:#ffd65a}body[data-theme="PRAY FOR KALIMANTAN"]{--v15-cyan:#fff;--v15-red:#e51b35}body[data-theme="CHAMPION"] .esports-hero{filter:sepia(.12)}@media(max-width:600px){body{padding-bottom:58px}.v15-sound-control{bottom:8px;right:8px}.topbar{box-shadow:0 10px 35px #0008}}
+
+/* =========================================================
+   SERENITY 155 V16.1 — SPONSOR SHOWCASE V2
+   ========================================================= */
+.sponsor-showcase{display:grid;gap:18px}
+.sponsor-featured{min-height:260px}
+.sponsor-hero-card{
+  min-height:260px;display:grid;grid-template-columns:1.25fr .75fr;align-items:center;
+  position:relative;overflow:hidden;padding:34px 38px;
+  background:
+    radial-gradient(circle at 82% 50%,rgba(32,231,243,.11),transparent 30%),
+    linear-gradient(120deg,rgba(255,23,111,.055),transparent 38%),#06101a;
+  border:1px solid rgba(255,255,255,.075);
+  clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,20px 100%,0 calc(100% - 20px));
+}
+.sponsor-hero-card:before{
+  content:"OFFICIAL PARTNER";position:absolute;right:-10px;bottom:-26px;
+  font-family:"Anton",sans-serif;font-size:90px;letter-spacing:2px;
+  color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.028);
+}
+.sponsor-hero-copy{position:relative;z-index:2}
+.sponsor-hero-copy>span{font-size:8px;letter-spacing:3px;color:var(--v12-cyan)}
+.sponsor-hero-copy h3{font-family:"Anton",sans-serif;font-size:clamp(42px,5vw,72px);font-weight:400;margin:10px 0}
+.sponsor-hero-copy p{max-width:560px;color:#758592;font-size:12px;line-height:1.6}
+.sponsor-hero-copy a{display:inline-block;margin-top:13px;padding:10px 13px;border:1px solid rgba(32,231,243,.2);font-size:8px;letter-spacing:1.7px;color:var(--v12-cyan)}
+.sponsor-hero-logo{height:190px;display:grid;place-items:center;position:relative;z-index:2}
+.sponsor-hero-logo:before{content:"";position:absolute;width:170px;height:170px;border-radius:50%;border:1px solid rgba(32,231,243,.12);box-shadow:0 0 70px rgba(32,231,243,.055)}
+.sponsor-hero-logo img{width:min(180px,80%);height:min(180px,80%);object-fit:contain;position:relative;z-index:2;filter:drop-shadow(0 20px 25px rgba(0,0,0,.4))}
+.sponsor-grid-v2{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important}
+.sponsor-card-v2{
+  min-height:250px!important;display:flex!important;flex-direction:column!important;position:relative!important;
+  padding:18px!important;background:linear-gradient(145deg,#08131e,#04090f)!important;
+  border:1px solid rgba(255,255,255,.065)!important;overflow:hidden!important;
+  transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease!important;
+}
+.sponsor-card-v2:before{content:"";position:absolute;left:0;top:0;width:34%;height:2px;background:linear-gradient(90deg,var(--v12-pink),var(--v12-cyan))}
+.sponsor-card-v2:hover{transform:translateY(-8px)!important;border-color:rgba(32,231,243,.22)!important;box-shadow:0 28px 65px rgba(0,0,0,.38),0 0 35px rgba(32,231,243,.045)!important}
+.sponsor-tier{font-size:7px;letter-spacing:2px;color:#657582}
+.sponsor-logo-wrap{flex:1;min-height:150px;display:grid;place-items:center}
+.sponsor-logo-wrap img{width:130px!important;height:130px!important;object-fit:contain!important;transition:transform .35s ease,filter .35s ease}
+.sponsor-card-v2:hover .sponsor-logo-wrap img{transform:scale(1.07);filter:drop-shadow(0 0 18px rgba(32,231,243,.13))}
+.sponsor-card-bottom{display:flex;justify-content:space-between;align-items:end;border-top:1px solid rgba(255,255,255,.055);padding-top:13px}
+.sponsor-card-bottom .sponsor-name{font-family:"Anton",sans-serif!important;font-size:27px!important;color:#f3f6f8!important;letter-spacing:.5px!important}
+.sponsor-card-bottom small{font-size:7px;letter-spacing:1.3px;color:#63727e}
+.sponsor-marquee{margin-top:18px;overflow:hidden;height:38px;border-top:1px solid rgba(255,255,255,.045);border-bottom:1px solid rgba(255,255,255,.045);background:rgba(3,8,13,.55)}
+#sponsorMarqueeTrack{width:max-content;height:100%;display:flex;align-items:center;animation:sponsorTicker 24s linear infinite}
+#sponsorMarqueeTrack span{font-size:8px;letter-spacing:3px;color:#647480;white-space:nowrap}
+#sponsorMarqueeTrack b{color:var(--v12-pink);padding:0 15px}
+@keyframes sponsorTicker{to{transform:translateX(-33.33%)}}
+.sponsor-caption{margin-top:18px!important;font-size:8px!important;letter-spacing:1.8px!important;color:#566571!important}
+@media(max-width:850px){
+  .sponsor-hero-card{grid-template-columns:1fr;padding:28px 22px}
+  .sponsor-hero-logo{height:150px;margin-top:18px}
+  .sponsor-grid-v2{grid-template-columns:1fr!important}
+  .sponsor-card-v2{min-height:220px!important}
+}

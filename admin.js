@@ -434,14 +434,23 @@ async function addAchievement(){
 function addSponsor(){
   const name=$("sponsorName").value.trim();
   if(!name)return;
-  data.sponsors.push({name,logo:pendingSponsorLogo});
+  data.sponsors.push({
+    name,
+    logo:pendingSponsorLogo,
+    tier:$("sponsorTier")?.value||"OFFICIAL PARTNER",
+    link:$("sponsorLink")?.value.trim()||"",
+    desc:$("sponsorDesc")?.value.trim()||""
+  });
   pendingSponsorLogo="";
   $("sponsorName").value="";
+  if($("sponsorTier"))$("sponsorTier").value="OFFICIAL PARTNER";
+  if($("sponsorLink"))$("sponsorLink").value="";
+  if($("sponsorDesc"))$("sponsorDesc").value="";
   $("sponsorLogo").value="";
   $("sponsorLogoPreview").hidden=true;
   try{saveSilent()}catch(e){}
   renderLists();
-  $("saveStatus").textContent="Sponsor berhasil ditambahkan ✓";
+  $("saveStatus").textContent="Sponsor Showcase berhasil ditambahkan ✓";
   setTimeout(()=>$("saveStatus").textContent="",2200);
 }
 

@@ -152,15 +152,37 @@ function renderRoster(targetId, players, groupName){
   }
 
   const sponsors=document.getElementById("sponsorGrid");
+  const sponsorFeatured=document.getElementById("sponsorFeatured");
+  const sponsorMarqueeTrack=document.getElementById("sponsorMarqueeTrack");
   if(sponsors){
     sponsors.innerHTML="";
-    d.sponsors.forEach(s=>{
-      const item=typeof s==="string"?{name:s,logo:""}:s;
-      const el=document.createElement("div");
-      el.innerHTML=(item.logo?`<img class="sponsor-logo" src="${item.logo}" alt="${escapeHtml(item.name)}">`:"")
-        +`<span class="sponsor-name">${escapeHtml(item.name)}</span>`;
+    const normalized=(d.sponsors||[]).map((s,i)=>{
+      const item=typeof s==="string"?{name:s,logo:""}:{...s};
+      item.tier=item.tier||((i===0)?"MAIN PARTNER":"OFFICIAL PARTNER");
+      item.link=item.link||"";
+      item.desc=item.desc||"";
+      return item;
+    });
+    const main=normalized.find(x=>String(x.tier).toUpperCase()==="MAIN PARTNER")||normalized[0];
+    if(sponsorFeatured){
+      sponsorFeatured.innerHTML=main?`<article class="sponsor-hero-card">
+        <div class="sponsor-hero-copy"><span>MAIN PARTNER // SERENITY 155</span><h3>${escapeHtml(main.name||"PARTNER")}</h3><p>${escapeHtml(main.desc||"Official partner supporting the journey of SERENITY 155.")}</p>${main.link?`<a href="${main.link}" target="_blank" rel="noopener">VISIT PARTNER ↗</a>`:""}</div>
+        <div class="sponsor-hero-logo">${main.logo?`<img src="${main.logo}" alt="${escapeHtml(main.name)}">`:`<b>${escapeHtml(main.name||"PARTNER")}</b>`}</div>
+      </article>`:`<div class="sponsor-empty">BELUM ADA MAIN PARTNER</div>`;
+    }
+    normalized.forEach((item,i)=>{
+      const el=document.createElement(item.link?"a":"div");
+      if(item.link){el.href=item.link;el.target="_blank";el.rel="noopener"}
+      el.className="sponsor-card-v2"+(i===0?" is-main":"");
+      el.innerHTML=`<div class="sponsor-tier">${escapeHtml(item.tier)}</div>
+        <div class="sponsor-logo-wrap">${item.logo?`<img class="sponsor-logo" src="${item.logo}" alt="${escapeHtml(item.name)}">`:`<strong>${escapeHtml(item.name)}</strong>`}</div>
+        <div class="sponsor-card-bottom"><span class="sponsor-name">${escapeHtml(item.name)}</span><small>${item.link?"VISIT ↗":"OFFICIAL PARTNER"}</small></div>`;
       sponsors.appendChild(el);
-    })
+    });
+    if(sponsorMarqueeTrack){
+      const names=normalized.length?normalized.map(x=>escapeHtml(x.name)).join(' <b>•</b> '):"SERENITY 155 PARTNERS";
+      sponsorMarqueeTrack.innerHTML=`<span>${names} <b>•</b> ${names} <b>•</b> ${names}</span>`;
+    }
   }
 
   const featured=getFeaturedMatch(d.matches);

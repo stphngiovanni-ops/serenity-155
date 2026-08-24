@@ -29,7 +29,7 @@
   <div id="adminView" class="admin-shell" hidden>
     <div class="admin-top">
       <div>
-        <p class="eyebrow">CONTENT MANAGEMENT</p><span class="version-badge">ONLINE V15.0</span>
+        <p class="eyebrow">CONTENT MANAGEMENT</p><span class="version-badge">ONLINE V16.1</span>
         <h1>SERENITY <span>ADMIN</span></h1>
       </div>
       <div class="admin-actions">
@@ -217,16 +217,18 @@
       </section>
 
       <section class="admin-card">
-        <h2>SPONSOR + LOGO</h2>
+        <h2>SPONSOR SHOWCASE V2</h2>
+        <p class="hint">Kelola partner SERENITY: tier, logo, link, dan deskripsi.</p>
         <div class="form-grid">
-          <div class="full"><label>Nama Sponsor</label><input id="sponsorName" placeholder="NKJ"></div>
+          <div><label>Nama Sponsor</label><input id="sponsorName" placeholder="NKJ"></div>
+          <div><label>Tier Sponsor</label><select id="sponsorTier"><option>MAIN PARTNER</option><option>OFFICIAL PARTNER</option><option>SUPPORTING PARTNER</option></select></div>
+          <div class="full"><label>Link Website / Social</label><input id="sponsorLink" placeholder="https://..."></div>
+          <div class="full"><label>Deskripsi Sponsor</label><textarea id="sponsorDesc" placeholder="Tentang partnership sponsor..."></textarea></div>
           <div class="full">
             <label>Logo Sponsor</label>
             <input class="file-input" id="sponsorLogo" type="file" accept="image/*">
             <img id="sponsorLogoPreview" class="image-preview" hidden alt="Preview logo sponsor">
-            <div class="image-tools">
-              <button class="small-btn danger" type="button" id="clearSponsorLogo">HAPUS PILIHAN LOGO</button>
-            </div>
+            <div class="image-tools"><button class="small-btn danger" type="button" id="clearSponsorLogo">HAPUS PILIHAN LOGO</button></div>
             <p class="hint">Logo sponsor akan dibuka di Photo Crop Editor rasio 1:1.</p>
           </div>
         </div>
