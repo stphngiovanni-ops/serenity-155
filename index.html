@@ -33,7 +33,7 @@
       <a href="#matches">MATCH</a>
       <a href="#sponsors">SPONSOR</a>
       <a href="#contact">CONTACT</a>
-      <a href="store.html" class="store-link">NKJ STORE</a>
+      <a href="#nkj-store" class="store-link">NKJ STORE</a>
       <a href="admin.html" class="admin-link">ADMIN</a>
     </nav>
   </header>
@@ -186,6 +186,59 @@
       <div class="match-list" id="matchList"></div>
     </section>
 
+
+    <section id="nkj-store" class="nkj-store-section">
+      <div class="nkj-store-overlay"></div>
+      <div class="nkj-store-inner">
+        <div class="nkj-store-heading reveal">
+          <div class="nkj-brand-lockup">
+            <img src="assets/nkj-logo.png" alt="Logo NKJ" class="nkj-store-logo">
+            <div>
+              <p class="nkj-kicker">OFFICIAL DIGITAL STORE</p>
+              <h2>NKJ <span>STORE</span></h2>
+              <p>Voucher Point Blank langsung dari website SERENITY 155. Pilih nominal, masukkan ke keranjang, lalu lanjut checkout.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="nkj-store-products" id="storeProducts"></div>
+
+        <div class="nkj-checkout-wrap">
+          <div class="nkj-cart-card">
+            <div class="nkj-card-title">
+              <span>KERANJANG BELANJA</span>
+              <strong id="storeCartCount">0 ITEM</strong>
+            </div>
+            <div id="cartItems"></div>
+            <div class="nkj-cart-total">
+              <span>TOTAL</span>
+              <strong id="cartTotal">Rp0</strong>
+            </div>
+          </div>
+
+          <div class="nkj-checkout-card">
+            <div class="nkj-card-title"><span>CHECKOUT NKJ STORE</span></div>
+            <label>Nama Pembeli</label>
+            <input id="buyerName" placeholder="Nama pembeli">
+            <label>Nomor WhatsApp</label>
+            <input id="buyerWhatsapp" placeholder="08xxxxxxxxxx">
+            <label>Catatan</label>
+            <textarea id="buyerNote" placeholder="Opsional"></textarea>
+            <button class="nkj-buy-btn" id="createOrder" type="button">BUAT ORDER</button>
+            <div class="status" id="orderStatus"></div>
+            <p class="nkj-store-note">Checkout saat ini mencatat order. Pembayaran QRIS/e-wallet otomatis dapat ditambahkan saat backend/payment gateway sudah aktif.</p>
+          </div>
+        </div>
+
+        <div class="nkj-trust-row">
+          <div><strong>AMAN</strong><span>Order tercatat</span></div>
+          <div><strong>CEPAT</strong><span>Alur checkout ringkas</span></div>
+          <div><strong>PB VOUCHER</strong><span>Nominal bisa diatur Admin</span></div>
+          <div><strong>NKJ STORE</strong><span>Terintegrasi SERENITY 155</span></div>
+        </div>
+      </div>
+    </section>
+
     <section id="sponsors" class="section dark-section">
       <div class="section-head reveal">
         <p>POWERED BY</p>
@@ -252,5 +305,6 @@
   <script src="script.js"></script>
   <script src="site-data.js"></script>
 <script src="logo-manager.js"></script>
+  <script src="store.js"></script>
 </body>
 </html>
