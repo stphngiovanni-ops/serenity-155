@@ -183,6 +183,23 @@
         </div>
       </section>
 
+
+      <section class="admin-card full">
+        <h2>LOGO NKJ STORE</h2>
+        <div class="form-grid">
+          <div class="full">
+            <label>Upload / Ganti Logo NKJ Store</label>
+            <input class="file-input" id="nkjLogoInput" type="file" accept="image/*">
+            <img id="nkjLogoPreview" class="image-preview logo-preview-contain" alt="Preview logo NKJ">
+            <div class="image-tools">
+              <button class="small-btn" type="button" id="saveNKJLogo">SIMPAN LOGO NKJ</button>
+              <button class="small-btn danger" type="button" id="resetNKJLogo">KEMBALIKAN LOGO DEFAULT</button>
+            </div>
+            <p class="hint">Logo ini khusus untuk halaman NKJ Store.</p>
+          </div>
+        </div>
+      </section>
+
 <section class="admin-card full"><h2>NKJ STORE - VOUCHER PB (TERINTEGRASI)</h2><div class="form-grid"><div><label>Nama Produk</label><input id="storeProductName"></div><div><label>Nominal Cash</label><input id="storeProductCash"></div><div><label>Harga Jual</label><input id="storeProductPrice" type="number"></div><div><label>Stok</label><input id="storeProductStock" type="number"></div></div><div class="admin-actions"><button class="small-btn" id="addStoreProduct" type="button">+ TAMBAH PRODUK</button></div><div id="storeProductList" class="edit-list"></div><h2 style="margin-top:30px">ORDER MASUK</h2><div id="storeOrderList" class="edit-list"></div><p class="hint">Untuk produksi, kode voucher dan pembayaran harus diproses di backend/server.</p></section>
 <section class="admin-card full">
         <h2>CONTACT & SOCIAL</h2>
@@ -245,5 +262,7 @@
   <script src="admin.js"></script><script src="store-admin.js"></script>
 <script src="logo-manager.js"></script>
 <script src="logo-admin.js"></script>
+<script src="nkj-logo-manager.js"></script>
+<script src="nkj-logo-admin.js"></script>
 </body>
 </html>
