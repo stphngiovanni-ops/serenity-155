@@ -582,3 +582,115 @@ input:focus,textarea:focus,select:focus{border-color:var(--cyan);box-shadow:0 0 
 @media(max-width:520px){
   .nkj-store-products,.nkj-trust-row{grid-template-columns:1fr}
 }
+
+/* ===== V9.4 STANDALONE NKJ STORE ===== */
+.nkj-store-body{background:#090000;color:#fff}
+.nkj-store-header{
+  position:sticky;top:0;z-index:80;height:92px;display:grid;
+  grid-template-columns:auto 1fr auto;align-items:center;gap:28px;
+  padding:0 clamp(18px,4vw,64px);background:
+  linear-gradient(110deg,#220000 0%,#090909 35%,#080808 65%,#2a0000 100%);
+  border-bottom:1px solid rgba(255,35,35,.28);box-shadow:0 8px 32px rgba(0,0,0,.45)
+}
+.nkj-store-header::before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.25;
+  background:linear-gradient(125deg,transparent 0 25%,#e50914 25% 26%,transparent 26% 70%,#e50914 70% 71%,transparent 71%)
+}
+.nkj-store-brand{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none;z-index:1}
+.nkj-store-brand img{width:72px;height:72px;object-fit:contain;filter:drop-shadow(0 0 12px rgba(229,9,20,.25))}
+.nkj-store-brand strong{font-family:"Anton";font-size:36px;letter-spacing:1px}
+.nkj-store-brand span{font-family:"Anton";font-size:27px;color:#e50914;margin-left:7px}
+.nkj-store-nav{display:flex;justify-content:center;gap:26px;z-index:1}
+.nkj-store-nav a{color:#ddd;text-decoration:none;font-size:12px;font-weight:700;letter-spacing:.8px}
+.nkj-store-nav a:hover{color:#ff3030}
+.nkj-header-actions{display:flex;align-items:center;gap:10px;z-index:1}
+.nkj-cart-mini,.nkj-login-btn{
+  text-decoration:none;color:#fff;border:1px solid rgba(255,255,255,.12);padding:11px 16px;font-size:11px;font-weight:700
+}
+.nkj-cart-mini b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#e50914;margin-left:6px}
+.nkj-login-btn{background:linear-gradient(100deg,#9e0008,#ee1820);border-color:transparent}
+.nkj-store-header .menu-btn{display:none}
+
+.nkj-hero-pro{
+  position:relative;min-height:510px;background:#080000 url("assets/nkj-store-background.png") center/cover no-repeat;
+  overflow:hidden;border-bottom:1px solid rgba(255,40,40,.35)
+}
+.nkj-hero-layer{
+  position:absolute;inset:0;background:
+  linear-gradient(90deg,rgba(5,0,0,.96) 0%,rgba(20,0,0,.88) 42%,rgba(10,0,0,.35) 70%,rgba(0,0,0,.7)),
+  linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.72))
+}
+.nkj-hero-content{
+  position:relative;z-index:1;max-width:1450px;margin:auto;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;
+  min-height:510px;padding:50px clamp(22px,6vw,95px)
+}
+.nkj-hero-copy{max-width:680px}
+.nkj-hero-copy .nkj-kicker{font-family:"Anton";font-size:34px;color:#eee;letter-spacing:0}
+.nkj-hero-copy h1{font-family:"Anton";font-size:clamp(72px,8vw,122px);line-height:.88;font-weight:400}
+.nkj-hero-copy h2{font-family:"Anton";font-size:32px;color:#d71920;margin:12px 0 18px}
+.nkj-hero-copy>p:last-of-type{font-size:18px;color:#c1b9b9;line-height:1.55;max-width:610px}
+.nkj-feature-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:26px}
+.nkj-feature-row div{border:1px solid rgba(255,255,255,.12);padding:11px;background:rgba(0,0,0,.42)}
+.nkj-feature-row strong{display:block;color:#ff2b2b;font-size:12px}
+.nkj-feature-row span{font-size:10px;color:#a89e9e}
+.nkj-hero-logo-wrap{display:grid;place-items:center}
+.nkj-hero-logo{width:min(500px,85%);filter:drop-shadow(0 0 28px rgba(229,9,20,.28))}
+
+.nkj-products-section,.nkj-checkout-section,.nkj-how-section{padding:42px clamp(18px,3vw,40px);background:#0a0707}
+.nkj-section-title{text-align:center;margin-bottom:18px}
+.nkj-section-title span{font-size:10px;color:#e50914;letter-spacing:2px;font-weight:700}
+.nkj-section-title h2{font-family:"Anton";font-size:42px;font-weight:400}
+.nkj-products-layout{display:grid;grid-template-columns:1fr 360px;gap:18px;max-width:1500px;margin:auto}
+.nkj-store-products-page{grid-template-columns:repeat(4,minmax(0,1fr));margin-top:0}
+.nkj-cart-side{
+  background:#0b0b0b;border:1px solid rgba(255,255,255,.12);padding:20px;align-self:start;position:sticky;top:110px
+}
+.nkj-cart-checkout{display:block;text-align:center;text-decoration:none;margin-top:15px}
+.nkj-payment-strip{
+  padding:16px clamp(18px,5vw,70px);background:#101010;border-top:1px solid #242424;border-bottom:1px solid #242424;text-align:center
+}
+.nkj-payment-title{font-size:12px;color:#aaa;margin-bottom:10px}
+.nkj-payment-methods{display:flex;justify-content:center;gap:26px;flex-wrap:wrap}
+.nkj-payment-methods span{font-weight:700;color:#b5b5b5}
+.nkj-how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:1200px;margin:auto}
+.nkj-how-grid article{padding:22px;background:#100909;border:1px solid rgba(255,45,45,.16)}
+.nkj-how-grid strong{font-family:"Anton";font-size:42px;color:#4d1414}
+.nkj-how-grid h3{font-size:22px;margin:6px 0}
+.nkj-how-grid p{color:#8f8484}
+.nkj-checkout-page{max-width:1150px;margin:auto}
+
+.nkj-store-footer{
+  display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:30px;padding:34px clamp(20px,5vw,70px);
+  background:linear-gradient(100deg,#210000,#090909 35%,#090909 70%,#210000);border-top:1px solid rgba(255,40,40,.22)
+}
+.nkj-footer-brand{display:flex;gap:16px}
+.nkj-footer-brand img{width:110px;height:110px;object-fit:contain}
+.nkj-footer-brand strong{font-family:"Anton";font-size:28px;color:#e50914}
+.nkj-footer-brand p{color:#8d8585;max-width:330px;line-height:1.5}
+.nkj-store-footer h4{margin-bottom:10px}
+.nkj-store-footer a,.nkj-store-footer p{display:block;color:#9d9494;text-decoration:none;margin:6px 0;font-size:13px}
+
+@media(max-width:1150px){
+  .nkj-store-products-page{grid-template-columns:repeat(3,1fr)}
+  .nkj-products-layout{grid-template-columns:1fr 320px}
+  .nkj-store-nav{gap:14px}
+}
+@media(max-width:900px){
+  .nkj-store-header{grid-template-columns:auto auto;justify-content:space-between;height:auto;min-height:78px;padding-top:8px;padding-bottom:8px}
+  .nkj-store-header .menu-btn{display:flex}
+  .nkj-store-nav{display:none;position:absolute;top:78px;left:12px;right:12px;flex-direction:column;background:#0c0707;border:1px solid #3b1515;padding:18px}
+  .nkj-store-nav.open{display:flex}
+  .nkj-header-actions{display:none}
+  .nkj-hero-content{grid-template-columns:1fr;text-align:center}
+  .nkj-hero-copy{margin:auto}.nkj-feature-row{grid-template-columns:repeat(2,1fr)}
+  .nkj-hero-logo{width:300px;margin-top:20px}
+  .nkj-products-layout{grid-template-columns:1fr}
+  .nkj-cart-side{position:static}
+  .nkj-store-products-page{grid-template-columns:repeat(2,1fr)}
+  .nkj-store-footer{grid-template-columns:1fr 1fr}
+}
+@media(max-width:580px){
+  .nkj-store-brand img{width:55px;height:55px}.nkj-store-brand strong{font-size:28px}.nkj-store-brand span{font-size:21px}
+  .nkj-hero-copy .nkj-kicker{font-size:24px}.nkj-hero-copy h2{font-size:23px}
+  .nkj-feature-row,.nkj-store-products-page,.nkj-how-grid,.nkj-store-footer{grid-template-columns:1fr}
+}

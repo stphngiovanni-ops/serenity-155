@@ -39,20 +39,15 @@ function renderProducts(){
   });
 }
 function updateCartCount(){
+  const qty=cart.reduce((s,c)=>s+c.qty,0);
   const el=document.getElementById("storeCartCount");
-  if(el) el.textContent=cart.reduce((s,c)=>s+c.qty,0)+" ITEM";
+  if(el) el.textContent=qty+" ITEM";
+  const head=document.getElementById("headerCartCount");
+  if(head) head.textContent=qty;
 }
 function renderCart(){
-  const wrap=document.getElementById("cartItems");
-  const totalEl=document.getElementById("cartTotal");
-  if(!wrap||!totalEl) return;
-  if(!cart.length){
-    wrap.innerHTML='<div class="nkj-empty-cart"><strong>Keranjang masih kosong</strong><span>Pilih voucher Point Blank di atas.</span></div>';
-    totalEl.textContent="Rp0";
-    updateCartCount();
-    return;
-  }
-  wrap.innerHTML=cart.map((c,i)=>`
+  const total=cart.reduce((s,c)=>s+c.price*c.qty,0);
+  const makeRows=()=>cart.map((c,i)=>`
     <div class="nkj-cart-row">
       <div><b>${c.cash}</b><small>${rupiah(c.price)} × ${c.qty}</small></div>
       <div class="nkj-cart-actions">
@@ -62,7 +57,14 @@ function renderCart(){
         <button type="button" data-remove="${i}">×</button>
       </div>
     </div>`).join("");
-  totalEl.textContent=rupiah(cart.reduce((s,c)=>s+c.price*c.qty,0));
+
+  ["cartItems","cartItemsCheckout"].forEach(id=>{
+    const wrap=document.getElementById(id);
+    if(!wrap)return;
+    wrap.innerHTML=cart.length?makeRows():'<div class="nkj-empty-cart"><strong>Keranjang masih kosong</strong><span>Yuk pilih voucher favoritmu.</span></div>';
+  });
+  const t1=document.getElementById("cartTotal"); if(t1)t1.textContent=rupiah(total);
+  const t2=document.getElementById("cartTotalCheckout"); if(t2)t2.textContent=rupiah(total);
   updateCartCount();
 }
 function addToCart(id){
@@ -73,7 +75,6 @@ function addToCart(id){
     if(found.qty<p.stock)found.qty++;
   }else cart.push({...p,qty:1});
   renderCart();
-  document.getElementById("nkj-store")?.scrollIntoView({behavior:"smooth",block:"center"});
 }
 function createOrder(){
   const status=document.getElementById("orderStatus");
@@ -113,4 +114,13 @@ document.addEventListener("DOMContentLoaded",()=>{
   if(!document.getElementById("storeProducts"))return;
   loadStore();renderProducts();renderCart();
   document.getElementById("createOrder")?.addEventListener("click",createOrder);
+});
+
+document.addEventListener("DOMContentLoaded",()=>{
+  const btn=document.getElementById("nkjMenuBtn");
+  const nav=document.getElementById("nkjStoreNav");
+  if(btn&&nav){
+    btn.addEventListener("click",()=>nav.classList.toggle("open"));
+    nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>nav.classList.remove("open")));
+  }
 });

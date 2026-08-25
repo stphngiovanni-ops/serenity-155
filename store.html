@@ -1,7 +1,166 @@
-<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NKJ Store | SERENITY 155</title><link rel="stylesheet" href="styles.css"></head><body>
-<header class="site-header"><a href="index.html" class="brand"><img src="assets/serenity155-logo.png" data-serenity-logo="1"><span>NKJ <b>STORE</b></span></a><nav><a href="index.html">SERENITY</a><a href="#products">VOUCHER PB</a><a href="#checkout">CHECKOUT</a><a href="admin.html">ADMIN</a></nav></header>
-<main class="store-page"><section class="store-hero"><div><p class="eyebrow">OFFICIAL DIGITAL STORE</p><h1>NKJ <span>STORE</span></h1><p>Voucher Point Blank dengan pilihan nominal, harga transparan, dan alur checkout yang rapi.</p><a href="#products" class="btn primary">BELI VOUCHER PB</a></div><div class="store-hero-card"><div class="store-badge">POINT BLANK</div><strong>FAST • SIMPLE • SECURE FLOW</strong><small>Payment otomatis membutuhkan integrasi payment gateway dan backend.</small></div></section>
-<section id="products" class="section"><div class="section-head"><p>POINT BLANK VOUCHER</p><h2>PILIH <span>NOMINAL</span></h2></div><div class="store-products" id="storeProducts"></div></section>
-<section id="checkout" class="section dark-section"><div class="section-head"><p>YOUR ORDER</p><h2>CHECK<span>OUT</span></h2></div><div class="checkout-grid"><div class="cart-card"><h3>KERANJANG</h3><div id="cartItems"></div><div class="cart-total"><span>TOTAL</span><strong id="cartTotal">Rp0</strong></div></div><div class="checkout-card"><h3>DATA PEMBELI</h3><label>Nama</label><input id="buyerName"><label>WhatsApp</label><input id="buyerWhatsapp"><label>Catatan</label><textarea id="buyerNote"></textarea><button class="btn primary" id="createOrder" type="button">BUAT ORDER</button><div class="status" id="orderStatus"></div><p class="store-warning">Versi ini belum memproses pembayaran otomatis.</p></div></div></section></main>
-<footer><div class="footer-brand"><img src="assets/serenity155-logo.png" data-serenity-logo="1"><div><strong>NKJ STORE</strong><span>BY SERENITY 155</span></div></div><p>Digital Voucher Store</p><a href="index.html">BACK TO SERENITY</a></footer><script src="store.js"></script><script src="logo-manager.js"></script>
-</body></html>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#140000">
+  <title>NKJ Store | Voucher Point Blank</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="nkj-store-body">
+  <header class="nkj-store-header">
+    <a href="store.html" class="nkj-store-brand">
+      <img src="assets/nkj-logo.png" alt="NKJ">
+      <div><strong>NKJ</strong><span>STORE</span></div>
+    </a>
+
+    <button class="menu-btn" id="nkjMenuBtn" aria-label="Buka menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="nkj-store-nav" id="nkjStoreNav">
+      <a href="index.html">BERANDA</a>
+      <a href="#products">VOUCHER PB</a>
+      <a href="#how">CARA BELI</a>
+      <a href="#checkout">CEK ORDER</a>
+      <a href="#contact-store">KONTAK</a>
+    </nav>
+
+    <div class="nkj-header-actions">
+      <a href="#checkout" class="nkj-cart-mini">🛒 <span>KERANJANG</span> <b id="headerCartCount">0</b></a>
+      <a href="admin.html" class="nkj-login-btn">LOGIN / ADMIN</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="nkj-hero-pro">
+      <div class="nkj-hero-layer"></div>
+      <div class="nkj-hero-content">
+        <div class="nkj-hero-copy">
+          <p class="nkj-kicker">TOP UP CASH</p>
+          <h1>POINT BLANK</h1>
+          <h2>MURAH • AMAN • TERPERCAYA</h2>
+          <p>Top up Cash Point Blank hanya di NKJ Store. Proses cepat, harga bersahabat, dan pilihan voucher yang mudah dikelola.</p>
+
+          <div class="nkj-feature-row">
+            <div><strong>AMAN</strong><span>Order Tercatat</span></div>
+            <div><strong>CEPAT</strong><span>Proses Instan</span></div>
+            <div><strong>LEGAL</strong><span>Produk Terdata</span></div>
+            <div><strong>24/7</strong><span>Support Online</span></div>
+          </div>
+        </div>
+
+        <div class="nkj-hero-logo-wrap">
+          <img src="assets/nkj-logo.png" alt="NKJ Store" class="nkj-hero-logo">
+        </div>
+      </div>
+    </section>
+
+    <section id="products" class="nkj-products-section">
+      <div class="nkj-section-title">
+        <span>PILIH NOMINAL</span>
+        <h2>VOUCHER POINT BLANK</h2>
+      </div>
+
+      <div class="nkj-products-layout">
+        <div class="nkj-store-products nkj-store-products-page" id="storeProducts"></div>
+
+        <aside class="nkj-cart-side">
+          <div class="nkj-card-title">
+            <span>KERANJANG BELANJA</span>
+          </div>
+          <div id="cartItems"></div>
+          <div class="nkj-cart-total">
+            <span>TOTAL</span>
+            <strong id="cartTotal">Rp0</strong>
+          </div>
+          <a href="#checkout" class="nkj-buy-btn nkj-cart-checkout">LIHAT KERANJANG</a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="nkj-payment-strip">
+      <div class="nkj-payment-title">🔒 PEMBAYARAN AMAN & TERPERCAYA</div>
+      <div class="nkj-payment-methods">
+        <span>QRIS</span><span>DANA</span><span>OVO</span><span>GoPay</span><span>ShopeePay</span>
+        <span>BCA</span><span>Mandiri</span><span>BNI</span><span>BRI</span>
+      </div>
+    </section>
+
+    <section id="how" class="nkj-how-section">
+      <div class="nkj-section-title">
+        <span>MUDAH & CEPAT</span>
+        <h2>CARA PEMBELIAN</h2>
+      </div>
+      <div class="nkj-how-grid">
+        <article><strong>01</strong><h3>Pilih Voucher</h3><p>Pilih nominal Cash PB yang ingin dibeli.</p></article>
+        <article><strong>02</strong><h3>Masukkan Keranjang</h3><p>Tentukan jumlah pembelian dan cek total.</p></article>
+        <article><strong>03</strong><h3>Isi Data</h3><p>Masukkan nama dan nomor WhatsApp.</p></article>
+        <article><strong>04</strong><h3>Buat Order</h3><p>Order akan tercatat dan mendapat ID transaksi.</p></article>
+      </div>
+    </section>
+
+    <section id="checkout" class="nkj-checkout-section">
+      <div class="nkj-section-title">
+        <span>ORDER</span>
+        <h2>CHECKOUT</h2>
+      </div>
+
+      <div class="nkj-checkout-wrap nkj-checkout-page">
+        <div class="nkj-cart-card">
+          <div class="nkj-card-title">
+            <span>RINGKASAN PESANAN</span>
+            <strong id="storeCartCount">0 ITEM</strong>
+          </div>
+          <div id="cartItemsCheckout"></div>
+          <div class="nkj-cart-total">
+            <span>TOTAL</span>
+            <strong id="cartTotalCheckout">Rp0</strong>
+          </div>
+        </div>
+
+        <div class="nkj-checkout-card">
+          <div class="nkj-card-title"><span>DATA PEMBELI</span></div>
+          <label>Nama Pembeli</label>
+          <input id="buyerName" placeholder="Nama pembeli">
+          <label>Nomor WhatsApp</label>
+          <input id="buyerWhatsapp" placeholder="08xxxxxxxxxx">
+          <label>Catatan</label>
+          <textarea id="buyerNote" placeholder="Opsional"></textarea>
+          <button class="nkj-buy-btn" id="createOrder" type="button">BUAT ORDER</button>
+          <div class="status" id="orderStatus"></div>
+          <p class="nkj-store-note">Pembayaran otomatis belum aktif. Integrasi QRIS/e-wallet membutuhkan payment gateway dan backend.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="nkj-store-footer" id="contact-store">
+    <div class="nkj-footer-brand">
+      <img src="assets/nkj-logo.png" alt="NKJ">
+      <div><strong>NKJ STORE</strong><p>Top up Cash Point Blank dengan tampilan premium dan terintegrasi dengan website SERENITY 155.</p></div>
+    </div>
+    <div>
+      <h4>INFORMASI</h4>
+      <a href="#how">Cara Pembelian</a>
+      <a href="index.html">SERENITY 155</a>
+      <a href="admin.html">Admin</a>
+    </div>
+    <div>
+      <h4>BANTUAN</h4>
+      <a href="#checkout">Cek Order</a>
+      <a href="#products">Voucher PB</a>
+      <a href="#contact-store">Kontak</a>
+    </div>
+    <div>
+      <h4>FOLLOW US</h4>
+      <p>NKJ Store • SERENITY 155</p>
+    </div>
+  </footer>
+
+  <script src="store.js"></script>
+</body>
+</html>
