@@ -13,7 +13,7 @@
 <body>
   <div id="loginView" class="login-wrap">
     <div class="login-card">
-      <img src="assets/serenity155-logo.png" alt="SERENITY 155">
+      <img src="assets/serenity155-logo.png" data-serenity-logo="1" alt="SERENITY 155">
       <h1>ADMIN <span style="color:#28e7f0">155</span></h1>
       <p>Panel pengelolaan website SERENITY 155</p>
       <label>Username</label>
@@ -166,7 +166,24 @@
         <div id="sponsorList" class="edit-list"></div>
       </section>
 
-      <section class="admin-card full"><h2>NKJ STORE - VOUCHER PB</h2><div class="form-grid"><div><label>Nama Produk</label><input id="storeProductName"></div><div><label>Nominal Cash</label><input id="storeProductCash"></div><div><label>Harga Jual</label><input id="storeProductPrice" type="number"></div><div><label>Stok</label><input id="storeProductStock" type="number"></div></div><div class="admin-actions"><button class="small-btn" id="addStoreProduct" type="button">+ TAMBAH PRODUK</button></div><div id="storeProductList" class="edit-list"></div><h2 style="margin-top:30px">ORDER MASUK</h2><div id="storeOrderList" class="edit-list"></div><p class="hint">Untuk produksi, kode voucher dan pembayaran harus diproses di backend/server.</p></section>
+      
+      <section class="admin-card full">
+        <h2>LOGO SERENITY 155</h2>
+        <div class="form-grid">
+          <div class="full">
+            <label>Upload / Ganti Logo SERENITY</label>
+            <input class="file-input" id="serenityLogoInput" type="file" accept="image/*">
+            <img id="serenityLogoPreview" class="image-preview logo-preview-contain" alt="Preview logo Serenity">
+            <div class="image-tools">
+              <button class="small-btn" type="button" id="saveSerenityLogo">SIMPAN LOGO</button>
+              <button class="small-btn danger" type="button" id="resetSerenityLogo">KEMBALIKAN LOGO DEFAULT</button>
+            </div>
+            <p class="hint">Logo disimpan di browser dan otomatis dipakai di Home, NKJ Store, Admin, footer, dan bagian match.</p>
+          </div>
+        </div>
+      </section>
+
+<section class="admin-card full"><h2>NKJ STORE - VOUCHER PB</h2><div class="form-grid"><div><label>Nama Produk</label><input id="storeProductName"></div><div><label>Nominal Cash</label><input id="storeProductCash"></div><div><label>Harga Jual</label><input id="storeProductPrice" type="number"></div><div><label>Stok</label><input id="storeProductStock" type="number"></div></div><div class="admin-actions"><button class="small-btn" id="addStoreProduct" type="button">+ TAMBAH PRODUK</button></div><div id="storeProductList" class="edit-list"></div><h2 style="margin-top:30px">ORDER MASUK</h2><div id="storeOrderList" class="edit-list"></div><p class="hint">Untuk produksi, kode voucher dan pembayaran harus diproses di backend/server.</p></section>
 <section class="admin-card full">
         <h2>CONTACT & SOCIAL</h2>
         <div class="form-grid">
@@ -226,5 +243,7 @@
   </div>
 
   <script src="admin.js"></script><script src="store-admin.js"></script>
+<script src="logo-manager.js"></script>
+<script src="logo-admin.js"></script>
 </body>
 </html>

@@ -124,7 +124,7 @@ function imageToDataURL(file,maxW=900,maxH=900,quality=.82){
   const mode=(maxW===1200&&maxH===850)?"achievement":(maxW===700&&maxH===700)?"logo":"player";
   return openCropEditor(file,mode);
 }
-function login(){if(($("loginUser").value||"").trim()==="admin"&&($("loginPass").value||"")==="serenity155"){try{sessionStorage.setItem("serenity155Admin","1")}catch(e){}showAdmin()}else $("loginStatus").textContent="Username atau password salah."}
+function login(){if(($("loginUser").value||"").trim()==="admin"&&($("loginPass").value||"")==="serenity_mei25"){try{sessionStorage.setItem("serenity155Admin","1")}catch(e){}showAdmin()}else $("loginStatus").textContent="Username atau password salah."}
 function showAdmin(){$("loginView").hidden=true;$("loginView").style.display="none";$("adminView").hidden=false;$("adminView").style.display="block";loadData();fillForm();renderLists()}
 function fillForm(){
   $("about1").value=data.about1||"";$("about2").value=data.about2||"";
