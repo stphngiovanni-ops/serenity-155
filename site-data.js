@@ -29,8 +29,6 @@ const DEFAULT_DATA = {
   matches: [
     {date:"2026-09-12T20:00", opponent:"OPPONENT", game:"POINT BLANK", format:"BO3 / BO5", stream:"LIVE STREAM", status:"UPCOMING", logo:"", featured:true}
   ],
-  matchHistory: [],
-  announcements:[{id:"welcome-v112",title:"WELCOME TO SERENITY 155",category:"TEAM",date:"2026-08-21",message:"Selamat datang di official website SQUAD SERENITY 155.",pinned:true,active:true,image:""}],
   sponsors:[{name:"NKJ",logo:""},{name:"AJ1",logo:""},{name:"2K",logo:""},{name:"PARTNER",logo:""}],
   contact:{email:"serenity155@example.com", instagram:"https://instagram.com/", youtube:"https://youtube.com/"}
 };
@@ -61,16 +59,12 @@ function migrateData(x){
     warRoster:(x.warRoster||DEFAULT_DATA.warRoster).slice(0,12).map(p=>({...p,photo:p.photo||""})),
     achievements:(x.achievements||DEFAULT_DATA.achievements).map(a=>({...a,photo:a.photo||""})),
     sponsors:(x.sponsors||DEFAULT_DATA.sponsors).map(s=>typeof s==="string"?{name:s,logo:""}:{name:s.name||"SPONSOR",logo:s.logo||""}),
-    matches:(x.matches||DEFAULT_DATA.matches).map(m=>({...m,logo:m.logo||"",featured:!!m.featured,status:m.status||"UPCOMING",ourScore:Number(m.ourScore||0),opponentScore:Number(m.opponentScore||0),mvp:m.mvp||"",event:m.event||""})),
-    matchHistory:(x.matchHistory||[]).map(h=>({...h,logo:h.logo||"",result:h.result||"WIN",ourScore:Number(h.ourScore||0),opponentScore:Number(h.opponentScore||0)})),
-    announcements:(x.announcements||DEFAULT_DATA.announcements||[]).map(a=>({...a,image:a.image||"",active:a.active!==false,pinned:!!a.pinned}))
+    matches:(x.matches||DEFAULT_DATA.matches).map(m=>({...m,logo:m.logo||"",featured:!!m.featured,status:m.status||"UPCOMING"}))
   };
 }
 function getSiteData(){
-  try{
-    if(window.__SERENITY_CLOUD_DATA__) return migrateData(window.__SERENITY_CLOUD_DATA__);
-    return migrateData(JSON.parse(localStorage.getItem("serenity155Data")));
-  }catch(e){return DEFAULT_DATA}
+  try{return migrateData(JSON.parse(localStorage.getItem("serenity155Data")))}
+  catch(e){return DEFAULT_DATA}
 }
 const SITE_DATA=getSiteData();
 
@@ -152,37 +146,15 @@ function renderRoster(targetId, players, groupName){
   }
 
   const sponsors=document.getElementById("sponsorGrid");
-  const sponsorFeatured=document.getElementById("sponsorFeatured");
-  const sponsorMarqueeTrack=document.getElementById("sponsorMarqueeTrack");
   if(sponsors){
     sponsors.innerHTML="";
-    const normalized=(d.sponsors||[]).map((s,i)=>{
-      const item=typeof s==="string"?{name:s,logo:""}:{...s};
-      item.tier=item.tier||((i===0)?"MAIN PARTNER":"OFFICIAL PARTNER");
-      item.link=item.link||"";
-      item.desc=item.desc||"";
-      return item;
-    });
-    const main=normalized.find(x=>String(x.tier).toUpperCase()==="MAIN PARTNER")||normalized[0];
-    if(sponsorFeatured){
-      sponsorFeatured.innerHTML=main?`<article class="sponsor-hero-card">
-        <div class="sponsor-hero-copy"><span>MAIN PARTNER // SERENITY 155</span><h3>${escapeHtml(main.name||"PARTNER")}</h3><p>${escapeHtml(main.desc||"Official partner supporting the journey of SERENITY 155.")}</p>${main.link?`<a href="${main.link}" target="_blank" rel="noopener">VISIT PARTNER ↗</a>`:""}</div>
-        <div class="sponsor-hero-logo">${main.logo?`<img src="${main.logo}" alt="${escapeHtml(main.name)}">`:`<b>${escapeHtml(main.name||"PARTNER")}</b>`}</div>
-      </article>`:`<div class="sponsor-empty">BELUM ADA MAIN PARTNER</div>`;
-    }
-    normalized.forEach((item,i)=>{
-      const el=document.createElement(item.link?"a":"div");
-      if(item.link){el.href=item.link;el.target="_blank";el.rel="noopener"}
-      el.className="sponsor-card-v2"+(i===0?" is-main":"");
-      el.innerHTML=`<div class="sponsor-tier">${escapeHtml(item.tier)}</div>
-        <div class="sponsor-logo-wrap">${item.logo?`<img class="sponsor-logo" src="${item.logo}" alt="${escapeHtml(item.name)}">`:`<strong>${escapeHtml(item.name)}</strong>`}</div>
-        <div class="sponsor-card-bottom"><span class="sponsor-name">${escapeHtml(item.name)}</span><small>${item.link?"VISIT ↗":"OFFICIAL PARTNER"}</small></div>`;
+    d.sponsors.forEach(s=>{
+      const item=typeof s==="string"?{name:s,logo:""}:s;
+      const el=document.createElement("div");
+      el.innerHTML=(item.logo?`<img class="sponsor-logo" src="${item.logo}" alt="${escapeHtml(item.name)}">`:"")
+        +`<span class="sponsor-name">${escapeHtml(item.name)}</span>`;
       sponsors.appendChild(el);
-    });
-    if(sponsorMarqueeTrack){
-      const names=normalized.length?normalized.map(x=>escapeHtml(x.name)).join(' <b>•</b> '):"SERENITY 155 PARTNERS";
-      sponsorMarqueeTrack.innerHTML=`<span>${names} <b>•</b> ${names} <b>•</b> ${names}</span>`;
-    }
+    })
   }
 
   const featured=getFeaturedMatch(d.matches);
@@ -203,7 +175,7 @@ function renderRoster(targetId, players, groupName){
         label.textContent=fmtDate(featured.date);
         const tick=()=>{
           const diff=dt-new Date();
-          if(featured.status==="COMPLETED"){cd.textContent=`FINAL ${Number(featured.ourScore||0)} : ${Number(featured.opponentScore||0)}`;return}
+          if(featured.status==="COMPLETED"){cd.textContent="MATCH FINISHED";return}
           if(featured.status==="LIVE"){cd.textContent="LIVE NOW";return}
           if(diff<=0){cd.textContent="MATCH TIME";return}
           const day=Math.floor(diff/86400000),hr=Math.floor(diff/3600000)%24,min=Math.floor(diff/60000)%60,sec=Math.floor(diff/1000)%60;
@@ -221,27 +193,10 @@ function renderRoster(targetId, players, groupName){
       const card=document.createElement("article");
       card.className="match-mini-card"+(m.featured?" featured":"");
       const logo=m.logo?`<img src="${m.logo}" alt="${escapeHtml(m.opponent)}">`:"?";
-      const finished=m.status==="COMPLETED";
-      const result=Number(m.ourScore||0)>Number(m.opponentScore||0)?"VICTORY":Number(m.ourScore||0)<Number(m.opponentScore||0)?"DEFEAT":"DRAW";
-      card.innerHTML=`<div class="match-mini-top"><span class="match-status ${escapeHtml(m.status)}">${finished?"FINISHED":escapeHtml(m.status)}</span>${m.featured?'<span class="featured-tag">NEXT MATCH</span>':""}${finished?`<span class="match-result-badge ${result.toLowerCase()}">${result}</span>`:""}</div>
-      <div class="match-mini-main"><div class="match-mini-logo">${logo}</div><div><h3>SERENITY 155 <span style="color:#657080">VS</span> ${escapeHtml(m.opponent)}</h3>${finished?`<div class="match-final-score"><b>${Number(m.ourScore||0)}</b><span>:</span><b>${Number(m.opponentScore||0)}</b></div>`:""}<p>${escapeHtml(m.event||m.game)} • ${escapeHtml(m.format)}${m.mvp?` • MVP ${escapeHtml(m.mvp)}`:""}</p></div></div>
-      <div class="match-mini-bottom"><span>${fmtDate(m.date)}</span><span>${finished?"MATCH FINISHED":escapeHtml(m.stream||"")}</span></div>`;
+      card.innerHTML=`<div class="match-mini-top"><span class="match-status ${escapeHtml(m.status)}">${escapeHtml(m.status)}</span>${m.featured?'<span class="featured-tag">NEXT MATCH</span>':""}</div>
+      <div class="match-mini-main"><div class="match-mini-logo">${logo}</div><div><h3>SERENITY 155 <span style="color:#657080">VS</span> ${escapeHtml(m.opponent)}</h3><p>${escapeHtml(m.game)} • ${escapeHtml(m.format)}</p></div></div>
+      <div class="match-mini-bottom"><span>${fmtDate(m.date)}</span><span>${escapeHtml(m.stream||"")}</span></div>`;
       matchList.appendChild(card);
-    });
-  }
-
-  const historyGrid=document.getElementById("historyGrid"),historyEmpty=document.getElementById("historyEmpty"),historyStats=document.getElementById("historyStats");
-  if(historyGrid){
-    const history=[...(d.matchHistory||[])].sort((a,b)=>new Date(b.date)-new Date(a.date));
-    historyGrid.innerHTML="";
-    if(historyEmpty)historyEmpty.hidden=history.length>0;
-    const wins=history.filter(h=>h.result==="WIN").length, losses=history.filter(h=>h.result==="LOSE").length, draws=history.filter(h=>h.result==="DRAW").length;
-    if(historyStats)historyStats.innerHTML=`<div><strong>${history.length}</strong><span>TOTAL MATCH</span></div><div class="win"><strong>${wins}</strong><span>WIN</span></div><div class="lose"><strong>${losses}</strong><span>LOSE</span></div><div><strong>${draws}</strong><span>DRAW</span></div>`;
-    history.forEach(h=>{
-      const card=document.createElement("article");card.className="history-card reveal show";
-      const oppLogo=h.logo?`<img src="${h.logo}" alt="${escapeHtml(h.opponent)}">`:`<span>${escapeHtml((h.opponent||"?").charAt(0))}</span>`;
-      card.innerHTML=`<div class="history-card-top"><span>${escapeHtml(h.event||"MATCH")}</span><b class="history-result ${escapeHtml(h.result)}">${escapeHtml(h.result)}</b></div><div class="history-versus"><div class="history-team"><img src="./serenity155-logo.png" alt="SERENITY 155"><strong>SERENITY 155</strong></div><div class="history-score"><b>${Number(h.ourScore||0)} <i>:</i> ${Number(h.opponentScore||0)}</b><span>${fmtDate(h.date)}</span></div><div class="history-team"><div class="history-opponent-logo">${oppLogo}</div><strong>${escapeHtml(h.opponent)}</strong></div></div><div class="history-meta"><span>${escapeHtml(h.game||"POINT BLANK")}</span><span>${escapeHtml(h.format||"")}</span><span>${escapeHtml(h.note||"")}</span></div>`;
-      historyGrid.appendChild(card);
     });
   }
 

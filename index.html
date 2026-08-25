@@ -9,63 +9,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=17.0" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="v12-body">
-  <div class="v15-opening" id="v15Opening">
-    <div class="v15-noise"></div>
-    <div class="v15-opening-core">
-      <img src="serenity155-logo.webp" onerror="this.src='serenity155-logo.png'" alt="SERENITY 155">
-      <span>INITIALIZING SERENITY NETWORK</span>
-      <h1>SERENITY <b>155</b></h1>
-      <div class="v15-opening-line"><i></i></div>
-      <small>TACTICAL • FEARLESS • UNITED</small>
-    </div>
-  </div>
-
-  <div class="v15-match-hud" id="v15MatchHud">
-    <div class="hud-live"><i></i><span>NEXT MATCH</span></div>
-    <div class="hud-main">
-      <b>SERENITY 155</b><strong>VS</strong><b id="v15HudOpponent">TBA</b>
-    </div>
-    <div class="hud-countdown" id="v15HudCountdown">--:--:--</div>
-    <a href="#match">MATCH CENTER →</a>
-  </div>
-
-  <div class="kalimantan-tribute-bg" id="kalimantanTribute" aria-hidden="true">
-    <div class="kalimantan-map-mark">KALIMANTAN</div>
-    <div class="kalimantan-ribbon"></div>
-    <div class="kalimantan-grid-lines"></div>
-  </div>
-  <div class="pray-banner">
-    <span class="pray-dot"></span>
-    <strong>PRAY FOR KALIMANTAN</strong>
-    <small>STAY STRONG • STAY UNITED</small>
-  </div>
-
-  <div class="v12-preloader" id="v12Preloader" aria-hidden="true">
-    <div class="v12-preloader-core">
-      <img src="./serenity155-logo.png" alt="">
-      <div class="v12-preloader-copy">
-        <span>SERENITY 155</span>
-        <b>INITIALIZING TACTICAL SYSTEM</b>
-      </div>
-      <div class="v12-loadbar"><i></i></div>
-    </div>
-  </div>
-  <div class="v12-scroll-progress" id="v12ScrollProgress"></div>
-  <div class="esports-bg" aria-hidden="true">
-    <div class="bg-grid"></div><div class="bg-vignette"></div><div class="bg-scanlines"></div>
-    <div class="bg-orb orb-cyan"></div><div class="bg-orb orb-pink"></div>
-    <div class="bg-beam beam-a"></div><div class="bg-beam beam-b"></div>
-    <div class="bg-particles" id="bgParticles"></div>
-  </div>
+<body>
   <div class="noise"></div>
   <div class="cursor-glow" id="cursorGlow"></div>
 
   <header class="site-header">
     <a href="#home" class="brand" aria-label="SERENITY 155 Home">
-      <img src="./serenity155-logo.png" alt="Logo SERENITY 155" />
+      <img src="assets/serenity155-logo.png" alt="Logo SERENITY 155" />
       <span>SERENITY <b>155</b></span>
     </a>
 
@@ -79,34 +31,20 @@
       <a href="#roster">ROSTER</a>
       <a href="#achievement">ACHIEVEMENT</a>
       <a href="#matches">MATCH</a>
-      <a href="#history">HISTORY</a>
       <a href="#sponsors">SPONSOR</a>
       <a href="#contact">CONTACT</a>
-      <button class="nav-announcement" id="announcementNavBtn" type="button">ANNOUNCEMENT <span id="announcementBadge" class="announcement-badge">NEW</span></button>
-<a href="hub.html">HUB</a>
-      <a href="competitive.html">COMPETITIVE</a><a href="tv.html">TV</a>
-      <a href="family.html">FAMILY</a>
-      <a href="tournament.html">TOURNAMENT</a>
-        <a href="admin.html" class="admin-link">ADMIN</a>
+      <a href="store.html" class="store-link">NKJ STORE</a>
+      <a href="admin.html" class="admin-link">ADMIN</a>
     </nav>
   </header>
 
   <main>
-    <div class="v12-section-rail v12-rail-left" aria-hidden="true"></div>
-    <div class="v12-section-rail v12-rail-right" aria-hidden="true"></div>
-    <section id="home" class="hero esports-hero">
-      <div class="hero-hud hero-hud-left"><span>TACTICAL UNIT</span><b>SRNTY-155</b></div>
-      <div class="hero-hud hero-hud-right"><span>STATUS</span><b>ONLINE</b></div>
-      <div class="hero-corner tl"></div><div class="hero-corner tr"></div><div class="hero-corner bl"></div><div class="hero-corner br"></div>
+    <section id="home" class="hero">
       <div class="hero-grid"></div>
       <div class="hero-light cyan"></div>
       <div class="hero-light pink"></div>
 
-      <div class="v12-hero-kicker">
-          <span><i></i> SYSTEM ONLINE</span>
-          <span>POINT BLANK // COMPETITIVE UNIT</span>
-        </div>
-        <div class="hero-copy reveal">
+      <div class="hero-copy reveal">
         <p class="eyebrow">OFFICIAL ESPORTS SQUAD</p>
         <h1>SERENITY <span>155</span></h1>
         <p class="hero-sub">
@@ -126,22 +64,14 @@
 
       <div class="hero-logo-wrap reveal">
         <div class="logo-orbit"></div>
-        <img class="hero-logo" src="/serenity155-logo.webp" alt="SERENITY 155" />
+        <img class="hero-logo" src="assets/serenity155-logo.png" alt="SERENITY 155" />
       </div>
 
-      <div class="v12-hero-ticker" aria-hidden="true">
-        <div>
-          <span>SERENITY 155</span><b>•</b><span>ONE SQUAD</span><b>•</b><span>ONE FAMILY</span><b>•</b>
-          <span>TACTICAL</span><b>•</b><span>FEARLESS</span><b>•</b><span>UNITED</span><b>•</b>
-          <span>SERENITY 155</span><b>•</b><span>ONE SQUAD</span><b>•</b><span>ONE FAMILY</span>
-        </div>
-      </div>
-      <div class="v15-cinematic-tag"><span>SRNTY // 155</span><b>WALK NEVER ALONE</b></div>
       <a class="scroll-hint" href="#about">SCROLL <span>↓</span></a>
     </section>
 
-    <section id="about" data-section-code="PROFILE_01" class="section dark-section">
-      <div class="section-head reveal"><div class="section-scan"></div>
+    <section id="about" class="section dark-section">
+      <div class="section-head reveal">
         <p>WHO WE ARE</p>
         <h2>ABOUT <span>SERENITY</span></h2>
       </div>
@@ -163,8 +93,8 @@
       </div>
     </section>
 
-    <section id="roster" data-section-code="ROSTER_02" class="section roster-section">
-      <div class="section-head reveal"><div class="section-scan"></div>
+    <section id="roster" class="section roster-section">
+      <div class="section-head reveal">
         <p>ACTIVE LINEUP</p>
         <h2>OUR <span>ROSTER</span></h2>
       </div>
@@ -194,8 +124,8 @@
       <p class="edit-note reveal">Roster Competitive dan War dapat dikelola terpisah melalui <b>Halaman Admin</b>.</p>
     </section>
 
-    <section id="achievement" data-section-code="ACHV_03" class="section dark-section">
-      <div class="section-head reveal"><div class="section-scan"></div>
+    <section id="achievement" class="section dark-section">
+      <div class="section-head reveal">
         <p>OUR JOURNEY</p>
         <h2>ACHIEVE<span>MENT</span></h2>
       </div>
@@ -216,8 +146,8 @@
       <div class="achievement-preview-grid" id="achievementPreviewGrid"></div>
     </section>
 
-    <section id="matches" data-section-code="MATCH_04" class="section matches-section">
-      <div class="section-head reveal"><div class="section-scan"></div>
+    <section id="matches" class="section matches-section">
+      <div class="section-head reveal">
         <p>BATTLE SCHEDULE</p>
         <h2>NEXT <span>MATCH</span></h2>
       </div>
@@ -229,7 +159,7 @@
         </div>
         <div class="match-main">
           <div class="team-block">
-            <img src="/serenity155-logo.webp" alt="SERENITY 155" />
+            <img src="assets/serenity155-logo.png" alt="SERENITY 155" />
             <strong>SERENITY 155</strong>
           </div>
           <div class="vs">
@@ -256,37 +186,16 @@
       <div class="match-list" id="matchList"></div>
     </section>
 
-    <section id="history" data-section-code="HISTORY_05" class="section history-section dark-section">
-      <div class="section-head reveal"><div class="section-scan"></div>
-        <p>BATTLE ARCHIVE</p>
-        <h2>MATCH <span>HISTORY</span></h2>
-      </div>
-      <p class="history-intro reveal">Riwayat pertandingan resmi SERENITY 155. Lihat hasil, skor, lawan, dan kompetisi dalam satu halaman.</p>
-      <div class="history-stats reveal" id="historyStats"></div>
-      <div class="history-grid" id="historyGrid"></div>
-      <div class="history-empty" id="historyEmpty" hidden>Belum ada riwayat pertandingan.</div>
-    </section>
-
-    <section class="v17-breaking"><b>BREAKING</b><div id="v17Breaking">SERENITY 155 • OFFICIAL ESPORTS SQUAD</div></section>
-<section class="section v17-home-block" id="v17Command"><div class="section-head"><p>LIVE OPERATIONS</p><h2>MATCH <span>COMMAND CENTER</span></h2></div><div id="v17FeaturedMatch"></div></section>
-<section class="section dark-section v17-home-block" id="v17Roster"><div class="section-head"><p>ACTIVE UNIT</p><h2>ROSTER <span>SPOTLIGHT</span></h2></div><div class="v17-roster-wrap"><div id="v17RosterMain"></div><div id="v17RosterRail"></div></div></section>
-<section class="section v17-home-block" id="v17Stats"><div class="section-head"><p>COMPETITIVE DATA</p><h2>SERENITY <span>STATISTICS</span></h2></div><div class="v17-stat-grid"><article><b id="v17Matches">0</b><span>MATCHES</span></article><article><b id="v17Wins">0</b><span>WINS</span></article><article><b id="v17Rate">0%</b><span>WIN RATE</span></article><article><b id="v17Trophies">0</b><span>TROPHIES</span></article></div></section>
-<section class="section dark-section v17-home-block" id="v17Road"><div class="section-head"><p>THE JOURNEY</p><h2>ROAD TO <span>PBNC</span></h2></div><div id="v17RoadTrack" class="v17-road-track"></div></section>
-<section class="section v17-home-block" id="v17TV"><div class="section-head"><p>SERENITY MEDIA NETWORK</p><h2>LATEST FROM <span>SERENITY TV</span></h2></div><div id="v17TVGrid" class="v17-tv-grid"></div><a class="btn ghost" href="tv.html">OPEN SERENITY TV →</a></section>
-<section class="section dark-section v17-home-block" id="v17Family"><div class="section-head"><p>ONE FAMILY</p><h2>FAMILY <span>SERENITY</span></h2></div><div id="v17FamilyWall" class="v17-family-wall"></div><a class="btn primary" href="family.html">ENTER FAMILY →</a></section><section id="sponsors" data-section-code="PARTNERS_06" class="section dark-section">
-      <div class="section-head reveal"><div class="section-scan"></div>
+    <section id="sponsors" class="section dark-section">
+      <div class="section-head reveal">
         <p>POWERED BY</p>
         <h2>OUR <span>SPONSORS</span></h2>
       </div>
-      <div class="sponsor-showcase reveal">
-        <div class="sponsor-featured" id="sponsorFeatured"></div>
-        <div class="sponsor-grid sponsor-grid-v2" id="sponsorGrid"></div>
-      </div>
-      <div class="sponsor-marquee reveal"><div id="sponsorMarqueeTrack"></div></div>
-      <p class="sponsor-caption reveal">OFFICIAL PARTNERS OF SERENITY 155 • Sponsor dapat dikelola melalui halaman Admin.</p>
+      <div class="sponsor-grid reveal" id="sponsorGrid"></div>
+      <p class="sponsor-caption reveal">Sponsor dapat ditambah atau diubah melalui halaman Admin.</p>
     </section>
 
-    <section id="contact" data-section-code="CONTACT_06" class="section contact-section">
+    <section id="contact" class="section contact-section">
       <div class="contact-box reveal">
         <p class="eyebrow">BUSINESS • SCRIM • PARTNERSHIP</p>
         <h2>READY TO <span>CONNECT?</span></h2>
@@ -303,12 +212,11 @@
 
   <footer>
     <div class="footer-brand">
-      <img src="/serenity155-logo.webp" alt="SERENITY 155" />
+      <img src="assets/serenity155-logo.png" alt="SERENITY 155" />
       <div><strong>SERENITY 155</strong><span>OFFICIAL ESPORTS SQUAD</span></div>
     </div>
     <p>© <span id="year"></span> SERENITY 155. ALL RIGHTS RESERVED.</p>
     <a href="#home">BACK TO TOP ↑</a>
-    <div class="v12-footer-signature">TACTICAL • FEARLESS • UNITED // SRNTY-155</div>
   </footer>
 
 
@@ -341,96 +249,7 @@
     </div>
   </div>
 
-  
-  <!-- V10.9.2 ANNOUNCEMENT CENTER -->
-  <button id="announcementFloatBtn" class="announcement-float-btn" type="button">
-    <span class="announcement-speaker">!</span><span>ANNOUNCEMENT</span>
-    <i id="announcementFloatBadge">NEW</i>
-  </button>
-  <div id="announcementModal" class="announcement-modal" aria-hidden="true">
-    <div class="announcement-backdrop" data-close-announcement></div>
-    <section class="announcement-panel" role="dialog" aria-modal="true">
-      <header class="announcement-panel-head">
-        <div><small>SERENITY 155 // INFO CENTER</small><h2>ANNOUNCEMENT</h2></div>
-        <button id="announcementCloseBtn" class="announcement-close" type="button">×</button>
-      </header>
-      <div id="announcementList" class="announcement-list"></div>
-    </section>
-  </div>
-
-<script src="script.js?v=12.1"></script>
-  <script src="cloud-sync.js"></script>
-<script>
-(async()=>{
-  const cloud=await serenityCloudLoad();
-  if(cloud){
-    window.__SERENITY_CLOUD_DATA__=cloud;
-    try{localStorage.setItem("serenity155Data",JSON.stringify(cloud))}
-    catch(e){console.warn("Local cache penuh; website tetap memakai cloud.",e)}
-  }
-  const s=document.createElement("script");s.src="site-data.js?v=17.2";document.body.appendChild(s);
-})();
-</script>
-
-  <!-- V10.8 SERENITY BACKSOUND -->
-  <audio id="serenityBgMusic" loop preload="metadata">
-    <source src="./serenity-backsound.mp3" type="audio/mpeg">
-  </audio>
-  <div class="music-control" id="musicControl">
-    <button type="button" id="musicToggle" class="music-toggle" aria-label="Toggle background music">
-      <span id="musicIcon">♪</span>
-      <span id="musicLabel">MUSIC ON</span>
-    </button>
-    <input id="musicVolume" class="music-volume" type="range" min="0" max="100" value="22" aria-label="Music volume">
-  </div>
-
-
-<script>
-/* ===== V12 UI SYSTEM ===== */
-document.addEventListener("DOMContentLoaded",()=>{
-  const pre=document.getElementById("v12Preloader");
-  const progress=document.getElementById("v12ScrollProgress");
-  const header=document.querySelector(".site-header");
-  const navLinks=[...document.querySelectorAll('#mainNav a[href^="#"]')];
-
-  setTimeout(()=>pre?.classList.add("is-done"),650);
-  setTimeout(()=>pre?.remove(),1350);
-
-  const updateScroll=()=>{
-    const max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
-    const pct=Math.min(100,(scrollY/max)*100);
-    if(progress)progress.style.width=pct+"%";
-    header?.classList.toggle("is-scrolled",scrollY>24);
-  };
-  updateScroll();
-  addEventListener("scroll",updateScroll,{passive:true});
-
-  const sections=[...document.querySelectorAll("main section[id]")];
-  if("IntersectionObserver" in window){
-    const io=new IntersectionObserver(entries=>{
-      entries.forEach(entry=>{
-        if(!entry.isIntersecting)return;
-        navLinks.forEach(a=>a.classList.toggle("is-active",a.getAttribute("href")==="#"+entry.target.id));
-      });
-    },{rootMargin:"-38% 0px -55% 0px",threshold:0});
-    sections.forEach(s=>io.observe(s));
-  }
-
-  if(matchMedia("(pointer:fine)").matches){
-    document.querySelectorAll(".player-card,.match-card,.achievement-showcase,.history-card,.sponsor-grid > *").forEach(card=>{
-      card.addEventListener("pointermove",e=>{
-        const r=card.getBoundingClientRect();
-        const x=(e.clientX-r.left)/r.width-.5;
-        const y=(e.clientY-r.top)/r.height-.5;
-        card.style.setProperty("--mx",(x*100+50)+"%");
-        card.style.setProperty("--my",(y*100+50)+"%");
-      });
-    });
-  }
-});
-</script>
-
-<script src="immersive.js?v=15.0"></script>
-<div class="v15-sound-control" id="v15SoundControl"><button id="v15SoundBtn" title="Sound">♪</button><span id="v15SoundLabel">SOUND OFF</span></div>
-<nav class="v17-mobile-nav"><a href="#home">HOME</a><a href="#v17Command">MATCH</a><a href="#v17Roster">SQUAD</a><a href="tv.html">TV</a><a href="#sponsors">MORE</a></nav><script src="homepage-v17.js?v=17.2"></script></body>
+  <script src="script.js"></script>
+  <script src="site-data.js"></script>
+</body>
 </html>
