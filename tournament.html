@@ -8,7 +8,7 @@
 <body class="arena-page">
 <header class="arena-header">
   <a class="arena-brand" href="index.html"><img src="assets/serenity155-logo.png" data-serenity-logo="1"><div><b>SERENITY</b><span>155</span></div></a>
-  <nav><a href="index.html">HOME</a><a href="matches.html">MATCH</a><a class="active" href="tournament.html">TOURNAMENT</a><a href="store.html">NKJ STORE</a><a href="admin.html">ADMIN</a></nav>
+  <nav><a href="index.html">HOME</a><a href="matches.html">MATCH</a><a class="active" href="tournament.html">TOURNAMENT</a><a href="store.html">NKJ STORE</a><a href="admin.html">ADMIN</a></nav><div class="participant-auth-pill" id="participantAuthPill"><button id="participantLoginOpen" type="button">LOGIN PESERTA</button></div>
 </header>
 <main>
 <section class="arena-hero tournament-hero">
@@ -22,6 +22,33 @@
  <div class="arena-empty" id="tournamentEmpty">Belum ada tournament untuk kategori ini.</div>
 </section>
 </main>
+<div class="reg-modal" id="regModal" aria-hidden="true">
+ <div class="reg-dialog">
+  <button class="reg-close" id="regClose" type="button">×</button>
+  <div id="authPanel">
+   <p class="arena-kicker">PARTICIPANT ACCOUNT</p><h2>LOGIN PESERTA</h2>
+   <p class="reg-note">Wajib menggunakan alamat <b>@gmail.com</b>. Password akun disimpan dan diverifikasi oleh sistem autentikasi, bukan di file website.</p>
+   <div class="auth-switch"><button class="active" data-auth-mode="login">LOGIN</button><button data-auth-mode="signup">BUAT AKUN</button></div>
+   <label>Gmail</label><input id="participantEmail" type="email" placeholder="nama@gmail.com" autocomplete="email">
+   <label>Password</label><input id="participantPassword" type="password" placeholder="Minimal 6 karakter" autocomplete="current-password">
+   <button class="tour-action" id="participantAuthSubmit" type="button">LOGIN</button>
+   <div class="reg-status" id="authStatus"></div>
+  </div>
+  <div id="registrationPanel" hidden>
+   <p class="arena-kicker">TOURNAMENT REGISTRATION</p><h2 id="regTournamentName">DAFTAR TOURNAMENT</h2>
+   <p class="reg-user" id="regUserEmail"></p>
+   <label>Nama Team / Squad</label><input id="regTeam" placeholder="Nama squad">
+   <label>Nama Captain</label><input id="regCaptain" placeholder="Nama captain">
+   <label>WhatsApp Captain</label><input id="regWhatsapp" placeholder="08xxxxxxxxxx">
+   <label>Roster Pemain</label><textarea id="regRoster" rows="5" placeholder="Contoh: Player1, Player2, Player3, Player4, Player5"></textarea>
+   <button class="tour-action" id="submitTournamentRegistration" type="button">KIRIM PENDAFTARAN</button>
+   <div class="reg-status" id="regStatus"></div>
+  </div>
+ </div>
+</div>
+
 <footer class="arena-footer"><span>SERENITY 155 • TOURNAMENT HUB</span><a href="index.html">Kembali ke Home</a></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>window.SERENITY_SUPABASE={url:"https://vcmbthekmltociajzsdx.supabase.co",key:"sb_publishable_MjSTXwI71RW99XaYTP4fCA_U9uDj5pA"};</script>
 <script src="logo-manager.js"></script><script src="tournament-page.js"></script>
 </body></html>
