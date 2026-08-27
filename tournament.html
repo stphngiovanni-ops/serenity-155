@@ -8,7 +8,7 @@
 <body class="arena-page">
 <header class="arena-header">
   <a class="arena-brand" href="index.html"><img src="assets/serenity155-logo.png" data-serenity-logo="1"><div><b>SERENITY</b><span>155</span></div></a>
-  <nav><a href="index.html">HOME</a><a href="matches.html">MATCH</a><a class="active" href="tournament.html">TOURNAMENT</a><a href="store.html">NKJ STORE</a><a href="admin.html">ADMIN</a></nav><div class="participant-auth-pill" id="participantAuthPill"><button id="participantLoginOpen" type="button">LOGIN PESERTA</button></div>
+  <nav><a href="index.html">HOME</a><a href="matches.html">MATCH</a><a class="active" href="tournament.html">TOURNAMENT</a><a href="#bracket">BAGAN</a><a href="store.html">NKJ STORE</a><a href="admin.html">ADMIN</a></nav><div class="participant-auth-pill" id="participantAuthPill"><button id="participantLoginOpen" type="button">LOGIN PESERTA</button></div>
 </header>
 <main>
 <section class="arena-hero tournament-hero">
@@ -20,6 +20,18 @@
  <div class="arena-tabs"><button class="active" data-tour-filter="all">SEMUA</button><button data-tour-filter="open">REGISTRATION</button><button data-tour-filter="upcoming">UPCOMING</button><button data-tour-filter="ongoing">ONGOING</button><button data-tour-filter="finished">FINISHED</button></div>
  <div class="tournament-grid" id="tournamentGrid"></div>
  <div class="arena-empty" id="tournamentEmpty">Belum ada tournament untuk kategori ini.</div>
+</section>
+
+<section class="bracket-section" id="bracket">
+ <div class="arena-content">
+  <div class="bracket-heading">
+   <div><p class="arena-kicker">ROAD TO CHAMPION</p><h2>TOURNAMENT <span>BRACKET</span></h2></div>
+   <select id="bracketTournamentSelect" aria-label="Pilih tournament"></select>
+  </div>
+  <div class="bracket-scroll">
+   <div class="bracket-board" id="bracketBoard"></div>
+  </div>
+ </div>
 </section>
 </main>
 <div class="reg-modal" id="regModal" aria-hidden="true">
@@ -50,5 +62,5 @@
 <footer class="arena-footer"><span>SERENITY 155 • TOURNAMENT HUB</span><a href="index.html">Kembali ke Home</a></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>window.SERENITY_SUPABASE={url:"https://vcmbthekmltociajzsdx.supabase.co",key:"sb_publishable_MjSTXwI71RW99XaYTP4fCA_U9uDj5pA"};</script>
-<script src="logo-manager.js"></script><script src="tournament-page.js"></script>
+<script src="logo-manager.js"></script><script src="tournament-page.js"></script><script src="bracket-page.js"></script>
 </body></html>

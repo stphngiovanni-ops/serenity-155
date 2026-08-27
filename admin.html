@@ -120,6 +120,7 @@
         <div class="form-grid">
           <div><label>Tanggal & Jam</label><input id="matchDate" type="datetime-local"></div>
           <div><label>Nama Lawan</label><input id="opponent" placeholder="FORTIS"></div>
+          <div><label>Jenis / Event Match</label><input id="matchEvent" placeholder="FRIENDLY MATCH / MATCH DAY"></div>
           <div><label>Game</label><input id="game" value="POINT BLANK"></div>
           <div><label>Format</label><input id="format" placeholder="BO3 / BO5"></div>
           <div><label>Stream Label</label><input id="stream" placeholder="LIVE YOUTUBE"></div>
@@ -128,9 +129,11 @@
             <select id="matchStatus">
               <option value="UPCOMING">UPCOMING</option>
               <option value="LIVE">LIVE</option>
-              <option value="COMPLETED">COMPLETED</option>
+              <option value="COMPLETED">FINISHED / COMPLETED</option>
             </select>
           </div>
+          <div><label>Skor SERENITY</label><input id="ourScore" type="number" min="0" placeholder="4"></div>
+          <div><label>Skor Lawan</label><input id="oppScore" type="number" min="0" placeholder="0"></div>
           <div class="full">
             <label>Logo Lawan</label>
             <input class="file-input" id="opponentLogo" type="file" accept="image/*">
@@ -144,7 +147,7 @@
           <button class="small-btn" id="saveMatch" type="button">+ TAMBAH MATCH</button>
           <button class="small-btn" id="cancelMatchEdit" type="button" hidden>BATAL EDIT</button>
         </div>
-        <p class="hint">Gunakan tombol <b>JADIKAN NEXT</b> pada daftar match untuk menentukan pertandingan utama di website.</p>
+        <p class="hint">Semua perubahan di sini otomatis dipakai oleh halaman <b>Match Center</b>. Untuk hasil pertandingan, ubah status menjadi FINISHED / COMPLETED lalu isi skor.</p>
         <div id="matchAdminList" class="edit-list match-admin-list"></div>
       </section>
 
@@ -219,6 +222,18 @@
         <div id="tournamentAdminList" class="edit-list"></div>
       </section>
 
+
+<section class="admin-card full">
+ <h2>TOURNAMENT BRACKET MANAGEMENT</h2>
+ <p class="hint">Buat bagan 8 atau 16 team. Isi nama team dan skor setiap pertandingan, lalu pilih pemenang. Bagan akan tampil di halaman Tournament.</p>
+ <div class="form-grid">
+  <div><label>Pilih Tournament</label><select id="bracketAdminTournament"></select></div>
+  <div><label>Ukuran Bagan</label><select id="bracketSize"><option value="8">8 Team</option><option value="16">16 Team</option></select></div>
+ </div>
+ <div class="admin-actions"><button class="small-btn" id="generateBracket" type="button">BUAT / RESET BAGAN</button><button class="small-btn" id="saveBracket" type="button">SIMPAN BAGAN</button></div>
+ <div id="bracketAdminEditor" class="bracket-admin-editor"></div>
+</section>
+
 <section class="admin-card full"><h2>NKJ STORE - VOUCHER PB (TERINTEGRASI)</h2><div class="form-grid"><div><label>Nama Produk</label><input id="storeProductName"></div><div><label>Nominal Cash</label><input id="storeProductCash"></div><div><label>Harga Jual</label><input id="storeProductPrice" type="number"></div><div><label>Stok</label><input id="storeProductStock" type="number"></div></div><div class="admin-actions"><button class="small-btn" id="addStoreProduct" type="button">+ TAMBAH PRODUK</button></div><div id="storeProductList" class="edit-list"></div><h2 style="margin-top:30px">ORDER MASUK</h2><div id="storeOrderList" class="edit-list"></div><p class="hint">Untuk produksi, kode voucher dan pembayaran harus diproses di backend/server.</p></section>
 <section class="admin-card full">
         <h2>CONTACT & SOCIAL</h2>
@@ -284,5 +299,6 @@
 <script src="nkj-logo-manager.js"></script>
 <script src="nkj-logo-admin.js"></script>
 <script src="tournament-admin.js"></script>
+<script src="bracket-admin.js"></script>
 </body>
 </html>

@@ -15,7 +15,7 @@ const DEFAULT_DATA={
     {year:"2026",badge:"QUALIFIED",title:"PBSB DIVISI 1",desc:"Lolos ke PBSB Divisi 1 dengan target berikutnya: melangkah menuju PBNC.",photo:""},
     {year:"NEXT",badge:"MISSION",title:"PBNC",desc:"Target besar berikutnya. Keep grinding. Keep fighting.",photo:""}
   ],
-  matches:[{date:"2026-09-12T20:00",opponent:"OPPONENT",game:"POINT BLANK",format:"BO3 / BO5",stream:"LIVE STREAM",status:"UPCOMING",logo:"",featured:true}],
+  matches:[{date:"2026-09-12T20:00",opponent:"OPPONENT",event:"FRIENDLY MATCH",game:"POINT BLANK",format:"BO3 / BO5",stream:"LIVE STREAM",status:"UPCOMING",ourScore:"",oppScore:"",logo:"",featured:true}],
   sponsors:[{name:"NKJ",logo:""},{name:"AJ1",logo:""},{name:"2K",logo:""},{name:"PARTNER",logo:""}],
   contact:{email:"serenity155@example.com",instagram:"https://instagram.com/",youtube:"https://youtube.com/"}
 };
@@ -29,7 +29,7 @@ function migrate(x){
   if(!x.matches&&x.match)x.matches=[{...x.match,status:"UPCOMING",logo:"",featured:true}];
   x.competitiveRoster=(x.competitiveRoster||[]).slice(0,5).map(p=>({...p,photo:p.photo||""}));
   x.warRoster=(x.warRoster||[]).slice(0,12).map(p=>({...p,photo:p.photo||""}));
-  x.matches=(x.matches||[]).map(m=>({...m,logo:m.logo||"",status:m.status||"UPCOMING",featured:!!m.featured}));
+  x.matches=(x.matches||[]).map(m=>({...m,event:m.event||m.title||"MATCH",ourScore:m.ourScore??m.scoreA??"",oppScore:m.oppScore??m.scoreB??"",logo:m.logo||"",status:m.status||"UPCOMING",featured:!!m.featured}));
   x.achievements=(x.achievements||[]).map(a=>({...a,photo:a.photo||""}));
   x.sponsors=(x.sponsors||[]).map(v=>typeof v==="string"?{name:v,logo:""}:{name:v.name||"SPONSOR",logo:v.logo||""});
   return x;
@@ -165,9 +165,11 @@ function renderLists(){
   }).join("");
 
   $("matchAdminList").innerHTML=(data.matches||[]).map((m,i)=>`
-    <div class="edit-row with-thumb">
+    <div class="edit-row with-thumb match-admin-pro-row">
       ${matchLogo(m.logo)}
-      <div><b>SERENITY 155 VS ${esc(m.opponent)}</b><br><small>${esc(m.date||"DATE TBA")} • ${esc(m.game)} • ${esc(m.format)} • ${esc(m.status)} ${m.featured?"• NEXT MATCH":""}</small>
+      <div class="match-admin-main">
+        <b>SERENITY 155 VS ${esc(m.opponent)}</b><br>
+        <small>${esc(m.date||"DATE TBA")} • ${esc(m.event||"MATCH")} • ${esc(m.status)} ${String(m.status).toUpperCase()==="COMPLETED"?`• SCORE ${esc(m.ourScore||0)} - ${esc(m.oppScore||0)}`:""} ${m.featured?"• NEXT MATCH":""}</small>
         <div class="match-actions">
           <button class="small-btn" type="button" data-edit-match="${i}">EDIT</button>
           <button class="small-btn" type="button" data-feature-match="${i}">JADIKAN NEXT</button>
@@ -294,7 +296,7 @@ function addSponsor(){
 
 function resetMatchForm(){
   editingMatchIndex=-1;pendingOpponentLogo="";
-  $("matchDate").value="";$("opponent").value="";$("game").value="POINT BLANK";$("format").value="";$("stream").value="";$("matchStatus").value="UPCOMING";
+  $("matchDate").value="";$("opponent").value="";$("matchEvent").value="";$("game").value="POINT BLANK";$("format").value="";$("stream").value="";$("matchStatus").value="UPCOMING";$("ourScore").value="";$("oppScore").value="";
   $("opponentLogo").value="";$("opponentLogoPreview").hidden=true;
   $("saveMatch").textContent="+ TAMBAH MATCH";$("cancelMatchEdit").hidden=true;
 }
@@ -302,16 +304,32 @@ function saveMatch(){
   const opponent=$("opponent").value.trim();if(!opponent){$("saveStatus").textContent="Nama lawan wajib diisi.";return}
   const existing=editingMatchIndex>=0?data.matches[editingMatchIndex]:null;
   const item={
-    date:$("matchDate").value,opponent,game:$("game").value.trim()||"POINT BLANK",format:$("format").value.trim(),
-    stream:$("stream").value.trim(),status:$("matchStatus").value,
-    logo:pendingOpponentLogo || (existing?.logo||""),featured:existing?.featured||false
+    date:$("matchDate").value,
+    opponent,
+    event:$("matchEvent").value.trim()||"MATCH",
+    game:$("game").value.trim()||"POINT BLANK",
+    format:$("format").value.trim(),
+    stream:$("stream").value.trim(),
+    status:$("matchStatus").value,
+    ourScore:$("ourScore").value,
+    oppScore:$("oppScore").value,
+    logo:pendingOpponentLogo || (existing?.logo||""),
+    featured:existing?.featured||false
   };
   if(editingMatchIndex>=0)data.matches[editingMatchIndex]=item;else data.matches.push(item);
   resetMatchForm();renderLists();
 }
 function editMatch(i){
   const m=data.matches[i];editingMatchIndex=i;pendingOpponentLogo="";
-  $("matchDate").value=m.date||"";$("opponent").value=m.opponent||"";$("game").value=m.game||"POINT BLANK";$("format").value=m.format||"";$("stream").value=m.stream||"";$("matchStatus").value=m.status||"UPCOMING";
+  $("matchDate").value=m.date||"";
+  $("opponent").value=m.opponent||"";
+  $("matchEvent").value=m.event||"MATCH";
+  $("game").value=m.game||"POINT BLANK";
+  $("format").value=m.format||"";
+  $("stream").value=m.stream||"";
+  $("matchStatus").value=m.status||"UPCOMING";
+  $("ourScore").value=m.ourScore??"";
+  $("oppScore").value=m.oppScore??"";
   if(m.logo){$("opponentLogoPreview").src=m.logo;$("opponentLogoPreview").hidden=false}else $("opponentLogoPreview").hidden=true;
   $("saveMatch").textContent="SIMPAN PERUBAHAN MATCH";$("cancelMatchEdit").hidden=false;
   window.scrollTo({top:$("matchDate").getBoundingClientRect().top+window.scrollY-120,behavior:"smooth"});
