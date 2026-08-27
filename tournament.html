@@ -2,87 +2,26 @@
 <html lang="id">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SERENITY 155 — Tournament Portal</title>
-<link rel="icon" href="serenity155-logo.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="tournament.css?v=13.2">
+<title>Tournament Hub | SERENITY 155</title>
+<link rel="stylesheet" href="styles.css">
 </head>
-<body>
-<div class="kalimantan-tribute-bg" aria-hidden="true">
-  <div class="kalimantan-map-mark">KALIMANTAN</div>
-  <div class="kalimantan-ribbon"></div>
-</div>
-<div class="pray-banner">
-  <span class="pray-dot"></span>
-  <strong>PRAY FOR KALIMANTAN</strong>
-  <small>STAY STRONG • STAY UNITED</small>
-</div>
-
-<header class="topbar">
-  <a class="brand" href="index.html"><img src="serenity155-logo.png"><span>SERENITY <b>155</b></span></a>
-  <nav><a href="index.html">HOME</a><a href="#events">TOURNAMENT</a><a href="#participants">PARTICIPANTS</a><a href="hub.html">HUB</a></nav>
-  <button id="accountBtn" class="ghost">LOGIN / REGISTER</button>
+<body class="arena-page">
+<header class="arena-header">
+  <a class="arena-brand" href="index.html"><img src="assets/serenity155-logo.png" data-serenity-logo="1"><div><b>SERENITY</b><span>155</span></div></a>
+  <nav><a href="index.html">HOME</a><a href="matches.html">MATCH</a><a class="active" href="tournament.html">TOURNAMENT</a><a href="store.html">NKJ STORE</a><a href="admin.html">ADMIN</a></nav>
 </header>
-
 <main>
-<section class="hero">
- <div class="scan"></div>
- <div class="hero-copy"><span class="eyebrow">SERENITY 155 // COMPETITIVE PLATFORM</span>
- <h1>TOURNAMENT<br><i>PORTAL</i></h1>
- <p>Daftar akun, buat team, isi roster pemain, lalu join tournament SERENITY.</p>
- <div class="actions"><button id="joinHero" class="primary">REGISTER TEAM</button><a href="#events" class="ghost linkbtn">VIEW TOURNAMENT</a></div>
- </div>
- <div class="hero-mark"><img src="serenity155-logo.png"><b>OFFICIAL<br>TOURNAMENT<br>SYSTEM</b></div>
+<section class="arena-hero tournament-hero">
+ <div><p class="arena-kicker">COMPETE • CONQUER • CHAMPION</p><h1>TOURNAMENT <span>HUB</span></h1>
+ <p>Pusat informasi turnamen SERENITY 155 — pendaftaran, slot, prize pool, jadwal, format, dan status kompetisi.</p></div>
+ <div class="trophy-orbit"><div>🏆</div></div>
 </section>
-
-<section id="events" class="section">
- <div class="section-title"><span>01 // EVENTS</span><h2>OPEN <i>TOURNAMENT</i></h2></div>
- <div id="tournamentGrid" class="tournament-grid"><div class="loading">LOADING TOURNAMENT...</div></div>
-</section>
-
-<section id="participants" class="section dark">
- <div class="section-title"><span>02 // REGISTERED UNITS</span><h2>TEAM <i>PARTICIPANTS</i></h2></div>
- <div id="participantGrid" class="participant-grid"><div class="empty">Pilih tournament untuk melihat peserta.</div></div>
+<section class="arena-content">
+ <div class="arena-tabs"><button class="active" data-tour-filter="all">SEMUA</button><button data-tour-filter="open">REGISTRATION</button><button data-tour-filter="upcoming">UPCOMING</button><button data-tour-filter="ongoing">ONGOING</button><button data-tour-filter="finished">FINISHED</button></div>
+ <div class="tournament-grid" id="tournamentGrid"></div>
+ <div class="arena-empty" id="tournamentEmpty">Belum ada tournament untuk kategori ini.</div>
 </section>
 </main>
-
-<div class="modal" id="authModal"><div class="modal-card">
- <button class="close" data-close>×</button>
- <div class="modal-logo"><img src="serenity155-logo.png"></div>
- <span class="eyebrow">MEMBER ACCESS</span><h2 id="authTitle">LOGIN</h2>
- <form id="authForm">
-  <label>EMAIL<input id="authEmail" type="email" required placeholder="email@contoh.com"></label>
-  <label>PASSWORD<input id="authPassword" type="password" minlength="6" required placeholder="Minimal 6 karakter"></label>
-  <button class="primary wide" type="submit" id="authSubmit">LOGIN</button>
- </form>
- <button id="switchAuth" class="textbtn">Belum punya akun? REGISTER</button>
- <p id="authMsg" class="msg"></p>
-</div></div>
-
-<div class="modal" id="dashboardModal"><div class="modal-card dashboard-card">
- <button class="close" data-close>×</button>
- <div class="dash-head"><div><span class="eyebrow">MEMBER DASHBOARD</span><h2>MY TEAM</h2><p id="userEmail"></p></div><button id="logoutBtn" class="danger">LOGOUT</button></div>
- <form id="teamForm" class="team-form">
-  <input type="hidden" id="teamId">
-  <div class="form-grid">
-   <label>NAMA TEAM<input id="teamName" required placeholder="Contoh: SERENITY JUNIOR"></label>
-   <label>NAMA CAPTAIN<input id="captainName" required></label>
-   <label>WHATSAPP<input id="teamWhatsapp" required placeholder="08xxxxxxxxxx"></label>
-   <label>KOTA / DOMISILI<input id="teamCity" placeholder="Bekasi"></label>
-   <label class="full">URL LOGO TEAM <span>(opsional)</span><input id="teamLogo" type="url" placeholder="https://..."></label>
-  </div>
-  <div class="roster-head"><div><span class="eyebrow">ACTIVE LINEUP</span><h3>ROSTER PEMAIN</h3></div><button type="button" id="addPlayer" class="ghost">+ PLAYER</button></div>
-  <div id="playerRows"></div>
-  <button type="submit" class="primary wide">SIMPAN DATA TEAM</button>
- </form>
- <div class="join-box">
-  <h3>JOIN TOURNAMENT</h3><p>Pilih tournament yang ingin diikuti. Data team harus disimpan terlebih dahulu.</p>
-  <select id="joinTournament"></select><button id="joinTournamentBtn" class="primary wide">DAFTARKAN TEAM</button>
-  <p id="dashMsg" class="msg"></p>
- </div>
-</div></div>
-
-<script src="tournament.js?v=13.1.2"></script>
+<footer class="arena-footer"><span>SERENITY 155 • TOURNAMENT HUB</span><a href="index.html">Kembali ke Home</a></footer>
+<script src="logo-manager.js"></script><script src="tournament-page.js"></script>
 </body></html>

@@ -200,6 +200,25 @@
         </div>
       </section>
 
+
+      <section class="admin-card full">
+        <h2>TOURNAMENT MANAGEMENT</h2>
+        <div class="form-grid">
+          <div><label>Nama Tournament</label><input id="tourName" placeholder="SERENITY COMMUNITY CUP"></div>
+          <div><label>Game</label><input id="tourGame" value="POINT BLANK"></div>
+          <div><label>Tanggal</label><input id="tourDate" type="date"></div>
+          <div><label>Status</label><select id="tourStatus"><option value="open">Registration Open</option><option value="upcoming">Upcoming</option><option value="ongoing">Ongoing</option><option value="finished">Finished</option></select></div>
+          <div><label>Total Slot</label><input id="tourSlots" type="number" value="32"></div>
+          <div><label>Terdaftar</label><input id="tourRegistered" type="number" value="0"></div>
+          <div><label>Entry Fee</label><input id="tourFee" placeholder="Rp25.000 / FREE"></div>
+          <div><label>Prize Pool</label><input id="tourPrize" placeholder="Rp2.500.000"></div>
+          <div class="full"><label>Format</label><input id="tourFormat" placeholder="5 VS 5 • SINGLE ELIMINATION"></div>
+          <div class="full"><label>Poster Tournament</label><input id="tourPoster" type="file" accept="image/*"></div>
+        </div>
+        <div class="admin-actions"><button class="small-btn" id="addTournament" type="button">+ TAMBAH TOURNAMENT</button></div>
+        <div id="tournamentAdminList" class="edit-list"></div>
+      </section>
+
 <section class="admin-card full"><h2>NKJ STORE - VOUCHER PB (TERINTEGRASI)</h2><div class="form-grid"><div><label>Nama Produk</label><input id="storeProductName"></div><div><label>Nominal Cash</label><input id="storeProductCash"></div><div><label>Harga Jual</label><input id="storeProductPrice" type="number"></div><div><label>Stok</label><input id="storeProductStock" type="number"></div></div><div class="admin-actions"><button class="small-btn" id="addStoreProduct" type="button">+ TAMBAH PRODUK</button></div><div id="storeProductList" class="edit-list"></div><h2 style="margin-top:30px">ORDER MASUK</h2><div id="storeOrderList" class="edit-list"></div><p class="hint">Untuk produksi, kode voucher dan pembayaran harus diproses di backend/server.</p></section>
 <section class="admin-card full">
         <h2>CONTACT & SOCIAL</h2>
@@ -264,5 +283,6 @@
 <script src="logo-admin.js"></script>
 <script src="nkj-logo-manager.js"></script>
 <script src="nkj-logo-admin.js"></script>
+<script src="tournament-admin.js"></script>
 </body>
 </html>
