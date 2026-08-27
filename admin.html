@@ -51,7 +51,23 @@
         </div>
       </section>
 
-      <section class="admin-card full">
+      
+      <section class="admin-card full admin-module-hub">
+        <h2>ADMIN MANAGEMENT</h2>
+        <p class="hint">Match dan Tournament sekarang memiliki halaman Admin sendiri agar lebih rapi dan mudah digunakan.</p>
+        <div class="admin-module-grid">
+          <a class="admin-module-card" href="admin-match.html">
+            <span class="admin-module-icon">⚔</span>
+            <div><b>MATCH MANAGEMENT</b><small>Jadwal, status, logo lawan, skor, dan Match Center.</small></div>
+          </a>
+          <a class="admin-module-card" href="admin-tournament.html">
+            <span class="admin-module-icon">🏆</span>
+            <div><b>TOURNAMENT MANAGEMENT</b><small>Tournament, registrasi, poster, slot, dan bagan.</small></div>
+          </a>
+        </div>
+      </section>
+
+<section class="admin-card full">
         <h2>ROSTER MANAGEMENT + FOTO</h2>
 
         <div class="form-grid">
@@ -115,41 +131,7 @@
         <div id="achievementAdminList" class="edit-list"></div>
       </section>
 
-      <section class="admin-card full">
-        <h2>MATCH MANAGEMENT</h2>
-        <div class="form-grid">
-          <div><label>Tanggal & Jam</label><input id="matchDate" type="datetime-local"></div>
-          <div><label>Nama Lawan</label><input id="opponent" placeholder="FORTIS"></div>
-          <div><label>Jenis / Event Match</label><input id="matchEvent" placeholder="FRIENDLY MATCH / MATCH DAY"></div>
-          <div><label>Game</label><input id="game" value="POINT BLANK"></div>
-          <div><label>Format</label><input id="format" placeholder="BO3 / BO5"></div>
-          <div><label>Stream Label</label><input id="stream" placeholder="LIVE YOUTUBE"></div>
-          <div>
-            <label>Status</label>
-            <select id="matchStatus">
-              <option value="UPCOMING">UPCOMING</option>
-              <option value="LIVE">LIVE</option>
-              <option value="COMPLETED">FINISHED / COMPLETED</option>
-            </select>
-          </div>
-          <div><label>Skor SERENITY</label><input id="ourScore" type="number" min="0" placeholder="4"></div>
-          <div><label>Skor Lawan</label><input id="oppScore" type="number" min="0" placeholder="0"></div>
-          <div class="full">
-            <label>Logo Lawan</label>
-            <input class="file-input" id="opponentLogo" type="file" accept="image/*">
-            <img id="opponentLogoPreview" class="image-preview" hidden alt="Preview logo lawan">
-            <div class="image-tools">
-              <button class="small-btn danger" type="button" id="clearOpponentLogo">HAPUS PILIHAN LOGO</button>
-            </div>
-          </div>
-        </div>
-        <div class="admin-actions">
-          <button class="small-btn" id="saveMatch" type="button">+ TAMBAH MATCH</button>
-          <button class="small-btn" id="cancelMatchEdit" type="button" hidden>BATAL EDIT</button>
-        </div>
-        <p class="hint">Semua perubahan di sini otomatis dipakai oleh halaman <b>Match Center</b>. Untuk hasil pertandingan, ubah status menjadi FINISHED / COMPLETED lalu isi skor.</p>
-        <div id="matchAdminList" class="edit-list match-admin-list"></div>
-      </section>
+      
 
       <section class="admin-card">
         <h2>SPONSOR + LOGO</h2>
@@ -204,35 +186,10 @@
       </section>
 
 
-      <section class="admin-card full">
-        <h2>TOURNAMENT MANAGEMENT</h2>
-        <div class="form-grid">
-          <div><label>Nama Tournament</label><input id="tourName" placeholder="SERENITY COMMUNITY CUP"></div>
-          <div><label>Game</label><input id="tourGame" value="POINT BLANK"></div>
-          <div><label>Tanggal</label><input id="tourDate" type="date"></div>
-          <div><label>Status</label><select id="tourStatus"><option value="open">Registration Open</option><option value="upcoming">Upcoming</option><option value="ongoing">Ongoing</option><option value="finished">Finished</option></select></div>
-          <div><label>Total Slot</label><input id="tourSlots" type="number" value="32"></div>
-          <div><label>Terdaftar</label><input id="tourRegistered" type="number" value="0"></div>
-          <div><label>Entry Fee</label><input id="tourFee" placeholder="Rp25.000 / FREE"></div>
-          <div><label>Prize Pool</label><input id="tourPrize" placeholder="Rp2.500.000"></div>
-          <div class="full"><label>Format</label><input id="tourFormat" placeholder="5 VS 5 • SINGLE ELIMINATION"></div>
-          <div class="full"><label>Poster Tournament</label><input id="tourPoster" type="file" accept="image/*"></div>
-        </div>
-        <div class="admin-actions"><button class="small-btn" id="addTournament" type="button">+ TAMBAH TOURNAMENT</button></div>
-        <div id="tournamentAdminList" class="edit-list"></div>
-      </section>
+      
 
 
-<section class="admin-card full">
- <h2>TOURNAMENT BRACKET MANAGEMENT</h2>
- <p class="hint">Buat bagan 8 atau 16 team. Isi nama team dan skor setiap pertandingan, lalu pilih pemenang. Bagan akan tampil di halaman Tournament.</p>
- <div class="form-grid">
-  <div><label>Pilih Tournament</label><select id="bracketAdminTournament"></select></div>
-  <div><label>Ukuran Bagan</label><select id="bracketSize"><option value="8">8 Team</option><option value="16">16 Team</option></select></div>
- </div>
- <div class="admin-actions"><button class="small-btn" id="generateBracket" type="button">BUAT / RESET BAGAN</button><button class="small-btn" id="saveBracket" type="button">SIMPAN BAGAN</button></div>
- <div id="bracketAdminEditor" class="bracket-admin-editor"></div>
-</section>
+
 
 <section class="admin-card full"><h2>NKJ STORE - VOUCHER PB (TERINTEGRASI)</h2><div class="form-grid"><div><label>Nama Produk</label><input id="storeProductName"></div><div><label>Nominal Cash</label><input id="storeProductCash"></div><div><label>Harga Jual</label><input id="storeProductPrice" type="number"></div><div><label>Stok</label><input id="storeProductStock" type="number"></div></div><div class="admin-actions"><button class="small-btn" id="addStoreProduct" type="button">+ TAMBAH PRODUK</button></div><div id="storeProductList" class="edit-list"></div><h2 style="margin-top:30px">ORDER MASUK</h2><div id="storeOrderList" class="edit-list"></div><p class="hint">Untuk produksi, kode voucher dan pembayaran harus diproses di backend/server.</p></section>
 <section class="admin-card full">
@@ -298,7 +255,5 @@
 <script src="logo-admin.js"></script>
 <script src="nkj-logo-manager.js"></script>
 <script src="nkj-logo-admin.js"></script>
-<script src="tournament-admin.js"></script>
-<script src="bracket-admin.js"></script>
 </body>
 </html>

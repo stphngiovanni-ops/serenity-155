@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Match Admin | SERENITY 155</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="admin-page admin-special-page">
+  <div class="admin-login-shell" id="matchAdminLogin">
+    <div class="admin-login-card">
+      <img src="assets/serenity155-logo.png" data-serenity-logo="1" alt="SERENITY 155">
+      <p class="eyebrow">SERENITY 155</p>
+      <h1>MATCH ADMIN</h1>
+      <label>Username</label><input id="matchAdminUser" autocomplete="username" placeholder="admin">
+      <label>Password</label><input id="matchAdminPass" type="password" autocomplete="current-password">
+      <button class="btn primary" id="matchAdminLoginBtn" type="button">LOGIN</button>
+      <div class="status" id="matchAdminLoginStatus"></div>
+      <a class="admin-back-link" href="admin.html">← Kembali ke Admin Utama</a>
+    </div>
+  </div>
+
+  <div class="admin-view" id="matchAdminView" hidden>
+    <header class="special-admin-header">
+      <a class="special-admin-brand" href="matches.html"><img src="assets/serenity155-logo.png" data-serenity-logo="1"><div><b>SERENITY 155</b><span>MATCH MANAGEMENT</span></div></a>
+      <nav><a href="admin.html">ADMIN UTAMA</a><a href="matches.html">MATCH CENTER</a><a href="admin-tournament.html">TOURNAMENT ADMIN</a><button id="matchAdminLogout" type="button">LOGOUT</button></nav>
+    </header>
+
+    <main class="special-admin-main">
+      <section class="special-admin-hero">
+        <p class="eyebrow">COMPETITIVE CONTROL CENTER</p>
+        <h1>MATCH <span>MANAGEMENT</span></h1>
+        <p>Kelola jadwal, jenis pertandingan, lawan, logo, status LIVE/Upcoming/Finished, dan skor.</p>
+      </section>
+
+      <section class="admin-card full">
+        <h2>TAMBAH / EDIT MATCH</h2>
+        <div class="form-grid">
+          <div><label>Tanggal & Jam</label><input id="matchDate" type="datetime-local"></div>
+          <div><label>Nama Lawan</label><input id="opponent" placeholder="FORTIS"></div>
+          <div><label>Jenis / Event Match</label><input id="matchEvent" placeholder="FRIENDLY MATCH / MATCH DAY"></div>
+          <div><label>Game</label><input id="game" value="POINT BLANK"></div>
+          <div><label>Format</label><input id="format" placeholder="BO3 / BO5"></div>
+          <div><label>Stream</label><input id="stream" placeholder="YouTube / Twitch"></div>
+          <div><label>Status</label><select id="matchStatus"><option value="UPCOMING">UPCOMING</option><option value="LIVE">LIVE</option><option value="COMPLETED">FINISHED / COMPLETED</option></select></div>
+          <div><label>Skor SERENITY</label><input id="ourScore" type="number" min="0" placeholder="4"></div>
+          <div><label>Skor Lawan</label><input id="oppScore" type="number" min="0" placeholder="0"></div>
+          <div class="full">
+            <label>Logo Lawan</label>
+            <input class="file-input" id="opponentLogo" type="file" accept="image/*">
+            <img id="opponentLogoPreview" class="image-preview" hidden alt="Preview logo lawan">
+            <div class="image-tools"><button class="small-btn danger" id="clearOpponentLogo" type="button">HAPUS PILIHAN LOGO</button></div>
+          </div>
+        </div>
+        <div class="admin-actions">
+          <button class="btn primary" id="addMatch" type="button">+ TAMBAH MATCH</button>
+          <button class="small-btn" id="cancelMatchEdit" type="button" hidden>BATAL EDIT</button>
+          <button class="small-btn" id="saveMatchData" type="button">SIMPAN DATA MATCH</button>
+        </div>
+        <div class="status" id="matchSaveStatus"></div>
+      </section>
+
+      <section class="admin-card full">
+        <h2>DAFTAR MATCH</h2>
+        <p class="hint">Klik EDIT untuk mengubah pertandingan. Gunakan JADIKAN NEXT untuk menentukan pertandingan utama.</p>
+        <div id="matchAdminList" class="edit-list"></div>
+      </section>
+    </main>
+  </div>
+
+<script src="logo-manager.js"></script>
+<script src="admin-match.js"></script>
+</body>
+</html>
