@@ -124,7 +124,7 @@ function imageToDataURL(file,maxW=900,maxH=900,quality=.82){
   const mode=(maxW===1200&&maxH===850)?"achievement":(maxW===700&&maxH===700)?"logo":"player";
   return openCropEditor(file,mode);
 }
-function login(){if(($("loginUser").value||"").trim()==="admin"&&($("loginPass").value||"")==="serenity_mei25"){try{sessionStorage.setItem("serenity155Admin","1")}catch(e){}showAdmin()}else $("loginStatus").textContent="Username atau password salah."}
+function login(){if(($("loginUser").value||"").trim()==="admin"&&($("loginPass").value||"")==="serenity_mei25"){try{sessionStorage.setItem("serenity155Admin","1");sessionStorage.setItem("serenity155AdminPass",$("loginPass").value)}catch(e){}showAdmin()}else $("loginStatus").textContent="Username atau password salah."}
 function showAdmin(){$("loginView").hidden=true;$("loginView").style.display="none";$("adminView").hidden=false;$("adminView").style.display="block";loadData();fillForm();renderLists()}
 function fillForm(){
   $("about1").value=data.about1||"";$("about2").value=data.about2||"";
@@ -335,11 +335,20 @@ function editMatch(i){
   window.scrollTo({top:$("matchDate").getBoundingClientRect().top+window.scrollY-120,behavior:"smooth"});
 }
 function featureMatch(i){data.matches.forEach((m,idx)=>m.featured=idx===i);renderLists()}
-function saveAll(){
+async function saveAll(){
   data.about1=$("about1").value;data.about2=$("about2").value;
   data.contact={email:$("email").value,instagram:$("instagram").value,youtube:$("youtube").value};
-  try{saveSilent();$("saveStatus").textContent="Tersimpan ✓"}catch(e){$("saveStatus").textContent="Penyimpanan browser penuh. Gunakan gambar lebih kecil."}
-  setTimeout(()=>$("saveStatus").textContent="",2400);
+  try{
+    saveSilent();
+    $("saveStatus").textContent="Menyimpan online...";
+    const pass=sessionStorage.getItem("serenity155AdminPass")||"serenity_mei25";
+    if(typeof serenityAdminCloudSave==="function") await serenityAdminCloudSave(data,pass);
+    $("saveStatus").textContent="Tersimpan ONLINE ✓";
+  }catch(e){
+    console.error(e);
+    $("saveStatus").textContent="Gagal simpan online. Coba lagi.";
+  }
+  setTimeout(()=>$("saveStatus").textContent="",3200);
 }
 function resetAll(){if(confirm("Reset seluruh data ke default?")){data=cloneDefault();saveSilent();fillForm();renderLists();resetMatchForm();$("saveStatus").textContent="Data direset."}}
 

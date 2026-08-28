@@ -1,9 +1,7 @@
 
 (function(){
 const FALLBACK=[
- {id:"m1",date:"2026-08-28T20:00",opponent:"WAYANG",event:"FRIENDLY MATCH",status:"UPCOMING",ourScore:"",oppScore:"",logo:""},
- {id:"m2",date:"2026-08-24T20:00",opponent:"REBORN",event:"MATCH DAY",status:"COMPLETED",ourScore:"4",oppScore:"0",logo:""},
- {id:"m3",date:"2026-08-22T20:00",opponent:"ETHERION",event:"FRIENDLY MATCH",status:"COMPLETED",ourScore:"3",oppScore:"0",logo:""}
+ {id:"default",date:"2026-09-12T20:00",opponent:"OPPONENT",event:"FRIENDLY MATCH",status:"UPCOMING",ourScore:"",oppScore:"",logo:""}
 ];
 function load(){
   try{

@@ -29,3 +29,12 @@ async function serenityAdminCloudSave(data,password){
   if(!r.ok) throw new Error(out.error||("HTTP "+r.status));
   return out;
 }
+
+async function serenityHydrateLocal(){
+  const cloud=await serenityCloudLoad();
+  if(cloud){
+    try{localStorage.setItem("serenity155Data",JSON.stringify(cloud));}catch(e){}
+    return cloud;
+  }
+  return null;
+}
