@@ -165,9 +165,9 @@ footer a{color:var(--cyan);text-decoration:none}
   .roster-grid{grid-template-columns:repeat(3,1fr)}
 }
 @media(max-width:820px){
-  nav{position:absolute;top:77px;left:14px;right:14px;display:none;flex-direction:column;background:#080b11;border:1px solid var(--line);padding:22px}
-  nav.open{display:flex}
-  .menu-btn{display:flex;width:34px;height:28px;flex-direction:column;justify-content:space-around;cursor:pointer}
+  .site-header nav{position:absolute;top:77px;left:14px;right:14px;display:none;flex-direction:column;background:#080b11;border:1px solid var(--line);padding:22px}
+  .site-header nav.open{display:flex}
+  .site-header .menu-btn{display:flex;width:34px;height:28px;flex-direction:column;justify-content:space-around;cursor:pointer}
   .menu-btn span{height:2px;background:#fff;width:100%}
   .about-grid{grid-template-columns:1fr}
   .roster-grid{grid-template-columns:repeat(2,1fr)}
@@ -177,7 +177,7 @@ footer a{color:var(--cyan);text-decoration:none}
 }
 @media(max-width:520px){
   .site-header{padding:10px 15px}.brand img{width:40px;height:40px}.brand span{font-size:16px}
-  nav{top:62px}
+  .site-header nav{top:62px}
   .hero{padding:100px 18px 55px}.hero h1{font-size:58px}.hero-sub{font-size:16px}.hero-stats{gap:16px}.hero-stats strong{font-size:20px}
   .section{padding:80px 18px}.section-head h2{font-size:48px}
   .roster-grid{grid-template-columns:1fr}.player-card{min-height:340px}
@@ -895,3 +895,68 @@ radial-gradient(circle at 52% 52%,rgba(255,43,166,.055),transparent 38%),#020409
 
 /* V13.1 admin save feedback */
 .admin-page .status:not(:empty){margin-top:14px;padding:12px 14px;border:1px solid rgba(45,233,243,.28);background:rgba(45,233,243,.055);color:#70f3fb;font-weight:800;letter-spacing:.5px;min-height:42px;display:flex;align-items:center}
+
+
+/* ===== MOBILE ARENA HEADER FIX =====
+   Tournament/Match Center use their own horizontal mobile navigation.
+   Keep it inside normal document flow so it never overlays the page. */
+@media(max-width:820px){
+  .arena-header{
+    position:sticky;
+    top:0;
+    height:auto;
+    min-height:74px;
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    justify-content:flex-start;
+    padding:10px 15px 9px;
+    gap:7px;
+    overflow:visible;
+  }
+  .arena-header .arena-brand{
+    align-self:flex-start;
+    padding-right:145px;
+  }
+  .arena-header nav{
+    position:static !important;
+    inset:auto !important;
+    display:flex !important;
+    width:100%;
+    flex-direction:row !important;
+    align-items:center;
+    gap:20px;
+    padding:8px 0 4px !important;
+    margin:0;
+    border:0 !important;
+    background:transparent !important;
+    box-shadow:none !important;
+    overflow-x:auto;
+    overflow-y:hidden;
+    white-space:nowrap;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .arena-header nav::-webkit-scrollbar{display:none}
+  .arena-header nav a{
+    flex:0 0 auto;
+    font-size:10px;
+    padding:5px 0;
+  }
+  .arena-header .participant-auth-pill{
+    position:absolute;
+    right:15px;
+    top:16px;
+    margin:0;
+  }
+  .arena-header + main{
+    position:relative;
+    z-index:1;
+  }
+}
+@media(max-width:520px){
+  .arena-header .arena-brand img{width:44px;height:44px}
+  .arena-header .arena-brand b{font-size:21px}
+  .arena-header .arena-brand{padding-right:125px}
+  .arena-header nav{gap:18px}
+}
