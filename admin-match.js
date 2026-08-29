@@ -45,7 +45,7 @@ function render(){
   <button class="small-btn danger" data-remove-match="${i}" type="button">HAPUS</button>
  </div>`).join(""):'<p class="hint">Belum ada match tersimpan.</p>';
 }
-async async function submit(){
+async function submit(){
  const opponent=$("opponent").value.trim();if(!opponent){$("matchSaveStatus").textContent="Nama lawan wajib diisi.";return}
  const old=editing>=0?data.matches[editing]:null;
  const item={date:$("matchDate").value,opponent,event:$("matchEvent").value.trim()||"MATCH",game:$("game").value.trim()||"POINT BLANK",format:$("format").value.trim(),stream:$("stream").value.trim(),status:$("matchStatus").value,ourScore:$("ourScore").value,oppScore:$("oppScore").value,logo:pendingLogo||(old?.logo||""),featured:old?.featured||false};
@@ -62,8 +62,31 @@ async async function submit(){
 }
 function edit(i){const m=data.matches[i];if(!m)return;editing=i;$("matchDate").value=m.date||"";$("opponent").value=m.opponent||"";$("matchEvent").value=m.event||"MATCH";$("game").value=m.game||"POINT BLANK";$("format").value=m.format||"";$("stream").value=m.stream||"";$("matchStatus").value=m.status||"UPCOMING";$("ourScore").value=m.ourScore??"";$("oppScore").value=m.oppScore??"";pendingLogo="";if(m.logo){$("opponentLogoPreview").src=m.logo;$("opponentLogoPreview").hidden=false}else $("opponentLogoPreview").hidden=true;$("addMatch").textContent="SIMPAN PERUBAHAN";$("cancelMatchEdit").hidden=false;window.scrollTo({top:0,behavior:"smooth"})}
 
-$("matchAdminLoginBtn").onclick=()=>{if($("matchAdminUser").value==="admin"&&$("matchAdminPass").value===PASSWORD){sessionStorage.setItem("serenityMatchAdmin","1");sessionStorage.setItem("serenityMatchAdminPass",$("matchAdminPass").value);sessionStorage.setItem("serenity155AdminPass",$("matchAdminPass").value);$("matchAdminLogin").hidden=true;$("matchAdminView").hidden=false;load();render()}else $("matchAdminLoginStatus").textContent="Username atau password salah."};
-$("matchAdminPass").addEventListener("keydown",e=>{if(e.key==="Enter")$("matchAdminLoginBtn").click()});
+function doLogin(){
+  const user=($("matchAdminUser").value||"").trim().toLowerCase();
+  const pass=($("matchAdminPass").value||"");
+  const validUser=(user==="admin" || user==="rudiahmad111020@gmail.com");
+  if(validUser && pass===PASSWORD){
+    try{
+      sessionStorage.setItem("serenityMatchAdmin","1");
+      sessionStorage.setItem("serenityMatchAdminPass",pass);
+      sessionStorage.setItem("serenity155AdminPass",pass);
+    }catch(e){}
+    $("matchAdminLoginStatus").textContent="Login berhasil ✓";
+    $("matchAdminLogin").hidden=true;
+    $("matchAdminView").hidden=false;
+    load();
+    render();
+  }else{
+    $("matchAdminLoginStatus").textContent="Username/email atau password salah.";
+  }
+}
+$("matchAdminLoginBtn").onclick=(e)=>{e.preventDefault();doLogin();};
+["matchAdminUser","matchAdminPass"].forEach(id=>{
+  $(id).addEventListener("keydown",e=>{
+    if(e.key==="Enter"){e.preventDefault();doLogin();}
+  });
+});
 $("matchAdminLogout").onclick=()=>{sessionStorage.removeItem("serenityMatchAdmin");location.reload()};
 $("opponentLogo").onchange=async e=>{const f=e.target.files?.[0];if(!f)return;pendingLogo=await imageFile(f);$("opponentLogoPreview").src=pendingLogo;$("opponentLogoPreview").hidden=false};
 $("clearOpponentLogo").onclick=()=>{pendingLogo="";$("opponentLogo").value="";$("opponentLogoPreview").hidden=true};
@@ -88,3 +111,4 @@ document.body.addEventListener("click",async e=>{
 document.body.addEventListener("change",async e=>{if(e.target.dataset.changeMatchLogo!==undefined){const f=e.target.files?.[0];if(!f)return;data.matches[+e.target.dataset.changeMatchLogo].logo=await imageFile(f);save().catch(console.error);render()}});
 if(sessionStorage.getItem("serenityMatchAdmin")==="1"){$("matchAdminLogin").hidden=true;$("matchAdminView").hidden=false;load();render()}
 })();
+

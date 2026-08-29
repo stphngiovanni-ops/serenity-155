@@ -1,4 +1,4 @@
-const CACHE="serenity155-v13-1-admin-match-fix";
+const CACHE="serenity155-v13-3-match-login-hotfix";
 const PRECACHE=["/", "/index.html", "/matches.html", "/tournament.html", "/competitive.html", "/family.html", "/tv.html", "/hub.html", "/store.html", "/styles.css", "/family.css", "/tv.css", "/hub.css", "/competitive.css", "/tournament.css", "/script.js", "/site-data.js", "/match-page.js", "/family.js", "/tv.js", "/hub.js", "/competitive.js", "/store.js", "/tournament-page.js", "/cloud-sync.js", "/cloud-boot.js", "/v12-command-media.js", "/v12-loader.js", "/v12-loader.css", "/serenity155-logo.png", "/serenity155-logo.webp", "/nkj-logo.png", "/nkj-store-background.png", "/manifest.webmanifest", "/offline.html", "/icons/icon-192.png", "/icons/icon-512.png", "/icons/maskable-192.png", "/icons/maskable-512.png"];
 self.addEventListener("install",e=>{
   e.waitUntil(caches.open(CACHE).then(c=>c.addAll(PRECACHE.filter(Boolean))).catch(()=>{}));
