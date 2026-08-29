@@ -348,7 +348,7 @@ async function saveAll(){
     console.error(e);
     $("saveStatus").textContent="Gagal simpan online. Coba lagi.";
   }
-  setTimeout(()=>$("saveStatus").textContent="",3200);
+  setTimeout(()=>$("saveStatus").textContent="",6000);
 }
 function resetAll(){if(confirm("Reset seluruh data ke default?")){data=cloneDefault();saveSilent();fillForm();renderLists();resetMatchForm();$("saveStatus").textContent="Data direset."}}
 

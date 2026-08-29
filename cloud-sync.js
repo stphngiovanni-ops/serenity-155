@@ -22,7 +22,7 @@ async function serenityCloudSave(data,accessToken){
 async function serenityAdminCloudSave(data,password){
   const r=await fetch(SERENITY_SUPABASE_URL+"/functions/v1/serenity-admin-save",{
     method:"POST",
-    headers:{"Content-Type":"application/json","apikey":SERENITY_SUPABASE_KEY},
+    headers:{"Content-Type":"application/json","apikey":SERENITY_SUPABASE_KEY,"x-admin-password":password||""},
     body:JSON.stringify({password,data})
   });
   const out=await r.json().catch(()=>({}));

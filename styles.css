@@ -881,3 +881,17 @@ radial-gradient(circle at 52% 52%,rgba(255,43,166,.055),transparent 38%),#020409
 .serenity-loader-line{height:2px;background:#101823;overflow:hidden;position:relative}.serenity-loader-line i{position:absolute;inset:0 auto 0 0;width:35%;background:linear-gradient(90deg,var(--cyan),var(--pink));box-shadow:0 0 14px rgba(45,233,243,.45);animation:serenityLoad 1.15s ease-in-out infinite}
 .serenity-loader-status{font-size:8px;letter-spacing:2.4px;color:#536272;margin-top:12px}
 @keyframes serenityOrbit{to{transform:rotate(360deg)}}@keyframes serenityPulse{50%{transform:scale(.94);opacity:.75}}@keyframes serenityLoad{0%{left:-35%}100%{left:100%}}
+
+/* V13 PWA install button */
+.pwa-install-btn{
+  position:fixed;right:18px;bottom:18px;z-index:9000;border:1px solid rgba(45,233,243,.35);
+  background:linear-gradient(120deg,rgba(9,16,26,.96),rgba(5,8,14,.98));color:#fff;
+  padding:12px 15px;font-family:"Rajdhani",Arial,sans-serif;font-weight:700;letter-spacing:1px;
+  box-shadow:0 16px 45px rgba(0,0,0,.4),0 0 25px rgba(45,233,243,.09);cursor:pointer;
+  backdrop-filter:blur(14px)
+}
+.pwa-install-btn span{color:#2de9f3}.pwa-install-btn:hover{transform:translateY(-2px);border-color:#2de9f3}
+@media(max-width:580px){.pwa-install-btn{right:12px;bottom:12px;padding:10px 12px;font-size:12px}}
+
+/* V13.1 admin save feedback */
+.admin-page .status:not(:empty){margin-top:14px;padding:12px 14px;border:1px solid rgba(45,233,243,.28);background:rgba(45,233,243,.055);color:#70f3fb;font-weight:800;letter-spacing:.5px;min-height:42px;display:flex;align-items:center}

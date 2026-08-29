@@ -1,0 +1,10 @@
+/* V13 PWA install button */
+.pwa-install-btn{
+  position:fixed;right:18px;bottom:18px;z-index:9000;border:1px solid rgba(45,233,243,.35);
+  background:linear-gradient(120deg,rgba(9,16,26,.96),rgba(5,8,14,.98));color:#fff;
+  padding:12px 15px;font-family:"Rajdhani",Arial,sans-serif;font-weight:700;letter-spacing:1px;
+  box-shadow:0 16px 45px rgba(0,0,0,.4),0 0 25px rgba(45,233,243,.09);cursor:pointer;
+  backdrop-filter:blur(14px)
+}
+.pwa-install-btn span{color:#2de9f3}.pwa-install-btn:hover{transform:translateY(-2px);border-color:#2de9f3}
+@media(max-width:580px){.pwa-install-btn{right:12px;bottom:12px;padding:10px 12px;font-size:12px}}
