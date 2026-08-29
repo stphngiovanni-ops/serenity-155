@@ -972,3 +972,11 @@ body.announcement-open{overflow:hidden}
   .serenity-popup-actions{display:grid}
   .serenity-popup-primary,.serenity-popup-secondary{text-align:center;width:100%}
 }
+
+/* ===== ANNOUNCEMENT IMAGE V3 ===== */
+.serenity-popup-image{width:100%;margin:2px 0 20px;overflow:hidden;border:1px solid rgba(40,231,240,.18);background:#05070b;aspect-ratio:16/9}
+.serenity-popup-image img{width:100%;height:100%;display:block;object-fit:cover}
+.announcement-image-tools{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;margin-top:9px}
+.announcement-image-preview{width:180px;max-height:130px;object-fit:cover;border:1px solid var(--line);background:#05070b}
+.announcement-admin-thumb{width:70px;height:54px;object-fit:cover;border:1px solid var(--line);flex:0 0 auto}
+@media(max-width:560px){.serenity-popup-image{aspect-ratio:4/3}.serenity-popup-card{max-height:92vh}}

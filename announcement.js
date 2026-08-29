@@ -48,7 +48,7 @@
           <span class="serenity-popup-dot"></span>
           <b>${esc((a.type||"INFO").toUpperCase())}</b>
         </div>
-        <div class="serenity-popup-icon">${a.type==="tournament"?"🏆":a.type==="store"?"🛒":a.type==="urgent"?"⚠":"📢"}</div>
+        ${a.image?`<div class="serenity-popup-image"><img src="${a.image}" alt="${esc(a.title||"Announcement")}"></div>`:`<div class="serenity-popup-icon">${a.type==="tournament"?"🏆":a.type==="store"?"🛒":a.type==="urgent"?"⚠":"📢"}</div>`}
         <h2>${esc(a.title||"ANNOUNCEMENT")}</h2>
         <p>${esc(a.message||"")}</p>
         <div class="serenity-popup-actions">
