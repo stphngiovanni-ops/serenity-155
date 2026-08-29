@@ -824,3 +824,60 @@ radial-gradient(circle at 20% 70%,rgba(255,43,166,.10),transparent 25%),#03050a!
 .v11-ticker{overflow:hidden;border-top:1px solid var(--v11-line);border-bottom:1px solid var(--v11-line);background:#05070b;padding:13px 0;white-space:nowrap}.v11-ticker-track{display:inline-block;min-width:200%;animation:v11ticker 28s linear infinite;font-family:"Anton";letter-spacing:3px;color:#52606e}.v11-ticker-track b{color:var(--v11-cyan);margin:0 25px}@keyframes v11ticker{to{transform:translateX(-50%)}}
 @media(max-width:900px){.v11-command-head{display:block}.v11-command-head p{margin-top:18px}.v11-command-grid{grid-template-columns:1fr 1fr}.v11-command-card:first-child{grid-row:auto;grid-column:1/-1;min-height:300px}}
 @media(max-width:580px){.hero{min-height:84vh!important}.section{padding-top:72px!important;padding-bottom:72px!important}.v11-command{padding:70px 18px}.v11-command-grid{grid-template-columns:1fr}.v11-command-card:first-child{grid-column:auto}.v11-command-card{min-height:230px}}
+
+/* =========================================================
+   V12 VISUAL COMMAND + ESPORTS PLAYER CARDS + LOADER
+   ========================================================= */
+.v11-command-card{padding:0!important;justify-content:stretch!important;display:grid!important;grid-template-rows:minmax(145px,45%) 1fr}
+.v11-command-card:first-child{grid-template-rows:minmax(230px,56%) 1fr}
+.v12-command-media{position:relative;overflow:hidden;background:#04070c;border-bottom:1px solid rgba(255,255,255,.08)}
+.v12-command-media:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 25%,rgba(3,5,10,.85)),linear-gradient(90deg,rgba(45,233,243,.08),transparent 55%);pointer-events:none}
+.v12-command-media img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.9) contrast(1.06);transition:.55s}
+.v11-command-card:hover .v12-command-media img{transform:scale(1.055);filter:saturate(1.1) contrast(1.08)}
+.v12-command-media span{position:absolute;left:18px;bottom:14px;z-index:2;font-size:9px;letter-spacing:2.5px;color:#dfe9ef;font-weight:700;background:rgba(3,5,10,.72);border:1px solid rgba(255,255,255,.12);padding:7px 9px;backdrop-filter:blur(8px)}
+.v11-store .v12-command-media img{object-position:center}
+.v12-command-copy{position:relative;z-index:2;padding:23px 26px 27px;display:flex;flex-direction:column;justify-content:end}
+.v12-command-copy p{flex:1}
+@media(max-width:580px){.v11-command-card,.v11-command-card:first-child{grid-template-rows:180px 1fr}.v12-command-copy{padding:20px}}
+
+/* Player name cards — esports broadcast style */
+.roster-grid{align-items:stretch}
+.player-card{padding:0!important;min-height:440px!important;display:flex;flex-direction:column;background:
+linear-gradient(165deg,rgba(10,16,27,.98),rgba(3,6,11,.99))!important}
+.player-card:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 0 66%,rgba(45,233,243,.035) 66% 67%,transparent 67%)}
+.player-card-top{height:50px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:3;border-bottom:1px solid rgba(255,255,255,.07)}
+.player-card-top .player-no{font-size:27px!important;line-height:1;color:rgba(255,255,255,.18)}
+.player-status{font-size:8px;letter-spacing:2px;color:#55f6ad;border:1px solid rgba(85,246,173,.22);padding:5px 7px;background:rgba(85,246,173,.035)}
+.player-scan{position:absolute;left:0;right:0;top:51px;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:.25;box-shadow:0 0 14px var(--cyan);z-index:5}
+.player-portrait{height:240px!important;flex:0 0 240px;overflow:hidden!important;border-bottom:1px solid rgba(255,255,255,.07)}
+.player-portrait.has-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(3,6,11,.78));pointer-events:none}
+.player-photo{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:.4s}
+.player-card:hover .player-photo{transform:scale(1.035)}
+.player-nameplate{position:relative;z-index:3;padding:18px 18px 12px;flex:1;background:linear-gradient(180deg,rgba(7,11,18,.3),rgba(5,8,14,.96))}
+.player-squad-code{font-size:8px;letter-spacing:2.4px;color:#657281}
+.player-nameplate h3{font-size:34px!important;line-height:1;margin:5px 0 9px!important;letter-spacing:.5px;text-transform:uppercase}
+.player-role-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.player-role-row p{margin:0!important;color:var(--cyan)!important;font-size:11px!important;letter-spacing:1.6px!important}
+.player-role-row i{font-style:normal;font-size:8px;letter-spacing:1.5px;color:#ff4bad;border:1px solid rgba(255,75,173,.25);padding:4px 7px}
+.player-nameplate small{display:block;margin-top:9px;line-height:1.35;color:#778391!important;min-height:18px}
+.player-card-foot{position:relative;z-index:3;height:34px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-top:1px solid rgba(255,255,255,.055);font-size:7px;letter-spacing:1.8px;color:#505d6b}
+.player-card-foot b{color:var(--cyan)}
+.player-card.featured .player-nameplate{box-shadow:inset 3px 0 0 rgba(255,43,166,.7)}
+@media(max-width:780px){.player-card{min-height:410px!important}.player-portrait{height:220px!important;flex-basis:220px}}
+
+/* Modern Serenity loading screen */
+#serenityLoader{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:
+radial-gradient(circle at 50% 45%,rgba(45,233,243,.08),transparent 28%),
+radial-gradient(circle at 52% 52%,rgba(255,43,166,.055),transparent 38%),#020409;transition:opacity .55s,visibility .55s}
+#serenityLoader.hide{opacity:0;visibility:hidden;pointer-events:none}
+.serenity-loader-core{width:min(360px,80vw);text-align:center;position:relative}
+.serenity-loader-logo-wrap{width:150px;height:150px;margin:0 auto 25px;position:relative;display:grid;place-items:center}
+.serenity-loader-logo-wrap:before,.serenity-loader-logo-wrap:after{content:"";position:absolute;border-radius:50%;inset:0;border:1px solid rgba(45,233,243,.2);animation:serenityOrbit 2.2s linear infinite}
+.serenity-loader-logo-wrap:after{inset:16px;border-color:rgba(255,43,166,.18);animation-direction:reverse;animation-duration:1.7s}
+.serenity-loader-logo{width:105px;height:105px;object-fit:contain;filter:drop-shadow(0 0 25px rgba(45,233,243,.18));animation:serenityPulse 1.35s ease-in-out infinite}
+.serenity-loader-kicker{font-size:9px;letter-spacing:4px;color:#536272}
+.serenity-loader-title{font-family:"Anton";font-size:34px;letter-spacing:2px;margin:5px 0 14px}
+.serenity-loader-title span{color:var(--cyan)}
+.serenity-loader-line{height:2px;background:#101823;overflow:hidden;position:relative}.serenity-loader-line i{position:absolute;inset:0 auto 0 0;width:35%;background:linear-gradient(90deg,var(--cyan),var(--pink));box-shadow:0 0 14px rgba(45,233,243,.45);animation:serenityLoad 1.15s ease-in-out infinite}
+.serenity-loader-status{font-size:8px;letter-spacing:2.4px;color:#536272;margin-top:12px}
+@keyframes serenityOrbit{to{transform:rotate(360deg)}}@keyframes serenityPulse{50%{transform:scale(.94);opacity:.75}}@keyframes serenityLoad{0%{left:-35%}100%{left:100%}}

@@ -13,6 +13,15 @@
 <script src="cloud-sync.js"></script><script src="cloud-boot.js"></script>
 </head>
 <body>
+<div id="serenityLoader" aria-label="Loading SERENITY 155">
+  <div class="serenity-loader-core">
+    <div class="serenity-loader-logo-wrap"><img class="serenity-loader-logo" src="serenity155-logo.png" alt="SERENITY 155"></div>
+    <div class="serenity-loader-kicker">INITIALIZING ESPORTS NETWORK</div>
+    <div class="serenity-loader-title">SERENITY <span>155</span></div>
+    <div class="serenity-loader-line"><i></i></div>
+    <div class="serenity-loader-status">LOADING // PLEASE WAIT</div>
+  </div>
+</div>
   <div class="noise"></div>
   <div class="cursor-glow" id="cursorGlow"></div>
 
@@ -79,11 +88,11 @@
     <p>Akses cepat ke seluruh ekosistem SERENITY 155. Pertandingan, tournament, family archive, media, dan store tetap berada dalam satu website.</p>
   </div>
   <div class="v11-command-grid">
-    <a class="v11-command-card v11-match" href="matches.html"><small>01 // BATTLE CONTROL</small><h3>MATCH CENTER</h3><p>Upcoming match, hasil pertandingan, score, dan perjalanan competitive SERENITY.</p><b>OPEN MATCH CENTER →</b></a>
-    <a class="v11-command-card v11-tournament" href="tournament.html"><small>02 // COMPETITION</small><h3>TOURNAMENT</h3><p>Portal tournament SERENITY.</p><b>ENTER PORTAL →</b></a>
-    <a class="v11-command-card v11-family" href="family.html"><small>03 // FAMILY ARCHIVE</small><h3>FOTO FAMILY</h3><p>Semua momen keluarga besar.</p><b>VIEW MOMENTS →</b></a>
-    <a class="v11-command-card v11-tv" href="tv.html"><small>04 // MEDIA NETWORK</small><h3>FAMILY TV</h3><p>Highlight dan video resmi.</p><b>WATCH NOW →</b></a>
-    <a class="v11-command-card v11-store" href="store.html"><small>05 // NKJ NETWORK</small><h3>NKJ STORE</h3><p>Voucher dan layanan NKJ Store.</p><b>OPEN STORE →</b></a>
+    <a class="v11-command-card v11-match" href="matches.html" data-command-media="match"><div class="v12-command-media"><img src="serenity155-logo.png" alt="SERENITY Match Center"><span>MATCH CONTROL</span></div><div class="v12-command-copy"><small>01 // BATTLE CONTROL</small><h3>MATCH CENTER</h3><p>Upcoming match, hasil pertandingan, score, dan perjalanan competitive SERENITY.</p><b>OPEN MATCH CENTER →</b></div></a>
+    <a class="v11-command-card v11-tournament" href="tournament.html" data-command-media="tournament"><div class="v12-command-media"><img src="serenity155-logo.png" alt="SERENITY Tournament"><span>COMPETITION</span></div><div class="v12-command-copy"><small>02 // COMPETITION</small><h3>TOURNAMENT</h3><p>Portal tournament SERENITY.</p><b>ENTER PORTAL →</b></div></a>
+    <a class="v11-command-card v11-family" href="family.html" data-command-media="family"><div class="v12-command-media"><img src="serenity155-logo.png" alt="SERENITY Family"><span>FAMILY ARCHIVE</span></div><div class="v12-command-copy"><small>03 // FAMILY ARCHIVE</small><h3>FOTO FAMILY</h3><p>Semua momen keluarga besar.</p><b>VIEW MOMENTS →</b></div></a>
+    <a class="v11-command-card v11-tv" href="tv.html" data-command-media="tv"><div class="v12-command-media"><img src="serenity155-logo.png" alt="SERENITY Family TV"><span>MEDIA NETWORK</span></div><div class="v12-command-copy"><small>04 // MEDIA NETWORK</small><h3>FAMILY TV</h3><p>Highlight dan video resmi.</p><b>WATCH NOW →</b></div></a>
+    <a class="v11-command-card v11-store" href="store.html" data-command-media="store"><div class="v12-command-media"><img src="nkj-store-background.png" alt="NKJ Store"><span>NKJ NETWORK</span></div><div class="v12-command-copy"><small>05 // NKJ NETWORK</small><h3>NKJ STORE</h3><p>Voucher dan layanan NKJ Store.</p><b>OPEN STORE →</b></div></a>
   </div>
 </section>
 
@@ -269,5 +278,7 @@
   <script src="script.js"></script>
   <script src="site-data.js"></script>
 <script src="logo-manager.js"></script>
+<script src="v12-command-media.js"></script>
+<script src="v12-loader.js"></script>
 </body>
 </html>

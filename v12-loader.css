@@ -1,0 +1,16 @@
+/* Modern Serenity loading screen */
+#serenityLoader{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:
+radial-gradient(circle at 50% 45%,rgba(45,233,243,.08),transparent 28%),
+radial-gradient(circle at 52% 52%,rgba(255,43,166,.055),transparent 38%),#020409;transition:opacity .55s,visibility .55s}
+#serenityLoader.hide{opacity:0;visibility:hidden;pointer-events:none}
+.serenity-loader-core{width:min(360px,80vw);text-align:center;position:relative}
+.serenity-loader-logo-wrap{width:150px;height:150px;margin:0 auto 25px;position:relative;display:grid;place-items:center}
+.serenity-loader-logo-wrap:before,.serenity-loader-logo-wrap:after{content:"";position:absolute;border-radius:50%;inset:0;border:1px solid rgba(45,233,243,.2);animation:serenityOrbit 2.2s linear infinite}
+.serenity-loader-logo-wrap:after{inset:16px;border-color:rgba(255,43,166,.18);animation-direction:reverse;animation-duration:1.7s}
+.serenity-loader-logo{width:105px;height:105px;object-fit:contain;filter:drop-shadow(0 0 25px rgba(45,233,243,.18));animation:serenityPulse 1.35s ease-in-out infinite}
+.serenity-loader-kicker{font-size:9px;letter-spacing:4px;color:#536272}
+.serenity-loader-title{font-family:"Anton";font-size:34px;letter-spacing:2px;margin:5px 0 14px}
+.serenity-loader-title span{color:var(--cyan)}
+.serenity-loader-line{height:2px;background:#101823;overflow:hidden;position:relative}.serenity-loader-line i{position:absolute;inset:0 auto 0 0;width:35%;background:linear-gradient(90deg,var(--cyan),var(--pink));box-shadow:0 0 14px rgba(45,233,243,.45);animation:serenityLoad 1.15s ease-in-out infinite}
+.serenity-loader-status{font-size:8px;letter-spacing:2.4px;color:#536272;margin-top:12px}
+@keyframes serenityOrbit{to{transform:rotate(360deg)}}@keyframes serenityPulse{50%{transform:scale(.94);opacity:.75}}@keyframes serenityLoad{0%{left:-35%}100%{left:100%}}

@@ -21,3 +21,15 @@ radial-gradient(circle at 20% 70%,rgba(255,18,117,.10),transparent 24%),#05070b}
 
 /* V11 common premium shell */
 body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(circle at 75% 10%,rgba(45,233,243,.045),transparent 25%),radial-gradient(circle at 10% 80%,rgba(255,43,166,.04),transparent 25%)}
+
+/* V12 — perfectly aligned Family Gallery */
+.family-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:18px!important;align-items:stretch!important;grid-auto-rows:1fr}
+.family-card{height:100%!important;min-height:0!important;display:grid!important;grid-template-rows:260px 1fr!important;align-self:stretch!important;overflow:hidden!important}
+.family-photo{height:260px!important;width:100%!important;aspect-ratio:auto!important;overflow:hidden!important}
+.family-photo img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;display:block!important}
+.family-info{min-height:145px!important;display:flex!important;flex-direction:column!important;padding:19px 20px 21px!important}
+.family-info h3{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;min-height:34px}
+.family-info p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:48px;margin-top:auto!important}
+.family-info span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:920px){.family-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.family-card{grid-template-rows:235px 1fr!important}.family-photo{height:235px!important}}
+@media(max-width:580px){.family-grid{grid-template-columns:1fr!important}.family-card{grid-template-rows:230px 1fr!important}.family-photo{height:230px!important}}

@@ -94,8 +94,16 @@ function renderRoster(targetId, players, groupName){
     const media=p.photo
       ? `<div class="player-portrait has-photo"><img class="player-photo" src="${p.photo}" alt="${escapeHtml(p.name)}"></div>`
       : `<div class="player-portrait"><span>${initial}</span></div>`;
-    article.innerHTML=`<div class="player-no">${String(i+1).padStart(2,"0")}</div>
-      ${media}<h3>${escapeHtml(p.name)}</h3><p>${escapeHtml(p.role)}</p><small>${escapeHtml(p.detail||"")}</small>`;
+    article.innerHTML=`<div class="player-card-top"><div class="player-no">${String(i+1).padStart(2,"0")}</div><span class="player-status">ACTIVE</span></div>
+      <div class="player-scan"></div>
+      ${media}
+      <div class="player-nameplate">
+        <span class="player-squad-code">SRNTY // 155</span>
+        <h3>${escapeHtml(p.name)}</h3>
+        <div class="player-role-row"><p>${escapeHtml(p.role)}</p><i>${groupName==="competitive"?"COMP":"WAR"}</i></div>
+        <small>${escapeHtml(p.detail||"")}</small>
+      </div>
+      <div class="player-card-foot"><span>SERENITY ESPORTS</span><b>///</b></div>`;
     roster.appendChild(article);
   });
 }
