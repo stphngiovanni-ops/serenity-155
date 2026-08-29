@@ -17,3 +17,7 @@ radial-gradient(circle at 20% 70%,rgba(255,18,117,.10),transparent 24%),#05070b}
 .family-info{padding:20px!important}.family-info span{letter-spacing:2px!important;color:#31e7f4!important}
 .viewer{backdrop-filter:blur(16px)}
 @media(max-width:920px){.family-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:580px){.family-grid{grid-template-columns:1fr}}
+
+
+/* V11 common premium shell */
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(circle at 75% 10%,rgba(45,233,243,.045),transparent 25%),radial-gradient(circle at 10% 80%,rgba(255,43,166,.04),transparent 25%)}

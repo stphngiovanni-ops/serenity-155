@@ -11,3 +11,6 @@
 .hub-player:hover,.achievement-card:hover,.news-card:hover,.family-mini:hover{transform:translateY(-8px);border-color:rgba(32,231,243,.22);box-shadow:0 25px 60px rgba(0,0,0,.34)}
 
 /* V15.1 ROAD TO PBNC */.road-timeline{position:relative;margin:20px auto;max-width:1000px}.road-timeline:before{content:"";position:absolute;left:19px;top:0;bottom:0;width:1px;background:linear-gradient(#20e7f3,#ff176f)}.road-item{position:relative;margin:0 0 12px;padding:22px 25px 22px 55px;background:#07101a;border:1px solid #ffffff0f}.road-item:before{content:"";position:absolute;left:14px;top:28px;width:11px;height:11px;border-radius:50%;background:#20e7f3;box-shadow:0 0 12px #20e7f3}.road-item span{font-size:8px;letter-spacing:2px;color:#20e7f3}.road-item h3{font-family:Anton;font-size:28px;margin:6px 0}.road-item p{color:#71808d;font-size:11px}
+
+/* V11 common premium shell */
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(circle at 75% 10%,rgba(45,233,243,.045),transparent 25%),radial-gradient(circle at 10% 80%,rgba(255,43,166,.04),transparent 25%)}

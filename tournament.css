@@ -12,3 +12,7 @@
 .hero h1 i,.section-title h2 i{-webkit-text-stroke:1px rgba(255,255,255,.8)}
 .eyebrow{color:#ff557e}
 @media(max-width:700px){.pray-banner{left:10px;right:10px;transform:none;justify-content:center}.pray-banner small{display:none}}
+
+
+/* V11 common premium shell */
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(circle at 75% 10%,rgba(45,233,243,.045),transparent 25%),radial-gradient(circle at 10% 80%,rgba(255,43,166,.04),transparent 25%)}

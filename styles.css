@@ -788,3 +788,39 @@ linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90de
 .portal-card small{display:block;color:#88939f;line-height:1.6;max-width:380px;margin-bottom:28px}
 .portal-card>b{font-size:12px;letter-spacing:1.7px;color:#fff}
 @media(max-width:900px){.modern-portal-grid{grid-template-columns:1fr}.portal-card{min-height:270px}.portal-icon{margin-bottom:30px}}
+
+/* =========================================================
+   V11 SERENITY IMMERSIVE — premium visual layer
+   ========================================================= */
+:root{--v11-cyan:#2de9f3;--v11-pink:#ff2ba6;--v11-bg:#03050a;--v11-panel:#080d16;--v11-line:rgba(255,255,255,.09)}
+html{scroll-behavior:smooth}body{background:var(--v11-bg);overflow-x:hidden}
+.site-header{background:rgba(3,5,10,.72)!important;backdrop-filter:blur(20px);border-bottom:1px solid var(--v11-line);box-shadow:0 15px 45px rgba(0,0,0,.2)}
+.site-header .brand img{filter:drop-shadow(0 0 16px rgba(45,233,243,.22))}
+.site-header nav a{position:relative}.site-header nav a:after{content:"";position:absolute;left:50%;right:50%;bottom:-8px;height:2px;background:linear-gradient(90deg,var(--v11-cyan),var(--v11-pink));transition:.25s}.site-header nav a:hover:after{left:0;right:0}
+.hero{min-height:92vh!important;isolation:isolate;background:
+radial-gradient(circle at 70% 28%,rgba(45,233,243,.12),transparent 28%),
+radial-gradient(circle at 20% 70%,rgba(255,43,166,.10),transparent 25%),#03050a!important}
+.hero:after{content:"SERENITY";position:absolute;right:-1vw;bottom:-4vw;font-family:"Anton";font-size:clamp(120px,22vw,360px);line-height:.8;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.025);z-index:-1;pointer-events:none}
+.hero-copy h1{font-size:clamp(75px,11vw,170px)!important;line-height:.86!important;letter-spacing:-2px;text-shadow:0 0 45px rgba(45,233,243,.08)}
+.hero-copy h1 span{background:linear-gradient(100deg,var(--v11-cyan),#fff 45%,var(--v11-pink));-webkit-background-clip:text;color:transparent}
+.hero-sub{max-width:650px;font-size:clamp(16px,1.6vw,22px)!important;color:#9aa8b7!important}
+.btn{border-radius:2px!important;letter-spacing:1.3px}.btn.primary{box-shadow:0 0 30px rgba(45,233,243,.12)}
+.section{padding-top:100px!important;padding-bottom:100px!important}
+.section-head h2{font-size:clamp(45px,6vw,82px)!important;letter-spacing:-1px}
+.player-card,.achievement-card,.match-card,.sponsor-card{background:linear-gradient(145deg,rgba(11,17,28,.95),rgba(4,7,12,.98))!important;border:1px solid var(--v11-line)!important;transition:transform .3s,border-color .3s,box-shadow .3s}
+.player-card:hover,.achievement-card:hover,.match-card:hover,.sponsor-card:hover{transform:translateY(-7px);border-color:rgba(45,233,243,.35)!important;box-shadow:0 30px 65px rgba(0,0,0,.4)}
+.v11-command{position:relative;padding:95px clamp(20px,6vw,95px);background:#050810;border-top:1px solid var(--v11-line);border-bottom:1px solid var(--v11-line);overflow:hidden}
+.v11-command:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(45,233,243,.04),transparent 40%,rgba(255,43,166,.04));pointer-events:none}
+.v11-command-head{position:relative;display:flex;justify-content:space-between;gap:30px;align-items:end;max-width:1400px;margin:0 auto 30px}
+.v11-command-head span{font-size:11px;letter-spacing:3px;color:var(--v11-cyan);font-weight:700}.v11-command-head h2{font-family:"Anton";font-size:clamp(50px,7vw,92px);font-weight:400;line-height:.9;margin-top:8px}.v11-command-head h2 i{font-style:normal;color:transparent;-webkit-text-stroke:1px var(--v11-cyan)}
+.v11-command-head p{max-width:420px;color:#788797;line-height:1.65}
+.v11-command-grid{position:relative;max-width:1400px;margin:auto;display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:15px}
+.v11-command-card{min-height:270px;position:relative;display:flex;flex-direction:column;justify-content:end;padding:28px;text-decoration:none;color:#fff;border:1px solid var(--v11-line);background:linear-gradient(145deg,#0b111c,#05070c);overflow:hidden;transition:.3s}
+.v11-command-card:first-child{min-height:420px;grid-row:span 2}
+.v11-command-card:before{content:"";position:absolute;width:210px;height:210px;border-radius:50%;background:var(--accent,var(--v11-cyan));filter:blur(85px);opacity:.12;right:-70px;top:-70px}
+.v11-command-card:hover{transform:translateY(-6px);border-color:color-mix(in srgb,var(--accent,var(--v11-cyan)) 50%,transparent)}
+.v11-command-card small{letter-spacing:2px;color:#778797}.v11-command-card h3{font-family:"Anton";font-size:clamp(30px,3.2vw,48px);font-weight:400;margin:7px 0}.v11-command-card p{color:#8592a0;max-width:430px;line-height:1.55}.v11-command-card b{margin-top:18px;font-size:11px;letter-spacing:2px;color:var(--accent,var(--v11-cyan))}
+.v11-match{--accent:#2de9f3}.v11-tournament{--accent:#ff2ba6}.v11-family{--accent:#a78bfa}.v11-tv{--accent:#37e9f3}.v11-store{--accent:#ff3434}
+.v11-ticker{overflow:hidden;border-top:1px solid var(--v11-line);border-bottom:1px solid var(--v11-line);background:#05070b;padding:13px 0;white-space:nowrap}.v11-ticker-track{display:inline-block;min-width:200%;animation:v11ticker 28s linear infinite;font-family:"Anton";letter-spacing:3px;color:#52606e}.v11-ticker-track b{color:var(--v11-cyan);margin:0 25px}@keyframes v11ticker{to{transform:translateX(-50%)}}
+@media(max-width:900px){.v11-command-head{display:block}.v11-command-head p{margin-top:18px}.v11-command-grid{grid-template-columns:1fr 1fr}.v11-command-card:first-child{grid-row:auto;grid-column:1/-1;min-height:300px}}
+@media(max-width:580px){.hero{min-height:84vh!important}.section{padding-top:72px!important;padding-bottom:72px!important}.v11-command{padding:70px 18px}.v11-command-grid{grid-template-columns:1fr}.v11-command-card:first-child{grid-column:auto}.v11-command-card{min-height:230px}}
