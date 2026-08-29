@@ -47,7 +47,34 @@
         <p class="eyebrow">CONTENT MANAGEMENT</p>
         <h1>SERENITY <span>ADMIN</span></h1>
       </div>
-      <div class="admin-actions">
+      
+<section class="admin-card full" id="announcementManagement">
+  <h2>📢 ANNOUNCEMENT MANAGEMENT</h2>
+  <p class="hint">Buat pengumuman modern untuk seluruh website SERENITY 155.</p>
+  <form id="announcementForm">
+    <input type="hidden" id="announcementEditIndex">
+    <div class="form-grid">
+      <div><label>Judul Announcement</label><input id="announcementTitle" required placeholder="MATCH DAY — SERENITY VS WAYANG"></div>
+      <div><label>Kategori</label><select id="announcementType"><option value="info">INFORMATION</option><option value="urgent">URGENT / LIVE</option><option value="tournament">TOURNAMENT</option><option value="store">NKJ STORE</option></select></div>
+      <div class="full"><label>Isi Pengumuman</label><textarea id="announcementMessage" required placeholder="Live malam ini pukul 20:00 WIB..."></textarea></div>
+      <div><label>Teks Tombol</label><input id="announcementButtonText" placeholder="WATCH MATCH"></div>
+      <div><label>Link Tombol</label><input id="announcementButtonUrl" placeholder="matches.html"></div>
+      <div class="full announcement-checks">
+        <label><input type="checkbox" id="announcementTicker"> Ticker berjalan</label>
+        <label><input type="checkbox" id="announcementActive" checked> Publish sekarang</label>
+      </div>
+      <div class="full image-tools">
+        <button class="small-btn" type="submit">SIMPAN / PUBLISH</button>
+        <button class="small-btn" type="button" id="announcementResetForm">FORM BARU</button>
+        <button class="small-btn" type="button" id="announcementResetDismissed">RESET TOMBOL TUTUP</button>
+      </div>
+    </div>
+    <div class="status" id="announcementAdminStatus"></div>
+  </form>
+  <div id="announcementAdminList"></div>
+</section>
+
+<div class="admin-actions">
         <a href="index.html" class="btn ghost">LIHAT WEBSITE</a>
         <button class="small-btn" id="logoutBtn" type="button">LOGOUT</button>
       </div>
@@ -273,5 +300,6 @@
 <script src="v12-loader.js"></script>
 <button id="pwaInstallBtn" class="pwa-install-btn" type="button" hidden>INSTALL <span>SERENITY APP</span></button>
 <script src="/pwa.js"></script>
+<script src="announcement-admin.js"></script>
 </body>
 </html>

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=mobile-nav-fix-1" />
+  <link rel="stylesheet" href="styles.css" />
 <script src="cloud-sync.js"></script><script src="cloud-boot.js"></script>
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icons/icon-180.png">
@@ -18,6 +18,7 @@
 <meta name="apple-mobile-web-app-title" content="SERENITY 155">
 </head>
 <body>
+<div id="serenityAnnouncement" hidden></div>
 <div id="serenityLoader" aria-label="Loading SERENITY 155">
   <div class="serenity-loader-core">
     <div class="serenity-loader-logo-wrap"><img class="serenity-loader-logo" src="serenity155-logo.png" alt="SERENITY 155"></div>
@@ -287,5 +288,6 @@
 <script src="v12-loader.js"></script>
 <button id="pwaInstallBtn" class="pwa-install-btn" type="button" hidden>INSTALL <span>SERENITY APP</span></button>
 <script src="/pwa.js"></script>
+<script src="announcement.js"></script>
 </body>
 </html>
