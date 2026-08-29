@@ -350,7 +350,7 @@ async function saveAll(){
   }
   setTimeout(()=>$("saveStatus").textContent="",6000);
 }
-function resetAll(){if(confirm("Reset seluruh data ke default?")){data=cloneDefault();saveSilent();fillForm();renderLists();resetMatchForm();$("saveStatus").textContent="Data direset."}}
+function resetAll(){if(confirm("Reset seluruh data ke default?")){data=cloneDefault();saveSilent();fillForm();renderLists();if($("matchDate"))resetMatchForm();$("saveStatus").textContent="Data direset."}}
 
 document.addEventListener("DOMContentLoaded",()=>{
   $("cropZoom").addEventListener("input",e=>{cropState.zoom=Number(e.target.value);drawCrop()});
@@ -366,16 +366,16 @@ document.addEventListener("DOMContentLoaded",()=>{
   $("loginBtn").addEventListener("click",login);$("loginPass").addEventListener("keydown",e=>{if(e.key==="Enter")login()});
   $("logoutBtn").addEventListener("click",()=>{try{sessionStorage.removeItem("serenity155Admin")}catch(e){}location.reload()});
   $("addPlayer").addEventListener("click",addPlayer);$("addAchievement").addEventListener("click",addAchievement);$("addSponsor").addEventListener("click",addSponsor);
-  $("saveMatch").addEventListener("click",saveMatch);$("cancelMatchEdit").addEventListener("click",resetMatchForm);
+  $("saveMatch")?.addEventListener("click",saveMatch);$("cancelMatchEdit")?.addEventListener("click",resetMatchForm);
   $("saveAll").addEventListener("click",saveAll);$("resetAll").addEventListener("click",resetAll);
 
   $("playerPhoto").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,900,900,.82);if(cropped){pendingPlayerPhoto=cropped;$("playerPhotoPreview").src=pendingPlayerPhoto;$("playerPhotoPreview").hidden=false}else{$("playerPhoto").value=""}});
   $("achPhoto").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,1200,850,.82);if(cropped){pendingAchPhoto=cropped;$("achPhotoPreview").src=pendingAchPhoto;$("achPhotoPreview").hidden=false}else{$("achPhoto").value=""}});
-  $("opponentLogo").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,700,700,.88);if(cropped){pendingOpponentLogo=cropped;$("opponentLogoPreview").src=pendingOpponentLogo;$("opponentLogoPreview").hidden=false}else{$("opponentLogo").value=""}});
+  $("opponentLogo")?.addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,700,700,.88);if(cropped){pendingOpponentLogo=cropped;$("opponentLogoPreview").src=pendingOpponentLogo;$("opponentLogoPreview").hidden=false}else{$("opponentLogo").value=""}});
   $("sponsorLogo").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,700,700,.88);if(cropped){pendingSponsorLogo=cropped;$("sponsorLogoPreview").src=pendingSponsorLogo;$("sponsorLogoPreview").hidden=false}else{$("sponsorLogo").value=""}});
   $("clearPlayerPhoto").addEventListener("click",()=>{pendingPlayerPhoto="";$("playerPhoto").value="";$("playerPhotoPreview").hidden=true});
   $("clearAchPhoto").addEventListener("click",()=>{pendingAchPhoto="";$("achPhoto").value="";$("achPhotoPreview").hidden=true});
-  $("clearOpponentLogo").addEventListener("click",()=>{pendingOpponentLogo="";$("opponentLogo").value="";$("opponentLogoPreview").hidden=true});
+  $("clearOpponentLogo")?.addEventListener("click",()=>{pendingOpponentLogo="";if($("opponentLogo"))$("opponentLogo").value="";if($("opponentLogoPreview"))$("opponentLogoPreview").hidden=true});
   $("clearSponsorLogo").addEventListener("click",()=>{pendingSponsorLogo="";$("sponsorLogo").value="";$("sponsorLogoPreview").hidden=true});
 
   document.body.addEventListener("click",e=>{

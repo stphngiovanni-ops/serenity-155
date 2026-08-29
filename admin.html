@@ -37,7 +37,7 @@
       <input id="loginPass" type="password" placeholder="Masukkan password" autocomplete="current-password">
       <button class="btn primary" id="loginBtn" type="button" style="width:100%">LOGIN</button>
       <div class="status" id="loginStatus"></div>
-      <small style="display:block;color:#656e7a;margin-top:12px;text-align:center">Default demo: admin / serenity155</small>
+      <small style="display:block;color:#656e7a;margin-top:12px;text-align:center">Login: admin / serenity_mei25</small>
     </div>
   </div>
 
@@ -47,8 +47,17 @@
         <p class="eyebrow">CONTENT MANAGEMENT</p>
         <h1>SERENITY <span>ADMIN</span></h1>
       </div>
-      
-<section class="admin-card full" id="announcementManagement">
+<div class="admin-actions">
+        <a href="index.html" class="btn ghost">LIHAT WEBSITE</a>
+        <button class="small-btn" id="logoutBtn" type="button">LOGOUT</button>
+      </div>
+    </div>
+
+    <div class="notice">
+      Perubahan disimpan di browser ini menggunakan Local Storage. Cocok untuk versi offline/demo. Untuk admin online multi-perangkat diperlukan backend/database.
+    </div>
+
+    <section class="admin-card full" id="announcementManagement">
   <h2>📢 ANNOUNCEMENT MANAGEMENT</h2>
   <p class="hint">Buat popup announcement yang otomatis muncul saat pengunjung membuka website dan bisa ditutup setelah dibaca.</p>
   <form id="announcementForm">
@@ -74,16 +83,6 @@
   </form>
   <div id="announcementAdminList"></div>
 </section>
-
-<div class="admin-actions">
-        <a href="index.html" class="btn ghost">LIHAT WEBSITE</a>
-        <button class="small-btn" id="logoutBtn" type="button">LOGOUT</button>
-      </div>
-    </div>
-
-    <div class="notice">
-      Perubahan disimpan di browser ini menggunakan Local Storage. Cocok untuk versi offline/demo. Untuk admin online multi-perangkat diperlukan backend/database.
-    </div>
 
     <div class="admin-grid">
       <section class="admin-card full">
@@ -293,7 +292,7 @@
     </div>
   </div>
 
-  <script src="admin.js"></script><script src="store-admin.js"></script>
+  <script src="admin.js?v=fix4"></script><script src="store-admin.js"></script>
 <script src="logo-manager.js"></script>
 <script src="logo-admin.js"></script>
 <script src="nkj-logo-manager.js"></script>
@@ -301,6 +300,6 @@
 <script src="v12-loader.js"></script>
 <button id="pwaInstallBtn" class="pwa-install-btn" type="button" hidden>INSTALL <span>SERENITY APP</span></button>
 <script src="/pwa.js"></script>
-<script src="announcement-admin.js"></script>
+<script src="announcement-admin.js?v=fix4"></script>
 </body>
 </html>
