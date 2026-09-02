@@ -1,9 +1,23 @@
-
-(function(){
+(async function(){
 const FALLBACK=[
  {id:"default",date:"2026-09-12T20:00",opponent:"OPPONENT",event:"FRIENDLY MATCH",status:"UPCOMING",ourScore:"",oppScore:"",logo:""}
 ];
-function load(){
+
+async function load(){
+  // ONLINE FIRST: every device reads the exact same match list.
+  try{
+    if(typeof serenityCloudLoad==="function"){
+      const cloud=await serenityCloudLoad();
+      if(cloud && Array.isArray(cloud.matches)){
+        try{localStorage.setItem("serenity155Data",JSON.stringify(cloud));}catch(e){}
+        return cloud.matches;
+      }
+    }
+  }catch(e){
+    console.warn("Match cloud load failed, using local cache.",e);
+  }
+
+  // Offline fallback only.
   try{
     const site=JSON.parse(localStorage.getItem("serenity155Data")||"null");
     if(site&&Array.isArray(site.matches)&&site.matches.length)return site.matches;
@@ -14,6 +28,7 @@ function load(){
   }catch(e){}
   return FALLBACK;
 }
+
 function norm(m,i){
   let raw=String(m.status||"UPCOMING").toUpperCase();
   let status=raw==="COMPLETED"||raw==="FINISHED"?"finished":raw==="LIVE"?"live":"upcoming";
@@ -36,11 +51,13 @@ function fmt(d){
     x.toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"})+" WIB"
   ];
 }
-let data=load().map(norm),filter="all";
 function getLogo(){
-  try{return typeof getSerenityLogo==="function"?getSerenityLogo():"assets/serenity155-logo.png"}
-  catch(e){return "assets/serenity155-logo.png"}
+  try{return typeof getSerenityLogo==="function"?getSerenityLogo():"serenity155-logo.png"}
+  catch(e){return "serenity155-logo.png"}
 }
+
+let data=(await load()).map(norm),filter="all";
+
 function stats(){
   const finished=data.filter(m=>m.status==="finished");
   let wins=0,loss=0,draw=0,gf=0,ga=0;
@@ -55,7 +72,8 @@ function stats(){
 }
 function renderStats(){
   const st=stats();
-  document.getElementById("matchTotal").textContent=st.total;
+  const total=document.getElementById("matchTotal");
+  if(total)total.textContent=st.total;
   const wrap=document.getElementById("matchStats");
   if(wrap)wrap.innerHTML=[
     ["TOTAL MATCH",st.total],["MENANG",st.wins],["KALAH",st.loss],["DRAW",st.draw],
@@ -64,6 +82,7 @@ function renderStats(){
 }
 function render(){
   const grid=document.getElementById("matchPageGrid"),empty=document.getElementById("matchEmpty");
+  if(!grid)return;
   const list=data.filter(m=>filter==="all"||m.status===filter);
   grid.innerHTML=list.map(m=>{
     const [d,t]=fmt(m.date),done=m.status==="finished";
@@ -75,7 +94,7 @@ function render(){
       <div class="match-side enemy">${m.logo?`<img src="${m.logo}">`:`<div class="enemy-mark">${m.opponent.slice(0,2).toUpperCase()}</div>`}<span>${m.opponent}</span></div>
     </article>`;
   }).join("");
-  empty.style.display=list.length?"none":"block";
+  if(empty)empty.style.display=list.length?"none":"block";
   renderStats();
 }
 document.querySelectorAll("[data-match-filter]").forEach(b=>b.onclick=()=>{
@@ -83,4 +102,14 @@ document.querySelectorAll("[data-match-filter]").forEach(b=>b.onclick=()=>{
   b.classList.add("active");filter=b.dataset.matchFilter;render();
 });
 render();
+
+// Re-check cloud when user returns to the tab after editing from another device.
+document.addEventListener("visibilitychange",async()=>{
+  if(document.visibilityState!=="visible")return;
+  try{
+    const latest=await load();
+    data=latest.map(norm);
+    render();
+  }catch(e){}
+});
 })();

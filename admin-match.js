@@ -10,6 +10,22 @@ function load(){
   if(!Array.isArray(data.matches))data.matches=[];
   data.matches=data.matches.map(m=>({...m,event:m.event||m.title||"MATCH",ourScore:m.ourScore??"",oppScore:m.oppScore??"",logo:m.logo||"",status:m.status||"UPCOMING",featured:!!m.featured}));
 }
+async function loadOnline(){
+  try{
+    if(typeof serenityCloudLoad==="function"){
+      const cloud=await serenityCloudLoad();
+      if(cloud&&typeof cloud==="object"){
+        data=cloud;
+        if(!Array.isArray(data.matches))data.matches=[];
+        data.matches=data.matches.map(m=>({...m,event:m.event||m.title||"MATCH",ourScore:m.ourScore??"",oppScore:m.oppScore??"",logo:m.logo||"",status:m.status||"UPCOMING",featured:!!m.featured}));
+        try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){}
+        return true;
+      }
+    }
+  }catch(e){console.warn("Gagal mengambil Match online",e)}
+  load();
+  return false;
+}
 async function save(){
   localStorage.setItem(KEY,JSON.stringify(data));
   const pass=sessionStorage.getItem("serenity155AdminPass")||sessionStorage.getItem("serenityMatchAdminPass")||PASSWORD;
@@ -62,7 +78,7 @@ async function submit(){
 }
 function edit(i){const m=data.matches[i];if(!m)return;editing=i;$("matchDate").value=m.date||"";$("opponent").value=m.opponent||"";$("matchEvent").value=m.event||"MATCH";$("game").value=m.game||"POINT BLANK";$("format").value=m.format||"";$("stream").value=m.stream||"";$("matchStatus").value=m.status||"UPCOMING";$("ourScore").value=m.ourScore??"";$("oppScore").value=m.oppScore??"";pendingLogo="";if(m.logo){$("opponentLogoPreview").src=m.logo;$("opponentLogoPreview").hidden=false}else $("opponentLogoPreview").hidden=true;$("addMatch").textContent="SIMPAN PERUBAHAN";$("cancelMatchEdit").hidden=false;window.scrollTo({top:0,behavior:"smooth"})}
 
-function doLogin(){
+async function doLogin(){
   const user=($("matchAdminUser").value||"").trim().toLowerCase();
   const pass=($("matchAdminPass").value||"");
   const validUser=(user==="admin" || user==="rudiahmad111020@gmail.com");
@@ -75,8 +91,10 @@ function doLogin(){
     $("matchAdminLoginStatus").textContent="Login berhasil ✓";
     $("matchAdminLogin").hidden=true;
     $("matchAdminView").hidden=false;
-    load();
+    $("matchAdminLoginStatus").textContent="Mengambil data Match online...";
+    await loadOnline();
     render();
+    $("matchAdminLoginStatus").textContent="Login berhasil • Data ONLINE ✓";
   }else{
     $("matchAdminLoginStatus").textContent="Username/email atau password salah.";
   }
@@ -109,6 +127,10 @@ document.body.addEventListener("click",async e=>{
  if(t.dataset.deleteMatchLogo!==undefined){data.matches[+t.dataset.deleteMatchLogo].logo="";save().catch(console.error);render()}
 });
 document.body.addEventListener("change",async e=>{if(e.target.dataset.changeMatchLogo!==undefined){const f=e.target.files?.[0];if(!f)return;data.matches[+e.target.dataset.changeMatchLogo].logo=await imageFile(f);save().catch(console.error);render()}});
-if(sessionStorage.getItem("serenityMatchAdmin")==="1"){$("matchAdminLogin").hidden=true;$("matchAdminView").hidden=false;load();render()}
+if(sessionStorage.getItem("serenityMatchAdmin")==="1"){
+  $("matchAdminLogin").hidden=true;
+  $("matchAdminView").hidden=false;
+  loadOnline().then(render);
+}
 })();
 
