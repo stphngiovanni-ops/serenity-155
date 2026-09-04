@@ -195,6 +195,55 @@ function renderRoster(targetId, players, groupName){
   }
 
   const matchList=document.getElementById("matchList");
+
+  // NEXT MATCH / BATTLE SCHEDULE — fully controlled by Admin Match.
+  const upcomingMatches=(d.matches||[]).filter(m=>String(m.status||"").toUpperCase()!=="COMPLETED" && String(m.status||"").toUpperCase()!=="FINISHED");
+  const nextMatch=(d.matches||[]).find(m=>m.featured) || upcomingMatches.sort((a,b)=>new Date(a.date||0)-new Date(b.date||0))[0];
+
+  const opponentName=document.getElementById("opponentName");
+  const opponentLogoBox=document.getElementById("opponentLogoBox");
+  const gameName=document.getElementById("gameName");
+  const matchFormat=document.getElementById("matchFormat");
+  const streamLabel=document.getElementById("streamLabel");
+  const countdown=document.getElementById("countdown");
+  const matchDateLabel=document.getElementById("matchDateLabel");
+
+  if(nextMatch){
+    if(opponentName) opponentName.textContent=nextMatch.opponent||"OPPONENT";
+    if(opponentLogoBox){
+      opponentLogoBox.innerHTML=nextMatch.logo?`<img src="${nextMatch.logo}" alt="${escapeHtml(nextMatch.opponent||"Opponent")}">`:"?";
+    }
+    if(gameName) gameName.textContent=nextMatch.game||"POINT BLANK";
+    if(matchFormat) matchFormat.textContent=nextMatch.format||"MATCH";
+    if(streamLabel) streamLabel.textContent=nextMatch.stream||"LIVE STREAM";
+
+    const target=new Date(nextMatch.date);
+    if(matchDateLabel){
+      matchDateLabel.textContent=!isNaN(target)
+        ? new Intl.DateTimeFormat("id-ID",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}).format(target)+" WIB"
+        : (nextMatch.date||"DATE TBA");
+    }
+    if(countdown){
+      if(window.__serenityNextMatchTimer) clearInterval(window.__serenityNextMatchTimer);
+      const tick=()=>{
+        const diff=target-new Date();
+        if(isNaN(target)){countdown.textContent="DATE TBA";return}
+        if(diff<=0){countdown.textContent="MATCH TIME";return}
+        const days=Math.floor(diff/86400000);
+        const hours=Math.floor(diff/3600000)%24;
+        const mins=Math.floor(diff/60000)%60;
+        const secs=Math.floor(diff/1000)%60;
+        countdown.textContent=`${String(days).padStart(2,"0")}D : ${String(hours).padStart(2,"0")}H : ${String(mins).padStart(2,"0")}M : ${String(secs).padStart(2,"0")}S`;
+      };
+      tick(); window.__serenityNextMatchTimer=setInterval(tick,1000);
+    }
+  }else{
+    if(opponentName) opponentName.textContent="OPPONENT";
+    if(opponentLogoBox) opponentLogoBox.textContent="?";
+    if(countdown) countdown.textContent="NO UPCOMING MATCH";
+    if(matchDateLabel) matchDateLabel.textContent="SET FROM MATCH ADMIN";
+  }
+
   if(matchList){
     matchList.innerHTML="";
     [...d.matches].sort((a,b)=>new Date(a.date)-new Date(b.date)).forEach(m=>{
