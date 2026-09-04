@@ -98,7 +98,35 @@ async function submit(){
  }
  setTimeout(()=>$("matchSaveStatus").textContent="",3200);
 }
-function edit(i){const m=data.matches[i];if(!m)return;editing=i;$("matchDate").value=m.date||"";$("opponent").value=m.opponent||"";$("matchEvent").value=m.event||"MATCH";$("game").value=m.game||"POINT BLANK";$("format").value=m.format||"";$("stream").value=m.stream||"";$("matchStatus").value=m.status||"UPCOMING";$("ourScore").value=m.ourScore??"";$("oppScore").value=m.oppScore??"";pendingLogo="";if(m.logo){$("opponentLogoPreview").src=m.logo;$("opponentLogoPreview").hidden=false}else $("opponentLogoPreview").hidden=true;$("addMatch").textContent="SIMPAN PERUBAHAN";$("cancelMatchEdit").hidden=false;window.scrollTo({top:0,behavior:"smooth"})}
+function edit(i){
+ const m=data.matches[i];if(!m)return;
+ editing=i;
+ $("matchDate").value=m.date||"";
+ $("opponent").value=m.opponent||"";
+ $("matchEvent").value=m.event||"MATCH";
+ $("game").value=m.game||"POINT BLANK";
+ $("format").value=m.format||"";
+ $("stream").value=m.stream||"";
+ $("matchStatus").value=m.status||"UPCOMING";
+ $("ourScore").value=m.ourScore??"";
+ $("oppScore").value=m.oppScore??"";
+ pendingLogo="";
+ if(m.logo){$("opponentLogoPreview").src=m.logo;$("opponentLogoPreview").hidden=false}
+ else $("opponentLogoPreview").hidden=true;
+ $("addMatch").textContent="SIMPAN PERUBAHAN";
+ $("cancelMatchEdit").hidden=false;
+
+ const st=$("nextHomeActionStatus");
+ if(st)st.textContent="Mode EDIT aktif: "+(m.opponent||"OPPONENT")+". Form editor dibuka di bawah.";
+ const card=$("matchEditorCard");
+ if(card){
+   card.classList.add("match-editor-highlight");
+   card.scrollIntoView({behavior:"smooth",block:"start"});
+   setTimeout(()=>card.classList.remove("match-editor-highlight"),1800);
+ }else{
+   window.scrollTo({top:document.body.scrollHeight*0.22,behavior:"smooth"});
+ }
+}
 
 async function doLogin(){
   const user=($("matchAdminUser").value||"").trim().toLowerCase();
@@ -162,17 +190,39 @@ document.body.addEventListener("click",async e=>{
  if(t.dataset.deleteMatchLogo!==undefined){data.matches[+t.dataset.deleteMatchLogo].logo="";save().catch(console.error);render()}
 });
 document.body.addEventListener("change",async e=>{if(e.target.dataset.changeMatchLogo!==undefined){const f=e.target.files?.[0];if(!f)return;data.matches[+e.target.dataset.changeMatchLogo].logo=await imageFile(f);save().catch(console.error);render()}});
-if($("editCurrentNextMatch"))$("editCurrentNextMatch").onclick=()=>{
- const i=getCurrentNextIndex();
- if(i<0){$("matchSaveStatus").textContent="Belum ada Next Match untuk diedit.";return}
- edit(i);
-};
-if($("refreshMatchOnline"))$("refreshMatchOnline").onclick=async()=>{
- $("matchSaveStatus").textContent="Mengambil data terbaru...";
- await loadOnline();render();
- $("matchSaveStatus").textContent="Data online diperbarui ✓";
- setTimeout(()=>$("matchSaveStatus").textContent="",2200);
-};
+const editNextBtn=$("editCurrentNextMatch");
+if(editNextBtn){
+ editNextBtn.addEventListener("click",e=>{
+   e.preventDefault();
+   const st=$("nextHomeActionStatus");
+   const i=getCurrentNextIndex();
+   if(i<0){
+     if(st)st.textContent="Belum ada Next Match. Tambahkan match lalu klik JADIKAN NEXT.";
+     return;
+   }
+   if(st)st.textContent="Membuka editor Next Match...";
+   edit(i);
+ });
+}
+const refreshNextBtn=$("refreshMatchOnline");
+if(refreshNextBtn){
+ refreshNextBtn.addEventListener("click",async e=>{
+   e.preventDefault();
+   const st=$("nextHomeActionStatus");
+   if(st)st.textContent="Mengambil data terbaru dari cloud...";
+   refreshNextBtn.disabled=true;
+   try{
+     await loadOnline();
+     render();
+     if(st)st.textContent="Data online berhasil diperbarui ✓";
+   }catch(err){
+     console.error(err);
+     if(st)st.textContent="Gagal refresh data online.";
+   }finally{
+     refreshNextBtn.disabled=false;
+   }
+ });
+}
 
 if(sessionStorage.getItem("serenityMatchAdmin")==="1"){
   $("matchAdminLogin").hidden=true;

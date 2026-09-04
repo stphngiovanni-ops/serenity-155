@@ -986,3 +986,19 @@ body.announcement-open{overflow:hidden}
 .current-next-match-box{margin:14px 0;padding:16px;border:1px solid rgba(45,231,240,.2);background:#070c12;min-height:74px}
 .current-next-row{display:flex;gap:14px;align-items:center}
 .current-next-row .match-admin-logo{flex:0 0 62px}
+
+/* V11.2 next match admin interaction fix */
+#matchEditorCard{scroll-margin-top:24px}
+.next-home-action-status{
+  margin-top:12px;padding:10px 12px;border:1px solid rgba(45,231,240,.16);
+  background:#071018;color:#9deff4;font-size:13px
+}
+.match-editor-highlight{
+  animation:matchEditorFlash 1.6s ease;
+}
+@keyframes matchEditorFlash{
+  0%,100%{box-shadow:none}
+  25%,70%{box-shadow:0 0 0 2px rgba(45,231,240,.7),0 0 32px rgba(45,231,240,.18)}
+}
+#editCurrentNextMatch,#refreshMatchOnline{position:relative;z-index:2;pointer-events:auto!important;cursor:pointer}
+#refreshMatchOnline:disabled{opacity:.55;cursor:wait}
