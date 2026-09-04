@@ -980,3 +980,9 @@ body.announcement-open{overflow:hidden}
 .announcement-image-preview{width:180px;max-height:130px;object-fit:cover;border:1px solid var(--line);background:#05070b}
 .announcement-admin-thumb{width:70px;height:54px;object-fit:cover;border:1px solid var(--line);flex:0 0 auto}
 @media(max-width:560px){.serenity-popup-image{aspect-ratio:4/3}.serenity-popup-card{max-height:92vh}}
+
+/* V11.1 Next Match Homepage Admin */
+.next-home-admin-card{border-color:rgba(45,231,240,.32)!important;background:linear-gradient(135deg,rgba(45,231,240,.055),rgba(255,30,112,.025))!important}
+.current-next-match-box{margin:14px 0;padding:16px;border:1px solid rgba(45,231,240,.2);background:#070c12;min-height:74px}
+.current-next-row{display:flex;gap:14px;align-items:center}
+.current-next-row .match-admin-logo{flex:0 0 62px}

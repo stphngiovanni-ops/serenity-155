@@ -48,7 +48,17 @@
         <p>Kelola jadwal, jenis pertandingan, lawan, logo, status LIVE/Upcoming/Finished, dan skor.</p>
       </section>
 
-      <section class="admin-card full">
+      
+    <section class="admin-card full next-home-admin-card">
+      <h2>🏠 NEXT MATCH HOMEPAGE</h2>
+      <p class="hint">Bagian ini mengatur kartu NEXT MATCH besar di halaman utama. Pilih salah satu pertandingan sebagai NEXT MATCH, lalu edit datanya bila perlu.</p>
+      <div id="currentNextMatchBox" class="current-next-match-box">Belum ada Next Match.</div>
+      <div class="admin-actions">
+        <button class="small-btn" id="editCurrentNextMatch" type="button">EDIT NEXT MATCH</button>
+        <button class="small-btn" id="refreshMatchOnline" type="button">REFRESH DATA ONLINE</button>
+      </div>
+    </section>
+<section class="admin-card full">
         <h2>TAMBAH / EDIT MATCH</h2>
         <div class="form-grid">
           <div><label>Tanggal & Jam</label><input id="matchDate" type="datetime-local"></div>
@@ -84,7 +94,7 @@
   </div>
 
 <script src="logo-manager.js"></script>
-<script src="admin-match.js?v=matchsync11"></script>
+<script src="admin-match.js?v=matchsync111"></script>
 <script src="v12-loader.js"></script>
 <button id="pwaInstallBtn" class="pwa-install-btn" type="button" hidden>INSTALL <span>SERENITY APP</span></button>
 <script src="/pwa.js"></script>

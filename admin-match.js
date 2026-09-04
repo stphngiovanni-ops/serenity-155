@@ -44,7 +44,29 @@ function reset(){
  $("format").value="";$("stream").value="";$("matchStatus").value="UPCOMING";$("ourScore").value="";$("oppScore").value="";
  $("opponentLogo").value="";$("opponentLogoPreview").hidden=true;$("addMatch").textContent="+ TAMBAH MATCH";$("cancelMatchEdit").hidden=true;
 }
+
+function getCurrentNextIndex(){
+  let idx=data.matches.findIndex(m=>m.featured);
+  if(idx>=0)return idx;
+  const candidates=data.matches
+    .map((m,i)=>({m,i}))
+    .filter(x=>!["COMPLETED","FINISHED"].includes(String(x.m.status||"").toUpperCase()))
+    .sort((a,b)=>new Date(a.m.date||0)-new Date(b.m.date||0));
+  return candidates.length?candidates[0].i:-1;
+}
+function renderCurrentNext(){
+  const box=$("currentNextMatchBox");
+  if(!box)return;
+  const i=getCurrentNextIndex();
+  if(i<0){box.innerHTML="<b>Belum ada Next Match.</b><br><small>Tambahkan pertandingan lalu klik JADIKAN NEXT.</small>";return}
+  const m=data.matches[i];
+  box.innerHTML=`<div class="current-next-row">
+    <div class="match-admin-logo">${m.logo?`<img src="${m.logo}" alt="">`:"VS"}</div>
+    <div><b>SERENITY 155 VS ${esc(m.opponent)}</b><br><small>${esc(m.date||"DATE TBA")} • ${esc(m.game||"POINT BLANK")} • ${esc(m.format||m.event||"MATCH")}</small><br><strong style="color:#2de7f0">AKTIF DI HOMEPAGE</strong></div>
+  </div>`;
+}
 function render(){
+ renderCurrentNext();
  $("matchAdminList").innerHTML=data.matches.length?data.matches.map((m,i)=>`
  <div class="edit-row with-thumb match-admin-pro-row">
   <div class="match-admin-logo">${m.logo?`<img src="${m.logo}" alt="">`:"VS"}</div>
@@ -123,10 +145,35 @@ document.body.addEventListener("click",async e=>{
  const t=e.target;
  if(t.dataset.editMatch!==undefined)edit(+t.dataset.editMatch);
  if(t.dataset.removeMatch!==undefined&&confirm("Hapus match ini?")){data.matches.splice(+t.dataset.removeMatch,1);save().catch(console.error);render()}
- if(t.dataset.featureMatch!==undefined){data.matches.forEach((m,i)=>m.featured=i===+t.dataset.featureMatch);save().catch(console.error);render()}
+ if(t.dataset.featureMatch!==undefined){
+   const idx=+t.dataset.featureMatch;
+   data.matches.forEach((m,i)=>m.featured=i===idx);
+   try{
+     $("matchSaveStatus").textContent="Mengubah NEXT MATCH homepage...";
+     await save();
+     render();
+     $("matchSaveStatus").textContent="NEXT MATCH homepage berhasil diubah ONLINE ✓";
+   }catch(err){
+     console.error(err);
+     $("matchSaveStatus").textContent="Gagal mengubah NEXT MATCH.";
+   }
+   setTimeout(()=>$("matchSaveStatus").textContent="",3200);
+ }
  if(t.dataset.deleteMatchLogo!==undefined){data.matches[+t.dataset.deleteMatchLogo].logo="";save().catch(console.error);render()}
 });
 document.body.addEventListener("change",async e=>{if(e.target.dataset.changeMatchLogo!==undefined){const f=e.target.files?.[0];if(!f)return;data.matches[+e.target.dataset.changeMatchLogo].logo=await imageFile(f);save().catch(console.error);render()}});
+if($("editCurrentNextMatch"))$("editCurrentNextMatch").onclick=()=>{
+ const i=getCurrentNextIndex();
+ if(i<0){$("matchSaveStatus").textContent="Belum ada Next Match untuk diedit.";return}
+ edit(i);
+};
+if($("refreshMatchOnline"))$("refreshMatchOnline").onclick=async()=>{
+ $("matchSaveStatus").textContent="Mengambil data terbaru...";
+ await loadOnline();render();
+ $("matchSaveStatus").textContent="Data online diperbarui ✓";
+ setTimeout(()=>$("matchSaveStatus").textContent="",2200);
+};
+
 if(sessionStorage.getItem("serenityMatchAdmin")==="1"){
   $("matchAdminLogin").hidden=true;
   $("matchAdminView").hidden=false;
