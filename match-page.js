@@ -52,8 +52,8 @@ function fmt(d){
   ];
 }
 function getLogo(){
-  try{return typeof getSerenityLogo==="function"?getSerenityLogo():"serenity155-logo.png"}
-  catch(e){return "serenity155-logo.png"}
+  try{return typeof getSerenityLogo==="function"?getSerenityLogo():"nkj-serenity-logo.png"}
+  catch(e){return "nkj-serenity-logo.png"}
 }
 
 let data=(await load()).map(norm),filter="all";

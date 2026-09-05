@@ -1002,3 +1002,19 @@ body.announcement-open{overflow:hidden}
 }
 #editCurrentNextMatch,#refreshMatchOnline{position:relative;z-index:2;pointer-events:auto!important;cursor:pointer}
 #refreshMatchOnline:disabled{opacity:.55;cursor:wait}
+
+/* NKJ SERENITY V12 RED/GOLD */
+:root{--nred:#e10613;--ngold:#f2b90b;--nblack:#030405}
+html,body{background:#030405!important;color:#f6f6f7}
+body{background-image:radial-gradient(circle at 15% 20%,rgba(225,6,19,.13),transparent 28%),radial-gradient(circle at 88% 12%,rgba(242,185,11,.06),transparent 24%)!important}
+header,nav,.navbar,.site-header{border-color:rgba(225,6,19,.3)!important;background:rgba(3,4,5,.96)!important}
+.card,.panel,.admin-card,.match-list-row,.feature-card{background:linear-gradient(145deg,#0d1117,#050608)!important;border-color:rgba(225,6,19,.25)!important}
+button,.btn,.small-btn{border-color:rgba(225,6,19,.55)!important}
+button:hover,.btn:hover,.small-btn:hover{box-shadow:0 0 24px rgba(225,6,19,.22)!important}
+footer,.site-footer{border-top:1px solid rgba(225,6,19,.34)!important;background:#030405!important}
+#nkjV12Hero{min-height:620px;display:grid;grid-template-columns:1.12fr .88fr;gap:32px;align-items:center;padding:54px max(4vw,30px);border-bottom:1px solid rgba(225,6,19,.35);background:radial-gradient(circle at 22% 48%,rgba(225,6,19,.18),transparent 34%),linear-gradient(90deg,#030405,#090b0f)}
+.nkj-v12-brand{text-align:center}.nkj-v12-brand img{width:min(610px,92%);max-height:490px;object-fit:contain;filter:drop-shadow(0 15px 34px rgba(225,6,19,.25))}
+.nkj-micro,.nkj-tag{letter-spacing:.34em;font-size:12px;color:#b7bbc1}.nkj-tag b{color:#ff1b25}
+.nkj-v12-next{border:1px solid rgba(225,6,19,.5);padding:26px;background:rgba(4,5,7,.94)}
+.nkj-v12-next .eyebrow{color:#ff1b25;letter-spacing:.32em;font-size:11px}.nkj-v12-next h2{font-size:clamp(38px,4vw,68px);margin:6px 0 18px}.nkj-v12-next h2 span{color:#e10613}
+@media(max-width:900px){#nkjV12Hero{grid-template-columns:1fr;padding:32px 16px;min-height:auto}.nkj-v12-brand img{width:min(450px,92%)}}
