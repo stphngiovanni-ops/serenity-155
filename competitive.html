@@ -1,33 +1,92 @@
-<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SERENITY Competitive Center</title><link rel="icon" href="nkj-serenity-logo.png"><link rel="stylesheet" href="competitive.css?v=16"><script src="cloud-sync.js"></script><script src="cloud-boot.js"></script>
-<link rel="stylesheet" href="v12-loader.css">
-<link rel="manifest" href="/manifest.webmanifest">
-<link rel="apple-touch-icon" href="/icons/icon-180.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="NKJ SERENITY">
-<link rel="stylesheet" href="/pwa.css">
-<link rel="stylesheet" href="v13-theme.css?v=13.0">
-</head><body>
-<div id="serenityAnnouncement" hidden></div>
-<div id="serenityLoader" aria-label="Loading NKJ SERENITY">
-  <div class="serenity-loader-core">
-    <div class="serenity-loader-logo-wrap"><img class="serenity-loader-logo" src="nkj-serenity-logo.png" alt="NKJ SERENITY"></div>
-    <div class="serenity-loader-kicker">INITIALIZING ESPORTS NETWORK</div>
-    <div class="serenity-loader-title">SERENITY <span>155</span></div>
-    <div class="serenity-loader-line"><i></i></div>
-    <div class="serenity-loader-status">LOADING // PLEASE WAIT</div>
-  </div>
-</div>
-<header><a href="index.html"><img src="nkj-serenity-logo.png"><b>NKJ SERENITY</b></a><nav><a href="index.html">HOME</a><a href="hub.html">HUB</a><a href="#live">LIVE</a><a href="#stats">STATS</a><a href="#bracket">BRACKET</a><a href="tv.html">TV</a><a href="family.html">FOTO FAMILY</a><a href="tv.html">FAMILY TV</a></nav></header>
-<section class="hero"><span>V16 // COMPETITIVE NETWORK</span><h1>COMPETITIVE<br><i>CENTER</i></h1><p>Live match, player statistics, ranking, bracket tournament dan MVP voting dalam satu pusat kompetitif SERENITY.</p></section>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#050203">
+  <title>Roster | NKJ SERENITY</title>
+  <link rel="icon" href="nkj-serenity-logo-transparent.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="competitive.css?v=15.0">
+</head>
+<body>
+<header class="roster-header">
+  <a class="roster-brand" href="index.html">
+    <img src="nkj-serenity-logo-transparent.png" alt="NKJ Serenity">
+    <div><strong><span>NKJ</span> SERENITY</strong><small>ONE SQUAD ONE FAMILY</small></div>
+  </a>
+  <button id="rosterMenu" class="roster-menu" type="button">☰</button>
+  <nav id="rosterNav">
+    <a href="index.html">HOME</a>
+    <a href="matches.html">MATCH</a>
+    <a class="active" href="competitive.html">ROSTER</a>
+    <a href="tournament.html">TOURNAMENT</a>
+    <a href="tv.html">SERENITY TV</a>
+    <a href="family.html">FAMILY</a>
+    <a href="store.html">STORE</a>
+    <a href="hub.html">ABOUT</a>
+  </nav>
+  <a class="roster-login" href="admin.html">LOGIN</a>
+</header>
+
 <main>
-<section id="live"><div class="head"><span>01 // LIVE OPERATIONS</span><h2>LIVE <i>MATCH</i></h2></div><div id="liveMatch"></div></section>
-<section id="stats"><div class="head"><span>02 // PLAYER INTELLIGENCE</span><h2>PLAYER <i>RANKING</i></h2></div><div id="leaderboard" class="leaderboard"></div></section>
-<section id="bracket"><div class="head"><span>03 // TOURNAMENT TREE</span><h2>BRACKET <i>CENTER</i></h2></div><div id="bracketGrid" class="bracket"></div></section>
-<section id="mvp"><div class="head"><span>04 // FAN VOTE</span><h2>VOTE <i>MVP</i></h2></div><div id="mvpGrid" class="mvp"></div><p id="voteStatus"></p></section>
-</main><footer>NKJ SERENITY // V16 COMPETITIVE PLATFORM</footer><script src="competitive.js?v=16"></script><script src="v12-loader.js"></script>
-<button id="pwaInstallBtn" class="pwa-install-btn" type="button" hidden>INSTALL <span>SERENITY APP</span></button>
-<script src="/pwa.js"></script>
-<script src="announcement.js?v=fix4"></script>
-<script src="v13-theme.js?v=13.0"></script>
-</body></html>
+  <section class="roster-hero">
+    <div class="hero-copy">
+      <span>NKJ SERENITY // ROSTER CENTER</span>
+      <h1>ONE SQUAD.<br><em>ONE FAMILY.</em></h1>
+      <p>Competitive Squad 5 pemain dan War Squad 12 pemain dalam satu roster resmi NKJ SERENITY.</p>
+    </div>
+    <img src="nkj-serenity-logo-transparent.png" alt="NKJ Serenity" class="hero-logo">
+  </section>
+
+  <section class="roster-shell">
+    <div class="roster-title">
+      <div><small>NKJ SERENITY</small><h2>ROSTER</h2></div>
+      <p>Different individuals. Same goal.<br><b>Always Forward.</b></p>
+    </div>
+
+    <div class="roster-tabs">
+      <button class="active" type="button" data-roster-tab="competitive">COMPETITIVE <span>5 PLAYERS</span></button>
+      <button type="button" data-roster-tab="war">WAR SQUAD <span>12 PLAYERS</span></button>
+    </div>
+
+    <section class="roster-panel active" id="competitivePanel">
+      <div class="panel-heading">
+        <div><span>01 // MAIN SQUAD</span><h3>COMPETITIVE <b>ROSTER</b></h3></div>
+        <p>5 ACTIVE PLAYERS</p>
+      </div>
+      <div id="competitiveRosterGrid" class="competitive-grid"></div>
+    </section>
+
+    <section class="roster-panel" id="warPanel">
+      <div class="panel-heading">
+        <div><span>02 // EXTENDED SQUAD</span><h3>WAR <b>ROSTER</b></h3></div>
+        <p>12 ACTIVE PLAYERS</p>
+      </div>
+      <div id="warRosterGrid" class="war-grid"></div>
+    </section>
+  </section>
+
+  <section class="roster-philosophy">
+    <div><strong>DISCIPLINE</strong><span>PROCESS</span></div>
+    <div><strong>COMMUNICATION</strong><span>TEAMWORK</span></div>
+    <div><strong>RESULT</strong><span>COMPETITIVE</span></div>
+    <div><strong>FAMILY</strong><span>ONE SQUAD</span></div>
+  </section>
+
+  <section class="roster-sponsors">
+    <span>SUPPORTED BY</span>
+    <div id="rosterSponsorGrid"></div>
+  </section>
+</main>
+
+<footer>
+  <div>NKJ SERENITY</div>
+  <div><strong>ONE SQUAD ONE FAMILY</strong><small>ALWAYS FORWARD</small></div>
+  <div>PLAY • FOCUS • IMPROVE • REPEAT</div>
+</footer>
+
+<script src="cloud-sync.js"></script>
+<script src="competitive.js?v=15.0"></script>
+</body>
+</html>

@@ -19,7 +19,9 @@ const DEFAULT_DATA = {
     {name:"WAR 07",role:"PLAYER",detail:"WAR TEAM",photo:""},
     {name:"WAR 08",role:"PLAYER",detail:"WAR TEAM",photo:""},
     {name:"WAR 09",role:"PLAYER",detail:"WAR TEAM",photo:""},
-    {name:"WAR 10",role:"PLAYER",detail:"WAR TEAM",photo:""}
+    {name:"WAR 10",role:"PLAYER",detail:"WAR TEAM",photo:""},
+    {name:"WAR 11",role:"PLAYER",detail:"WAR TEAM",photo:""},
+    {name:"WAR 12",role:"PLAYER",detail:"WAR TEAM",photo:""}
   ],
   achievements: [
     {year:"2026", badge:"CHAMPION", title:"PBRS SEMARANG", desc:"Menjadi juara dan melanjutkan perjalanan kompetitif SERENITY ke level berikutnya.", photo:""},
