@@ -1,313 +1,109 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#05060a" />
-  <meta name="description" content="Official website Squad NKJ SERENITY - esports team." />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#050203">
   <title>NKJ SERENITY | Official Esports Squad</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
-<script src="cloud-sync.js"></script><script src="cloud-boot.js?v=matchsync111"></script>
-<link rel="manifest" href="/manifest.webmanifest">
-<link rel="apple-touch-icon" href="/icons/icon-180.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="NKJ SERENITY">
-<link rel="stylesheet" href="v13-theme.css?v=13.0">
+  <meta name="description" content="Official website NKJ SERENITY — Match, roster, tournament, family, TV, and NKJ Store.">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="nkj-serenity-logo.png">
+  <link rel="stylesheet" href="v14-home.css?v=14.0">
 </head>
 <body>
-<section id="nkjV12Hero">
- <div class="nkj-v12-brand"><div class="nkj-micro">NKJ SERENITY • SINCE 2024</div><img src="nkj-serenity-logo.png" alt="NKJ Serenity"><div class="nkj-tag">ONE SQUAD • ONE FAMILY • <b>ALWAYS FORWARD</b></div></div>
- <div class="nkj-v12-next"><div class="eyebrow">BATTLE SCHEDULE</div><h2>NEXT <span>MATCH</span></h2><div id="nkjV12NextClone">SYNCING MATCH DATA...</div></div>
-</section>
+  <div class="battle-noise"></div>
 
-<div id="serenityAnnouncement" hidden></div>
-<div id="serenityLoader" aria-label="Loading NKJ SERENITY">
-  <div class="serenity-loader-core">
-    <div class="serenity-loader-logo-wrap"><img class="serenity-loader-logo" src="nkj-serenity-logo.png" alt="NKJ SERENITY"></div>
-    <div class="serenity-loader-kicker">INITIALIZING ESPORTS NETWORK</div>
-    <div class="serenity-loader-title">SERENITY <span>155</span></div>
-    <div class="serenity-loader-line"><i></i></div>
-    <div class="serenity-loader-status">LOADING // PLEASE WAIT</div>
-  </div>
-</div>
-  <div class="noise"></div>
-  <div class="cursor-glow" id="cursorGlow"></div>
-
-  <header class="site-header">
-    <a href="#home" class="brand" aria-label="NKJ SERENITY Home">
-      <img src="assets/nkj-serenity-logo.png" data-serenity-logo="1" alt="Logo NKJ SERENITY" />
-      <span>SERENITY <b>155</b></span>
+  <header class="v14-header">
+    <a class="v14-brand" href="index.html">
+      <img src="nkj-serenity-logo.png" alt="NKJ Serenity">
+      <div><strong><span>NKJ</span> SERENITY</strong><small>ONE SQUAD ONE FAMILY</small></div>
     </a>
-
-    <button class="menu-btn" id="menuBtn" aria-label="Buka menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-
-    <nav id="mainNav">
-      <a href="#home">HOME</a>
+    <button class="v14-menu" id="v14Menu" type="button" aria-label="Menu">☰</button>
+    <nav id="v14Nav">
+      <a class="active" href="index.html">HOME</a>
       <a href="matches.html">MATCH</a>
+      <a href="competitive.html">ROSTER</a>
       <a href="tournament.html">TOURNAMENT</a>
-      <a href="competitive.html">COMPETITIVE</a>
-      <a href="family.html" class="family-nav-link">FOTO FAMILY</a>
-      <a href="tv.html" class="tv-nav-link">FAMILY TV</a>
-      <a href="store.html" class="store-link">NKJ STORE</a>
-      <a href="admin.html" class="admin-link">ADMIN</a>
+      <a href="tv.html">SERENITY TV</a>
+      <a href="family.html">FAMILY</a>
+      <a href="store.html">STORE</a>
+      <a href="hub.html">ABOUT</a>
     </nav>
+    <a class="v14-login" href="admin.html">♙ LOGIN</a>
   </header>
 
   <main>
-    <section id="home" class="hero">
-      <div class="hero-grid"></div>
-      <div class="hero-light cyan"></div>
-      <div class="hero-light pink"></div>
-
-      <div class="hero-copy reveal">
-        <p class="eyebrow">OFFICIAL ESPORTS SQUAD</p>
-        <h1>SERENITY <span>155</span></h1>
-        <p class="hero-sub">
-          Tactical. Fearless. United.<br />
-          Satu squad, satu tujuan, satu nama: <strong>SERENITY.</strong>
-        </p>
-        <div class="hero-actions">
-          <a class="btn primary" href="#roster">MEET THE SQUAD</a>
-          <a class="btn ghost" href="#matches">NEXT MATCH</a>
-        </div>
-        <div class="hero-stats">
-          <div><strong>155</strong><span>IDENTITY</span></div>
-          <div><strong>PB</strong><span>COMPETITIVE</span></div>
-          <div><strong>ONE</strong><span>FAMILY</span></div>
-        </div>
+    <section class="v14-hero">
+      <div class="v14-war-copy left">
+        <span>PLAY</span><span>FIGHT</span><span>GROW</span><span>TOGETHER</span><i></i>
       </div>
 
-      <div class="hero-logo-wrap reveal">
-        <div class="logo-orbit"></div>
-        <img class="hero-logo" src="assets/nkj-serenity-logo.png" data-serenity-logo="1" alt="NKJ SERENITY" />
+      <div class="v14-hero-brand">
+        <div class="v14-since">NKJ SERENITY • SINCE 2024</div>
+        <img src="nkj-serenity-logo.png" alt="NKJ Serenity" class="v14-main-logo">
+        <div class="v14-slogan">ONE SQUAD <b>ONE FAMILY</b> <em>ALWAYS FORWARD</em></div>
       </div>
 
-      <a class="scroll-hint" href="#about">SCROLL <span>↓</span></a>
+      <aside class="v14-next">
+        <div class="v14-next-head">
+          <h1>NEXT <span>MATCH</span></h1>
+          <small>BATTLE SCHEDULE →</small>
+        </div>
+        <div id="v14NextMatch" class="v14-next-body">
+          <div class="v14-loading">SYNCING MATCH DATA...</div>
+        </div>
+      </aside>
     </section>
 
-<section class="v11-ticker" aria-label="Serenity network">
-  <div class="v11-ticker-track">NKJ SERENITY <b>◆</b> COMPETITIVE <b>◆</b> MATCH CENTER <b>◆</b> TOURNAMENT <b>◆</b> FAMILY <b>◆</b> FAMILY TV <b>◆</b> NKJ STORE <b>◆</b> WALK NEVER ALONE <b>◆</b> NKJ SERENITY <b>◆</b> COMPETITIVE <b>◆</b> MATCH CENTER <b>◆</b> TOURNAMENT <b>◆</b> FAMILY <b>◆</b> FAMILY TV <b>◆</b> NKJ STORE <b>◆</b> WALK NEVER ALONE <b>◆</b></div>
-</section>
-<section class="v11-command">
-  <div class="v11-command-head">
-    <div><span>NKJ SERENITY // COMMAND CENTER</span><h2>ONE SQUAD.<br><i>ONE NETWORK.</i></h2></div>
-    <p>Akses cepat ke seluruh ekosistem NKJ SERENITY. Pertandingan, tournament, family archive, media, dan store tetap berada dalam satu website.</p>
-  </div>
-  <div class="v11-command-grid">
-    <a class="v11-command-card v11-match" href="matches.html" data-command-media="match"><div class="v12-command-media"><img src="nkj-serenity-logo.png" alt="SERENITY Match Center"><span>MATCH CONTROL</span></div><div class="v12-command-copy"><small>01 // BATTLE CONTROL</small><h3>MATCH CENTER</h3><p>Upcoming match, hasil pertandingan, score, dan perjalanan competitive SERENITY.</p><b>OPEN MATCH CENTER →</b></div></a>
-    <a class="v11-command-card v11-tournament" href="tournament.html" data-command-media="tournament"><div class="v12-command-media"><img src="nkj-serenity-logo.png" alt="SERENITY Tournament"><span>COMPETITION</span></div><div class="v12-command-copy"><small>02 // COMPETITION</small><h3>TOURNAMENT</h3><p>Portal tournament SERENITY.</p><b>ENTER PORTAL →</b></div></a>
-    <a class="v11-command-card v11-family" href="family.html" data-command-media="family"><div class="v12-command-media"><img src="nkj-serenity-logo.png" alt="SERENITY Family"><span>FAMILY ARCHIVE</span></div><div class="v12-command-copy"><small>03 // FAMILY ARCHIVE</small><h3>FOTO FAMILY</h3><p>Semua momen keluarga besar.</p><b>VIEW MOMENTS →</b></div></a>
-    <a class="v11-command-card v11-tv" href="tv.html" data-command-media="tv"><div class="v12-command-media"><img src="nkj-serenity-logo.png" alt="SERENITY Family TV"><span>MEDIA NETWORK</span></div><div class="v12-command-copy"><small>04 // MEDIA NETWORK</small><h3>FAMILY TV</h3><p>Highlight dan video resmi.</p><b>WATCH NOW →</b></div></a>
-    <a class="v11-command-card v11-store" href="store.html" data-command-media="store"><div class="v12-command-media"><img src="nkj-store-background.png" alt="NKJ Store"><span>NKJ NETWORK</span></div><div class="v12-command-copy"><small>05 // NKJ NETWORK</small><h3>NKJ STORE</h3><p>Voucher dan layanan NKJ Store.</p><b>OPEN STORE →</b></div></a>
-  </div>
-</section>
-
-
-    <section id="about" class="section dark-section">
-      <div class="section-head reveal">
-        <p>WHO WE ARE</p>
-        <h2>ABOUT <span>SERENITY</span></h2>
-      </div>
-      <div class="about-grid">
-        <div class="glass-card reveal">
-          <h3>More Than A Squad</h3>
-          <p>
-            <span id="aboutText1">NKJ SERENITY adalah squad esports yang dibangun dari kekompakan, disiplin, komunikasi, dan mental kompetitif. Kami bertanding bukan hanya untuk menang, tetapi untuk membangun nama, keluarga, dan perjalanan yang layak dikenang.</span>
-          </p>
-          <p>
-            <span id="aboutText2">Website ini dapat kamu edit untuk menampilkan profil resmi squad, perjalanan turnamen, roster aktif, sponsor, jadwal pertandingan, serta pencapaian SERENITY.</span>
-          </p>
+    <section class="v14-content-grid">
+      <div class="v14-recent">
+        <div class="v14-section-title">
+          <h2>RECENT <span>MATCHES</span></h2>
+          <a href="matches.html">VIEW ALL →</a>
         </div>
-        <div class="values reveal">
-          <article><span>01</span><h3>UNITY</h3><p>Saling percaya, saling backup, satu komando.</p></article>
-          <article><span>02</span><h3>DISCIPLINE</h3><p>Latihan konsisten, evaluasi, dan fokus objektif.</p></article>
-          <article><span>03</span><h3>MENTALITY</h3><p>Tetap tenang di bawah tekanan dan bermain sampai akhir.</p></article>
-        </div>
+        <div class="v14-match-grid" id="v14RecentMatches"></div>
       </div>
+
+      <aside class="v14-announcement">
+        <div class="v14-section-title">
+          <h2>ANNOUNCEMENT</h2>
+          <span>VIEW ALL →</span>
+        </div>
+        <div id="v14Announcements"></div>
+      </aside>
     </section>
 
-    <section id="roster" class="section roster-section">
-      <div class="section-head reveal">
-        <p>ACTIVE LINEUP</p>
-        <h2>OUR <span>ROSTER</span></h2>
-      </div>
-
-      <div class="roster-group reveal">
-        <div class="roster-group-head">
-          <div>
-            <p class="eyebrow">MAIN TEAM</p>
-            <h3>SQUAD <span>COMPETITIVE</span></h3>
-          </div>
-          <span class="roster-limit">5 PLAYERS</span>
-        </div>
-        <div class="roster-grid roster-grid-competitive" id="competitiveRosterGrid"></div>
-      </div>
-
-      <div class="roster-group reveal">
-        <div class="roster-group-head">
-          <div>
-            <p class="eyebrow">WAR TEAM</p>
-            <h3>SQUAD <span>WAR</span></h3>
-          </div>
-          <span class="roster-limit">12 PLAYERS</span>
-        </div>
-        <div class="roster-grid roster-grid-war" id="warRosterGrid"></div>
-      </div>
-
-      <p class="edit-note reveal">Roster Competitive dan War dapat dikelola terpisah melalui <b>Halaman Admin</b>.</p>
+    <section class="v14-feature-grid">
+      <a class="v14-feature roster" href="competitive.html">
+        <div><h3>ROSTER</h3><p>MEET OUR SQUAD</p></div><b>→</b>
+      </a>
+      <a class="v14-feature tournament" href="tournament.html">
+        <div><h3>TOURNAMENT</h3><p>BRACKET & REGISTRATION</p></div><b>→</b>
+      </a>
+      <a class="v14-feature tv" href="tv.html">
+        <div><h3>SERENITY <span>TV</span></h3><p>WATCH OUR CONTENT</p></div><b>→</b>
+      </a>
+      <a class="v14-feature family" href="family.html">
+        <div><h3>FAMILY WALL</h3><p>OUR MOMENT</p></div><b>→</b>
+      </a>
+      <a class="v14-feature store" href="store.html">
+        <div><h3>NKJ STORE</h3><p>OFFICIAL STORE</p></div><b>→</b>
+      </a>
     </section>
 
-    <section id="achievement" class="section dark-section">
-      <div class="section-head reveal">
-        <p>OUR JOURNEY</p>
-        <h2>ACHIEVE<span>MENT</span></h2>
-      </div>
-
-      <div class="achievement-showcase reveal">
-        <div class="achievement-showcase-copy">
-          <p class="eyebrow">NKJ SERENITY HISTORY</p>
-          <h3>OUR ACHIEVEMENTS</h3>
-          <p>Lihat seluruh perjalanan, gelar, qualification, dan pencapaian NKJ SERENITY dalam satu tampilan.</p>
-          <button class="btn primary" type="button" id="openAllAchievements">LIHAT SEMUA ACHIEVEMENT</button>
-        </div>
-        <div class="achievement-showcase-count">
-          <strong id="achievementCount">0</strong>
-          <span>TOTAL ACHIEVEMENTS</span>
-        </div>
-      </div>
-
-      <div class="achievement-preview-grid" id="achievementPreviewGrid"></div>
-    </section>
-
-    <section id="matches" class="section matches-section">
-      <div class="section-head reveal">
-        <p>BATTLE SCHEDULE</p>
-        <h2>NEXT <span>MATCH</span></h2>
-      </div>
-
-      <div class="match-card reveal">
-        <div class="match-top">
-          <span>UPCOMING MATCH</span>
-          <span class="live-dot">SCHEDULE</span>
-        </div>
-        <div class="match-main">
-          <div class="team-block">
-            <img src="assets/nkj-serenity-logo.png" data-serenity-logo="1" alt="NKJ SERENITY" />
-            <strong>NKJ SERENITY</strong>
-          </div>
-          <div class="vs">
-            <span>VS</span>
-            <div id="countdown">00D : 00H : 00M : 00S</div>
-            <small id="matchDateLabel">SET YOUR MATCH DATE</small>
-          </div>
-          <div class="team-block opponent">
-            <div class="opponent-logo" id="opponentLogoBox">?</div>
-            <strong id="opponentName">OPPONENT</strong>
-          </div>
-        </div>
-        <div class="match-bottom">
-          <span id="gameName">POINT BLANK</span>
-          <span id="matchFormat">BO3 / BO5</span>
-          <span id="streamLabel">LIVE STREAM</span>
-        </div>
-      </div>
-
-      <div class="section-head mini-head reveal">
-        <p>MATCH MANAGEMENT</p>
-        <h2>ALL <span>MATCHES</span></h2>
-      </div>
-      <div class="match-list" id="matchList"></div>
-    </section>
-<section id="sponsors" class="section dark-section">
-      <div class="section-head reveal">
-        <p>POWERED BY</p>
-        <h2>OUR <span>SPONSORS</span></h2>
-      </div>
-      <div class="sponsor-grid reveal" id="sponsorGrid"></div>
-      <p class="sponsor-caption reveal">Sponsor dapat ditambah atau diubah melalui halaman Admin.</p>
-    </section>
-
-    <section id="contact" class="section contact-section">
-      <div class="contact-box reveal">
-        <p class="eyebrow">BUSINESS • SCRIM • PARTNERSHIP</p>
-        <h2>READY TO <span>CONNECT?</span></h2>
-        <p>Hubungi NKJ SERENITY untuk partnership, sponsorship, scrim, atau kebutuhan kompetitif.</p>
-        <div class="contact-actions">
-          <a id="emailLink" href="mailto:serenity155@example.com" class="btn primary">EMAIL US</a>
-          <a id="instagramLink" href="https://instagram.com/" target="_blank" rel="noopener" class="btn ghost">INSTAGRAM</a>
-          <a id="youtubeLink" href="https://youtube.com/" target="_blank" rel="noopener" class="btn ghost">YOUTUBE</a>
-        </div>
-        <small>Ganti link email, Instagram, dan YouTube sesuai akun resmi SERENITY.</small>
-      </div>
+    <section class="v14-sponsors">
+      <span>SUPPORTED BY</span>
+      <div id="v14SponsorGrid"></div>
     </section>
   </main>
 
-  <footer>
-    <div class="footer-brand">
-      <img src="assets/nkj-serenity-logo.png" data-serenity-logo="1" alt="NKJ SERENITY" />
-      <div><strong>NKJ SERENITY</strong><span>OFFICIAL ESPORTS SQUAD</span></div>
-    </div>
-    <p>© <span id="year"></span> NKJ SERENITY. ALL RIGHTS RESERVED.</p>
-    <a href="#home">BACK TO TOP ↑</a>
+  <footer class="v14-footer">
+    <div class="v14-footer-left">NKJ SERENITY</div>
+    <div class="v14-footer-center"><strong>NKJ SERENITY</strong><small>ONE SQUAD ONE FAMILY • ALWAYS FORWARD</small></div>
+    <div class="v14-footer-right">PLAY<br>FOCUS<br>IMPROVE<br>REPEAT</div>
   </footer>
 
-
-
-  <div class="achievement-gallery-modal" id="achievementGalleryModal" hidden>
-    <div class="detail-modal-backdrop" data-close-achievements></div>
-    <div class="achievement-gallery-panel">
-      <div class="achievement-gallery-top">
-        <div>
-          <p class="eyebrow">NKJ SERENITY</p>
-          <h2>ALL ACHIEVEMENTS</h2>
-          <p>Seluruh pencapaian SERENITY dalam satu galeri.</p>
-        </div>
-        <button class="detail-modal-close" type="button" data-close-achievements>×</button>
-      </div>
-      <div class="achievement-gallery-grid" id="achievementGalleryGrid"></div>
-    </div>
-  </div>
-
-  <div class="detail-modal" id="detailModal" hidden>
-    <div class="detail-modal-backdrop" data-close-modal></div>
-    <div class="detail-modal-card" role="dialog" aria-modal="true" aria-labelledby="detailModalTitle">
-      <button class="detail-modal-close" type="button" data-close-modal aria-label="Tutup">×</button>
-      <div class="detail-modal-media" id="detailModalMedia"></div>
-      <div class="detail-modal-content">
-        <p class="eyebrow" id="detailModalEyebrow">NKJ SERENITY</p>
-        <h3 id="detailModalTitle">DETAIL</h3>
-        <p id="detailModalText"></p>
-      </div>
-    </div>
-  </div>
-
-  <script src="script.js?v=matchsync11"></script>
-  <script src="site-data.js?v=matchsync11"></script>
-<script src="home-next-match.js?v=matchsync111"></script>
-<script src="logo-manager.js"></script>
-<script src="v12-command-media.js"></script>
-<script src="v12-loader.js"></script>
-<button id="pwaInstallBtn" class="pwa-install-btn" type="button" hidden>INSTALL <span>SERENITY APP</span></button>
-<script src="/pwa.js"></script>
-<script src="announcement.js?v=fix4"></script>
-
-<script>
-(function(){
-function draw(){
- const c=document.getElementById('nkjV12NextClone'),n=document.getElementById('opponentName'),l=document.getElementById('opponentLogoBox'),cd=document.getElementById('countdown'),dt=document.getElementById('matchDateLabel'),g=document.getElementById('gameName'),f=document.getElementById('matchFormat');
- if(!c||!n||!cd)return;
- let oi=l&&l.querySelector('img')?'<img src="'+l.querySelector('img').src+'" style="width:120px;height:120px;object-fit:contain;border-radius:50%">':'<div style="font-size:45px">?</div>';
- c.innerHTML='<div style="display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;text-align:center;padding:25px 0"><div><img src="nkj-serenity-logo.png" style="width:125px;height:125px;object-fit:contain"><b style="display:block">NKJ SERENITY</b></div><div style="font-size:38px;color:#777">VS</div><div>'+oi+'<b style="display:block">'+n.textContent+'</b></div></div><div style="text-align:center;color:#f2b90b;font-size:19px;font-weight:800">'+cd.textContent+'</div><div style="text-align:center;color:#8d929b;margin-top:10px">'+(dt?dt.textContent:'')+' | '+(g?g.textContent:'POINT BLANK')+' | '+(f?f.textContent:'MATCH')+'</div>';
-}
-document.addEventListener('DOMContentLoaded',function(){setTimeout(draw,800);setInterval(draw,1000)});
-})();
-</script>
-<script src="v13-theme.js?v=13.0"></script>
+  <script src="cloud-sync.js"></script>
+  <script src="v14-home.js?v=14.0"></script>
 </body>
 </html>
