@@ -1,6 +1,6 @@
 
 const DEFAULT_DATA={
-  about1:"SERENITY 155 adalah squad esports yang dibangun dari kekompakan, disiplin, komunikasi, dan mental kompetitif. Kami bertanding bukan hanya untuk menang, tetapi untuk membangun nama, keluarga, dan perjalanan yang layak dikenang.",
+  about1:"NKJ SERENITY adalah squad esports yang dibangun dari kekompakan, disiplin, komunikasi, dan mental kompetitif. Kami bertanding bukan hanya untuk menang, tetapi untuk membangun nama, keluarga, dan perjalanan yang layak dikenang.",
   about2:"Website ini menampilkan profil resmi squad, perjalanan turnamen, roster aktif, sponsor, jadwal pertandingan, serta pencapaian SERENITY.",
   competitiveRoster:[
     {name:"ZEED",role:"RIFLER",detail:"ENTRY • AGGRESSIVE",photo:""},
@@ -168,7 +168,7 @@ function renderLists(){
     <div class="edit-row with-thumb match-admin-pro-row">
       ${matchLogo(m.logo)}
       <div class="match-admin-main">
-        <b>SERENITY 155 VS ${esc(m.opponent)}</b><br>
+        <b>NKJ SERENITY VS ${esc(m.opponent)}</b><br>
         <small>${esc(m.date||"DATE TBA")} • ${esc(m.event||"MATCH")} • ${esc(m.status)} ${String(m.status).toUpperCase()==="COMPLETED"?`• SCORE ${esc(m.ourScore||0)} - ${esc(m.oppScore||0)}`:""} ${m.featured?"• NEXT MATCH":""}</small>
         <div class="match-actions">
           <button class="small-btn" type="button" data-edit-match="${i}">EDIT</button>

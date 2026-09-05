@@ -62,7 +62,7 @@ function renderCurrentNext(){
   const m=data.matches[i];
   box.innerHTML=`<div class="current-next-row">
     <div class="match-admin-logo">${m.logo?`<img src="${m.logo}" alt="">`:"VS"}</div>
-    <div><b>SERENITY 155 VS ${esc(m.opponent)}</b><br><small>${esc(m.date||"DATE TBA")} • ${esc(m.game||"POINT BLANK")} • ${esc(m.format||m.event||"MATCH")}</small><br><strong style="color:#2de7f0">AKTIF DI HOMEPAGE</strong></div>
+    <div><b>NKJ SERENITY VS ${esc(m.opponent)}</b><br><small>${esc(m.date||"DATE TBA")} • ${esc(m.game||"POINT BLANK")} • ${esc(m.format||m.event||"MATCH")}</small><br><strong style="color:#2de7f0">AKTIF DI HOMEPAGE</strong></div>
   </div>`;
 }
 function render(){
@@ -71,7 +71,7 @@ function render(){
  <div class="edit-row with-thumb match-admin-pro-row">
   <div class="match-admin-logo">${m.logo?`<img src="${m.logo}" alt="">`:"VS"}</div>
   <div class="match-admin-main">
-   <b>SERENITY 155 VS ${esc(m.opponent)}</b><br>
+   <b>NKJ SERENITY VS ${esc(m.opponent)}</b><br>
    <small>${esc(m.date||"DATE TBA")} • ${esc(m.event||"MATCH")} • ${esc(m.status)} ${String(m.status).toUpperCase()==="COMPLETED"?`• SCORE ${esc(m.ourScore||0)} - ${esc(m.oppScore||0)}`:""} ${m.featured?"• NEXT MATCH":""}</small>
    <div class="match-actions">
     <button class="small-btn" data-edit-match="${i}" type="button">EDIT</button>

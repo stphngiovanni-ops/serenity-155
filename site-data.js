@@ -1,6 +1,6 @@
 
 const DEFAULT_DATA = {
-  about1: "SERENITY 155 adalah squad esports yang dibangun dari kekompakan, disiplin, komunikasi, dan mental kompetitif. Kami bertanding bukan hanya untuk menang, tetapi untuk membangun nama, keluarga, dan perjalanan yang layak dikenang.",
+  about1: "NKJ SERENITY adalah squad esports yang dibangun dari kekompakan, disiplin, komunikasi, dan mental kompetitif. Kami bertanding bukan hanya untuk menang, tetapi untuk membangun nama, keluarga, dan perjalanan yang layak dikenang.",
   about2: "Website ini menampilkan profil resmi squad, perjalanan turnamen, roster aktif, sponsor, jadwal pertandingan, serta pencapaian SERENITY.",
   competitiveRoster: [
     {name:"ZEED", role:"RIFLER", detail:"ENTRY • AGGRESSIVE", photo:""},
@@ -251,7 +251,7 @@ function renderRoster(targetId, players, groupName){
       card.className="match-mini-card"+(m.featured?" featured":"");
       const logo=m.logo?`<img src="${m.logo}" alt="${escapeHtml(m.opponent)}">`:"?";
       card.innerHTML=`<div class="match-mini-top"><span class="match-status ${escapeHtml(m.status)}">${escapeHtml(m.status)}</span>${m.featured?'<span class="featured-tag">NEXT MATCH</span>':""}</div>
-      <div class="match-mini-main"><div class="match-mini-logo">${logo}</div><div><h3>SERENITY 155 <span style="color:#657080">VS</span> ${escapeHtml(m.opponent)}</h3><p>${escapeHtml(m.game)} • ${escapeHtml(m.format)}</p></div></div>
+      <div class="match-mini-main"><div class="match-mini-logo">${logo}</div><div><h3>NKJ SERENITY <span style="color:#657080">VS</span> ${escapeHtml(m.opponent)}</h3><p>${escapeHtml(m.game)} • ${escapeHtml(m.format)}</p></div></div>
       <div class="match-mini-bottom"><span>${fmtDate(m.date)}</span><span>${escapeHtml(m.stream||"")}</span></div>`;
       matchList.appendChild(card);
     });
@@ -267,7 +267,7 @@ function renderRoster(targetId, players, groupName){
   const media=document.getElementById("detailModalMedia"),title=document.getElementById("detailModalTitle"),text=document.getElementById("detailModalText"),eyebrow=document.getElementById("detailModalEyebrow");
   function openModal(photo,fallback,heading,subheading,body){
     media.innerHTML=photo?`<img src="${photo}" alt="${escapeHtml(heading)}">`:`<div class="modal-initial">${escapeHtml(fallback||"?")}</div>`;
-    title.textContent=heading||"DETAIL";eyebrow.textContent=subheading||"SERENITY 155";text.textContent=body||"";
+    title.textContent=heading||"DETAIL";eyebrow.textContent=subheading||"NKJ SERENITY";text.textContent=body||"";
     modal.hidden=false;document.body.style.overflow="hidden";
   }
   function closeModal(){modal.hidden=true;document.body.style.overflow=""}
