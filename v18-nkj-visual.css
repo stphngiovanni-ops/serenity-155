@@ -1,0 +1,21 @@
+
+/* NKJ SERENITY V18 visual refresh — deliberate web UI, not full-page poster art */
+:root{--nkj-red:#e20b17;--nkj-red-dark:#700008;--nkj-gold:#e9b51f;--nkj-bg:#050506;--nkj-panel:#0b0c0e}
+body{background:#050506!important;color:#f4f4f4}
+body:before{content:"";position:fixed;inset:0;z-index:-10;pointer-events:none;background:radial-gradient(circle at 78% 8%,rgba(226,11,23,.08),transparent 25%),linear-gradient(180deg,#050506,#080708 58%,#050506)}
+/* eliminate legacy cyan/pink look on major page chrome */
+header,.arena-header,.family-header,.nkj-store-header{border-bottom-color:rgba(226,11,23,.42)!important}
+a.active,.active{--accent:var(--nkj-red)}
+.nkj-v18-page-visual{min-height:300px;position:relative;display:flex;align-items:flex-end;padding:42px 5vw;overflow:hidden;border-bottom:1px solid rgba(226,11,23,.45);background:linear-gradient(90deg,rgba(3,3,4,.96),rgba(3,3,4,.54),rgba(3,3,4,.82)),url("nkj-serenity-battle-art.png") center 46%/cover no-repeat}
+.nkj-v18-page-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,#050506);pointer-events:none}
+.nkj-v18-page-visual>div{position:relative;z-index:2;max-width:720px}
+.nkj-v18-page-visual small{display:block;color:var(--nkj-gold);font-size:10px;letter-spacing:.3em;font-weight:700}
+.nkj-v18-page-visual h1{font:900 clamp(45px,7vw,88px)/.9 Arial,sans-serif;margin:10px 0;text-transform:uppercase}
+.nkj-v18-page-visual h1 b{color:var(--nkj-red)}
+.nkj-v18-page-visual p{max-width:600px;color:#b0b0b5;line-height:1.55}
+.nkj-v18-page-visual img{position:absolute;right:5vw;bottom:14px;z-index:2;width:min(300px,30vw);height:220px;object-fit:contain;filter:drop-shadow(0 16px 26px rgba(226,11,23,.24))}
+#v18HeroLogo{animation:nkjHeroFloat 4.2s ease-in-out infinite,nkjHeroGlow 2.8s ease-in-out infinite}
+@keyframes nkjHeroFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-11px) scale(1.025)}}
+@keyframes nkjHeroGlow{0%,100%{filter:drop-shadow(0 10px 20px rgba(226,11,23,.20))}50%{filter:drop-shadow(0 16px 36px rgba(226,11,23,.52)) drop-shadow(0 0 12px rgba(233,181,31,.22))}}
+.v14-ann-row[data-clickable="1"]{cursor:pointer;transition:.18s}.v14-ann-row[data-clickable="1"]:hover{border-color:rgba(233,181,31,.65)!important;transform:translateX(3px)}
+@media(max-width:700px){.nkj-v18-page-visual{min-height:250px;padding:32px 22px}.nkj-v18-page-visual img{opacity:.25;right:-35px;width:280px}.nkj-v18-page-visual h1{font-size:48px}}
