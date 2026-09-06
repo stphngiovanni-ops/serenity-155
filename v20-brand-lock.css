@@ -1,0 +1,76 @@
+
+/* NKJ SERENITY V20.1 — GLOBAL BRAND LOCK
+   Black / Racing Red / Metallic Gold only. Legacy cyan/blue/purple neutralized. */
+:root{
+ --brand-bg:#030304!important;--brand-panel:#09090b!important;
+ --brand-red:#ef1725!important;--brand-red-dark:#7f0008!important;
+ --brand-gold:#e8b82f!important;--brand-text:#f4f4f5!important;
+ --brand-muted:#999ba2!important;--brand-line:rgba(239,23,37,.28)!important;
+ --cyan:#ef1725!important;--blue:#ef1725!important;--purple:#e8b82f!important;
+ --accent:#ef1725!important;--primary:#ef1725!important;--secondary:#e8b82f!important;
+}
+html,body{background:#030304!important;color:#f4f4f5!important}
+body{
+ background-image:
+ radial-gradient(circle at 12% 0%,rgba(239,23,37,.12),transparent 27%),
+ radial-gradient(circle at 88% 20%,rgba(232,184,47,.055),transparent 22%)!important;
+}
+body:before{filter:none!important}
+header,.header,.topbar,.navbar,.site-header,nav{
+ border-color:rgba(239,23,37,.24)!important;
+}
+.panel,.card,.box,.section,.match-card,.player-card,.roster-card,.tournament-card,
+.video-card,.family-card,.store-card,.admin-card,[class*="panel"],[class*="card"]{
+ border-color:rgba(239,23,37,.22)!important;
+}
+.glow,.neon,[class*="glow"]{box-shadow:0 0 26px rgba(239,23,37,.14)!important}
+a:hover{color:#fff}
+button,.btn,[class*="btn"],input[type="submit"]{
+ border-color:rgba(239,23,37,.5)!important;
+}
+.progress,.bar,.active-line,[class*="progress"]{
+ accent-color:#ef1725!important;
+}
+input,select,textarea{
+ background:#070709!important;color:#f4f4f5!important;border-color:#442025!important;
+}
+table,th,td{border-color:rgba(239,23,37,.16)!important}
+th{background:#0b0809!important}
+.badge,.tag,.pill,[class*="badge"],[class*="tag"]{
+ border-color:rgba(232,184,47,.3)!important;
+}
+::selection{background:#8d0009!important;color:#fff!important}
+
+/* Legacy Serenity visual files get dark/red treatment if still referenced. */
+img[src*="serenity155-logo"],img[src*="serenity-155-logo"]{display:none!important}
+[style*="#00ffff"],[style*="#00FFFF"],[style*="#00e5ff"],[style*="#00E5FF"],
+[style*="#00bfff"],[style*="#00BFFF"],[style*="#0ff"],[style*="#0FF"]{
+ color:#ef1725!important;border-color:#ef1725!important;
+}
+
+/* Public-page hero unification */
+.v201-brand-hero{
+ position:relative;min-height:250px;margin:0 0 22px;overflow:hidden;
+ border:1px solid rgba(239,23,37,.24);
+ background:
+ linear-gradient(90deg,rgba(3,3,4,.97),rgba(3,3,4,.55),rgba(3,3,4,.92)),
+ url("nkj-serenity-battle-art.png") center/cover no-repeat!important;
+}
+.v201-brand-hero:after{
+ content:"NKJ SERENITY";position:absolute;right:-8px;bottom:-20px;
+ font-weight:950;font-size:clamp(48px,8vw,105px);letter-spacing:-.07em;
+ color:rgba(255,255,255,.035)
+}
+.v201-brand-hero-inner{
+ min-height:250px;display:flex;align-items:center;gap:24px;padding:34px 5%;
+ position:relative;z-index:2
+}
+.v201-brand-hero img{width:min(235px,32vw);max-height:170px;object-fit:contain;
+ filter:drop-shadow(0 18px 32px rgba(239,23,37,.27))}
+.v201-brand-hero small{color:#e8b82f;font-weight:900;letter-spacing:.24em;font-size:9px}
+.v201-brand-hero h1{margin:5px 0 6px;font-size:clamp(32px,5vw,62px);letter-spacing:-.055em}
+.v201-brand-hero p{margin:0;color:#a3a4aa;font-size:10px;letter-spacing:.09em}
+@media(max-width:600px){
+ .v201-brand-hero-inner{min-height:210px;padding:25px 18px;gap:13px}
+ .v201-brand-hero{min-height:210px}.v201-brand-hero img{width:115px}
+}
