@@ -8,9 +8,19 @@
   <link rel="icon" href="nkj-serenity-logo-transparent.png">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="competitive.css?v=15.0">
-<link rel="stylesheet" href="v18-nkj-visual.css?v=18.0">
+<link rel="stylesheet" href="v18-nkj-visual.css?v=18.2">
+<style id="v19DirectVisual">
+.v19-direct-hero{position:relative;min-height:360px;overflow:hidden;border-bottom:1px solid rgba(228,20,32,.4);display:flex;align-items:flex-end;padding:42px 5vw;background:#050506}
+.v19-direct-hero>img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.48) saturate(.9)}
+.v19-direct-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,3,4,.94),rgba(3,3,4,.38),rgba(3,3,4,.78))}
+.v19-direct-hero .copy{position:relative;z-index:2;max-width:700px}
+.v19-direct-hero .copy small{color:#e7b521;letter-spacing:.25em;font-size:10px}.v19-direct-hero h1{font-size:clamp(48px,7vw,88px);margin:8px 0;text-transform:uppercase}.v19-direct-hero h1 span{color:#e41420}.v19-direct-hero p{color:#b6b6ba}
+.v19-direct-hero>img.logo{position:absolute;right:5vw;bottom:18px;z-index:2;width:min(320px,30vw);height:230px;object-fit:contain;filter:drop-shadow(0 14px 28px rgba(228,20,32,.25))}
+@media(max-width:700px){.v19-direct-hero{min-height:270px;padding:30px 20px}.v19-direct-hero>img.logo{opacity:.28;right:-40px;width:280px}}
+</style>
+<link rel="stylesheet" href="v20-theme.css?v=20.0">
 </head>
-<body>
+<body class="v18-roster">
 <header class="roster-header">
   <a class="roster-brand" href="index.html">
     <img src="nkj-serenity-logo-transparent.png" alt="NKJ Serenity">
@@ -29,10 +39,12 @@
   </nav>
   <a class="roster-login" href="admin.html">LOGIN</a>
 </header>
-<section class="nkj-v18-page-visual">
-      <div><small>NKJ SERENITY // OFFICIAL</small><h1>OFFICIAL <b>ROSTER</b></h1><p>Competitive Squad dan War Squad NKJ SERENITY.</p></div>
-      <img src="nkj-serenity-logo-transparent.png" alt="NKJ SERENITY">
+<section class="v19-direct-hero">
+      <img class="bg" src="visual-roster-banner.jpg" alt="">
+      <div class="copy"><small>NKJ SERENITY // OFFICIAL</small><h1>OFFICIAL <span>ROSTER</span></h1><p>5 COMPETITIVE • 15 WAR SQUAD</p></div>
+      <img class="logo" src="nkj-serenity-logo-transparent.png" alt="NKJ SERENITY">
     </section>
+
 
 <main>
   <section class="roster-hero">

@@ -1,0 +1,42 @@
+
+:root{
+  --v20-red:#ef1725;--v20-red2:#8e0009;--v20-gold:#e8b82f;
+  --v20-bg:#030305;--v20-panel:#090a0d;--v20-text:#f5f6f8;
+  --v20-muted:#989ba5;--v20-line:rgba(239,23,37,.28);
+}
+html{scroll-behavior:smooth;background:var(--v20-bg)}
+body{
+  background:
+    radial-gradient(circle at 15% 0%,rgba(239,23,37,.10),transparent 25%),
+    radial-gradient(circle at 90% 25%,rgba(232,184,47,.06),transparent 18%),
+    #030305!important;
+  color:var(--v20-text)!important;
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:.15;
+  background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:38px 38px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.9),transparent 80%);
+}
+a,button{transition:transform .18s ease,border-color .18s ease,background .18s ease,opacity .18s ease}
+a:hover,button:hover{transform:translateY(-1px)}
+header, .site-header, .topbar{
+  backdrop-filter:blur(18px)!important;
+  -webkit-backdrop-filter:blur(18px)!important;
+}
+.panel,.card,.match-card,.roster-card,.player-card,.tournament-card,.family-card,.video-card,.store-card{
+  border-color:var(--v20-line)!important;
+  box-shadow:0 18px 55px rgba(0,0,0,.28);
+}
+button,.btn,.login,[class*="button"]{
+  border-radius:2px!important;
+}
+img{max-width:100%}
+.v20-section-kicker{
+  color:var(--v20-gold);font-size:10px;font-weight:900;letter-spacing:.28em;text-transform:uppercase
+}
+.v20-reveal{opacity:0;transform:translateY(24px);transition:.65s ease}
+.v20-reveal.is-visible{opacity:1;transform:none}
+@media(max-width:760px){
+  body:before{background-size:24px 24px}
+}
