@@ -1,5 +1,6 @@
 
 const DEFAULT_DATA={
+  homeText:{eyebrow:"NKJ SERENITY • SINCE 2024",hero:"ALWAYS FORWARD",footer:"ALWAYS FORWARD"},
   about1:"NKJ SERENITY adalah squad esports yang dibangun dari kekompakan, disiplin, komunikasi, dan mental kompetitif. Kami bertanding bukan hanya untuk menang, tetapi untuk membangun nama, keluarga, dan perjalanan yang layak dikenang.",
   about2:"Website ini menampilkan profil resmi squad, perjalanan turnamen, roster aktif, sponsor, jadwal pertandingan, serta pencapaian SERENITY.",
   competitiveRoster:[
@@ -9,7 +10,7 @@ const DEFAULT_DATA={
     {name:"SUPERNDUT",role:"DUAL / SUPPORT",detail:"UTILITY • CLUTCH",photo:""},
     {name:"DEMON",role:"DUAL / FLEX",detail:"PRESSURE • FLEX",photo:""}
   ],
-  warRoster:[],
+  warRoster:Array.from({length:15},(_,i)=>({name:`WAR ${String(i+1).padStart(2,"0")}`,role:"PLAYER",detail:"WAR TEAM",photo:""})),
   achievements:[
     {year:"2026",badge:"CHAMPION",title:"PBRS SEMARANG",desc:"Menjadi juara dan melanjutkan perjalanan kompetitif SERENITY ke level berikutnya.",photo:""},
     {year:"2026",badge:"QUALIFIED",title:"PBSB DIVISI 1",desc:"Lolos ke PBSB Divisi 1 dengan target berikutnya: melangkah menuju PBNC.",photo:""},
@@ -28,7 +29,7 @@ function migrate(x){
   if(!x.warRoster)x.warRoster=[];
   if(!x.matches&&x.match)x.matches=[{...x.match,status:"UPCOMING",logo:"",featured:true}];
   x.competitiveRoster=(x.competitiveRoster||[]).slice(0,5).map(p=>({...p,photo:p.photo||""}));
-  x.warRoster=(x.warRoster||[]).slice(0,12).map(p=>({...p,photo:p.photo||""}));
+  x.warRoster=(x.warRoster||[]).slice(0,15).map(p=>({...p,photo:p.photo||""}));
   x.matches=(x.matches||[]).map(m=>({...m,event:m.event||m.title||"MATCH",ourScore:m.ourScore??m.scoreA??"",oppScore:m.oppScore??m.scoreB??"",logo:m.logo||"",status:m.status||"UPCOMING",featured:!!m.featured}));
   x.achievements=(x.achievements||[]).map(a=>({...a,photo:a.photo||""}));
   x.sponsors=(x.sponsors||[]).map(v=>typeof v==="string"?{name:v,logo:""}:{name:v.name||"SPONSOR",logo:v.logo||""});
@@ -127,6 +128,11 @@ function imageToDataURL(file,maxW=900,maxH=900,quality=.82){
 function login(){if(($("loginUser").value||"").trim()==="admin"&&($("loginPass").value||"")==="serenity_mei25"){try{sessionStorage.setItem("serenity155Admin","1");sessionStorage.setItem("serenity155AdminPass",$("loginPass").value)}catch(e){}showAdmin()}else $("loginStatus").textContent="Username atau password salah."}
 function showAdmin(){$("loginView").hidden=true;$("loginView").style.display="none";$("adminView").hidden=false;$("adminView").style.display="block";loadData();fillForm();renderLists()}
 function fillForm(){
+  data.homeText=data.homeText||{};
+  if($("homeHeroEyebrow")) $("homeHeroEyebrow").value=data.homeText.eyebrow||"NKJ SERENITY • SINCE 2024";
+  if($("homeHeroText")) $("homeHeroText").value=data.homeText.hero||"ALWAYS FORWARD";
+  if($("homeFooterText")) $("homeFooterText").value=data.homeText.footer||"ALWAYS FORWARD";
+
   $("about1").value=data.about1||"";$("about2").value=data.about2||"";
   data.contact=data.contact||{};$("email").value=data.contact.email||"";$("instagram").value=data.contact.instagram||"";$("youtube").value=data.contact.youtube||"";
 }
@@ -200,11 +206,11 @@ async function addPlayer(){
 
   const group=$("playerSquad").value;
   const roster=getRoster(group);
-  const limit=group==="war"?12:5;
+  const limit=group==="war"?15:5;
 
   if(editingPlayerIndex<0 && roster.length>=limit){
     $("saveStatus").textContent=group==="war"
-      ? "Squad War sudah penuh (maksimal 12 pemain)."
+      ? "Squad War sudah penuh (maksimal 15 pemain)."
       : "Squad Competitive sudah penuh (maksimal 5 pemain).";
     setTimeout(()=>$("saveStatus").textContent="",2600);
     return;
@@ -336,6 +342,11 @@ function editMatch(i){
 }
 function featureMatch(i){data.matches.forEach((m,idx)=>m.featured=idx===i);renderLists()}
 async function saveAll(){
+  data.homeText={
+    eyebrow:$("homeHeroEyebrow")?.value.trim()||"NKJ SERENITY • SINCE 2024",
+    hero:$("homeHeroText")?.value.trim()||"ALWAYS FORWARD",
+    footer:$("homeFooterText")?.value.trim()||"ALWAYS FORWARD"
+  };
   data.about1=$("about1").value;data.about2=$("about2").value;
   data.contact={email:$("email").value,instagram:$("instagram").value,youtube:$("youtube").value};
   try{

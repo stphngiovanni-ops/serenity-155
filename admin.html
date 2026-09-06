@@ -20,7 +20,7 @@
 <body>
 <div id="serenityLoader" aria-label="Loading NKJ SERENITY">
   <div class="serenity-loader-core">
-    <div class="serenity-loader-logo-wrap"><img class="serenity-loader-logo" src="nkj-serenity-logo.png" alt="NKJ SERENITY"></div>
+    <div class="serenity-loader-logo-wrap"><img class="serenity-loader-logo" src="nkj-serenity-logo-transparent.png" alt="NKJ SERENITY"></div>
     <div class="serenity-loader-kicker">INITIALIZING ESPORTS NETWORK</div>
     <div class="serenity-loader-title">SERENITY <span>155</span></div>
     <div class="serenity-loader-line"><i></i></div>
@@ -29,7 +29,7 @@
 </div>
   <div id="loginView" class="login-wrap">
     <div class="login-card">
-      <img src="assets/nkj-serenity-logo.png" data-serenity-logo="1" alt="NKJ SERENITY">
+      <img src="assets/nkj-serenity-logo-transparent.png" data-serenity-logo="1" alt="NKJ SERENITY">
       <h1>ADMIN <span style="color:#28e7f0">155</span></h1>
       <p>Panel pengelolaan website NKJ SERENITY</p>
       <label>Username</label>
@@ -57,6 +57,17 @@
     <div class="notice">
       Perubahan disimpan di browser ini menggunakan Local Storage. Cocok untuk versi offline/demo. Untuk admin online multi-perangkat diperlukan backend/database.
     </div>
+
+    <section class="admin-card full" id="homepageTextManagement">
+      <h2>🏠 EDIT KALIMAT HOMEPAGE</h2>
+      <p class="hint">Kalimat di hero halaman utama dapat diubah dari sini. PLAY / FIGHT / GROW / TOGETHER dan ONE SQUAD ONE FAMILY sudah dihapus dari homepage.</p>
+      <div class="form-grid">
+        <div class="full"><label>Teks kecil di atas logo</label><input id="homeHeroEyebrow" placeholder="NKJ SERENITY • SINCE 2024"></div>
+        <div class="full"><label>Kalimat utama di bawah logo</label><input id="homeHeroText" placeholder="ALWAYS FORWARD"></div>
+        <div class="full"><label>Kalimat Footer Homepage</label><input id="homeFooterText" placeholder="ALWAYS FORWARD"></div>
+      </div>
+      <p class="hint">Setelah mengubah teks, klik <b>SIMPAN SEMUA</b> di Admin agar tersimpan online dan tampil sama di HP/laptop.</p>
+    </section>
 
     <section class="admin-card full" id="announcementManagement">
   <h2>📢 ANNOUNCEMENT MANAGEMENT</h2>
@@ -131,7 +142,7 @@
             <div class="image-tools">
               <button class="small-btn danger" type="button" id="clearPlayerPhoto">HAPUS PILIHAN FOTO</button>
             </div>
-            <p class="hint">Competitive maksimal 5 pemain. War maksimal 12 pemain. Setelah memilih foto, Photo Crop Editor akan terbuka untuk mengatur zoom dan posisi.</p>
+            <p class="hint">Competitive maksimal 5 pemain. War maksimal 15 pemain. Setelah memilih foto, Photo Crop Editor akan terbuka untuk mengatur zoom dan posisi.</p>
           </div>
         </div>
 

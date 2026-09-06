@@ -21,7 +21,10 @@ const DEFAULT_DATA = {
     {name:"WAR 09",role:"PLAYER",detail:"WAR TEAM",photo:""},
     {name:"WAR 10",role:"PLAYER",detail:"WAR TEAM",photo:""},
     {name:"WAR 11",role:"PLAYER",detail:"WAR TEAM",photo:""},
-    {name:"WAR 12",role:"PLAYER",detail:"WAR TEAM",photo:""}
+    {name:"WAR 12",role:"PLAYER",detail:"WAR TEAM",photo:""},
+    {name:"WAR 13",role:"PLAYER",detail:"WAR TEAM",photo:""},
+    {name:"WAR 14",role:"PLAYER",detail:"WAR TEAM",photo:""},
+    {name:"WAR 15",role:"PLAYER",detail:"WAR TEAM",photo:""}
   ],
   achievements: [
     {year:"2026", badge:"CHAMPION", title:"PBRS SEMARANG", desc:"Menjadi juara dan melanjutkan perjalanan kompetitif SERENITY ke level berikutnya.", photo:""},
@@ -58,7 +61,7 @@ function migrateData(x){
     ...DEFAULT_DATA,...x,
     contact:{...DEFAULT_DATA.contact,...(x.contact||{})},
     competitiveRoster:(x.competitiveRoster||DEFAULT_DATA.competitiveRoster).slice(0,5).map(p=>({...p,photo:p.photo||""})),
-    warRoster:(x.warRoster||DEFAULT_DATA.warRoster).slice(0,12).map(p=>({...p,photo:p.photo||""})),
+    warRoster:(x.warRoster||DEFAULT_DATA.warRoster).slice(0,15).map(p=>({...p,photo:p.photo||""})),
     achievements:(x.achievements||DEFAULT_DATA.achievements).map(a=>({...a,photo:a.photo||""})),
     sponsors:(x.sponsors||DEFAULT_DATA.sponsors).map(s=>typeof s==="string"?{name:s,logo:""}:{name:s.name||"SPONSOR",logo:s.logo||""}),
     matches:(x.matches||DEFAULT_DATA.matches).map(m=>({...m,logo:m.logo||"",featured:!!m.featured,status:m.status||"UPCOMING"}))

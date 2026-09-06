@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded",async()=>{
   }
 
   const competitive=normalize(data.competitiveRoster,5,"COMP");
-  const war=normalize(data.warRoster,12,"WAR");
+  const war=normalize(data.warRoster,15,"WAR");
 
   function card(p,i,compact=false){
     const hasPhoto=!!p.photo;

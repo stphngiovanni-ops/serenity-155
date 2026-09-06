@@ -11,6 +11,12 @@ document.addEventListener("DOMContentLoaded",async()=>{
     try{data=JSON.parse(localStorage.getItem("serenity155Data")||"{}")}catch(_){}
   }
 
+
+  const homeText=data.homeText||{};
+  if($("homeHeroEyebrow")) $("homeHeroEyebrow").textContent=homeText.eyebrow||"NKJ SERENITY • SINCE 2024";
+  if($("homeHeroText")) $("homeHeroText").textContent=homeText.hero||"ALWAYS FORWARD";
+  if($("homeFooterText")) $("homeFooterText").textContent=homeText.footer||"ALWAYS FORWARD";
+
   const matches=Array.isArray(data.matches)?data.matches:[];
   const current=matches.find(m=>m.featured) || matches.filter(m=>!["COMPLETED","FINISHED"].includes(String(m.status||"").toUpperCase())).sort((a,b)=>new Date(a.date||0)-new Date(b.date||0))[0] || matches[0];
 
@@ -19,7 +25,7 @@ document.addEventListener("DOMContentLoaded",async()=>{
     const opponentLogo=current.logo?`<img src="${esc(current.logo)}" alt="">`:`<div style="width:120px;height:120px;display:grid;place-items:center;border:1px solid #452025;margin:auto">?</div>`;
     $("v14NextMatch").innerHTML=`
       <div class="next-teams">
-        <div class="next-team"><img src="nkj-serenity-logo.png" alt=""><strong>NKJ SERENITY</strong></div>
+        <div class="next-team"><img src="nkj-serenity-logo-transparent.png" alt=""><strong>NKJ SERENITY</strong></div>
         <div class="next-vs">VS</div>
         <div class="next-team">${opponentLogo}<strong>${esc(current.opponent||"TBA")}</strong></div>
       </div>
@@ -48,7 +54,7 @@ document.addEventListener("DOMContentLoaded",async()=>{
     const a=m.ourScore??m.scoreA??"-", b=m.oppScore??m.opponentScore??m.scoreB??"-";
     return `<article class="v14-match-card">
       <div class="v14-match-score">
-        <img src="nkj-serenity-logo.png" alt=""><b>${esc(a)} - ${esc(b)}</b>${m.logo?`<img src="${esc(m.logo)}" alt="">`:`<span></span>`}
+        <img src="nkj-serenity-logo-transparent.png" alt=""><b>${esc(a)} - ${esc(b)}</b>${m.logo?`<img src="${esc(m.logo)}" alt="">`:`<span></span>`}
       </div>
       <h4>NKJ SERENITY VS ${esc(m.opponent||"TBA")}</h4>
       <p>${esc(m.event||m.game||"MATCH")}</p><strong>${esc(m.date||"")}</strong>
