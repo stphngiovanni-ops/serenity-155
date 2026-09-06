@@ -16,7 +16,7 @@
   --v13-muted:#9ca1aa;
   --v13-line:rgba(239,16,27,.44);
   --v13-line-gold:rgba(247,189,18,.28);
-  --cyan:var(--v13-red);
+  --#ef1725:var(--v13-red);
   --pink:var(--v13-gold);
 }
 

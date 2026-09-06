@@ -1,12 +1,12 @@
 
 /* NKJ SERENITY V20.1 — GLOBAL BRAND LOCK
-   Black / Racing Red / Metallic Gold only. Legacy cyan/blue/purple neutralized. */
+   Black / Racing Red / Metallic Gold only. Legacy #ef1725/blue/purple neutralized. */
 :root{
  --brand-bg:#030304!important;--brand-panel:#09090b!important;
  --brand-red:#ef1725!important;--brand-red-dark:#7f0008!important;
  --brand-gold:#e8b82f!important;--brand-text:#f4f4f5!important;
  --brand-muted:#999ba2!important;--brand-line:rgba(239,23,37,.28)!important;
- --cyan:#ef1725!important;--blue:#ef1725!important;--purple:#e8b82f!important;
+ --#ef1725:#ef1725!important;--blue:#ef1725!important;--purple:#e8b82f!important;
  --accent:#ef1725!important;--primary:#ef1725!important;--secondary:#e8b82f!important;
 }
 html,body{background:#030304!important;color:#f4f4f5!important}
@@ -43,8 +43,8 @@ th{background:#0b0809!important}
 
 /* Legacy Serenity visual files get dark/red treatment if still referenced. */
 img[src*="serenity155-logo"],img[src*="serenity-155-logo"]{display:none!important}
-[style*="#00ffff"],[style*="#00FFFF"],[style*="#00e5ff"],[style*="#00E5FF"],
-[style*="#00bfff"],[style*="#00BFFF"],[style*="#0ff"],[style*="#0FF"]{
+[style*="#ef1725"],[style*="#ef1725"],[style*="#ef1725"],[style*="#ef1725"],
+[style*="#ef1725"],[style*="#ef1725"],[style*="#ef1725"],[style*="#ef1725"]{
  color:#ef1725!important;border-color:#ef1725!important;
 }
 
@@ -74,3 +74,21 @@ img[src*="serenity155-logo"],img[src*="serenity-155-logo"]{display:none!importan
  .v201-brand-hero-inner{min-height:210px;padding:25px 18px;gap:13px}
  .v201-brand-hero{min-height:210px}.v201-brand-hero img{width:115px}
 }
+
+/* V20.2 FINAL NO-BLUE OVERRIDE */
+body *{--cyan:#ef1725;--cyan2:#ef1725;--neon:#ef1725;--blue:#ef1725;--aqua:#ef1725}
+.kicker,.eyebrow,.section-kicker,.label,.meta-label,
+[class*="kicker"],[class*="eyebrow"],[class*="accent"],
+[class*="cyan"],[class*="blue"],[class*="aqua"],[class*="neon"]{
+ color:#ef1725!important;border-color:rgba(239,23,37,.45)!important;
+}
+h1 span,h2 span,.outline,.stroke,[class*="outline"]{
+ -webkit-text-stroke-color:#ef1725!important;
+ text-decoration-color:#ef1725!important;
+}
+progress::-webkit-progress-value{background:#ef1725!important}
+progress::-moz-progress-bar{background:#ef1725!important}
+[role="progressbar"],.progress-fill,.slot-fill,[class*="progress"]>i,[class*="progress"]>span{
+ background-color:#ef1725!important;
+}
+header strong span,.brand span,.logo-text span{color:#ef1725!important}
