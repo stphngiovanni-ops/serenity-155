@@ -62,7 +62,22 @@ url("nkj-serenity-battle-art.png") center/cover no-repeat;opacity:.78}
 @media(max-width:850px){.v20-header{grid-template-columns:auto auto auto}.v20-brand{min-width:0}.v20-brand img{width:82px;height:58px}.v20-brand div{display:none}.v20-menu{display:block}.v20-nav{display:none;position:absolute;top:76px;left:12px;right:12px;flex-direction:column;background:#07080a;border:1px solid #4b1e23;padding:12px}.v20-nav.open{display:flex}.v20-nav a{padding:9px}.v20-nav a:after{display:none}.v20-status{display:none}.v20-hero{grid-template-columns:1fr;min-height:auto;text-align:center;padding:52px 20px 44px}.v20-hero-copy{order:2}.v20-hero-visual{min-height:340px}.v20-hero-logo{max-height:330px}.v20-ring{width:320px;height:320px}.v20-ring2{width:250px;height:250px}.v20-hero p{margin-left:auto;margin-right:auto}.v20-hero-cta{justify-content:center}.v20-statbar{grid-template-columns:repeat(2,1fr);margin-top:0}.v20-main-grid{grid-template-columns:1fr}.v20-road-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.v20-header{height:74px;padding:0 14px}.v20-login{display:none}.v20-brand img{width:72px;height:54px}.v20-hero h1{font-size:58px}.v20-hero-visual{min-height:290px}.v20-hero-logo{max-height:270px}.v20-ring{width:270px;height:270px}.v20-ring2{width:205px;height:205px}.v20-statbar{margin:0 12px 18px}.v20-main-grid,.v20-recent,.v20-road{margin-left:12px;margin-right:12px}.v20-main-grid{padding:0}.matchgrid{grid-template-columns:1fr}.v20-features{padding-left:12px;padding-right:12px}.v20-feature-grid{grid-template-columns:1fr;grid-auto-rows:210px}.v20-feature:nth-child(n){grid-column:auto;grid-row:auto}.v20-section-title{display:block}.v20-section-title p{text-align:left}.v20-road-grid{grid-template-columns:1fr}.v20-sponsors{display:block}.v20-sponsors>div{margin-top:12px}.v20-footer{grid-template-columns:1fr;text-align:center}.v20-footer div:last-child{text-align:center}}
 </style>
-<link rel="stylesheet" href="v20-brand-lock.css?v=20.2">
+<link rel="stylesheet" href="v20-brand-lock.css?v=20.3">
+<link rel="stylesheet" href="v21-command-center.css?v=21">
+
+<style id="v21-2-pray-home">
+.v212-pray{width:min(1600px,94vw);margin:22px auto 40px;position:relative;min-height:430px;overflow:hidden;border:1px solid rgba(239,23,37,.28);background:#050506}
+.v212-pray-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.58) contrast(1.08)}
+.v212-pray:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.94),rgba(0,0,0,.56) 48%,rgba(0,0,0,.16)),linear-gradient(180deg,transparent 55%,rgba(0,0,0,.72))}
+.v212-pray-copy{position:relative;z-index:2;padding:55px 5%;max-width:760px}
+.v212-pray-k{font-size:9px;letter-spacing:.28em;color:#e8b82f;font-weight:900}
+.v212-pray h2{font-size:clamp(45px,6vw,86px);line-height:.87;letter-spacing:-.055em;margin:12px 0 18px}.v212-pray h2 span{color:#ef1725}
+.v212-pray p{max-width:620px;color:#c2c3c7;font-size:11px;line-height:1.8}
+.v212-pray-quote{margin-top:18px;padding-left:13px;border-left:2px solid #ef1725;color:#eee;font-size:11px;font-style:italic}
+.v212-pray-tag{position:absolute;z-index:3;right:22px;bottom:18px;color:#b8aeb0;font-size:8px;letter-spacing:.15em}
+@media(max-width:650px){.v212-pray{min-height:470px}.v212-pray-copy{padding:42px 24px}.v212-pray-tag{left:24px;right:auto}}
+</style>
+
 </head>
 <body>
 <div class="v20-intro" id="v20Intro">
@@ -138,6 +153,31 @@ url("nkj-serenity-battle-art.png") center/cover no-repeat;opacity:.78}
   </div>
 </section>
 
+<section class="v21-wrap">
+<div class="v21-livebar">
+<div><small>LIVE STATUS</small><b><span class="v21-dot"></span><span id="v21Online">SYSTEM ONLINE</span></b></div>
+<div><small>MATCH DATA</small><b><span id="v21Matches">—</span> MATCHES</b></div>
+<div><small>COMPETITIVE</small><b><span id="v21Players">5</span> PLAYERS</b></div>
+<div><small>WAR UNIT</small><b><span>15</span> SLOTS</b></div>
+<div><small>MISSION</small><b>ROAD TO <span>PBNC</span></b></div>
+</div>
+
+<div class="v21-command">
+<article class="v21-panel"><div class="v21-head"><div><div class="v21-k">BATTLE SCHEDULE</div><h2 class="v21-h">NEXT <span>MATCH</span></h2></div><a href="matches.html">MATCH CENTER →</a></div><div id="v21NextMatchMirror"></div></article>
+<aside class="v21-panel"><div class="v21-head"><div><div class="v21-k">TEAM INTELLIGENCE</div><h2 class="v21-h">LIVE <span>STATS</span></h2></div></div><div class="v21-intel"><div class="v21-intelgrid"><div class="v21-stat"><small>TOTAL MATCH</small><b id="v21Matches2">SYNC</b></div><div class="v21-stat"><small>WIN RATE</small><b><span id="v21Win">—</span></b></div><div class="v21-stat"><small>ACTIVE ROSTER</small><b id="v21Players2">5</b></div><div class="v21-stat"><small>TOURNAMENT</small><b id="v21Tours">—</b></div></div></div></aside>
+</div>
+
+<div class="v21-grid">
+<section class="v21-panel v21-box"><div class="v21-head"><div><div class="v21-k">PLAYER DATABASE</div><h2 class="v21-h">ROSTER <span>SPOTLIGHT</span></h2></div><a href="competitive.html">FULL ROSTER →</a></div><div class="v21-body"><div class="v21-list" id="v21Roster"><div class="v21-item"><img src="nkj-serenity-logo-transparent.png"><div><b>COMPETITIVE UNIT</b><small>SYNCING DATA</small></div><em>ACTIVE</em></div></div></div></section>
+<section class="v21-panel v21-box"><div class="v21-head"><div><div class="v21-k">LATEST UPDATE</div><h2 class="v21-h">ANNOUNCEMENT</h2></div></div><div class="v21-body"><p style="color:#858891;font-size:9px">Announcement tetap terhubung dengan sistem homepage yang sudah ada.</p></div></section>
+<section class="v21-panel v21-box"><div class="v21-head"><div><div class="v21-k">ARENA PULSE</div><h2 class="v21-h">TOURNAMENT</h2></div><a href="tournament.html">OPEN ARENA →</a></div><div class="v21-body"><div class="v21-list" id="v21TourList"><div class="v21-item"><img src="nkj-serenity-logo-transparent.png"><div><b>TOURNAMENT CENTER</b><small>SYNCING DATA</small></div><em>READY</em></div></div></div></section>
+</div>
+
+<div class="v21-road">
+<section class="v21-panel"><div class="v21-head"><div><div class="v21-k">MISSION CONTROL</div><h2 class="v21-h">ROAD TO <span>PBNC</span></h2></div></div><div class="v21-roadline"><div class="v21-step"><small>PHASE 01</small><b>BUILD THE FAMILY</b><span>Identity and chemistry.</span></div><div class="v21-step"><small>PHASE 02</small><b>DOMINATE THE GRIND</b><span>Training and war consistency.</span></div><div class="v21-step"><small>PHASE 03</small><b>CLIMB THE STAGE</b><span>Regional competition.</span></div><div class="v21-step"><small>FINAL MISSION</small><b>PBNC</b><span>One squad. One destination.</span></div></div></section>
+<aside class="v21-panel"><div class="v21-head"><div><div class="v21-k">ACHIEVEMENT VAULT</div><h2 class="v21-h">TROPHY <span>ROOM</span></h2></div></div><div class="v21-trophies"><div class="v21-trophy"><strong>01</strong><b>CHAMPION MOMENT</b><small>ACHIEVEMENT</small></div><div class="v21-trophy"><strong>02</strong><b>PBRS JOURNEY</b><small>HISTORY</small></div><div class="v21-trophy"><strong>03</strong><b>TEAM MILESTONE</b><small>PROGRESS</small></div><div class="v21-trophy"><strong>∞</strong><b>ALWAYS FORWARD</b><small>NEXT TARGET</small></div></div></aside>
+</div>
+</section>
 <section class="v20-sponsors"><span>OFFICIAL PARTNERS</span><div id="v14SponsorGrid"></div></section>
 </main>
 
@@ -153,5 +193,13 @@ url("nkj-serenity-battle-art.png") center/cover no-repeat;opacity:.78}
 <script src="homepage-v17.js?v=20.0"></script>
 <script src="v20-home.js?v=20.0"></script>
 <script src="pwa.js"></script>
+<script src="v21-command-center.js?v=21"></script>
+<script>
+(function(){
+ const copy=()=>{let a=document.getElementById('v14NextMatch'),b=document.getElementById('v21NextMatchMirror');if(a&&b&&a.innerHTML.trim())b.innerHTML=a.innerHTML;
+ let m=document.getElementById('v21Matches'),m2=document.getElementById('v21Matches2'),p=document.getElementById('v21Players'),p2=document.getElementById('v21Players2');if(m&&m2)m2.textContent=m.textContent;if(p&&p2)p2.textContent=p.textContent};
+ setTimeout(copy,900);setTimeout(copy,2200);
+})();
+</script>
 </body>
 </html>
