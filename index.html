@@ -94,6 +94,28 @@ url("nkj-serenity-battle-art.png") center/cover no-repeat;opacity:.78}
 .v2121-pray-tag{position:absolute;z-index:3;right:22px;bottom:18px;color:#b8aeb0;font-size:8px;letter-spacing:.15em}
 @media(max-width:650px){.v2121-pray{min-height:470px}.v2121-pray-copy{padding:42px 24px}.v2121-pray-tag{left:24px;right:auto}}
 </style>
+
+<style id="v2122-pray-css">
+.v2122-pray{width:100%;min-height:500px;position:relative;display:flex;align-items:center;overflow:hidden;background:#050506;border-bottom:1px solid rgba(239,23,37,.25)}
+.v2122-pray-bg{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;display:block!important;opacity:1!important;visibility:visible!important}
+.v2122-pray-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.94),rgba(0,0,0,.58) 52%,rgba(0,0,0,.2)),linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.7))}
+.v2122-pray-content{width:min(1600px,90vw);margin:auto;position:relative;z-index:2;padding:70px 0}
+.v2122-kicker{font-size:10px;font-weight:900;letter-spacing:.28em;color:#e8b82f}
+.v2122-pray h2{max-width:900px;font-size:clamp(48px,6vw,96px);line-height:.9;letter-spacing:-.055em;margin:14px 0 20px;color:#fff}
+.v2122-pray h2 span{color:#ef1725}.v2122-pray p{max-width:650px;font-size:12px;line-height:1.8;color:#c5c6ca}
+.v2122-quote{margin-top:20px;border-left:2px solid #ef1725;padding-left:14px;color:#eee;font-size:11px;font-style:italic}
+@media(max-width:700px){.v2122-pray{min-height:520px}.v2122-pray-content{padding:50px 0}}
+</style>
+
+
+<style id="v2123-dedupe">
+/* V21.2.3: homepage dedupe — original Match Schedule + Announcement remain */
+.v21-command{display:none!important;}
+.v21-grid .v21-box:nth-child(2){display:none!important;}
+.v21-grid{grid-template-columns:repeat(2,1fr)!important;}
+@media(max-width:700px){.v21-grid{grid-template-columns:1fr!important;}}
+</style>
+
 </head>
 <body>
 <div class="v20-intro" id="v20Intro">
@@ -106,10 +128,22 @@ url("nkj-serenity-battle-art.png") center/cover no-repeat;opacity:.78}
   <a class="v20-brand" href="index.html"><img src="nkj-serenity-logo-transparent.png" alt="NKJ Serenity"><div><strong><span>NKJ</span> SERENITY</strong><small>OFFICIAL ESPORTS SQUAD</small></div></a>
   <button class="v20-menu" id="v20Menu">☰</button>
   <nav class="v20-nav" id="v20Nav">
-    <a class="active" href="index.html">HOME</a><a href="matches.html">MATCH</a><a href="competitive.html">ROSTER</a><a href="tournament.html">TOURNAMENT</a><a href="tv.html">SERENITY TV</a><a href="family.html">FAMILY</a><a href="store.html">STORE</a><a href="hub.html">ABOUT</a>
+    <a class="active" href="index.html">HOME</a><a href="matches.html">MATCH</a><a href="competitive.html">ROSTER</a><a href="tournament.html">TOURNAMENT</a><a href="tv.html">SERENITY TV</a><a href="family.html">FAMILY</a><a href="store.html">STORE</a>
   </nav>
   <div class="v20-actions"><div class="v20-status"><span class="v20-dot" id="v20CloudDot"></span><span id="v20CloudText">SYSTEM ONLINE</span></div><a class="v20-login" href="admin.html">ADMIN</a></div>
 </header>
+
+<section class="v2122-pray" id="pray-anak-krakatau">
+  <img class="v2122-pray-bg" src="pray-anak-krakatau-hero.png" alt="Pray for Anak Krakatau">
+  <div class="v2122-pray-overlay"></div>
+  <div class="v2122-pray-content">
+    <div class="v2122-kicker">NKJ SERENITY • SOLIDARITAS UNTUK INDONESIA</div>
+    <h2>PRAY FOR <span>ANAK KRAKATAU</span></h2>
+    <p>Mari bersama mendoakan keselamatan dan kekuatan bagi masyarakat di sekitar Anak Krakatau. Tetap mengikuti informasi resmi dan menjaga kepedulian terhadap sesama serta lingkungan.</p>
+    <div class="v2122-quote">“Alam menjaga kita, sekarang saatnya kita menjaga alam.”</div>
+  </div>
+</section>
+
 
 <main>
 <section class="v20-hero">
@@ -210,12 +244,6 @@ url("nkj-serenity-battle-art.png") center/cover no-repeat;opacity:.78}
 <script src="v20-home.js?v=20.0"></script>
 <script src="pwa.js"></script>
 <script src="v21-command-center.js?v=21"></script>
-<script>
-(function(){
- const copy=()=>{let a=document.getElementById('v14NextMatch'),b=document.getElementById('v21NextMatchMirror');if(a&&b&&a.innerHTML.trim())b.innerHTML=a.innerHTML;
- let m=document.getElementById('v21Matches'),m2=document.getElementById('v21Matches2'),p=document.getElementById('v21Players'),p2=document.getElementById('v21Players2');if(m&&m2)m2.textContent=m.textContent;if(p&&p2)p2.textContent=p.textContent};
- setTimeout(copy,900);setTimeout(copy,2200);
-})();
-</script>
+
 </body>
 </html>
