@@ -65,19 +65,35 @@ url("nkj-serenity-battle-art.png") center/cover no-repeat;opacity:.78}
 <link rel="stylesheet" href="v20-brand-lock.css?v=20.3">
 <link rel="stylesheet" href="v21-command-center.css?v=21">
 
-<style id="v21-2-pray-home">
-.v212-pray{width:min(1600px,94vw);margin:22px auto 40px;position:relative;min-height:430px;overflow:hidden;border:1px solid rgba(239,23,37,.28);background:#050506}
-.v212-pray-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.58) contrast(1.08)}
-.v212-pray:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.94),rgba(0,0,0,.56) 48%,rgba(0,0,0,.16)),linear-gradient(180deg,transparent 55%,rgba(0,0,0,.72))}
-.v212-pray-copy{position:relative;z-index:2;padding:55px 5%;max-width:760px}
-.v212-pray-k{font-size:9px;letter-spacing:.28em;color:#e8b82f;font-weight:900}
-.v212-pray h2{font-size:clamp(45px,6vw,86px);line-height:.87;letter-spacing:-.055em;margin:12px 0 18px}.v212-pray h2 span{color:#ef1725}
-.v212-pray p{max-width:620px;color:#c2c3c7;font-size:11px;line-height:1.8}
-.v212-pray-quote{margin-top:18px;padding-left:13px;border-left:2px solid #ef1725;color:#eee;font-size:11px;font-style:italic}
-.v212-pray-tag{position:absolute;z-index:3;right:22px;bottom:18px;color:#b8aeb0;font-size:8px;letter-spacing:.15em}
-@media(max-width:650px){.v212-pray{min-height:470px}.v212-pray-copy{padding:42px 24px}.v212-pray-tag{left:24px;right:auto}}
+<style id="v21-inline-critical">
+
+:root{--v21r:#ef1725;--v21g:#e8b82f;--v21b:#020203;--v21p:#08090b;--v21m:#8b8e96}
+.v21-wrap{width:min(1600px,94vw);margin:auto}.v21-panel{background:linear-gradient(145deg,#0c0d10,#050608);border:1px solid rgba(239,23,37,.22);position:relative;overflow:hidden}.v21-panel:before{content:"";position:absolute;left:0;top:0;width:110px;height:2px;background:linear-gradient(90deg,var(--v21r),transparent)}
+.v21-k{font-size:9px;letter-spacing:.22em;color:var(--v21g);font-weight:900}.v21-h{font-size:31px;margin:5px 0 0;letter-spacing:-.045em}.v21-h span{color:var(--v21r)}
+.v21-command{display:grid;grid-template-columns:1.35fr .65fr;gap:14px;margin:18px auto}.v21-head{display:flex;justify-content:space-between;align-items:flex-end;padding:18px 20px 0}.v21-head a{font-size:8px;letter-spacing:.14em;color:#858891}
+.v21-intel{padding:15px 18px 18px}.v21-intelgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.v21-stat{background:#050608;border:1px solid rgba(239,23,37,.14);padding:14px}.v21-stat small{font-size:7px;color:#777a82;letter-spacing:.13em}.v21-stat b{display:block;font-size:24px;margin-top:5px}.v21-stat b span{color:var(--v21r)}
+.v21-livebar{display:grid;grid-template-columns:1.2fr repeat(4,1fr);margin:-36px auto 20px;position:relative;z-index:20;background:rgba(7,8,10,.92);border:1px solid rgba(239,23,37,.22);backdrop-filter:blur(18px)}.v21-livebar>div{padding:16px 18px;border-right:1px solid rgba(255,255,255,.055)}.v21-livebar>div:last-child{border-right:0}.v21-livebar small{display:block;color:#747780;font-size:8px;letter-spacing:.14em}.v21-livebar b{display:block;margin-top:5px;font-size:18px}.v21-livebar b span{color:var(--v21r)}
+.v21-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--v21r);box-shadow:0 0 18px rgba(239,23,37,.6);margin-right:8px}
+.v21-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:14px auto}.v21-box{min-height:270px}.v21-body{padding:14px 18px 18px}.v21-list{display:grid;gap:8px}.v21-item{display:grid;grid-template-columns:52px 1fr auto;gap:9px;align-items:center;padding:8px;border:1px solid rgba(239,23,37,.13);background:#050608}.v21-item img{width:52px;height:52px;object-fit:cover}.v21-item b{font-size:10px}.v21-item small{display:block;font-size:7px;color:#7c7f87;margin-top:3px}.v21-item em{font-style:normal;color:var(--v21g);font-size:8px}
+.v21-road{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin:14px auto 40px}.v21-roadline{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:18px 20px 22px}.v21-step{border-top:1px solid #4a1d22;padding-top:13px;position:relative}.v21-step:before{content:"";position:absolute;width:9px;height:9px;border-radius:50%;background:var(--v21r);top:-5px;left:0}.v21-step small{font-size:7px;color:#777}.v21-step b{display:block;font-size:11px;margin-top:5px}.v21-step span{display:block;font-size:8px;color:#8c8f96;margin-top:4px;line-height:1.5}.v21-trophies{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:18px}.v21-trophy{padding:13px;background:#080706;border:1px solid rgba(232,184,47,.18)}.v21-trophy strong{font-size:22px;color:var(--v21g)}.v21-trophy b{display:block;font-size:10px;margin-top:4px}.v21-trophy small{font-size:7px;color:#777}
+#v14NextMatch{padding:16px 18px 18px!important}#v14NextMatch .next-team img{width:82px!important;height:82px!important}#v14NextMatch .next-live{background:linear-gradient(90deg,#7f0008,#ef1725)!important}
+@media(max-width:900px){.v21-command,.v21-road{grid-template-columns:1fr}.v21-grid{grid-template-columns:1fr 1fr}.v21-grid .v21-box:last-child{grid-column:1/-1}.v21-livebar{grid-template-columns:1fr 1fr;margin-top:0}.v21-livebar>div:first-child{grid-column:1/-1}}
+@media(max-width:600px){.v21-grid{grid-template-columns:1fr}.v21-grid .v21-box:last-child{grid-column:auto}.v21-roadline{grid-template-columns:1fr}.v21-livebar{grid-template-columns:1fr 1fr}}
+
 </style>
 
+<style id="v2121-pray-home">
+.v2121-pray{width:min(1600px,94vw);margin:28px auto 42px;position:relative;min-height:440px;overflow:hidden;border:1px solid rgba(239,23,37,.28);background:#050506}
+.v2121-pray-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.58) contrast(1.08)}
+.v2121-pray:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.95),rgba(0,0,0,.56) 48%,rgba(0,0,0,.15)),linear-gradient(180deg,transparent 58%,rgba(0,0,0,.76))}
+.v2121-pray-copy{position:relative;z-index:2;padding:58px 5%;max-width:760px}
+.v2121-pray-k{font-size:9px;letter-spacing:.28em;color:#e8b82f;font-weight:900}
+.v2121-pray h2{font-size:clamp(46px,6vw,88px);line-height:.87;letter-spacing:-.055em;margin:12px 0 18px}.v2121-pray h2 span{color:#ef1725}
+.v2121-pray p{max-width:620px;color:#c2c3c7;font-size:11px;line-height:1.8}
+.v2121-pray-q{margin-top:18px;padding-left:13px;border-left:2px solid #ef1725;color:#eee;font-size:11px;font-style:italic}
+.v2121-pray-tag{position:absolute;z-index:3;right:22px;bottom:18px;color:#b8aeb0;font-size:8px;letter-spacing:.15em}
+@media(max-width:650px){.v2121-pray{min-height:470px}.v2121-pray-copy{padding:42px 24px}.v2121-pray-tag{left:24px;right:auto}}
+</style>
 </head>
 <body>
 <div class="v20-intro" id="v20Intro">
