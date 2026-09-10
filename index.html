@@ -141,6 +141,14 @@ background:rgba(4,5,7,.88);border:1px solid rgba(239,23,37,.42);box-shadow:0 20p
 <style id="v22-next-match-layout">
 @media(min-width:1001px){.v22-hero{grid-template-columns:1fr .72fr 1fr}.v22-copy{grid-column:1}.v22-vis{grid-column:2}.v22nm{grid-column:3}.v22-vis img{max-width:330px}}
 </style>
+
+<style id="v22-editable-hero-style">
+#v22Title{cursor:default}
+@media (hover:hover){
+  #v22Title:hover{filter:brightness(1.06)}
+}
+</style>
+
 </head>
 <body>
 <div class="v20-intro" id="v20Intro">
@@ -374,6 +382,60 @@ if(R[0]){q('#v22PlayerName').textContent=R[0].nickname||R[0].name||'PLAYER';q('#
   if(typeof serenityCloudLoad==='function'){
     Promise.resolve(serenityCloudLoad()).then(d=>{ if(d) render(upcomingMatch(getMatches(d))); }).catch(()=>{});
   }
+})();
+</script>
+
+
+<script id="v22-editable-hero-text">
+(function(){
+  const KEY='serenity155Data';
+  function load(){
+    try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}
+  }
+  function save(d){
+    try{localStorage.setItem(KEY,JSON.stringify(d));}catch(e){}
+  }
+  function esc(s){
+    return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+  }
+  function formatHero(text){
+    text=(text||'ONE SQUAD. ONE FAMILY.').trim();
+    const parts=text.split(/\s+/);
+    if(parts.length>=4){
+      const mid=Math.ceil(parts.length/2);
+      return esc(parts.slice(0,mid).join(' '))+'<br><span>'+esc(parts.slice(mid).join(' '))+'</span>';
+    }
+    return esc(text);
+  }
+  function apply(){
+    const d=load(), el=document.getElementById('v22Title');
+    if(!el) return;
+    const val=(d.homepageHeroText||'ONE SQUAD. ONE FAMILY.').trim();
+    el.dataset.rawText=val;
+    el.innerHTML=formatHero(val);
+    el.title='Double click untuk edit headline homepage';
+  }
+  function enableInlineEdit(){
+    const el=document.getElementById('v22Title');
+    if(!el || el.dataset.editBound==='1') return;
+    el.dataset.editBound='1';
+    el.addEventListener('dblclick',function(){
+      const current=(el.dataset.rawText||el.innerText||'').replace(/\s+/g,' ').trim();
+      const next=prompt('Edit headline homepage:',current);
+      if(next===null) return;
+      const value=next.trim();
+      if(!value) return;
+      const d=load();
+      d.homepageHeroText=value;
+      save(d);
+      apply();
+      window.dispatchEvent(new StorageEvent('storage',{key:KEY,newValue:JSON.stringify(d)}));
+    });
+  }
+  apply(); enableInlineEdit();
+  window.addEventListener('storage',function(e){if(!e.key||e.key===KEY) apply();});
+  document.addEventListener('DOMContentLoaded',function(){apply();enableInlineEdit();});
+  setTimeout(function(){apply();enableInlineEdit();},1200);
 })();
 </script>
 
