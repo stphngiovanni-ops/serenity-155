@@ -1,0 +1,26 @@
+{
+  "version": "23",
+  "brand": "NKJ SERENITY",
+  "heroTitle": "T4BEPUANG UNITY",
+  "heroSubtitle": "DIFFERENT INDIVIDUALS, SAME GOAL.",
+  "competitiveSlots": 5,
+  "warSlots": 15,
+  "homepageCards": [
+    {
+      "title": "TOURNAMENT",
+      "href": "tournament.html"
+    },
+    {
+      "title": "SERENITY TV",
+      "href": "tv.html"
+    },
+    {
+      "title": "FAMILY WALL",
+      "href": "family.html"
+    },
+    {
+      "title": "NKJ STORE",
+      "href": "store.html"
+    }
+  ]
+}
