@@ -123,6 +123,24 @@ url("nkj-serenity-battle-art.png") center/cover no-repeat;opacity:.78}
 @media(max-width:850px){.v22-hero,.v22-grid,.v22-feature{grid-template-columns:1fr}.v22-modebar{display:block}.v22-modeBtns{margin-top:8px}}
 
 </style>
+
+<style id="v22-next-match-style">
+.v22nm{position:absolute;right:3.5%;top:50%;transform:translateY(-50%);z-index:4;width:min(390px,36vw);
+background:rgba(4,5,7,.88);border:1px solid rgba(239,23,37,.42);box-shadow:0 20px 70px rgba(0,0,0,.5);backdrop-filter:blur(14px);padding:20px}
+.v22nm-top{display:flex;justify-content:space-between;gap:12px;align-items:center;border-bottom:1px solid rgba(239,23,37,.18);padding-bottom:10px}
+.v22nm-top span{color:#ef1725;font-size:10px;font-weight:900;letter-spacing:.18em}.v22nm-top b{font-size:8px;color:#d7d7da;text-align:right}
+.v22nm-versus{display:grid;grid-template-columns:1fr 42px 1fr;align-items:center;gap:7px;padding:18px 0 12px}
+.v22nm-team{text-align:center}.v22nm-team img{width:76px;height:64px;object-fit:contain;display:block;margin:auto}.v22nm-team strong{font-size:10px;display:block;margin-top:6px}
+.v22nm-vs{text-align:center;font-size:20px;font-weight:900;color:#777}.v22nm-meta{text-align:center;color:#92949a;font-size:8px;letter-spacing:.11em}
+.v22nm-count{text-align:center;color:#fff;font-size:13px;font-weight:900;letter-spacing:.10em;margin:14px 0;padding:10px;border:1px solid rgba(239,23,37,.22);background:#07080a}
+.v22nm-btn{display:block;text-align:center;background:linear-gradient(90deg,#7b0008,#ef1725);padding:11px;color:#fff;font-size:8px;font-weight:900;letter-spacing:.12em}
+.v22nm-empty{padding:30px 12px;text-align:center;font-size:9px;color:#8b8e95;letter-spacing:.14em}
+@media(max-width:1000px){.v22nm{position:relative;right:auto;top:auto;transform:none;width:auto;margin:0 20px 25px;grid-column:1/-1}.v22-hero{display:block;padding-bottom:20px}.v22-vis{min-height:230px}}
+</style>
+
+<style id="v22-next-match-layout">
+@media(min-width:1001px){.v22-hero{grid-template-columns:1fr .72fr 1fr}.v22-copy{grid-column:1}.v22-vis{grid-column:2}.v22nm{grid-column:3}.v22-vis img{max-width:330px}}
+</style>
 </head>
 <body>
 <div class="v20-intro" id="v20Intro">
@@ -140,7 +158,7 @@ url("nkj-serenity-battle-art.png") center/cover no-repeat;opacity:.78}
   <div class="v20-actions"><div class="v20-status"><span class="v20-dot" id="v20CloudDot"></span><span id="v20CloudText">SYSTEM ONLINE</span></div><a class="v20-login" href="admin.html">ADMIN</a></div>
 </header>
 <section class="v22-modebar"><div><small>DYNAMIC HOMEPAGE PROTOCOL</small><b id="v22ModeLabel">NORMAL MODE</b></div><div class="v22-modeBtns"><button class="v22-modeBtn active" data-v22="normal">NORMAL</button><button class="v22-modeBtn" data-v22="matchday">MATCH DAY</button><button class="v22-modeBtn" data-v22="live">LIVE</button><button class="v22-modeBtn" data-v22="champion">CHAMPION</button><button class="v22-modeBtn" data-v22="pray">PRAY KRAKATAU</button></div></section>
-<section class="v22-hero normal" id="v22Hero"><div class="v22-copy"><div class="v22-k" id="v22Kicker">NKJ SERENITY • CINEMATIC ESPORTS OS</div><h2 id="v22Title">ONE SQUAD.<br><span>ONE FAMILY.</span></h2><p id="v22Text">Command center, roster, tournament, media, family and store dalam satu experience.</p></div><div class="v22-vis"><img id="v22Img" src="nkj-serenity-logo-transparent.png"></div></section>
+<section class="v22-hero normal" id="v22Hero"><aside class="v22nm" id="v22DynamicNextMatch"></aside><div class="v22-copy"><div class="v22-k" id="v22Kicker">NKJ SERENITY • CINEMATIC ESPORTS OS</div><h2 id="v22Title">ONE SQUAD.<br><span>ONE FAMILY.</span></h2><p id="v22Text">Command center, roster, tournament, media, family and store dalam satu experience.</p></div><div class="v22-vis"><img id="v22Img" src="nkj-serenity-logo-transparent.png"></div></section>
 <section class="v22-wrap"><div class="v22-grid"><article class="v22-panel"><div class="v22-head"><div class="v22-k">PERFORMANCE CORE</div><h3>LAST 5 <span>FORM</span></h3></div><div class="v22-body"><div class="v22-form" id="v22Form"></div></div></article><aside class="v22-panel"><div class="v22-head"><div class="v22-k">TEAM READINESS</div><h3>LIVE <span>STATUS</span></h3></div><div class="v22-body"><div class="v22-ready"><div><small>COMPETITIVE</small><b>5/5</b></div><div><small>WAR UNIT</small><b>15/15</b></div><div><small>MISSION</small><b>ROAD TO PBNC</b></div><div><small>IDENTITY</small><b>ONE FAMILY</b></div></div></div></aside></div>
 <div class="v22-feature"><div class="v22-art"><img id="v22PlayerImg" src="visual-roster-banner.jpg"><div class="v22-artText"><small id="v22PlayerRole">COMPETITIVE</small><h3 id="v22PlayerName">ROSTER SPOTLIGHT</h3></div></div><article class="v22-panel v22-meta"><div class="v22-k">PLAYER PROFILE SYSTEM</div><h2>FEATURED PLAYER</h2><p>V22 membaca player utama dari data roster yang sudah ada tanpa menghapus halaman roster lama.</p><div class="v22-metaGrid"><div><small>TEAM</small><b>NKJ SERENITY</b></div><div><small>STATUS</small><b>ACTIVE</b></div><div><small>UNIT</small><b>COMPETITIVE</b></div><div><small>MISSION</small><b>ROAD TO PBNC</b></div></div></article></div></section>
 
@@ -260,5 +278,104 @@ if(R[0]){q('#v22PlayerName').textContent=R[0].nickname||R[0].name||'PLAYER';q('#
 })();
 
 </script>
+
+<script id="v22-next-match-sync">
+(function(){
+  function arr(x){ return Array.isArray(x) ? x : []; }
+  function txt(v){ return (v==null?'':String(v)).trim(); }
+  function parseDate(m){
+    const raw = m.datetime || m.dateTime || m.startAt || m.start || m.date || m.matchDate || '';
+    const time = m.time || m.matchTime || '';
+    let d = null;
+    if(raw){
+      d = new Date(raw);
+      if(isNaN(d) && time) d = new Date(raw + ' ' + time);
+    }
+    return d && !isNaN(d) ? d : null;
+  }
+  function getData(){
+    try { return JSON.parse(localStorage.getItem('serenity155Data') || '{}'); }
+    catch(e){ return {}; }
+  }
+  function getMatches(d){
+    return arr(d.matches || d.matchSchedule || d.schedule || d.matchAgenda || d.upcomingMatches || d.results);
+  }
+  function upcomingMatch(list){
+    const now = new Date();
+    const candidates = list.filter(m=>{
+      const s = txt(m.status).toLowerCase();
+      if(/finish|selesai|completed|done|cancel/i.test(s)) return false;
+      const d = parseDate(m);
+      return !d || d >= new Date(now.getTime()-6*60*60*1000);
+    });
+    candidates.sort((a,b)=>{
+      const da=parseDate(a), db=parseDate(b);
+      if(!da && !db) return 0;
+      if(!da) return 1; if(!db) return -1;
+      return da-db;
+    });
+    return candidates[0] || null;
+  }
+  function side(m){
+    const team = txt(m.team || m.homeTeam || m.team1 || m.ourTeam || 'NKJ SERENITY');
+    const opp = txt(m.opponent || m.awayTeam || m.team2 || m.enemy || m.enemyTeam || 'TBA');
+    return {team,opp};
+  }
+  function logo(m,which){
+    const keys = which==='team'
+      ? ['teamLogo','homeLogo','logo1','ourLogo']
+      : ['opponentLogo','awayLogo','logo2','enemyLogo'];
+    for(const k of keys) if(m && m[k]) return m[k];
+    return which==='team' ? 'nkj-serenity-logo-transparent.png' : 'nkj-serenity-logo-transparent.png';
+  }
+  function fmtDate(d){
+    if(!d) return 'TBA';
+    return d.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}).toUpperCase();
+  }
+  function fmtTime(d,m){
+    if(d) return d.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}).replace('.',':') + ' WIB';
+    return txt(m.time || m.matchTime || 'TBA');
+  }
+  function render(m){
+    const host = document.getElementById('v22DynamicNextMatch');
+    if(!host) return;
+    if(!m){
+      host.innerHTML = '<div class="v22nm-empty">BELUM ADA AGENDA MATCH BERIKUTNYA</div>';
+      return;
+    }
+    const d=parseDate(m), s=side(m);
+    host.innerHTML = `
+      <div class="v22nm-top"><span>NEXT MATCH</span><b>${fmtDate(d)} • ${fmtTime(d,m)}</b></div>
+      <div class="v22nm-versus">
+        <div class="v22nm-team"><img src="${logo(m,'team')}" alt=""><strong>${s.team}</strong></div>
+        <div class="v22nm-vs">VS</div>
+        <div class="v22nm-team"><img src="${logo(m,'opp')}" alt=""><strong>${s.opp}</strong></div>
+      </div>
+      <div class="v22nm-meta">${txt(m.event || m.tournament || m.competition || 'MATCH SCHEDULE')} ${txt(m.format || m.mode || m.bestOf) ? ' • ' + txt(m.format || m.mode || m.bestOf) : ''}</div>
+      <div class="v22nm-count" id="v22NmCount">00D : 00H : 00M : 00S</div>
+      <a href="matches.html" class="v22nm-btn">VIEW MATCH SCHEDULE →</a>`;
+    if(d){
+      function tick(){
+        const n=new Date(), diff=Math.max(0,d-n);
+        const dd=Math.floor(diff/86400000), hh=Math.floor(diff/3600000)%24, mm=Math.floor(diff/60000)%60, ss=Math.floor(diff/1000)%60;
+        const el=document.getElementById('v22NmCount');
+        if(el) el.textContent=`${String(dd).padStart(2,'0')}D : ${String(hh).padStart(2,'0')}H : ${String(mm).padStart(2,'0')}M : ${String(ss).padStart(2,'0')}S`;
+      }
+      tick(); setInterval(tick,1000);
+    }
+  }
+  function sync(){
+    const d=getData();
+    render(upcomingMatch(getMatches(d)));
+  }
+  sync();
+  window.addEventListener('storage',sync);
+  setTimeout(sync,1200);
+  if(typeof serenityCloudLoad==='function'){
+    Promise.resolve(serenityCloudLoad()).then(d=>{ if(d) render(upcomingMatch(getMatches(d))); }).catch(()=>{});
+  }
+})();
+</script>
+
 </body>
 </html>
