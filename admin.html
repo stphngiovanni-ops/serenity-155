@@ -16,7 +16,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="NKJ SERENITY">
 <link rel="stylesheet" href="v13-theme.css?v=13.0">
-<link rel="stylesheet" href="v20-brand-lock.css?v=20.2">
+<link rel="stylesheet" href="v20-brand-lock.css?v=20.3">
+<link rel="stylesheet" href="v21-command-center.css?v=21">
+<link rel="stylesheet" href="v22-esports-os.css?v=22">
 </head>
 <body>
 <div id="serenityLoader" aria-label="Loading NKJ SERENITY">
@@ -31,7 +33,7 @@
   <div id="loginView" class="login-wrap">
     <div class="login-card">
       <img src="assets/nkj-serenity-logo-transparent.png" data-serenity-logo="1" alt="NKJ SERENITY">
-      <h1>ADMIN <span style="color:#28e7f0">155</span></h1>
+      <h1>ADMIN <span style="color:#ef1725">155</span></h1>
       <p>Panel pengelolaan website NKJ SERENITY</p>
       <label>Username</label>
       <input id="loginUser" value="admin" autocomplete="username">
@@ -39,7 +41,7 @@
       <input id="loginPass" type="password" placeholder="Masukkan password" autocomplete="current-password">
       <button class="btn primary" id="loginBtn" type="button" style="width:100%">LOGIN</button>
       <div class="status" id="loginStatus"></div>
-      <small style="display:block;color:#656e7a;margin-top:12px;text-align:center">Login: admin / serenity_mei25</small>
+      
     </div>
   </div>
 
@@ -189,7 +191,29 @@
 
       
 
-      <section class="admin-card">
+      
+<section class="admin-card full" id="newsroomManagement">
+  <h2>📰 NEWSROOM MANAGEMENT</h2>
+  <p class="hint">Kelola berita resmi yang tampil di halaman NEWS dan section Latest News homepage.</p>
+  <input type="hidden" id="newsEditIndex" value="-1">
+  <div class="form-grid">
+    <div><label>Kategori</label><select id="newsCategory"><option>TEAM</option><option>MATCH</option><option>TOURNAMENT</option><option>ANNOUNCEMENT</option><option>COMMUNITY</option><option>STORE</option></select></div>
+    <div><label>Tanggal</label><input id="newsDate" type="datetime-local"></div>
+    <div class="full"><label>Judul Berita</label><input id="newsTitle" placeholder="NKJ SERENITY READY FOR THE NEXT BATTLE"></div>
+    <div class="full"><label>Ringkasan</label><textarea id="newsExcerpt" placeholder="Ringkasan singkat untuk card berita..."></textarea></div>
+    <div class="full"><label>Isi Berita</label><textarea id="newsBody" placeholder="Tulis isi berita lengkap di sini..."></textarea></div>
+    <div class="full"><label>Foto Berita</label><input id="newsImage" type="file" accept="image/*"><img id="newsImagePreview" class="image-preview" hidden alt="Preview berita"></div>
+    <div><label><input id="newsFeatured" type="checkbox"> Jadikan Featured / Breaking News</label></div>
+    <div><label><input id="newsPublished" type="checkbox" checked> Published</label></div>
+  </div>
+  <div class="admin-actions">
+    <button class="btn primary" id="saveNews" type="button">TAMBAH BERITA</button>
+    <button class="small-btn" id="cancelNewsEdit" type="button" hidden>BATAL EDIT</button>
+  </div>
+  <div id="newsAdminList" class="edit-list" style="margin-top:14px"></div>
+</section>
+
+<section class="admin-card">
         <h2>SPONSOR + LOGO</h2>
         <div class="form-grid">
           <div class="full"><label>Nama Sponsor</label><input id="sponsorName" placeholder="NKJ"></div>
@@ -316,5 +340,6 @@
 <script src="/pwa.js"></script>
 <script src="announcement-admin.js?v=fix4"></script>
 <script src="v13-theme.js?v=13.0"></script>
+<script src="news-admin.js?v=24"></script>
 </body>
 </html>
