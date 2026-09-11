@@ -25,7 +25,7 @@ const DEFAULT_DATA={
   contact:{email:"serenity155@example.com",instagram:"https://instagram.com/",youtube:"https://youtube.com/"}
 };
 const $=id=>document.getElementById(id),cloneDefault=()=>JSON.parse(JSON.stringify(DEFAULT_DATA));
-let data=cloneDefault(),pendingPlayerPhoto="",pendingAchPhoto="",pendingOpponentLogo="",editingMatchIndex=-1,editingPlayerGroup="",editingPlayerIndex=-1,pendingSponsorLogo="";
+let data=cloneDefault(),pendingPlayerPhoto="",pendingAchPhoto="",pendingOpponentLogo="",editingMatchIndex=-1,editingPlayerGroup="",editingPlayerIndex=-1,pendingSponsorLogo="",pendingHomeNextLogo="";
 
 function migrate(x){
   if(!x)return cloneDefault();
@@ -132,8 +132,62 @@ function imageToDataURL(file,maxW=900,maxH=900,quality=.82){
 }
 function login(){if(($("loginUser").value||"").trim()==="admin"&&($("loginPass").value||"")==="NKJSerenity2026!"){try{sessionStorage.setItem("serenity155Admin","1");sessionStorage.setItem("serenity155AdminPass",$("loginPass").value)}catch(e){}showAdmin()}else $("loginStatus").textContent="Username atau password salah."}
 function showAdmin(){$("loginView").hidden=true;$("loginView").style.display="none";$("adminView").hidden=false;$("adminView").style.display="block";loadData();fillForm();renderLists()}
+
+function featuredHomepageMatch(){
+  data.matches=Array.isArray(data.matches)?data.matches:[];
+  return data.matches.find(m=>m.featured) || data.matches.find(m=>!/completed|finished|selesai|done/i.test(String(m.status||""))) || data.matches[0] || null;
+}
+function fillHomeNextMatch(){
+  const m=featuredHomepageMatch();
+  if(!$("homeNextDate"))return;
+  $("homeNextDate").value=m?.date||"";
+  $("homeNextOpponent").value=m?.opponent||"";
+  $("homeNextEvent").value=m?.event||"";
+  $("homeNextFormat").value=m?.format||"";
+  $("homeNextStream").value=m?.stream||"";
+  pendingHomeNextLogo=m?.logo||"";
+  if(pendingHomeNextLogo){$("homeNextLogoPreview").src=pendingHomeNextLogo;$("homeNextLogoPreview").hidden=false}
+  else $("homeNextLogoPreview").hidden=true;
+}
+async function saveHomeNextMatch(){
+  const opponent=$("homeNextOpponent")?.value.trim();
+  if(!opponent){$("homeNextStatus").textContent="Nama lawan wajib diisi.";return}
+  data.matches=Array.isArray(data.matches)?data.matches:[];
+  let idx=data.matches.findIndex(m=>m.featured);
+  if(idx<0) idx=data.matches.findIndex(m=>!/completed|finished|selesai|done/i.test(String(m.status||"")));
+  const old=idx>=0?data.matches[idx]:{};
+  const item={
+    ...old,
+    date:$("homeNextDate")?.value||old.date||"",
+    opponent,
+    event:$("homeNextEvent")?.value.trim()||"MATCH",
+    game:old.game||"POINT BLANK",
+    format:$("homeNextFormat")?.value.trim()||"",
+    stream:$("homeNextStream")?.value.trim()||"",
+    status:"UPCOMING",
+    ourScore:"",
+    oppScore:"",
+    logo:pendingHomeNextLogo||old.logo||"",
+    featured:true
+  };
+  data.matches.forEach(m=>m.featured=false);
+  if(idx>=0)data.matches[idx]=item;else data.matches.unshift(item);
+  try{
+    saveSilent();
+    $("homeNextStatus").textContent="Menyimpan Next Match online...";
+    const pass=sessionStorage.getItem("serenity155AdminPass")||"NKJSerenity2026!";
+    if(typeof serenityAdminCloudSave==="function") await serenityAdminCloudSave(data,pass);
+    $("homeNextStatus").textContent="Next Match tersimpan ONLINE ✓";
+    if(typeof renderLists==="function")renderLists();
+  }catch(e){
+    console.error(e);$("homeNextStatus").textContent="Gagal menyimpan online.";
+  }
+  setTimeout(()=>{if($("homeNextStatus"))$("homeNextStatus").textContent=""},5000);
+}
+
 function fillForm(){
   data.homeText=data.homeText||{};
+  fillHomeNextMatch();
   if($("homeHeroEyebrow")) $("homeHeroEyebrow").value=data.homeText.eyebrow||"NKJ SERENITY • SINCE 2024";
   if($("homeHeroText")) $("homeHeroText").value=data.homeText.hero||"ALWAYS FORWARD";
   if($("homeFooterText")) $("homeFooterText").value=data.homeText.footer||"ALWAYS FORWARD";
@@ -155,13 +209,13 @@ function playerRow(p,i,group){
   <button class="small-btn danger" type="button" data-remove-player="${group}:${i}">HAPUS</button></div>`;
 }
 function renderLists(){
-  $("competitiveCounter").textContent=`${data.competitiveRoster.length} / 5`;
-  $("warCounter").textContent=`${data.warRoster.length} / 12`;
-  $("competitiveRosterList").innerHTML=data.competitiveRoster.map((p,i)=>playerRow(p,i,"competitive")).join("");
-  $("warRosterList").innerHTML=data.warRoster.map((p,i)=>playerRow(p,i,"war")).join("");
+  if($("competitiveCounter")) $("competitiveCounter").textContent=`${data.competitiveRoster.length} / 5`;
+  if($("warCounter")) $("warCounter").textContent=`${data.warRoster.length} / 12`;
+  if($("competitiveRosterList")) $("competitiveRosterList").innerHTML=data.competitiveRoster.map((p,i)=>playerRow(p,i,"competitive")).join("");
+  if($("warRosterList")) $("warRosterList").innerHTML=data.warRoster.map((p,i)=>playerRow(p,i,"war")).join("");
 
-  $("achievementAdminList").innerHTML=(data.achievements||[]).map((a,i)=>`<div class="edit-row with-thumb">${thumb(a.photo,"★")}<div><b>${esc(a.title)}</b><br><small>${esc(a.year)} • ${esc(a.badge)}</small><div class="image-tools"><label class="small-btn" style="cursor:pointer">GANTI FOTO<input type="file" accept="image/*" data-change-ach-photo="${i}" hidden></label>${a.photo?`<button class="small-btn danger" type="button" data-delete-ach-photo="${i}">HAPUS FOTO</button>`:""}</div></div><button class="small-btn danger" type="button" data-remove-achievement="${i}">HAPUS</button></div>`).join("");
-  $("sponsorList").innerHTML=(data.sponsors||[]).map((sp,i)=>{
+  if($("achievementAdminList")) $("achievementAdminList").innerHTML=(data.achievements||[]).map((a,i)=>`<div class="edit-row with-thumb">${thumb(a.photo,"★")}<div><b>${esc(a.title)}</b><br><small>${esc(a.year)} • ${esc(a.badge)}</small><div class="image-tools"><label class="small-btn" style="cursor:pointer">GANTI FOTO<input type="file" accept="image/*" data-change-ach-photo="${i}" hidden></label>${a.photo?`<button class="small-btn danger" type="button" data-delete-ach-photo="${i}">HAPUS FOTO</button>`:""}</div></div><button class="small-btn danger" type="button" data-remove-achievement="${i}">HAPUS</button></div>`).join("");
+  if($("sponsorList")) $("sponsorList").innerHTML=(data.sponsors||[]).map((sp,i)=>{
     const item=typeof sp==="string"?{name:sp,logo:""}:sp;
     return `<div class="edit-row with-thumb">
       <div class="sponsor-admin-logo">${item.logo?`<img src="${item.logo}" alt="">`:"S"}</div>
@@ -175,7 +229,7 @@ function renderLists(){
     </div>`;
   }).join("");
 
-  $("matchAdminList").innerHTML=(data.matches||[]).map((m,i)=>`
+  if($("matchAdminList")) $("matchAdminList").innerHTML=(data.matches||[]).map((m,i)=>`
     <div class="edit-row with-thumb match-admin-pro-row">
       ${matchLogo(m.logo)}
       <div class="match-admin-main">
@@ -384,6 +438,16 @@ document.addEventListener("DOMContentLoaded",()=>{
   $("addPlayer").addEventListener("click",addPlayer);$("addAchievement").addEventListener("click",addAchievement);$("addSponsor").addEventListener("click",addSponsor);
   $("saveMatch")?.addEventListener("click",saveMatch);$("cancelMatchEdit")?.addEventListener("click",resetMatchForm);
   $("saveAll").addEventListener("click",saveAll);$("resetAll").addEventListener("click",resetAll);
+  $("saveHomeNextMatch")?.addEventListener("click",saveHomeNextMatch);
+  $("homeNextLogo")?.addEventListener("change",async e=>{
+    const f=e.target.files?.[0];if(!f)return;
+    const cropped=await imageToDataURL(f,700,700,.88);
+    if(cropped){pendingHomeNextLogo=cropped;$("homeNextLogoPreview").src=cropped;$("homeNextLogoPreview").hidden=false}
+  });
+  $("clearHomeNextLogo")?.addEventListener("click",()=>{
+    pendingHomeNextLogo="";if($("homeNextLogo"))$("homeNextLogo").value="";
+    if($("homeNextLogoPreview"))$("homeNextLogoPreview").hidden=true;
+  });
 
   $("playerPhoto").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,900,900,.82);if(cropped){pendingPlayerPhoto=cropped;$("playerPhotoPreview").src=pendingPlayerPhoto;$("playerPhotoPreview").hidden=false}else{$("playerPhoto").value=""}});
   $("achPhoto").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,1200,850,.82);if(cropped){pendingAchPhoto=cropped;$("achPhotoPreview").src=pendingAchPhoto;$("achPhotoPreview").hidden=false}else{$("achPhoto").value=""}});

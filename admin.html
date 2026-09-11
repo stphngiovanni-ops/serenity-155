@@ -72,6 +72,29 @@
       <p class="hint">Setelah mengubah teks, klik <b>SIMPAN SEMUA</b> di Admin agar tersimpan online dan tampil sama di HP/laptop.</p>
     </section>
 
+    <section class="admin-card full" id="homepageNextMatchManagement">
+      <h2>⚔ HOMEPAGE NEXT MATCH</h2>
+      <p class="hint">Edit kartu Next Match yang tampil di halaman utama. Data ini tetap memakai database match yang sama, jadi tidak membuat jadwal ganda.</p>
+      <div class="form-grid">
+        <div><label>Tanggal & Jam</label><input id="homeNextDate" type="datetime-local"></div>
+        <div><label>Nama Lawan</label><input id="homeNextOpponent" placeholder="NAMA TEAM LAWAN"></div>
+        <div><label>Event / Judul Match</label><input id="homeNextEvent" placeholder="FRIENDLY MATCH / PBRS / PBSC"></div>
+        <div><label>Format</label><input id="homeNextFormat" placeholder="BO3 / BO5"></div>
+        <div class="full"><label>Link / Nama Live Stream</label><input id="homeNextStream" placeholder="YouTube / link live"></div>
+        <div class="full">
+          <label>Logo Lawan</label>
+          <input id="homeNextLogo" type="file" accept="image/*">
+          <img id="homeNextLogoPreview" class="image-preview logo-preview-contain" hidden alt="Preview logo lawan">
+          <div class="image-tools"><button class="small-btn danger" id="clearHomeNextLogo" type="button">HAPUS PILIHAN LOGO</button></div>
+        </div>
+      </div>
+      <div class="admin-actions">
+        <button class="btn primary" id="saveHomeNextMatch" type="button">SIMPAN NEXT MATCH</button>
+      </div>
+      <div class="status" id="homeNextStatus"></div>
+    </section>
+
+
     <section class="admin-card full" id="announcementManagement">
   <h2>📢 ANNOUNCEMENT MANAGEMENT</h2>
   <p class="hint">Buat popup announcement yang otomatis muncul saat pengunjung membuka website dan bisa ditutup setelah dibaca.</p>
@@ -330,7 +353,7 @@
     </div>
   </div>
 
-  <script src="admin.js?v=24.2-loginfix"></script><script src="store-admin.js"></script>
+  <script src="admin.js?v=26.2"></script><script src="store-admin.js"></script>
 <script src="logo-manager.js"></script>
 <script src="logo-admin.js"></script>
 <script src="nkj-logo-manager.js"></script>
@@ -338,9 +361,9 @@
 <script src="v12-loader.js"></script>
 <button id="pwaInstallBtn" class="pwa-install-btn" type="button" hidden>INSTALL <span>SERENITY APP</span></button>
 <script src="/pwa.js"></script>
-<script src="announcement-admin.js?v=24.2-loginfix"></script>
+<script src="announcement-admin.js?v=26.2"></script>
 <script src="v13-theme.js?v=13.0"></script>
-<script src="news-admin.js?v=24.2-loginfix"></script>
+<script src="news-admin.js?v=26.2"></script>
 
 <script id="v242-admin-login-hotfix">
 (function(){
