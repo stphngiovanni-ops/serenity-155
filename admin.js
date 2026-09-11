@@ -58,9 +58,9 @@ function openCropEditor(file,mode="player"){
       img.onload=()=>{
         cropState={
           file,img,mode,resolve,
-          outputW: mode==="achievement" ? 1200 : mode==="logo" ? 700 : 720,
-          outputH: mode==="achievement" ? 800 : mode==="logo" ? 700 : 900,
-          quality: mode==="logo" ? .92 : .88,
+          outputW: mode==="achievement" ? 1200 : mode==="logo" ? 700 : 360,
+          outputH: mode==="achievement" ? 800 : mode==="logo" ? 700 : 450,
+          quality: mode==="logo" ? .92 : mode==="player" ? .68 : .86,
           zoom:1,x:0,y:0,rotate:0
         };
         $("cropTitle").textContent = mode==="achievement" ? "CROP FOTO ACHIEVEMENT" : mode==="logo" ? "CROP LOGO" : "CROP FOTO PEMAIN";
@@ -150,6 +150,47 @@ function imagePreserveAspect(file,maxSide=1800,quality=.92){
     reader.onerror=reject;
     reader.readAsDataURL(file);
   });
+}
+
+
+function compactDataURL(src,maxW=360,maxH=450,quality=.68){
+  return new Promise(resolve=>{
+    if(!src || !/^data:image\//i.test(src)){resolve(src||"");return}
+    const img=new Image();
+    img.onload=()=>{
+      const scale=Math.min(1,maxW/img.width,maxH/img.height);
+      if(scale>=.999 && src.length<140000){resolve(src);return}
+      const w=Math.max(1,Math.round(img.width*scale));
+      const h=Math.max(1,Math.round(img.height*scale));
+      const c=document.createElement("canvas");
+      c.width=w;c.height=h;
+      const ctx=c.getContext("2d");
+      ctx.clearRect(0,0,w,h);
+      ctx.drawImage(img,0,0,w,h);
+      let out=src;
+      try{out=c.toDataURL("image/webp",quality)}
+      catch(e){try{out=c.toDataURL("image/jpeg",quality)}catch(_){}}
+      resolve(out||src);
+    };
+    img.onerror=()=>resolve(src);
+    img.src=src;
+  });
+}
+
+async function compactRosterPhotos(){
+  for(const group of ["competitiveRoster","warRoster"]){
+    const roster=Array.isArray(data[group])?data[group]:[];
+    for(const player of roster){
+      if(player && player.photo && /^data:image\//i.test(player.photo)){
+        player.photo=await compactDataURL(player.photo,360,450,.68);
+      }
+    }
+  }
+}
+
+function approxDataMB(){
+  try{return new Blob([JSON.stringify(data)]).size/1024/1024}
+  catch(e){return 0}
 }
 
 function imageToDataURL(file,maxW=900,maxH=900,quality=.82){
@@ -280,7 +321,18 @@ function getRoster(group){
   if(!Array.isArray(data.warRoster)) data.warRoster=[];
   return group==="war"?data.warRoster:data.competitiveRoster;
 }
-function saveSilent(){localStorage.setItem("serenity155Data",JSON.stringify(data))}
+function saveSilent(){
+  try{
+    localStorage.setItem("serenity155Data",JSON.stringify(data));
+    return true;
+  }catch(e){
+    console.error("Local save failed",e);
+    if(e && (e.name==="QuotaExceededError" || e.code===22 || e.code===1014)){
+      throw new Error("Penyimpanan browser penuh. Foto roster perlu dikompres.");
+    }
+    throw e;
+  }
+}
 async function addPlayer(){
   const name=$("playerName").value.trim();
   if(!name){
@@ -325,7 +377,22 @@ async function addPlayer(){
     roster.push(player);
   }
 
-  try{saveSilent()}catch(e){}
+  try{
+    $("saveStatus").textContent="Mengompres foto roster...";
+    await compactRosterPhotos();
+    saveSilent();
+
+    $("saveStatus").textContent="Menyimpan roster online...";
+    if(typeof serenityAdminCloudSave==="function"){
+      await serenityAdminCloudSave(data,SERENITY_CLOUD_SAVE_SECRET);
+    }
+  }catch(e){
+    console.error(e);
+    $("saveStatus").textContent="Gagal menyimpan roster: "+(e?.message||e);
+    setTimeout(()=>$("saveStatus").textContent="",7000);
+    return;
+  }
+
   pendingPlayerPhoto="";
   editingPlayerGroup="";
   editingPlayerIndex=-1;
@@ -337,8 +404,8 @@ async function addPlayer(){
   $("addPlayer").textContent="+ TAMBAH PEMAIN";
   renderLists();
 
-  $("saveStatus").textContent="Pemain berhasil disimpan ✓";
-  setTimeout(()=>$("saveStatus").textContent="",2200);
+  $("saveStatus").textContent="Roster tersimpan ONLINE ✓";
+  setTimeout(()=>$("saveStatus").textContent="",3500);
 }
 
 function editPlayer(group,index){
@@ -435,8 +502,11 @@ async function saveAll(){
   data.about1=$("about1").value;data.about2=$("about2").value;
   data.contact={email:$("email").value,instagram:$("instagram").value,youtube:$("youtube").value};
   try{
+    $("saveStatus").textContent="Mengoptimalkan foto roster...";
+    await compactRosterPhotos();
+    const sizeMB=approxDataMB();
     saveSilent();
-    $("saveStatus").textContent="Menyimpan online...";
+    $("saveStatus").textContent="Menyimpan online... ("+sizeMB.toFixed(1)+" MB)";
     const pass=SERENITY_CLOUD_SAVE_SECRET;
     if(typeof serenityAdminCloudSave==="function") await serenityAdminCloudSave(data,pass);
     $("saveStatus").textContent="Tersimpan ONLINE ✓";
@@ -475,7 +545,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     if($("homeNextLogoPreview"))$("homeNextLogoPreview").hidden=true;
   });
 
-  $("playerPhoto").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,900,900,.82);if(cropped){pendingPlayerPhoto=cropped;$("playerPhotoPreview").src=pendingPlayerPhoto;$("playerPhotoPreview").hidden=false}else{$("playerPhoto").value=""}});
+  $("playerPhoto").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,360,450,.68);if(cropped){pendingPlayerPhoto=cropped;$("playerPhotoPreview").src=pendingPlayerPhoto;$("playerPhotoPreview").hidden=false}else{$("playerPhoto").value=""}});
   $("achPhoto").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,1200,850,.82);if(cropped){pendingAchPhoto=cropped;$("achPhotoPreview").src=pendingAchPhoto;$("achPhotoPreview").hidden=false}else{$("achPhoto").value=""}});
   $("opponentLogo")?.addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,700,700,.88);if(cropped){pendingOpponentLogo=cropped;$("opponentLogoPreview").src=pendingOpponentLogo;$("opponentLogoPreview").hidden=false}else{$("opponentLogo").value=""}});
   $("sponsorLogo").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const logo=await imagePreserveAspect(f,1800,.92);if(logo){pendingSponsorLogo=logo;$("sponsorLogoPreview").src=logo;$("sponsorLogoPreview").hidden=false}else{$("sponsorLogo").value=""}});
@@ -510,7 +580,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     const t=e.target,f=t.files?.[0];if(!f)return;
     if(t.matches("[data-change-player-photo]")){
       const {group,index}=parseGroupIndex(t.dataset.changePlayerPhoto);
-      const cropped=await imageToDataURL(f,900,900,.82);if(cropped){getRoster(group)[index].photo=cropped;try{saveSilent()}catch(e){};renderLists()}
+      const cropped=await imageToDataURL(f,360,450,.68);if(cropped){getRoster(group)[index].photo=cropped;try{saveSilent()}catch(e){};renderLists()}
     } else if(t.matches("[data-change-ach-photo]")){const cropped=await imageToDataURL(f,1200,850,.82);if(cropped){data.achievements[Number(t.dataset.changeAchPhoto)].photo=cropped;try{saveSilent()}catch(e){};renderLists()}}
     else if(t.matches("[data-change-match-logo]")){const cropped=await imageToDataURL(f,700,700,.88);if(cropped){data.matches[Number(t.dataset.changeMatchLogo)].logo=cropped;try{saveSilent()}catch(e){};renderLists()}}
     else if(t.matches("[data-change-sponsor-logo]")){const logo=await imagePreserveAspect(f,1800,.92);if(logo){data.sponsors[Number(t.dataset.changeSponsorLogo)].logo=logo;try{saveSilent()}catch(e){};renderLists()}}
