@@ -11,6 +11,10 @@ const DEFAULT_DATA={
     {name:"DEMON",role:"DUAL / FLEX",detail:"PRESSURE • FLEX",photo:""}
   ],
   warRoster:Array.from({length:15},(_,i)=>({name:`WAR ${String(i+1).padStart(2,"0")}`,role:"PLAYER",detail:"WAR TEAM",photo:""})),
+  news:[
+    {category:"ANNOUNCEMENT",date:"2026-09-11T09:00",title:"WELCOME TO NKJ SERENITY NEWSROOM",excerpt:"Official media center NKJ SERENITY sekarang hadir di website.",body:"Mulai V24, semua update team, match, tournament, community dan announcement dapat dipublikasikan langsung melalui Newsroom.",featured:true,published:true,image:""},
+    {category:"TEAM",date:"2026-09-10T20:00",title:"T4BEPUANG UNITY — ONE CONNECTED ESPORTS EXPERIENCE",excerpt:"Website NKJ SERENITY memasuki era baru dengan newsroom dan live operations.",body:"T4BEPUANG UNITY terus berkembang sebagai identitas keluarga dan perjalanan kompetitif NKJ SERENITY.",featured:false,published:true,image:""}
+  ],
   achievements:[
     {year:"2026",badge:"CHAMPION",title:"PBRS SEMARANG",desc:"Menjadi juara dan melanjutkan perjalanan kompetitif SERENITY ke level berikutnya.",photo:""},
     {year:"2026",badge:"QUALIFIED",title:"PBSB DIVISI 1",desc:"Lolos ke PBSB Divisi 1 dengan target berikutnya: melangkah menuju PBNC.",photo:""},
@@ -31,6 +35,7 @@ function migrate(x){
   x.competitiveRoster=(x.competitiveRoster||[]).slice(0,5).map(p=>({...p,photo:p.photo||""}));
   x.warRoster=(x.warRoster||[]).slice(0,15).map(p=>({...p,photo:p.photo||""}));
   x.matches=(x.matches||[]).map(m=>({...m,event:m.event||m.title||"MATCH",ourScore:m.ourScore??m.scoreA??"",oppScore:m.oppScore??m.scoreB??"",logo:m.logo||"",status:m.status||"UPCOMING",featured:!!m.featured}));
+  x.news=(x.news||[]).map(n=>({...n,category:n.category||"TEAM",published:n.published!==false,featured:!!n.featured,image:n.image||""}));
   x.achievements=(x.achievements||[]).map(a=>({...a,photo:a.photo||""}));
   x.sponsors=(x.sponsors||[]).map(v=>typeof v==="string"?{name:v,logo:""}:{name:v.name||"SPONSOR",logo:v.logo||""});
   return x;
@@ -95,7 +100,7 @@ function drawCrop(){
   ctx.restore();
 
   ctx.save();
-  ctx.strokeStyle="rgba(40,231,240,.55)";
+  ctx.strokeStyle="rgba(239,23,37,.55)";
   ctx.lineWidth=Math.max(2,canvas.width/360);
   ctx.strokeRect(2,2,canvas.width-4,canvas.height-4);
   ctx.restore();
@@ -125,7 +130,7 @@ function imageToDataURL(file,maxW=900,maxH=900,quality=.82){
   const mode=(maxW===1200&&maxH===850)?"achievement":(maxW===700&&maxH===700)?"logo":"player";
   return openCropEditor(file,mode);
 }
-function login(){if(($("loginUser").value||"").trim()==="admin"&&($("loginPass").value||"")==="serenity_mei25"){try{sessionStorage.setItem("serenity155Admin","1");sessionStorage.setItem("serenity155AdminPass",$("loginPass").value)}catch(e){}showAdmin()}else $("loginStatus").textContent="Username atau password salah."}
+function login(){if(($("loginUser").value||"").trim()==="admin"&&($("loginPass").value||"")==="NKJSerenity2026!"){try{sessionStorage.setItem("serenity155Admin","1");sessionStorage.setItem("serenity155AdminPass",$("loginPass").value)}catch(e){}showAdmin()}else $("loginStatus").textContent="Username atau password salah."}
 function showAdmin(){$("loginView").hidden=true;$("loginView").style.display="none";$("adminView").hidden=false;$("adminView").style.display="block";loadData();fillForm();renderLists()}
 function fillForm(){
   data.homeText=data.homeText||{};
@@ -352,7 +357,7 @@ async function saveAll(){
   try{
     saveSilent();
     $("saveStatus").textContent="Menyimpan online...";
-    const pass=sessionStorage.getItem("serenity155AdminPass")||"serenity_mei25";
+    const pass=sessionStorage.getItem("serenity155AdminPass")||"NKJSerenity2026!";
     if(typeof serenityAdminCloudSave==="function") await serenityAdminCloudSave(data,pass);
     $("saveStatus").textContent="Tersimpan ONLINE ✓";
   }catch(e){

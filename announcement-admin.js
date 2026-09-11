@@ -25,7 +25,7 @@
   async function saveCloud(list){
     const site=setLocal(list);
     if(typeof serenityAdminCloudSave==="function"){
-      const pass=sessionStorage.getItem("serenity155AdminPass")||"serenity_mei25";
+      const pass=sessionStorage.getItem("serenity155AdminPass")||"NKJSerenity2026!";
       await serenityAdminCloudSave(site,pass);
     }
     return site;
