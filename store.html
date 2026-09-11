@@ -1,246 +1,53 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#140000">
-  <title>NKJ Store | Voucher Point Blank</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-<link rel="manifest" href="/manifest.webmanifest">
-<link rel="apple-touch-icon" href="/icons/icon-180.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="NKJ SERENITY">
-<link rel="stylesheet" href="v13-theme.css?v=13.0">
-<link rel="stylesheet" href="v18-nkj-visual.css?v=18.2">
-<style id="v19DirectVisual">
-.v19-direct-hero{position:relative;min-height:360px;overflow:hidden;border-bottom:1px solid rgba(228,20,32,.4);display:flex;align-items:flex-end;padding:42px 5vw;background:#050506}
-.v19-direct-hero>img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.48) saturate(.9)}
-.v19-direct-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,3,4,.94),rgba(3,3,4,.38),rgba(3,3,4,.78))}
-.v19-direct-hero .copy{position:relative;z-index:2;max-width:700px}
-.v19-direct-hero .copy small{color:#e7b521;letter-spacing:.25em;font-size:10px}.v19-direct-hero h1{font-size:clamp(48px,7vw,88px);margin:8px 0;text-transform:uppercase}.v19-direct-hero h1 span{color:#e41420}.v19-direct-hero p{color:#b6b6ba}
-.v19-direct-hero>img.logo{position:absolute;right:5vw;bottom:18px;z-index:2;width:min(320px,30vw);height:230px;object-fit:contain;filter:drop-shadow(0 14px 28px rgba(228,20,32,.25))}
-@media(max-width:700px){.v19-direct-hero{min-height:270px;padding:30px 20px}.v19-direct-hero>img.logo{opacity:.28;right:-40px;width:280px}}
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NKJ Store • Jersey & Voucher Game</title>
+<link rel="icon" href="nkj-serenity-logo-transparent.png">
+<link rel="stylesheet" href="v264-pro-nav.css?v=26.5">
+<style>
+:root{--bg:#080808;--panel:#101011;--line:#252528;--text:#f4f4f5;--muted:#91949a;--red:#d91f26;--gold:#b99854;--max:1500px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;padding-top:84px}a{color:inherit;text-decoration:none}
+.shell{width:min(var(--max),92vw);margin:auto}
+.hero{min-height:460px;display:flex;align-items:flex-end;position:relative;overflow:hidden;border-bottom:1px solid #1d1d20;background:linear-gradient(115deg,#090909,#160c0e 68%,#080808)}
+.hero:before{content:"";position:absolute;inset:0;background:url("nkj-serenity-logo-transparent.png") 83% 50%/min(38vw,570px) auto no-repeat;opacity:.16}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,8,8,.98),rgba(8,8,8,.80) 45%,rgba(8,8,8,.20))}
+.hero .inner{position:relative;z-index:2;padding:80px 0 58px}.kicker{font-size:8px;letter-spacing:.2em;color:var(--gold);font-weight:900}
+.hero h1{font-size:clamp(60px,8vw,116px);line-height:.82;letter-spacing:-.065em;margin:14px 0}.hero h1 span{color:var(--red)}
+.hero p{max-width:700px;color:#b2b4b9;font-size:11px;line-height:1.8}
+.category-jump{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}.category-jump a{border:1px solid #37373b;padding:12px 17px;font-size:8px;font-weight:900;letter-spacing:.11em}.category-jump a.primary{background:var(--red);border-color:var(--red)}
+.section{padding:58px 0;border-bottom:1px solid rgba(255,255,255,.05)}.head{display:flex;justify-content:space-between;gap:20px;align-items:flex-end;margin-bottom:22px}.head h2{font-size:42px;letter-spacing:-.045em;margin:6px 0 0}.head p{max-width:520px;text-align:right;color:var(--muted);font-size:9px;line-height:1.7}
+.products{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.v265-product-card{background:var(--panel);border:1px solid var(--line);overflow:hidden}.v265-product-media{height:220px;position:relative;background:#0c0c0d;display:flex;align-items:center;justify-content:center}.v265-product-image{width:100%;height:100%;object-fit:contain;padding:14px}.v265-product-fallback{font-size:30px;font-weight:950;color:#343438;letter-spacing:.04em}.v265-stock{position:absolute;top:12px;right:12px;font-size:7px;font-weight:900;letter-spacing:.12em;padding:7px 9px;background:#151516;border:1px solid #333}.v265-stock.ready{color:#fff}.v265-stock.sold{color:#777}.v265-product-copy{padding:18px}.v265-product-copy small{color:var(--gold);font-size:7px;font-weight:900;letter-spacing:.14em}.v265-product-copy h3{font-size:19px;margin:7px 0 5px}.v265-product-copy p{min-height:28px;color:var(--muted);font-size:9px;margin:0 0 18px}.v265-product-bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}.v265-product-bottom b{display:block;font-size:17px}.v265-product-bottom span{display:block;font-size:7px;color:#777;margin-top:3px}.v265-product-bottom button{border:0;background:var(--red);color:#fff;padding:10px 13px;font-size:8px;font-weight:900}.v265-product-bottom button:disabled{background:#27272a;color:#777}.v265-empty{grid-column:1/-1;border:1px solid var(--line);padding:30px;color:var(--muted)}
+.checkout-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.checkout-box{border:1px solid var(--line);background:var(--panel);padding:20px}.checkout-box h3{margin:0 0 16px}.nkj-cart-row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #262629;padding:12px 0}.nkj-cart-row small{display:block;color:var(--muted);margin-top:4px}.nkj-cart-actions{display:flex;align-items:center;gap:7px}.nkj-cart-actions button{background:#171719;border:1px solid #333;color:#fff;width:28px;height:28px}.nkj-empty-cart{padding:22px 0;color:var(--muted)}.nkj-empty-cart strong,.nkj-empty-cart span{display:block}.total{display:flex;justify-content:space-between;margin-top:16px;font-weight:900}.form input,.form textarea{width:100%;background:#0b0b0c;border:1px solid #303034;color:#fff;padding:12px;margin:0 0 10px}.form button{width:100%;background:var(--red);border:0;color:#fff;padding:13px;font-weight:900}.status{font-size:9px;color:#b6b8bd;margin-top:10px}.footer{padding:32px 0;color:#707278;font-size:8px;letter-spacing:.12em}
+@media(max-width:1050px){.products{grid-template-columns:1fr 1fr}}@media(max-width:700px){body{padding-top:72px}.head{display:block}.head p{text-align:left}.products,.checkout-grid{grid-template-columns:1fr}.v265-product-media{height:200px}}
 </style>
-<link rel="stylesheet" href="v20-theme.css?v=20.2">
-<link rel="stylesheet" href="v20-brand-lock.css?v=20.3">
-<link rel="stylesheet" href="v21-command-center.css?v=21">
-<link rel="stylesheet" href="v22-esports-os.css?v=22">
-<link rel="stylesheet" href="v26-pro.css?v=26">
-<link rel="stylesheet" href="v264-pro-nav.css?v=26.4">
 </head>
-<body class="nkj-store-body v18-store v26-pro page-store v264-unified">
-
+<body class="v264-unified">
 <header class="v264-header">
   <div class="v264-nav">
-    <a class="v264-brand" href="index.html">
-      <img src="nkj-serenity-logo-transparent.png" alt="NKJ SERENITY">
-      <div class="v264-brand-name">NKJ SERENITY<small>T4BEPUANG UNITY</small></div>
-    </a>
-    <nav class="v264-main-links"><a href="matches.html" class="">Jadwal</a><a href="family.html" class="">Family</a><a href="competitive.html" class="">Tim</a><a href="news.html" class="">Berita</a><a href="store.html" class="active">Store</a></nav>
-    <div class="v264-actions">
-      <div class="v264-lang">ID <span>/</span> EN</div>
-      <button class="v264-menu-btn" type="button" aria-expanded="false">
-        <span>Menu</span><span class="v264-menu-icon"><i></i></span>
-      </button>
-    </div>
+    <a class="v264-brand" href="index.html"><img src="nkj-serenity-logo-transparent.png"><div class="v264-brand-name">NKJ SERENITY<small>T4BEPUANG UNITY</small></div></a>
+    <nav class="v264-main-links"><a href="matches.html">Jadwal</a><a href="family.html">Family</a><a href="competitive.html">Tim</a><a href="news.html">Berita</a><a href="store.html" class="active">Store</a></nav>
+    <div class="v264-actions"><div class="v264-lang">ID <span>/</span> EN</div><button class="v264-menu-btn" type="button"><span>Menu</span><span class="v264-menu-icon"><i></i></span></button></div>
   </div>
 </header>
-<div class="v264-mega">
-  <div class="v264-mega-inner"><div class="v264-col"><h4>Beranda</h4><a href="index.html" class="">Beranda</a><a href="news.html" class="">Berita</a><a href="partners.html" class="">Partner</a></div><div class="v264-col"><h4>Kompetitif</h4><a href="matches.html" class="">Jadwal</a><a href="tournament.html" class="">Tournament</a><a href="achievement.html" class="">Achievement</a></div><div class="v264-col"><h4>Team</h4><a href="competitive.html" class="">Roster</a><a href="family.html" class="">Family</a><a href="history.html" class="">History</a></div><div class="v264-col"><h4>Media & Lainnya</h4><a href="tv.html" class="">Serenity TV</a><a href="store.html" class="current">NKJ Store</a><a href="admin.html" class="">Admin</a></div></div>
-</div>
+<div class="v264-mega"><div class="v264-mega-inner">
+<div class="v264-col"><h4>Beranda</h4><a href="index.html">Beranda</a><a href="news.html">Berita</a><a href="partners.html">Partner</a></div>
+<div class="v264-col"><h4>Kompetitif</h4><a href="matches.html">Jadwal</a><a href="tournament.html">Tournament</a><a href="achievement.html">Achievement</a></div>
+<div class="v264-col"><h4>Team</h4><a href="competitive.html">Roster</a><a href="family.html">Family</a><a href="history.html">History</a></div>
+<div class="v264-col"><h4>Store</h4><a href="#jersey">Jersey</a><a href="#voucher">Voucher Game</a><a href="admin.html">Admin</a></div>
+</div></div>
 
-<section class="v201-brand-hero">
-<div class="v201-brand-hero-inner">
-<img src="nkj-serenity-logo-transparent.png" alt="NKJ Serenity">
-<div><small>NKJ SERENITY // OFFICIAL</small><h1>NKJ STORE</h1><p>OFFICIAL STORE • DIGITAL GOODS</p></div>
-</div></section>
-<div id="serenityAnnouncement" hidden></div>
-<div id="serenityLoader" aria-label="Loading NKJ SERENITY">
-  <div class="serenity-loader-core">
-    <div class="serenity-loader-logo-wrap"><img class="serenity-loader-logo" src="nkj-serenity-logo-transparent.png" alt="NKJ SERENITY"></div>
-    <div class="serenity-loader-kicker">INITIALIZING ESPORTS NETWORK</div>
-    <div class="serenity-loader-title">NKJ <span>SERENITY</span></div>
-    <div class="serenity-loader-line"><i></i></div>
-    <div class="serenity-loader-status">LOADING // PLEASE WAIT</div>
-  </div>
-</div>
-  <header class="nkj-store-header">
-    <a href="news.html">NEWS</a>
-<a href="store.html" class="nkj-store-brand">
-      <img src="assets/nkj-logo.png" data-nkj-logo="1" alt="NKJ">
-      <div><strong>NKJ</strong><span>STORE</span></div>
-    </a>
+<section class="hero"><div class="shell inner"><div class="kicker">OFFICIAL NKJ SERENITY STORE</div><h1>JERSEY & <span>GAME VOUCHER</span></h1><p>Satu halaman store dengan dua kategori terpisah: official jersey NKJ SERENITY dan voucher game. Produk dapat dikelola dari Admin Utama.</p><div class="category-jump"><a class="primary" href="#jersey">BELANJA JERSEY</a><a href="#voucher">BELI VOUCHER GAME</a><a href="#checkout">KERANJANG <span id="headerCartCount">0</span></a></div></div></section>
 
-    <button class="menu-btn" id="nkjMenuBtn" aria-label="Buka menu">
-      <span></span><span></span><span></span>
-    </button>
+<main>
+<section class="section" id="jersey"><div class="shell"><div class="head"><div><div class="kicker">OFFICIAL MERCHANDISE</div><h2>JERSEY NKJ SERENITY</h2></div><p>Produk apparel resmi. Admin dapat menambahkan foto, ukuran/varian, harga, dan stok.</p></div><div class="products" id="jerseyProducts"></div></div></section>
+<section class="section" id="voucher"><div class="shell"><div class="head"><div><div class="kicker">DIGITAL GOODS</div><h2>VOUCHER GAME</h2></div><p>Voucher Point Blank dan game lain dapat ditambahkan dari Admin Utama dengan nominal dan harga masing-masing.</p></div><div class="products" id="voucherProducts"></div></div></section>
 
-    <nav class="nkj-store-nav" id="nkjStoreNav">
-      <a href="index.html">BERANDA</a>
-      <a href="#products">VOUCHER PB</a>
-      <a href="#how">CARA BELI</a>
-      <a href="#checkout">CEK ORDER</a>
-      <a href="#contact-store">KONTAK</a>
-    </nav>
-
-    <div class="nkj-header-actions">
-      <a href="#checkout" class="nkj-cart-mini">🛒 <span>KERANJANG</span> <b id="headerCartCount">0</b></a>
-      <a href="admin.html" class="nkj-login-btn">LOGIN / ADMIN</a>
-    </div>
-  </header>
-<section class="v26-mast">
-      <div class="v26-mast-bg" style="background-image:url('visual-store-banner.jpg')"></div>
-      <div class="v26-shell v26-mast-inner">
-        <div class="v26-kicker">OFFICIAL COMMERCE</div>
-        <h1>NKJ <span>STORE</span></h1>
-        <p>A cleaner official store experience for team products and digital goods.</p>
-        <div class="v26-meta"><span>OFFICIAL STORE</span><span>DIGITAL GOODS</span><span>NKJ SERENITY</span></div>
-      </div>
-    </section>
-<section class="v19-direct-hero">
-      <img class="bg" src="visual-store-banner.jpg" alt="">
-      <div class="copy"><small>NKJ SERENITY // OFFICIAL</small><h1>NKJ <span>STORE</span></h1><p>VOUCHER • MERCHANDISE • OFFICIAL</p></div>
-      <img class="logo" src="nkj-serenity-logo-transparent.png" alt="NKJ SERENITY">
-    </section>
-
-
-  <main>
-    <section class="nkj-hero-pro">
-      <div class="nkj-hero-layer"></div>
-      <div class="nkj-hero-content">
-        <div class="nkj-hero-copy">
-          <p class="nkj-kicker">TOP UP CASH</p>
-          <h1>POINT BLANK</h1>
-          <h2>MURAH • AMAN • TERPERCAYA</h2>
-          <p>Top up Cash Point Blank hanya di NKJ Store. Proses cepat, harga bersahabat, dan pilihan voucher yang mudah dikelola.</p>
-
-          <div class="nkj-feature-row">
-            <div><strong>AMAN</strong><span>Order Tercatat</span></div>
-            <div><strong>CEPAT</strong><span>Proses Instan</span></div>
-            <div><strong>LEGAL</strong><span>Produk Terdata</span></div>
-            <div><strong>24/7</strong><span>Support Online</span></div>
-          </div>
-        </div>
-
-        <div class="nkj-hero-logo-wrap">
-          <img src="assets/nkj-logo.png" data-nkj-logo="1" alt="NKJ Store" class="nkj-hero-logo">
-        </div>
-      </div>
-    </section>
-
-    <section id="products" class="nkj-products-section">
-      <div class="nkj-section-title">
-        <span>PILIH NOMINAL</span>
-        <h2>VOUCHER POINT BLANK</h2>
-      </div>
-
-      <div class="nkj-products-layout">
-        <div class="nkj-store-products nkj-store-products-page" id="storeProducts"></div>
-
-        <aside class="nkj-cart-side">
-          <div class="nkj-card-title">
-            <span>KERANJANG BELANJA</span>
-          </div>
-          <div id="cartItems"></div>
-          <div class="nkj-cart-total">
-            <span>TOTAL</span>
-            <strong id="cartTotal">Rp0</strong>
-          </div>
-          <a href="#checkout" class="nkj-buy-btn nkj-cart-checkout">LIHAT KERANJANG</a>
-        </aside>
-      </div>
-    </section>
-
-    <section class="nkj-payment-strip">
-      <div class="nkj-payment-title">🔒 PEMBAYARAN AMAN & TERPERCAYA</div>
-      <div class="nkj-payment-methods">
-        <span>QRIS</span><span>DANA</span><span>OVO</span><span>GoPay</span><span>ShopeePay</span>
-        <span>BCA</span><span>Mandiri</span><span>BNI</span><span>BRI</span>
-      </div>
-    </section>
-
-    <section id="how" class="nkj-how-section">
-      <div class="nkj-section-title">
-        <span>MUDAH & CEPAT</span>
-        <h2>CARA PEMBELIAN</h2>
-      </div>
-      <div class="nkj-how-grid">
-        <article><strong>01</strong><h3>Pilih Voucher</h3><p>Pilih nominal Cash PB yang ingin dibeli.</p></article>
-        <article><strong>02</strong><h3>Masukkan Keranjang</h3><p>Tentukan jumlah pembelian dan cek total.</p></article>
-        <article><strong>03</strong><h3>Isi Data</h3><p>Masukkan nama dan nomor WhatsApp.</p></article>
-        <article><strong>04</strong><h3>Buat Order</h3><p>Order akan tercatat dan mendapat ID transaksi.</p></article>
-      </div>
-    </section>
-
-    <section id="checkout" class="nkj-checkout-section">
-      <div class="nkj-section-title">
-        <span>ORDER</span>
-        <h2>CHECKOUT</h2>
-      </div>
-
-      <div class="nkj-checkout-wrap nkj-checkout-page">
-        <div class="nkj-cart-card">
-          <div class="nkj-card-title">
-            <span>RINGKASAN PESANAN</span>
-            <strong id="storeCartCount">0 ITEM</strong>
-          </div>
-          <div id="cartItemsCheckout"></div>
-          <div class="nkj-cart-total">
-            <span>TOTAL</span>
-            <strong id="cartTotalCheckout">Rp0</strong>
-          </div>
-        </div>
-
-        <div class="nkj-checkout-card">
-          <div class="nkj-card-title"><span>DATA PEMBELI</span></div>
-          <label>Nama Pembeli</label>
-          <input id="buyerName" placeholder="Nama pembeli">
-          <label>Nomor WhatsApp</label>
-          <input id="buyerWhatsapp" placeholder="08xxxxxxxxxx">
-          <label>Catatan</label>
-          <textarea id="buyerNote" placeholder="Opsional"></textarea>
-          <button class="nkj-buy-btn" id="createOrder" type="button">BUAT ORDER</button>
-          <div class="status" id="orderStatus"></div>
-          <p class="nkj-store-note">Pembayaran otomatis belum aktif. Integrasi QRIS/e-wallet membutuhkan payment gateway dan backend.</p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="nkj-store-footer" id="contact-store">
-    <div class="nkj-footer-brand">
-      <img src="assets/nkj-logo.png" data-nkj-logo="1" alt="NKJ">
-      <div><strong>NKJ STORE</strong><p>Top up Cash Point Blank dengan tampilan premium dan terintegrasi dengan website NKJ SERENITY.</p></div>
-    </div>
-    <div>
-      <h4>INFORMASI</h4>
-      <a href="#how">Cara Pembelian</a>
-      <a href="index.html">NKJ SERENITY</a>
-      <a href="admin.html">Admin</a>
-    </div>
-    <div>
-      <h4>BANTUAN</h4>
-      <a href="#checkout">Cek Order</a>
-      <a href="#products">Voucher PB</a>
-      <a href="#contact-store">Kontak</a>
-    </div>
-    <div>
-      <h4>FOLLOW US</h4>
-      <p>NKJ Store • NKJ SERENITY</p>
-    </div>
-  </footer>
-
-  <script src="nkj-logo-manager.js"></script>
-  <script src="store.js"></script>
-<script src="v12-loader.js"></script>
-<button id="pwaInstallBtn" class="pwa-install-btn" type="button" hidden>INSTALL <span>SERENITY APP</span></button>
-<script src="/pwa.js"></script>
-<script src="announcement.js?v=fix4"></script>
-<script src="v13-theme.js?v=13.0"></script>
-<script src="v264-pro-nav.js?v=26.4"></script>
-</body>
-</html>
+<section class="section" id="checkout"><div class="shell"><div class="head"><div><div class="kicker">CHECKOUT</div><h2>KERANJANG & ORDER</h2></div><p>Pesanan jersey maupun voucher dapat digabung dalam satu order.</p></div><div class="checkout-grid">
+<div class="checkout-box"><h3>KERANJANG <span id="storeCartCount">0 ITEM</span></h3><div id="cartItems"></div><div class="total"><span>TOTAL</span><span id="cartTotal">Rp0</span></div></div>
+<div class="checkout-box form"><h3>DATA PEMBELI</h3><input id="buyerName" placeholder="Nama"><input id="buyerWhatsapp" placeholder="WhatsApp"><textarea id="buyerNote" rows="4" placeholder="Catatan: ukuran jersey, nickname, detail voucher, dll."></textarea><div id="cartItemsCheckout" style="display:none"></div><div id="cartTotalCheckout" style="display:none"></div><button id="createOrder">BUAT ORDER</button><div class="status" id="orderStatus"></div></div>
+</div></div></section>
+</main>
+<footer class="footer"><div class="shell">© 2026 NKJ SERENITY • OFFICIAL STORE</div></footer>
+<script src="store.js?v=26.5"></script><script src="v264-pro-nav.js?v=26.5"></script>
+</body></html>

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-<script src="cloud-sync.js"></script><script src="cloud-boot.js"></script>
+<script src="cloud-sync.js"></script><script src="cloud-boot.js?v=26.5"></script>
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icons/icon-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -294,7 +294,24 @@
 
 
 
-<section class="admin-card full"><h2>NKJ STORE - VOUCHER PB (TERINTEGRASI)</h2><div class="form-grid"><div><label>Nama Produk</label><input id="storeProductName"></div><div><label>Nominal Cash</label><input id="storeProductCash"></div><div><label>Harga Jual</label><input id="storeProductPrice" type="number"></div><div><label>Stok</label><input id="storeProductStock" type="number"></div></div><div class="admin-actions"><button class="small-btn" id="addStoreProduct" type="button">+ TAMBAH PRODUK</button></div><div id="storeProductList" class="edit-list"></div><h2 style="margin-top:30px">ORDER MASUK</h2><div id="storeOrderList" class="edit-list"></div><p class="hint">Untuk produksi, kode voucher dan pembayaran harus diproses di backend/server.</p></section>
+<section class="admin-card full" id="storeManagement">
+<h2>🛒 NKJ STORE MANAGEMENT</h2>
+<p class="hint">Kelola dua jenis penjualan: <b>Official Jersey</b> dan <b>Voucher Game</b>. Semua produk tampil otomatis di halaman Store.</p>
+<div class="form-grid">
+  <div><label>Jenis Produk</label><select id="storeProductType"><option value="voucher">VOUCHER GAME</option><option value="jersey">JERSEY</option></select></div>
+  <div><label>Nama Produk</label><input id="storeProductName" placeholder="Official Jersey 2026 / PB Voucher Gold"></div>
+  <div><label>Game (untuk voucher)</label><input id="storeProductGame" placeholder="POINT BLANK"></div>
+  <div><label>Varian / Nominal / Ukuran</label><input id="storeProductVariant" placeholder="6.000 Cash / S-M-L-XL"></div>
+  <div><label>Harga Jual</label><input id="storeProductPrice" type="number" placeholder="185000"></div>
+  <div><label>Stok</label><input id="storeProductStock" type="number" placeholder="20"></div>
+  <div class="full"><label>Foto Produk (opsional)</label><input id="storeProductImage" type="file" accept="image/*"><img id="storeProductImagePreview" class="image-preview logo-preview-contain" hidden alt="Preview produk"><p class="hint">Foto jersey akan dipertahankan proporsinya dan dikompres otomatis.</p></div>
+</div>
+<div class="admin-actions"><button class="small-btn" id="addStoreProduct" type="button">+ TAMBAH PRODUK</button></div>
+<div id="storeProductList" class="edit-list"></div>
+<h2 style="margin-top:30px">ORDER MASUK</h2>
+<div id="storeOrderList" class="edit-list"></div>
+<p class="hint">Order disimpan pada sistem Store saat ini. Untuk pembayaran otomatis dan pengiriman kode voucher real-time dibutuhkan backend/payment gateway.</p>
+</section>
 <section class="admin-card full">
         <h2>CONTACT & SOCIAL</h2>
         <div class="form-grid">
@@ -353,7 +370,7 @@
     </div>
   </div>
 
-  <script src="admin.js?v=26.4.1-savefix"></script><script src="store-admin.js"></script>
+  <script src="admin.js?v=26.4.1-savefix"></script><script src="store-admin.js?v=26.5"></script>
 <script src="logo-manager.js"></script>
 <script src="logo-admin.js"></script>
 <script src="nkj-logo-manager.js"></script>
@@ -363,7 +380,7 @@
 <script src="/pwa.js"></script>
 <script src="announcement-admin.js?v=26.4.1-savefix"></script>
 <script src="v13-theme.js?v=13.0"></script>
-<script src="news-admin.js?v=26.4.1-savefix"></script>
+<script src="news-admin.js?v=26.5"></script>
 
 <script id="v242-admin-login-hotfix">
 (function(){

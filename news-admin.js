@@ -26,17 +26,38 @@ async function save(){
  let item={...old,category:$('newsCategory').value,date:$('newsDate').value||new Date().toISOString(),title,excerpt:$('newsExcerpt').value.trim(),body:$('newsBody').value.trim(),featured:$('newsFeatured').checked,published:$('newsPublished').checked,image:imageData||old.image||''};
  if(i>=0)d.news[i]=item;else d.news.unshift(item);
  if(!write(d))return;
- try{if(typeof serenityAdminCloudSave==='function'){const pass=sessionStorage.getItem('serenity155AdminPass')||'NKJSerenity2026!';await serenityAdminCloudSave(d,pass)}}catch(e){console.warn(e)}
- reset();render();
+
+ const btn=$('saveNews'), oldText=btn.textContent;
+ btn.disabled=true; btn.textContent='MENYIMPAN...';
+ try{
+   if(typeof serenityAdminCloudSave!=='function') throw new Error('Cloud save tidak tersedia');
+   await serenityAdminCloudSave(d,'serenity_mei25');
+   localStorage.setItem('serenity155Data',JSON.stringify(d));
+   reset();render();
+   alert('Berita berhasil disimpan ONLINE.');
+ }catch(e){
+   console.error('News save failed',e);
+   alert('Berita tersimpan di browser, tetapi GAGAL tersimpan online. Error: '+(e?.message||e));
+   render();
+ }finally{
+   btn.disabled=false;
+   if(btn.textContent==='MENYIMPAN...') btn.textContent=oldText;
+ }
 }
 function edit(i){
  let x=list()[i];if(!x)return;$('newsEditIndex').value=i;$('newsCategory').value=x.category||'TEAM';$('newsDate').value=(x.date||'').slice(0,16);$('newsTitle').value=x.title||'';$('newsExcerpt').value=x.excerpt||'';$('newsBody').value=x.body||'';$('newsFeatured').checked=!!x.featured;$('newsPublished').checked=x.published!==false;imageData=x.image||'';if(imageData){$('newsImagePreview').src=imageData;$('newsImagePreview').hidden=false}$('saveNews').textContent='SIMPAN PERUBAHAN BERITA';$('cancelNewsEdit').hidden=false;document.getElementById('newsroomManagement').scrollIntoView({behavior:'smooth'});
 }
-async function del(i){if(!confirm('Hapus berita ini?'))return;let d=read();d.news=Array.isArray(d.news)?d.news:[];d.news.splice(i,1);if(!write(d))return;try{if(typeof serenityAdminCloudSave==='function'){const pass=sessionStorage.getItem('serenity155AdminPass')||'NKJSerenity2026!';await serenityAdminCloudSave(d,pass)}}catch(e){}render()}
-document.addEventListener('DOMContentLoaded',()=>{
- if(!$('newsroomManagement'))return;
- $('saveNews').onclick=save;$('cancelNewsEdit').onclick=reset;
- $('newsImage').onchange=async e=>{let f=e.target.files?.[0];if(!f)return;imageData=await compress(f);$('newsImagePreview').src=imageData;$('newsImagePreview').hidden=false};
+async function del(i){
+ if(!confirm('Hapus berita ini?'))return;
+ let d=read();d.news=Array.isArray(d.news)?d.news:[];
+ d.news.splice(i,1);
+ if(!write(d))return;
+ try{
+   if(typeof serenityAdminCloudSave==='function') await serenityAdminCloudSave(d,'serenity_mei25');
+ }catch(e){
+   console.error('Delete news cloud save failed',e);
+   alert('Berita terhapus di browser, tetapi sinkronisasi online gagal.');
+ }
  render();
 });
 })();
