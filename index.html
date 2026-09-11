@@ -6,7 +6,161 @@
 <meta name="theme-color" content="#070707">
 <title>NKJ SERENITY • T4BEPUANG UNITY</title>
 <link rel="icon" href="nkj-serenity-logo-transparent.png">
-<link rel="stylesheet" href="elite-club.css?v=26">
+<style id="v26-critical-home-css">
+
+:root{
+  --bg:#070707;
+  --bg2:#0b0b0c;
+  --panel:#101012;
+  --panel2:#141416;
+  --line:#202024;
+  --text:#f1f1f2;
+  --muted:#8d8f95;
+  --red:#d91f26;
+  --gold:#b99854;
+  --max:1500px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+.el-shell{width:min(var(--max),92vw);margin:auto}
+.el-header{
+  position:sticky;top:0;z-index:80;height:76px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  background:rgba(7,7,7,.92);backdrop-filter:blur(16px);
+}
+.el-nav{height:100%;display:flex;align-items:center;gap:26px}
+.el-brand{display:flex;align-items:center;gap:11px;margin-right:auto}
+.el-brand img{width:48px;height:42px;object-fit:contain}
+.el-brand b{font-size:14px;letter-spacing:.02em}
+.el-brand small{display:block;color:var(--muted);font-size:7px;letter-spacing:.16em;margin-top:2px}
+.el-links{display:flex;align-items:center;gap:20px}
+.el-links a{
+  color:#a7a9ae;font-size:8px;font-weight:800;letter-spacing:.10em;
+  transition:.2s ease
+}
+.el-links a:hover,.el-links a.active{color:#fff}
+.el-links a.active:after{content:"";display:block;height:2px;background:var(--red);margin-top:8px}
+.el-admin{
+  border:1px solid #303034;padding:9px 12px;font-size:8px;font-weight:900;letter-spacing:.10em
+}
+.el-hero{
+  min-height:650px;position:relative;overflow:hidden;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.el-hero-bg{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(90deg,rgba(7,7,7,.97) 0%,rgba(7,7,7,.78) 42%,rgba(7,7,7,.28) 78%,rgba(7,7,7,.55) 100%),
+    linear-gradient(180deg,rgba(7,7,7,.08),rgba(7,7,7,.78)),
+    url("nkj-serenity-battle-art.png") center/cover no-repeat;
+  filter:saturate(.65) contrast(1.02);
+}
+.el-hero-grid{
+  min-height:650px;position:relative;z-index:2;
+  display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center
+}
+.el-kicker{color:var(--gold);font-size:8px;letter-spacing:.22em;font-weight:900}
+.el-hero h1{
+  font-size:clamp(58px,7.2vw,120px);line-height:.84;letter-spacing:-.065em;
+  margin:14px 0 18px;max-width:850px
+}
+.el-hero h1 span{color:var(--red)}
+.el-hero p{max-width:680px;color:#b4b6bb;font-size:11px;line-height:1.8}
+.el-actions{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
+.el-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:12px 16px;border:1px solid #343438;
+  background:rgba(12,12,13,.72);font-size:8px;font-weight:900;letter-spacing:.10em
+}
+.el-btn.primary{background:var(--red);border-color:var(--red)}
+.el-next{
+  width:min(470px,100%);justify-self:end;
+  background:rgba(11,11,12,.82);border:1px solid rgba(255,255,255,.08);
+  padding:22px;backdrop-filter:blur(12px)
+}
+.el-next-top{display:flex;justify-content:space-between;gap:20px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px}
+.el-next-top strong{font-size:9px;letter-spacing:.12em;color:#fff}
+.el-next-top span{font-size:8px;color:var(--muted)}
+.el-next-match{display:grid;grid-template-columns:1fr 45px 1fr;gap:10px;align-items:center;padding:22px 0 18px}
+.el-team{text-align:center}
+.el-team img{width:74px;height:64px;object-fit:contain}
+.el-team b{display:block;font-size:10px;margin-top:7px}
+.el-vs{text-align:center;color:#666;font-size:18px;font-weight:900}
+.el-next-meta{text-align:center;color:var(--muted);font-size:8px;letter-spacing:.10em}
+.el-countdown{
+  margin-top:14px;padding:10px;text-align:center;border:1px solid var(--line);
+  font-size:12px;font-weight:900;letter-spacing:.10em
+}
+.el-section{padding:58px 0}
+.el-section + .el-section{border-top:1px solid rgba(255,255,255,.05)}
+.el-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:18px}
+.el-head h2{font-size:40px;letter-spacing:-.045em;margin:5px 0 0}
+.el-head p{max-width:520px;text-align:right;color:var(--muted);font-size:9px;line-height:1.7}
+.el-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.el-stat{padding:18px;border:1px solid var(--line);background:var(--panel)}
+.el-stat small{display:block;color:var(--muted);font-size:7px;letter-spacing:.13em}
+.el-stat b{display:block;font-size:25px;margin-top:5px}
+.el-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.el-card{
+  min-height:320px;position:relative;overflow:hidden;border:1px solid var(--line);
+  background:var(--panel)
+}
+.el-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.46) saturate(.72);transition:.3s}
+.el-card:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 28%,rgba(7,7,7,.96))}
+.el-card-copy{position:absolute;left:20px;right:20px;bottom:18px;z-index:2}
+.el-card small{color:var(--gold);font-size:7px;letter-spacing:.15em}
+.el-card h3{font-size:25px;line-height:1.03;margin:7px 0 5px}
+.el-card p{font-size:9px;line-height:1.6;color:#a7a9af;margin:0}
+.el-card:hover img{transform:scale(1.025);filter:brightness(.56) saturate(.78)}
+.el-news-grid{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:12px}
+.el-news-card{min-height:290px;position:relative;overflow:hidden;border:1px solid var(--line);background:var(--panel)}
+.el-news-card:first-child{min-height:380px}
+.el-news-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.48) saturate(.72)}
+.el-news-card:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 25%,rgba(7,7,7,.95))}
+.el-news-copy{position:absolute;left:18px;right:18px;bottom:17px;z-index:2}
+.el-news-tag{font-size:7px;color:var(--gold);letter-spacing:.14em;font-weight:900}
+.el-news-copy h3{font-size:22px;line-height:1.05;margin:6px 0}
+.el-news-copy p{font-size:9px;color:#aaaeb4;line-height:1.55;margin:0}
+.el-quick{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.el-quick a{padding:18px;border:1px solid var(--line);background:var(--panel);transition:.2s}
+.el-quick a:hover{background:var(--panel2);border-color:#3a3a3f}
+.el-quick small{display:block;color:var(--muted);font-size:7px;letter-spacing:.12em}
+.el-quick b{display:block;font-size:16px;margin-top:6px}
+.el-footer{border-top:1px solid rgba(255,255,255,.06);padding:28px 0 36px;color:#6e7076;font-size:8px;letter-spacing:.13em}
+.el-footer-row{display:flex;justify-content:space-between;gap:20px;align-items:center}
+@media(max-width:1000px){
+  .el-hero-grid{grid-template-columns:1fr;padding:60px 0}
+  .el-next{justify-self:start}
+  .el-grid3,.el-news-grid{grid-template-columns:1fr 1fr}
+  .el-news-card:first-child{grid-column:1/-1}
+  .el-quick,.el-stats{grid-template-columns:1fr 1fr}
+}
+@media(max-width:700px){
+  .el-header{height:auto}
+  .el-nav{padding:12px 0;flex-wrap:wrap}
+  .el-brand{width:100%}
+  .el-links{width:100%;overflow:auto;padding-bottom:4px}
+  .el-hero,.el-hero-grid{min-height:auto}
+  .el-hero-grid{padding:48px 0}
+  .el-head{display:block}
+  .el-head p{text-align:left;margin-top:8px}
+  .el-grid3,.el-news-grid,.el-quick,.el-stats{grid-template-columns:1fr}
+  .el-news-card:first-child{grid-column:auto}
+}
+
+</style>
+
+<style id="v26-home-failsafe">
+.el-header .el-brand img{width:48px!important;height:42px!important;max-width:48px!important;max-height:42px!important;object-fit:contain!important}
+.el-header img{display:block!important}
+body.v26-home{overflow-x:hidden!important}
+</style>
 </head>
 <body class="v26-home">
 <header class="el-header">
