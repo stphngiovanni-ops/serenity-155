@@ -396,10 +396,17 @@ body.v26-home{overflow-x:hidden!important}
  function renderMatch(d){
    let m=nextMatch(d);if(!m)return;
    let opp=m.opponent||m.awayTeam||m.team2||m.enemy||m.enemyTeam||'TBA';
-   let logo=m.opponentLogo||m.awayLogo||m.logo2||m.enemyLogo||'nkj-serenity-logo-transparent.png';
+   if(/\bvs\b/i.test(opp)){
+     const parts=opp.split(/\s+vs\s+/i).map(x=>x.trim()).filter(Boolean);
+     const enemy=parts.find(x=>!/nkj|serenity/i.test(x));
+     if(enemy)opp=enemy;
+   }
+   let logo=m.logo||m.opponentLogo||m.awayLogo||m.logo2||m.enemyLogo||'nkj-serenity-logo-transparent.png';
    let md=dt(m);
    document.getElementById('eliteOppName').textContent=opp;
-   document.getElementById('eliteOppLogo').src=logo;
+   const oppLogoEl=document.getElementById('eliteOppLogo');
+   oppLogoEl.src=logo;
+   oppLogoEl.onerror=function(){this.onerror=null;this.style.opacity='.35';this.removeAttribute('src');};
    document.getElementById('eliteMatchDate').textContent=md?md.toLocaleString('id-ID',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}).toUpperCase():'TBA';
    document.getElementById('eliteMatchMeta').textContent=[m.event||m.tournament||m.competition||'MATCH',m.format||m.mode||m.bestOf||''].filter(Boolean).join(' • ');
    if(md){function tick(){let diff=Math.max(0,md-new Date()),dd=Math.floor(diff/86400000),hh=Math.floor(diff/3600000)%24,mm=Math.floor(diff/60000)%60,ss=Math.floor(diff/1000)%60;document.getElementById('eliteCountdown').textContent=`${String(dd).padStart(2,'0')}D : ${String(hh).padStart(2,'0')}H : ${String(mm).padStart(2,'0')}M : ${String(ss).padStart(2,'0')}S`}tick();setInterval(tick,1000)}
