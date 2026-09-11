@@ -1,3 +1,4 @@
+const SERENITY_CLOUD_SAVE_SECRET="serenity_mei25"; // server-side Edge Function secret; login password remains separate
 
 const DEFAULT_DATA={
   homeText:{eyebrow:"NKJ SERENITY • SINCE 2024",hero:"ALWAYS FORWARD",footer:"ALWAYS FORWARD"},
@@ -200,7 +201,7 @@ async function saveHomeNextMatch(){
   try{
     saveSilent();
     $("homeNextStatus").textContent="Menyimpan Next Match online...";
-    const pass=sessionStorage.getItem("serenity155AdminPass")||"NKJSerenity2026!";
+    const pass=SERENITY_CLOUD_SAVE_SECRET;
     if(typeof serenityAdminCloudSave==="function") await serenityAdminCloudSave(data,pass);
     $("homeNextStatus").textContent="Next Match tersimpan ONLINE ✓";
     if(typeof renderLists==="function")renderLists();
@@ -436,7 +437,7 @@ async function saveAll(){
   try{
     saveSilent();
     $("saveStatus").textContent="Menyimpan online...";
-    const pass=sessionStorage.getItem("serenity155AdminPass")||"NKJSerenity2026!";
+    const pass=SERENITY_CLOUD_SAVE_SECRET;
     if(typeof serenityAdminCloudSave==="function") await serenityAdminCloudSave(data,pass);
     $("saveStatus").textContent="Tersimpan ONLINE ✓";
   }catch(e){
