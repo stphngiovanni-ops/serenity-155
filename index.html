@@ -159,43 +159,51 @@ img{max-width:100%}
 .el-history-event{text-align:center;color:var(--muted);font-size:7px;letter-spacing:.10em}
 .el-history-empty{grid-column:1/-1;border:1px solid var(--line);background:var(--panel);padding:24px;color:var(--muted);font-size:9px}
 
+
 .el-sponsors{
   border-top:1px solid rgba(255,255,255,.06);
-  background:#09090a;
-  padding:34px 0 38px;
+  background:#0b1323;
+  padding:58px 0 64px;
 }
-.el-sponsor-head{
-  display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:18px
+.el-sponsor-layout{
+  display:grid;grid-template-columns:minmax(260px,.72fr) 1.8fr;gap:64px;align-items:center
 }
 .el-sponsor-title small{
-  display:block;color:var(--gold);font-size:7px;font-weight:900;letter-spacing:.18em;margin-bottom:6px
+  display:block;color:#fff;font-size:8px;font-weight:950;letter-spacing:.19em;margin-bottom:18px
 }
 .el-sponsor-title h3{
-  margin:0;font-size:22px;letter-spacing:-.035em
+  margin:0;color:#fff;font-size:clamp(42px,5vw,72px);line-height:.94;letter-spacing:-.055em;
+  max-width:340px;text-transform:uppercase
 }
 .el-sponsor-note{
-  color:var(--muted);font-size:8px;letter-spacing:.09em;text-align:right
+  color:#c7ccd5;font-size:9px;line-height:1.7;margin-top:25px;max-width:300px
 }
 .el-sponsor-grid{
-  display:grid;grid-template-columns:repeat(5,1fr);gap:10px
+  display:grid;grid-template-columns:repeat(3,minmax(120px,1fr));column-gap:52px;row-gap:48px;align-items:center
 }
 .el-sponsor-card{
-  min-height:96px;border:1px solid var(--line);background:#0f0f10;
-  display:flex;align-items:center;justify-content:center;padding:16px;
-  transition:.2s ease
+  min-height:105px;display:flex;align-items:center;justify-content:center;
+  background:transparent!important;border:0!important;padding:8px!important
 }
-.el-sponsor-card:hover{background:#131315;border-color:#3a3a3e}
+.el-sponsor-card:hover{background:transparent!important;border:0!important;transform:translateY(-2px)}
 .el-sponsor-card img{
-  width:100%;height:58px;object-fit:contain;filter:grayscale(.15);opacity:.92
+  display:block!important;
+  width:auto!important;height:auto!important;
+  max-width:100%!important;max-height:92px!important;
+  object-fit:contain!important;
+  filter:none!important;opacity:1!important
 }
 .el-sponsor-card span{
-  font-size:18px;font-weight:900;letter-spacing:.08em;color:#d7d7d9
+  color:#fff;font-size:24px;font-weight:950;letter-spacing:.08em
 }
-@media(max-width:900px){.el-sponsor-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:600px){
-  .el-sponsor-head{display:block}
-  .el-sponsor-note{text-align:left;margin-top:7px}
-  .el-sponsor-grid{grid-template-columns:1fr 1fr}
+@media(max-width:900px){
+  .el-sponsor-layout{grid-template-columns:1fr;gap:36px}
+  .el-sponsor-title h3{max-width:none}
+}
+@media(max-width:650px){
+  .el-sponsor-grid{grid-template-columns:1fr 1fr;gap:28px 22px}
+  .el-sponsor-card{min-height:82px}
+  .el-sponsor-card img{max-height:70px!important}
 }
 
 @media(max-width:1000px){.el-history-grid{grid-template-columns:1fr 1fr}}
@@ -228,8 +236,29 @@ img{max-width:100%}
 .el-header img{display:block!important}
 body.v26-home{overflow-x:hidden!important}
 </style>
+<link rel="stylesheet" href="v264-pro-nav.css?v=26.4">
 </head>
-<body class="v26-home">
+<body class="v26-home v264-unified">
+
+<header class="v264-header">
+  <div class="v264-nav">
+    <a class="v264-brand" href="index.html">
+      <img src="nkj-serenity-logo-transparent.png" alt="NKJ SERENITY">
+      <div class="v264-brand-name">NKJ SERENITY<small>T4BEPUANG UNITY</small></div>
+    </a>
+    <nav class="v264-main-links"><a href="matches.html" class="">Jadwal</a><a href="family.html" class="">Family</a><a href="competitive.html" class="">Tim</a><a href="news.html" class="">Berita</a><a href="store.html" class="">Store</a></nav>
+    <div class="v264-actions">
+      <div class="v264-lang">ID <span>/</span> EN</div>
+      <button class="v264-menu-btn" type="button" aria-expanded="false">
+        <span>Menu</span><span class="v264-menu-icon"><i></i></span>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="v264-mega">
+  <div class="v264-mega-inner"><div class="v264-col"><h4>Beranda</h4><a href="index.html" class="current">Beranda</a><a href="news.html" class="">Berita</a><a href="partners.html" class="">Partner</a></div><div class="v264-col"><h4>Kompetitif</h4><a href="matches.html" class="">Jadwal</a><a href="tournament.html" class="">Tournament</a><a href="achievement.html" class="">Achievement</a></div><div class="v264-col"><h4>Team</h4><a href="competitive.html" class="">Roster</a><a href="family.html" class="">Family</a><a href="history.html" class="">History</a></div><div class="v264-col"><h4>Media & Lainnya</h4><a href="tv.html" class="">Serenity TV</a><a href="store.html" class="">NKJ Store</a><a href="admin.html" class="">Admin</a></div></div>
+</div>
+
 <header class="el-header">
   <div class="el-shell el-nav">
     <a class="el-brand" href="index.html"><img src="nkj-serenity-logo-transparent.png"><div><b>NKJ SERENITY</b><small>T4BEPUANG UNITY</small></div></a>
@@ -333,14 +362,13 @@ body.v26-home{overflow-x:hidden!important}
 </main>
 
 
+
 <section class="el-sponsors" id="officialPartners">
-  <div class="el-shell">
-    <div class="el-sponsor-head">
-      <div class="el-sponsor-title">
-        <small>OFFICIAL PARTNERS</small>
-        <h3>SUPPORTED BY</h3>
-      </div>
-      <div class="el-sponsor-note">NKJ SERENITY PARTNER NETWORK</div>
+  <div class="el-shell el-sponsor-layout">
+    <div class="el-sponsor-title">
+      <small>PROUD PARTNERS</small>
+      <h3>TUMBUH BERSAMA.</h3>
+      <div class="el-sponsor-note">Partner dan sponsor resmi yang tumbuh bersama perjalanan NKJ SERENITY.</div>
     </div>
     <div class="el-sponsor-grid" id="eliteSponsorGrid">
       <div class="el-sponsor-card"><span>NKJ</span></div>
@@ -349,6 +377,7 @@ body.v26-home{overflow-x:hidden!important}
     </div>
   </div>
 </section>
+
 
 <footer class="el-footer"><div class="el-shell el-footer-row"><span>© 2026 NKJ SERENITY</span><span>T4BEPUANG UNITY • ALWAYS FORWARD</span></div></footer>
 
@@ -418,4 +447,5 @@ body.v26-home{overflow-x:hidden!important}
  window.addEventListener('storage',e=>{if(!e.key||e.key===KEY)render(local())});
 })();
 </script>
+<script src="v264-pro-nav.js?v=26.4"></script>
 </body></html>

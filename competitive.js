@@ -53,5 +53,5 @@ document.addEventListener("DOMContentLoaded",async()=>{
   });
 
   const sponsors=Array.isArray(data.sponsors)?data.sponsors:[];
-  $("rosterSponsorGrid").innerHTML=sponsors.length?sponsors.map(s=>`<div class="sponsor-item">${s.logo?`<img src="${esc(s.logo)}" alt="${esc(s.name||"Sponsor")}">`:`<b>${esc(s.name||"SPONSOR")}</b>`}</div>`).join(""):'<div class="sponsor-item"><b>AJ1</b></div><div class="sponsor-item"><b>2K</b></div><div class="sponsor-item"><b>HT557</b></div>';
+  if($("rosterSponsorGrid")) $("rosterSponsorGrid").innerHTML="";
 });

@@ -126,6 +126,31 @@ function resetCrop(){
   drawCrop();
 }
 
+
+function imagePreserveAspect(file,maxSide=1800,quality=.92){
+  return new Promise((resolve,reject)=>{
+    if(!file){resolve("");return}
+    const reader=new FileReader();
+    reader.onload=()=>{
+      const img=new Image();
+      img.onload=()=>{
+        const scale=Math.min(1,maxSide/Math.max(img.naturalWidth||img.width,img.naturalHeight||img.height));
+        const w=Math.max(1,Math.round((img.naturalWidth||img.width)*scale));
+        const h=Math.max(1,Math.round((img.naturalHeight||img.height)*scale));
+        const canvas=document.createElement("canvas");canvas.width=w;canvas.height=h;
+        const ctx=canvas.getContext("2d");ctx.clearRect(0,0,w,h);ctx.drawImage(img,0,0,w,h);
+        let out="";
+        try{out=canvas.toDataURL("image/webp",quality)}catch(e){out=reader.result}
+        resolve(out||reader.result);
+      };
+      img.onerror=()=>resolve(reader.result);
+      img.src=reader.result;
+    };
+    reader.onerror=reject;
+    reader.readAsDataURL(file);
+  });
+}
+
 function imageToDataURL(file,maxW=900,maxH=900,quality=.82){
   const mode=(maxW===1200&&maxH===850)?"achievement":(maxW===700&&maxH===700)?"logo":"player";
   return openCropEditor(file,mode);
@@ -452,7 +477,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   $("playerPhoto").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,900,900,.82);if(cropped){pendingPlayerPhoto=cropped;$("playerPhotoPreview").src=pendingPlayerPhoto;$("playerPhotoPreview").hidden=false}else{$("playerPhoto").value=""}});
   $("achPhoto").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,1200,850,.82);if(cropped){pendingAchPhoto=cropped;$("achPhotoPreview").src=pendingAchPhoto;$("achPhotoPreview").hidden=false}else{$("achPhoto").value=""}});
   $("opponentLogo")?.addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,700,700,.88);if(cropped){pendingOpponentLogo=cropped;$("opponentLogoPreview").src=pendingOpponentLogo;$("opponentLogoPreview").hidden=false}else{$("opponentLogo").value=""}});
-  $("sponsorLogo").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,700,700,.88);if(cropped){pendingSponsorLogo=cropped;$("sponsorLogoPreview").src=pendingSponsorLogo;$("sponsorLogoPreview").hidden=false}else{$("sponsorLogo").value=""}});
+  $("sponsorLogo").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const logo=await imagePreserveAspect(f,1800,.92);if(logo){pendingSponsorLogo=logo;$("sponsorLogoPreview").src=logo;$("sponsorLogoPreview").hidden=false}else{$("sponsorLogo").value=""}});
   $("clearPlayerPhoto").addEventListener("click",()=>{pendingPlayerPhoto="";$("playerPhoto").value="";$("playerPhotoPreview").hidden=true});
   $("clearAchPhoto").addEventListener("click",()=>{pendingAchPhoto="";$("achPhoto").value="";$("achPhotoPreview").hidden=true});
   $("clearOpponentLogo")?.addEventListener("click",()=>{pendingOpponentLogo="";if($("opponentLogo"))$("opponentLogo").value="";if($("opponentLogoPreview"))$("opponentLogoPreview").hidden=true});
@@ -487,7 +512,7 @@ document.addEventListener("DOMContentLoaded",()=>{
       const cropped=await imageToDataURL(f,900,900,.82);if(cropped){getRoster(group)[index].photo=cropped;try{saveSilent()}catch(e){};renderLists()}
     } else if(t.matches("[data-change-ach-photo]")){const cropped=await imageToDataURL(f,1200,850,.82);if(cropped){data.achievements[Number(t.dataset.changeAchPhoto)].photo=cropped;try{saveSilent()}catch(e){};renderLists()}}
     else if(t.matches("[data-change-match-logo]")){const cropped=await imageToDataURL(f,700,700,.88);if(cropped){data.matches[Number(t.dataset.changeMatchLogo)].logo=cropped;try{saveSilent()}catch(e){};renderLists()}}
-    else if(t.matches("[data-change-sponsor-logo]")){const cropped=await imageToDataURL(f,700,700,.88);if(cropped){data.sponsors[Number(t.dataset.changeSponsorLogo)].logo=cropped;try{saveSilent()}catch(e){};renderLists()}}
+    else if(t.matches("[data-change-sponsor-logo]")){const logo=await imagePreserveAspect(f,1800,.92);if(logo){data.sponsors[Number(t.dataset.changeSponsorLogo)].logo=logo;try{saveSilent()}catch(e){};renderLists()}}
   });
 
   try{if(sessionStorage.getItem("serenity155Admin")==="1")showAdmin()}catch(e){}
