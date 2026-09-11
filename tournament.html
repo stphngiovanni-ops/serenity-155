@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Tournament Hub | NKJ SERENITY</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=20.4">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icons/icon-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="NKJ SERENITY">
-<link rel="stylesheet" href="v13-theme.css?v=13.0">
-<link rel="stylesheet" href="v18-nkj-visual.css?v=18.2">
+<link rel="stylesheet" href="v13-theme.css?v=20.4">
+<link rel="stylesheet" href="v18-nkj-visual.css?v=20.4">
 <style id="v19DirectVisual">
 .v19-direct-hero{position:relative;min-height:360px;overflow:hidden;border-bottom:1px solid rgba(228,20,32,.4);display:flex;align-items:flex-end;padding:42px 5vw;background:#050506}
 .v19-direct-hero>img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.48) saturate(.9)}
@@ -20,10 +20,54 @@
 .v19-direct-hero>img.logo{position:absolute;right:5vw;bottom:18px;z-index:2;width:min(320px,30vw);height:230px;object-fit:contain;filter:drop-shadow(0 14px 28px rgba(228,20,32,.25))}
 @media(max-width:700px){.v19-direct-hero{min-height:270px;padding:30px 20px}.v19-direct-hero>img.logo{opacity:.28;right:-40px;width:280px}}
 </style>
-<link rel="stylesheet" href="v20-theme.css?v=20.2">
-<link rel="stylesheet" href="v20-brand-lock.css?v=20.2">
+<link rel="stylesheet" href="v20-theme.css?v=20.4">
+<link rel="stylesheet" href="v20-brand-lock.css?v=20.4">
+
+<style id="v20-4-tournament-final-lock">
+/* FINAL NKJ SERENITY TOURNAMENT BRAND LOCK — inline on purpose */
+.tour-modern-card{background:#09090b!important;border-color:rgba(239,23,37,.28)!important}
+.tour-modern-card:hover{border-color:#ef1725!important}
+.tour-cover{
+ background:
+ radial-gradient(circle at 50% 50%,rgba(239,23,37,.16),transparent 38%),
+ linear-gradient(135deg,#100608,#060608)!important;
+}
+.tour-cover-mark{
+ width:100%!important;height:100%!important;display:grid!important;place-items:center!important;
+ color:transparent!important;-webkit-text-stroke:0!important;
+}
+.tour-cover-mark img{
+ width:150px!important;height:110px!important;object-fit:contain!important;
+ filter:drop-shadow(0 10px 24px rgba(239,23,37,.32))!important;
+}
+.tour-status{background:#0c090a!important;border-color:#482024!important;color:#e8b82f!important}
+.tour-status.open{color:#ef1725!important;border-color:#ef1725!important}
+.tour-status.upcoming{color:#e8b82f!important;border-color:rgba(232,184,47,.5)!important}
+.tour-status.ongoing{color:#ef1725!important;border-color:#ef1725!important}
+.tour-body>small{color:#ef1725!important}
+.tour-body h3{color:#fff!important}
+.tour-meta div{background:#0b090a!important;border-color:#29171a!important}
+.tour-meta span{color:#8c777a!important}
+.slot-line{color:#b9a3a5!important}
+.slot-line b{color:#e8b82f!important}
+.slot-bar{background:#241013!important}
+.slot-bar i{background:linear-gradient(90deg,#8b0008,#ef1725)!important}
+.tour-action{background:linear-gradient(90deg,#8b0008,#ef1725)!important;color:#fff!important}
+.tour-action:disabled{background:linear-gradient(90deg,#4d070c,#9c000a)!important;color:#fff!important;opacity:.9!important}
+[data-tour-filter]{background:#12080a!important;border-color:#6c1119!important;color:#fff!important}
+[data-tour-filter].active{background:linear-gradient(90deg,#8b0008,#ef1725)!important;border-color:#ef1725!important}
+.bracket-section,.arena-section{border-color:rgba(239,23,37,.18)!important}
+.bracket-title span,.section-title span,.eyebrow{color:#ef1725!important}
+.bracket-title i,.section-title h2 i{color:#ef1725!important;-webkit-text-stroke-color:#ef1725!important}
+select{border-color:#482024!important;background:#09090b!important}
+.arena-empty,.bracket-empty{border-color:#442025!important;color:#9b8588!important}
+</style>
+
+<link rel="stylesheet" href="v21-command-center.css?v=21">
+<link rel="stylesheet" href="v22-esports-os.css?v=22">
+<link rel="stylesheet" href="v26-pro.css?v=26">
 </head>
-<body class="arena-page v18-tournament">
+<body class="arena-page v18-tournament v26-pro page-tournament">
 <section class="v201-brand-hero">
 <div class="v201-brand-hero-inner">
 <img src="nkj-serenity-logo-transparent.png" alt="NKJ Serenity">
@@ -41,8 +85,20 @@
 </div>
 <header class="arena-header">
   <a class="arena-brand" href="index.html"><img src="assets/nkj-serenity-logo-transparent.png" data-serenity-logo="1"><div><b>SERENITY</b><span>155</span></div></a>
-  <nav><a href="index.html">HOME</a><a href="matches.html">MATCH</a><a class="active" href="tournament.html">TOURNAMENT</a><a href="#bracket">BAGAN</a><a href="store.html">NKJ STORE</a><a href="admin.html">ADMIN</a><a href="family.html">FOTO FAMILY</a><a href="tv.html">FAMILY TV</a></nav><div class="participant-auth-pill" id="participantAuthPill"><button id="participantLoginOpen" type="button">LOGIN PESERTA</button></div>
+  <nav><a href="index.html">HOME</a><a href="matches.html">MATCH</a><a class="active" href="tournament.html">TOURNAMENT</a><a href="#bracket">BAGAN</a><a href="store.html">NKJ STORE</a><a href="admin.html">ADMIN</a><a href="partners.html">PARTNERS</a>
+<a href="history.html">HISTORY</a>
+<a href="family.html">FOTO FAMILY</a><a href="news.html">NEWS</a>
+<a href="tv.html">FAMILY TV</a></nav><div class="participant-auth-pill" id="participantAuthPill"><button id="participantLoginOpen" type="button">LOGIN PESERTA</button></div>
 </header>
+<section class="v26-mast">
+      <div class="v26-mast-bg" style="background-image:url('visual-tournament-banner.jpg')"></div>
+      <div class="v26-shell v26-mast-inner">
+        <div class="v26-kicker">COMPETITION PLATFORM</div>
+        <h1>TOURNAMENT <span>CENTER</span></h1>
+        <p>Registration, tournament status, bracket progression, and champion records in one organized arena.</p>
+        <div class="v26-meta"><span>REGISTRATION</span><span>BRACKET</span><span>CHAMPIONS</span></div>
+      </div>
+    </section>
 <section class="v19-direct-hero">
       <img class="bg" src="visual-tournament-banner.jpg" alt="">
       <div class="copy"><small>NKJ SERENITY // OFFICIAL</small><h1>TOURNAMENT <span>ARENA</span></h1><p>BRACKET • REGISTRATION • RESULTS</p></div>
@@ -97,7 +153,7 @@
 <footer class="arena-footer"><span>NKJ SERENITY • TOURNAMENT HUB</span><a href="index.html">Kembali ke Home</a></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>window.SERENITY_SUPABASE={url:"https://vcmbthekmltociajzsdx.supabase.co",key:"sb_publishable_MjSTXwI71RW99XaYTP4fCA_U9uDj5pA"};</script>
-<script src="logo-manager.js"></script><script src="tournament-page.js"></script><script src="bracket-page.js"></script>
+<script src="logo-manager.js"></script><script src="tournament-page.js?v=20.4"></script><script src="bracket-page.js?v=20.4"></script>
 <script src="v12-loader.js"></script>
 <button id="pwaInstallBtn" class="pwa-install-btn" type="button" hidden>INSTALL <span>SERENITY APP</span></button>
 <script src="/pwa.js"></script>

@@ -1,0 +1,132 @@
+
+:root{
+ --v26-bg:#080808;--v26-panel:#101011;--v26-panel2:#151516;--v26-line:#242426;
+ --v26-text:#f1f1f2;--v26-muted:#909298;--v26-red:#cf2028;--v26-gold:#ad925c;
+ --v26-max:1500px;
+}
+body.v26-pro{background:var(--v26-bg)!important;color:var(--v26-text)!important}
+body.v26-pro .v201-brand-hero{display:none!important}
+body.v26-pro .serenity-loader-core{border-color:#252527!important}
+.v26-shell{width:min(var(--v26-max),92vw);margin:auto}
+.v26-mast{
+ min-height:370px;position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.06);
+ display:flex;align-items:flex-end;background:#0a0a0b
+}
+.v26-mast-bg{position:absolute;inset:0;background-position:center;background-size:cover;filter:brightness(.42) saturate(.65)}
+.v26-mast:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,8,8,.97),rgba(8,8,8,.68) 47%,rgba(8,8,8,.28)),linear-gradient(180deg,transparent 45%,rgba(8,8,8,.9))}
+.v26-mast-inner{position:relative;z-index:2;padding:72px 0 44px}
+.v26-kicker{font-size:8px;letter-spacing:.22em;color:var(--v26-gold);font-weight:900}
+.v26-mast h1{font-size:clamp(52px,7vw,108px);line-height:.84;letter-spacing:-.065em;margin:12px 0 14px;text-transform:uppercase}
+.v26-mast h1 span{color:var(--v26-red)}
+.v26-mast p{max-width:700px;color:#b0b2b7;font-size:11px;line-height:1.8;margin:0}
+.v26-meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:21px}
+.v26-meta span{font-size:8px;color:#898c92;letter-spacing:.1em;border-left:2px solid var(--v26-red);padding-left:9px}
+
+/* unified top navigation treatment, while preserving existing HTML */
+body.v26-pro header:not(.el-header){
+ background:rgba(8,8,8,.95)!important;border-bottom:1px solid rgba(255,255,255,.06)!important;
+ box-shadow:none!important;backdrop-filter:blur(16px);position:sticky!important;top:0!important;z-index:70!important
+}
+body.v26-pro header nav a{color:#a2a4a9!important;font-size:8px!important;font-weight:800!important;letter-spacing:.09em!important}
+body.v26-pro header nav a:hover,body.v26-pro header nav a.active{color:#fff!important}
+body.v26-pro header img{filter:none!important}
+
+/* generic content surfaces */
+body.v26-pro main{background:transparent!important}
+body.v26-pro main section:not(.v26-mast){border-color:rgba(255,255,255,.06)!important}
+body.v26-pro .arena-content,
+body.v26-pro .gallery-section,
+body.v26-pro main>.head,
+body.v26-pro .nkj-products,
+body.v26-pro .nkj-section,
+body.v26-pro .shell:not(.nav):not(.hero){
+ width:min(var(--v26-max),92vw)!important;margin-left:auto!important;margin-right:auto!important
+}
+body.v26-pro .arena-tabs,body.v26-pro .roster-tabs{
+ border:1px solid var(--v26-line)!important;background:#0d0d0e!important;padding:8px!important
+}
+body.v26-pro button{border-radius:0!important}
+body.v26-pro .arena-tabs button,body.v26-pro .roster-tabs button{
+ background:transparent!important;border:1px solid transparent!important;color:#8e9096!important
+}
+body.v26-pro .arena-tabs button.active,body.v26-pro .roster-tabs button.active{
+ background:#1a1a1c!important;border-color:#343438!important;color:#fff!important
+}
+
+/* Cards / tables */
+body.v26-pro [class*="card"],
+body.v26-pro [class*="item"],
+body.v26-pro [class*="panel"],
+body.v26-pro [class*="box"]{
+ border-color:var(--v26-line)!important;box-shadow:none!important
+}
+body.v26-pro .match-card,body.v26-pro .tour-card,body.v26-pro .player-card,
+body.v26-pro .family-card,body.v26-pro .video-card,body.v26-pro .product-card{
+ background:var(--v26-panel)!important;border:1px solid var(--v26-line)!important;
+ transition:transform .2s ease,border-color .2s ease!important
+}
+body.v26-pro .match-card:hover,body.v26-pro .tour-card:hover,body.v26-pro .player-card:hover,
+body.v26-pro .family-card:hover,body.v26-pro .video-card:hover,body.v26-pro .product-card:hover{
+ transform:translateY(-2px);border-color:#3b3b3f!important
+}
+
+/* MATCH */
+body.page-match .arena-hero{display:none!important}
+body.page-match .match-card{min-height:170px!important}
+body.page-match .arena-header .arena-brand div b,
+body.page-match .arena-header .arena-brand div span{color:#fff!important}
+
+/* ROSTER */
+body.page-roster .roster-hero{display:none!important}
+body.page-roster .roster-header{min-height:74px!important}
+body.page-roster .roster-header .roster-brand small{color:#8d8f95!important}
+body.page-roster .player-card{background:linear-gradient(180deg,#141416,#0c0c0d)!important}
+body.page-roster .player-card img{filter:saturate(.75) contrast(1.02)}
+body.page-roster .player-card h3,body.page-roster .player-card h2{letter-spacing:-.03em}
+
+/* TOURNAMENT */
+body.page-tournament .arena-hero{display:none!important}
+body.page-tournament .tour-card{background:#101011!important}
+body.page-tournament .progress,body.page-tournament [class*="progress"]{accent-color:var(--v26-red)!important}
+
+/* TV */
+body.page-tv main>.head{padding-top:48px!important}
+body.page-tv main>.head span{color:var(--v26-gold)!important}
+body.page-tv main>.head i{color:var(--v26-red)!important}
+body.page-tv .grid{gap:14px!important}
+body.page-tv .grid>*{background:#101011!important;border:1px solid var(--v26-line)!important}
+
+/* FAMILY */
+body.page-family .family-hero{display:none!important}
+body.page-family .section-head span{color:var(--v26-gold)!important}
+body.page-family .section-head i{color:var(--v26-red)!important}
+body.page-family .family-grid{gap:12px!important}
+body.page-family .family-grid>*{border:1px solid var(--v26-line)!important;background:#101011!important}
+
+/* ACHIEVEMENT */
+body.page-achievement header{height:76px!important}
+body.page-achievement .hero{display:none!important}
+body.page-achievement .stats{margin-top:44px!important}
+body.page-achievement .stat{background:#101011!important;border-color:var(--v26-line)!important}
+body.page-achievement .card{background:#101011!important;border-color:var(--v26-line)!important}
+body.page-achievement .card:before{background:var(--v26-red)!important}
+
+/* STORE */
+body.page-store .nkj-hero-pro{display:none!important}
+body.page-store .nkj-store-header{background:#080808!important;border-bottom:1px solid rgba(255,255,255,.06)!important}
+body.page-store [class*="product"],body.page-store [class*="voucher"]{border-color:var(--v26-line)!important}
+body.page-store main{padding-top:0!important}
+
+/* NEWS */
+body.page-news .hero{display:none!important}
+body.page-news .breaking{margin-top:38px!important;background:#101011!important;border-color:var(--v26-line)!important}
+body.page-news .feature-card,body.page-news .side-story,body.page-news .card{border-color:var(--v26-line)!important;background:#101011!important}
+body.page-news .tag{border-color:#473234!important;background:#191113!important}
+
+/* responsive */
+@media(max-width:780px){
+ .v26-mast{min-height:320px}
+ .v26-mast-inner{padding:55px 0 34px}
+ .v26-mast h1{font-size:52px}
+ body.v26-pro header nav{overflow:auto!important;white-space:nowrap!important}
+}

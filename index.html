@@ -1,288 +1,139 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#030305">
-<title>NKJ SERENITY | Official Esports Squad</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#070707">
+<title>NKJ SERENITY • T4BEPUANG UNITY</title>
 <link rel="icon" href="nkj-serenity-logo-transparent.png">
-<link rel="manifest" href="/manifest.webmanifest">
-<link rel="stylesheet" href="v20-theme.css?v=20.2">
-<style>
-*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;overflow-x:hidden}a{text-decoration:none;color:inherit}
-:root{--red:#ef1725;--gold:#e8b82f;--bg:#030305;--panel:#090a0d;--line:rgba(239,23,37,.27);--mut:#979aa5}
-.v20-intro{position:fixed;inset:0;z-index:10000;background:#020203;display:grid;place-items:center;overflow:hidden;transition:.65s ease}
-.v20-intro.hide{opacity:0;visibility:hidden}.v20-intro:before{content:"";position:absolute;inset:-25%;background:radial-gradient(circle,rgba(239,23,37,.22),transparent 34%);animation:introPulse 1.6s ease-in-out infinite}
-.v20-intro img{width:min(520px,72vw);position:relative;z-index:2;filter:drop-shadow(0 0 38px rgba(239,23,37,.45));animation:introLogo 1.2s cubic-bezier(.2,.8,.2,1)}
-.v20-intro small{position:absolute;bottom:12vh;letter-spacing:.42em;color:#8d8f96;font-size:9px}.v20-intro button{position:absolute;right:26px;top:24px;background:transparent;border:1px solid #3d1a1d;color:#bbb;padding:9px 13px;font-size:9px;letter-spacing:.18em;cursor:pointer}
-@keyframes introLogo{from{opacity:0;transform:scale(.72);filter:blur(14px)}to{opacity:1;transform:scale(1)}}@keyframes introPulse{50%{transform:scale(1.1);opacity:.55}}
-
-.v20-header{height:88px;position:sticky;top:0;z-index:500;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:22px;padding:0 4vw;background:rgba(3,3,5,.82);border-bottom:1px solid var(--line)}
-.v20-brand{display:flex;align-items:center;gap:14px;min-width:275px}.v20-brand img{width:112px;height:72px;object-fit:contain;filter:drop-shadow(0 8px 22px rgba(239,23,37,.2))}.v20-brand strong{font-size:22px;letter-spacing:-.04em}.v20-brand strong span{color:var(--red)}.v20-brand small{display:block;color:#777b84;font-size:8px;letter-spacing:.23em;margin-top:5px}
-.v20-nav{display:flex;justify-content:center;gap:22px}.v20-nav a{font-size:10px;font-weight:900;letter-spacing:.09em;color:#c4c6cc;position:relative;padding:34px 0}.v20-nav a:after{content:"";position:absolute;bottom:24px;left:50%;right:50%;height:2px;background:var(--red);transition:.2s}.v20-nav a:hover,.v20-nav a.active{color:#fff}.v20-nav a:hover:after,.v20-nav a.active:after{left:0;right:0}
-.v20-actions{display:flex;gap:8px;align-items:center}.v20-status{display:flex;gap:7px;align-items:center;font-size:8px;color:#7d8088;white-space:nowrap}.v20-dot{width:7px;height:7px;border-radius:50%;background:#552226;box-shadow:0 0 0 0 rgba(239,23,37,.4)}.v20-dot.online{background:#44d67b;box-shadow:0 0 14px rgba(68,214,123,.55)}.v20-login{border:1px solid #702229;padding:10px 14px;font-size:9px;font-weight:900}.v20-menu{display:none;background:#090a0d;border:1px solid #562028;color:#fff;padding:9px 11px}
-
-.v20-hero{min-height:720px;position:relative;display:grid;grid-template-columns:.92fr 1.08fr;align-items:center;padding:72px 5vw 52px;overflow:hidden}
-.v20-hero:before{content:"";position:absolute;inset:0;background:
-linear-gradient(90deg,rgba(3,3,5,.98) 0%,rgba(3,3,5,.70) 42%,rgba(3,3,5,.40) 70%,rgba(3,3,5,.94) 100%),
-linear-gradient(180deg,transparent 60%,#030305 100%),
-url("nkj-serenity-battle-art.png") center/cover no-repeat;opacity:.78}
-.v20-hero:after{content:"NKJ // SERENITY // 2024";position:absolute;right:-130px;top:50%;transform:rotate(90deg);font-size:10px;letter-spacing:.38em;color:#45474e}
-.v20-hero-copy,.v20-hero-visual{position:relative;z-index:2}
-.v20-chip{display:inline-flex;align-items:center;gap:9px;border:1px solid #3e1b1e;background:rgba(8,8,10,.72);padding:8px 11px;font-size:9px;letter-spacing:.17em;color:#bbb}.v20-chip i{display:block;width:6px;height:6px;background:var(--red);border-radius:50%;box-shadow:0 0 14px rgba(239,23,37,.8)}
-.v20-hero h1{font-size:clamp(70px,8.5vw,142px);line-height:.78;margin:18px 0 22px;letter-spacing:-.07em;text-transform:uppercase}.v20-hero h1 .red{color:var(--red)}.v20-hero h1 .outline{-webkit-text-stroke:1px #656871;color:transparent}
-.v20-hero p{max-width:670px;color:#a9abb2;font-size:13px;line-height:1.7;letter-spacing:.08em;text-transform:uppercase}
-.v20-hero-cta{display:flex;gap:10px;margin-top:28px;flex-wrap:wrap}.v20-btn{padding:13px 18px;border:1px solid #5d2026;font-size:9px;font-weight:900;letter-spacing:.12em}.v20-btn.primary{background:linear-gradient(90deg,#8c0009,#ef1725);border-color:#ef1725}.v20-btn.ghost{background:rgba(8,8,10,.62)}
-.v20-hero-visual{display:grid;place-items:center;min-height:520px}.v20-ring,.v20-ring2{position:absolute;border:1px solid rgba(232,184,47,.13);border-radius:50%}.v20-ring{width:500px;height:500px;animation:ring 8s linear infinite}.v20-ring2{width:390px;height:390px;border-style:dashed;animation:ring 14s linear infinite reverse}.v20-hero-logo{width:min(780px,95%);max-height:500px;object-fit:contain;filter:drop-shadow(0 28px 50px rgba(239,23,37,.28));animation:logoFloat 5s ease-in-out infinite}
-.v20-cross{position:absolute;width:680px;height:1px;background:linear-gradient(90deg,transparent,rgba(239,23,37,.26),transparent)}.v20-cross:after{content:"";position:absolute;width:1px;height:560px;left:50%;top:-280px;background:linear-gradient(transparent,rgba(239,23,37,.22),transparent)}
-@keyframes ring{to{transform:rotate(360deg)}}@keyframes logoFloat{50%{transform:translateY(-12px) scale(1.025)}}
-
-.v20-statbar{margin:-38px 4vw 24px;position:relative;z-index:6;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(7,8,10,.9);border:1px solid var(--line);backdrop-filter:blur(18px)}
-.v20-stat{padding:18px 20px;border-right:1px solid rgba(255,255,255,.06)}.v20-stat:last-child{border-right:0}.v20-stat small{display:block;color:#747780;font-size:8px;letter-spacing:.18em}.v20-stat b{display:block;margin-top:6px;font-size:22px}.v20-stat b span{color:var(--red)}
-
-.v20-main-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(330px,.75fr);gap:14px;padding:10px 4vw 0}
-.v20-panel{background:linear-gradient(145deg,rgba(14,14,17,.96),rgba(6,7,9,.96));border:1px solid var(--line);position:relative;overflow:hidden}.v20-panel:before{content:"";position:absolute;left:0;top:0;width:110px;height:2px;background:linear-gradient(90deg,var(--red),transparent)}
-.v20-panel-head{display:flex;justify-content:space-between;align-items:flex-end;padding:18px 20px 0}.v20-panel-head h2{margin:5px 0 0;font-size:27px;letter-spacing:-.04em}.v20-panel-head h2 span{color:var(--red)}.v20-panel-head a{font-size:8px;color:#858891;letter-spacing:.14em}
-#v14NextMatch{padding:16px 18px 18px}.next-teams{display:grid!important;grid-template-columns:1fr auto 1fr!important;gap:14px!important;align-items:center!important;text-align:center}.next-team img{width:84px!important;height:84px!important;object-fit:contain}.next-team strong{display:block;margin-top:6px;font-size:11px}.next-vs{font-size:28px!important;color:#666a73!important}.next-count{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:6px!important;margin:11px 0 8px!important}.next-count div{padding:7px!important;border:1px solid rgba(239,23,37,.19)!important;background:#050608!important}.next-count b{font-size:17px!important}.next-count small{font-size:7px!important;color:#777b84}.next-meta{font-size:8px!important;color:#9a9da5;text-align:center}.next-live{display:block!important;width:min(280px,60%)!important;margin:10px auto 0!important;padding:8px!important;text-align:center!important;background:linear-gradient(90deg,#8c0009,#ef1725)!important;font-size:9px!important;font-weight:900!important}
-#v14Announcements{padding:14px 16px 16px}.v14-ann-row{display:grid!important;grid-template-columns:96px 1fr auto!important;gap:12px!important;align-items:center!important;padding:9px!important;border:1px solid rgba(239,23,37,.16)!important;background:#060709!important;margin-bottom:8px!important;cursor:pointer}.v14-ann-row img{width:96px!important;height:60px!important;object-fit:cover!important}.v14-ann-row b{font-size:11px}.v14-ann-row small{display:block;color:#83868e;font-size:8px;margin-top:4px}.v14-ann-row>span{color:var(--red);font-size:20px}
-
-.v20-recent{margin:14px 4vw 0;padding-bottom:18px}.matchgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;padding:15px 18px 0}.v14-match-card{background:#060709!important;border:1px solid rgba(239,23,37,.16)!important;padding:13px!important;min-height:132px}.v14-match-score{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center}.v14-match-score img{width:48px;height:48px;object-fit:contain}.v14-match-score b{font-size:20px}.v14-match-card h4{font-size:9px;margin:9px 0 3px}.v14-match-card p,.v14-match-card strong{font-size:8px}
-
-.v20-features{padding:52px 4vw 28px}.v20-section-title{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:16px}.v20-section-title h2{font-size:clamp(34px,4vw,58px);margin:6px 0 0;letter-spacing:-.055em}.v20-section-title p{color:#767982;font-size:9px;letter-spacing:.14em;max-width:430px;text-align:right;line-height:1.7}
-.v20-feature-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:160px;gap:10px}
-.v20-feature{position:relative;overflow:hidden;border:1px solid rgba(239,23,37,.23);background:#08090b;transition:.2s ease;transform-style:preserve-3d}.v20-feature:nth-child(1){grid-column:span 5;grid-row:span 2}.v20-feature:nth-child(2){grid-column:span 4;grid-row:span 2}.v20-feature:nth-child(3){grid-column:span 3}.v20-feature:nth-child(4){grid-column:span 3}.v20-feature:nth-child(5){grid-column:span 6}
-.v20-feature>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.74) contrast(1.08);transition:.35s ease}.v20-feature:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.18) 35%,rgba(0,0,0,.91) 100%)}.v20-feature:hover>img{transform:scale(1.045);filter:brightness(.9) contrast(1.05)}.v20-feature-copy{position:absolute;left:18px;right:18px;bottom:16px;z-index:2}.v20-feature-copy small{color:var(--gold);font-size:8px;letter-spacing:.2em}.v20-feature-copy h3{margin:5px 0 4px;font-size:22px}.v20-feature-copy p{margin:0;color:#cacbd0;font-size:8px;letter-spacing:.06em}.v20-feature-arrow{position:absolute;right:16px;top:14px;z-index:2;color:var(--red);font-size:25px}
-
-.v20-road{margin:22px 4vw 36px;padding:28px 24px;background:linear-gradient(135deg,#0b0c0f,#050608);border:1px solid var(--line);overflow:hidden;position:relative}.v20-road:after{content:"ROAD TO PBNC";position:absolute;right:-8px;bottom:-25px;font-size:82px;font-weight:900;color:rgba(255,255,255,.025);letter-spacing:-.05em;white-space:nowrap}.v20-road-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:20px}.v20-step{position:relative;padding:15px 13px;border-top:1px solid #532026}.v20-step:before{content:"";position:absolute;width:9px;height:9px;background:var(--red);border-radius:50%;top:-5px;left:0;box-shadow:0 0 18px rgba(239,23,37,.65)}.v20-step small{font-size:8px;color:#777b84;letter-spacing:.15em}.v20-step b{display:block;margin-top:7px;font-size:13px}.v20-step span{display:block;margin-top:5px;color:#9b9ea7;font-size:8px;line-height:1.5}
-
-.v20-sponsors{display:flex;align-items:center;gap:28px;padding:18px 4vw;border-top:1px solid rgba(239,23,37,.18);border-bottom:1px solid rgba(239,23,37,.18);background:#030304}.v20-sponsors>span{font-size:8px;color:#6e7179;letter-spacing:.19em}.v20-sponsors>div{display:flex;gap:30px;align-items:center;flex-wrap:wrap}.v14-sponsor{min-width:75px;height:42px;display:grid;place-items:center}.v14-sponsor img{max-width:110px;max-height:42px;object-fit:contain}.v14-sponsor b{font-size:17px}
-.v20-footer{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px;padding:22px 4vw;color:#666a72;font-size:8px}.v20-footer strong{display:block;color:var(--gold);letter-spacing:.25em;margin-bottom:5px}.v20-footer div:nth-child(2){text-align:center}.v20-footer div:last-child{text-align:right}
-
-@media(max-width:1100px){.v20-nav{gap:12px}.matchgrid{grid-template-columns:repeat(2,1fr)}.v20-feature-grid{grid-template-columns:repeat(6,1fr)}.v20-feature:nth-child(n){grid-column:span 3;grid-row:span 2}.v20-feature:nth-child(5){grid-column:span 6}}
-@media(max-width:850px){.v20-header{grid-template-columns:auto auto auto}.v20-brand{min-width:0}.v20-brand img{width:82px;height:58px}.v20-brand div{display:none}.v20-menu{display:block}.v20-nav{display:none;position:absolute;top:76px;left:12px;right:12px;flex-direction:column;background:#07080a;border:1px solid #4b1e23;padding:12px}.v20-nav.open{display:flex}.v20-nav a{padding:9px}.v20-nav a:after{display:none}.v20-status{display:none}.v20-hero{grid-template-columns:1fr;min-height:auto;text-align:center;padding:52px 20px 44px}.v20-hero-copy{order:2}.v20-hero-visual{min-height:340px}.v20-hero-logo{max-height:330px}.v20-ring{width:320px;height:320px}.v20-ring2{width:250px;height:250px}.v20-hero p{margin-left:auto;margin-right:auto}.v20-hero-cta{justify-content:center}.v20-statbar{grid-template-columns:repeat(2,1fr);margin-top:0}.v20-main-grid{grid-template-columns:1fr}.v20-road-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:560px){.v20-header{height:74px;padding:0 14px}.v20-login{display:none}.v20-brand img{width:72px;height:54px}.v20-hero h1{font-size:58px}.v20-hero-visual{min-height:290px}.v20-hero-logo{max-height:270px}.v20-ring{width:270px;height:270px}.v20-ring2{width:205px;height:205px}.v20-statbar{margin:0 12px 18px}.v20-main-grid,.v20-recent,.v20-road{margin-left:12px;margin-right:12px}.v20-main-grid{padding:0}.matchgrid{grid-template-columns:1fr}.v20-features{padding-left:12px;padding-right:12px}.v20-feature-grid{grid-template-columns:1fr;grid-auto-rows:210px}.v20-feature:nth-child(n){grid-column:auto;grid-row:auto}.v20-section-title{display:block}.v20-section-title p{text-align:left}.v20-road-grid{grid-template-columns:1fr}.v20-sponsors{display:block}.v20-sponsors>div{margin-top:12px}.v20-footer{grid-template-columns:1fr;text-align:center}.v20-footer div:last-child{text-align:center}}
-</style>
-<link rel="stylesheet" href="v20-brand-lock.css?v=20.3">
-<link rel="stylesheet" href="v21-command-center.css?v=21">
-
-<style id="v21-inline-critical">
-
-:root{--v21r:#ef1725;--v21g:#e8b82f;--v21b:#020203;--v21p:#08090b;--v21m:#8b8e96}
-.v21-wrap{width:min(1600px,94vw);margin:auto}.v21-panel{background:linear-gradient(145deg,#0c0d10,#050608);border:1px solid rgba(239,23,37,.22);position:relative;overflow:hidden}.v21-panel:before{content:"";position:absolute;left:0;top:0;width:110px;height:2px;background:linear-gradient(90deg,var(--v21r),transparent)}
-.v21-k{font-size:9px;letter-spacing:.22em;color:var(--v21g);font-weight:900}.v21-h{font-size:31px;margin:5px 0 0;letter-spacing:-.045em}.v21-h span{color:var(--v21r)}
-.v21-command{display:grid;grid-template-columns:1.35fr .65fr;gap:14px;margin:18px auto}.v21-head{display:flex;justify-content:space-between;align-items:flex-end;padding:18px 20px 0}.v21-head a{font-size:8px;letter-spacing:.14em;color:#858891}
-.v21-intel{padding:15px 18px 18px}.v21-intelgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.v21-stat{background:#050608;border:1px solid rgba(239,23,37,.14);padding:14px}.v21-stat small{font-size:7px;color:#777a82;letter-spacing:.13em}.v21-stat b{display:block;font-size:24px;margin-top:5px}.v21-stat b span{color:var(--v21r)}
-.v21-livebar{display:grid;grid-template-columns:1.2fr repeat(4,1fr);margin:-36px auto 20px;position:relative;z-index:20;background:rgba(7,8,10,.92);border:1px solid rgba(239,23,37,.22);backdrop-filter:blur(18px)}.v21-livebar>div{padding:16px 18px;border-right:1px solid rgba(255,255,255,.055)}.v21-livebar>div:last-child{border-right:0}.v21-livebar small{display:block;color:#747780;font-size:8px;letter-spacing:.14em}.v21-livebar b{display:block;margin-top:5px;font-size:18px}.v21-livebar b span{color:var(--v21r)}
-.v21-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--v21r);box-shadow:0 0 18px rgba(239,23,37,.6);margin-right:8px}
-.v21-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:14px auto}.v21-box{min-height:270px}.v21-body{padding:14px 18px 18px}.v21-list{display:grid;gap:8px}.v21-item{display:grid;grid-template-columns:52px 1fr auto;gap:9px;align-items:center;padding:8px;border:1px solid rgba(239,23,37,.13);background:#050608}.v21-item img{width:52px;height:52px;object-fit:cover}.v21-item b{font-size:10px}.v21-item small{display:block;font-size:7px;color:#7c7f87;margin-top:3px}.v21-item em{font-style:normal;color:var(--v21g);font-size:8px}
-.v21-road{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin:14px auto 40px}.v21-roadline{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:18px 20px 22px}.v21-step{border-top:1px solid #4a1d22;padding-top:13px;position:relative}.v21-step:before{content:"";position:absolute;width:9px;height:9px;border-radius:50%;background:var(--v21r);top:-5px;left:0}.v21-step small{font-size:7px;color:#777}.v21-step b{display:block;font-size:11px;margin-top:5px}.v21-step span{display:block;font-size:8px;color:#8c8f96;margin-top:4px;line-height:1.5}.v21-trophies{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:18px}.v21-trophy{padding:13px;background:#080706;border:1px solid rgba(232,184,47,.18)}.v21-trophy strong{font-size:22px;color:var(--v21g)}.v21-trophy b{display:block;font-size:10px;margin-top:4px}.v21-trophy small{font-size:7px;color:#777}
-#v14NextMatch{padding:16px 18px 18px!important}#v14NextMatch .next-team img{width:82px!important;height:82px!important}#v14NextMatch .next-live{background:linear-gradient(90deg,#7f0008,#ef1725)!important}
-@media(max-width:900px){.v21-command,.v21-road{grid-template-columns:1fr}.v21-grid{grid-template-columns:1fr 1fr}.v21-grid .v21-box:last-child{grid-column:1/-1}.v21-livebar{grid-template-columns:1fr 1fr;margin-top:0}.v21-livebar>div:first-child{grid-column:1/-1}}
-@media(max-width:600px){.v21-grid{grid-template-columns:1fr}.v21-grid .v21-box:last-child{grid-column:auto}.v21-roadline{grid-template-columns:1fr}.v21-livebar{grid-template-columns:1fr 1fr}}
-
-</style>
-
-<style id="v2121-pray-home">
-.v2121-pray{width:min(1600px,94vw);margin:28px auto 42px;position:relative;min-height:440px;overflow:hidden;border:1px solid rgba(239,23,37,.28);background:#050506}
-.v2121-pray-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.58) contrast(1.08)}
-.v2121-pray:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.95),rgba(0,0,0,.56) 48%,rgba(0,0,0,.15)),linear-gradient(180deg,transparent 58%,rgba(0,0,0,.76))}
-.v2121-pray-copy{position:relative;z-index:2;padding:58px 5%;max-width:760px}
-.v2121-pray-k{font-size:9px;letter-spacing:.28em;color:#e8b82f;font-weight:900}
-.v2121-pray h2{font-size:clamp(46px,6vw,88px);line-height:.87;letter-spacing:-.055em;margin:12px 0 18px}.v2121-pray h2 span{color:#ef1725}
-.v2121-pray p{max-width:620px;color:#c2c3c7;font-size:11px;line-height:1.8}
-.v2121-pray-q{margin-top:18px;padding-left:13px;border-left:2px solid #ef1725;color:#eee;font-size:11px;font-style:italic}
-.v2121-pray-tag{position:absolute;z-index:3;right:22px;bottom:18px;color:#b8aeb0;font-size:8px;letter-spacing:.15em}
-@media(max-width:650px){.v2121-pray{min-height:470px}.v2121-pray-copy{padding:42px 24px}.v2121-pray-tag{left:24px;right:auto}}
-</style>
-
-
-
-
-<style id="v2123-dedupe">
-/* V21.2.3: homepage dedupe — original Match Schedule + Announcement remain */
-.v21-command{display:none!important;}
-.v21-grid .v21-box:nth-child(2){display:none!important;}
-.v21-grid{grid-template-columns:repeat(2,1fr)!important;}
-@media(max-width:700px){.v21-grid{grid-template-columns:1fr!important;}}
-</style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="v23-t4bepuang-unity.css?v=23">
-
-<style id="v23-home-remove-old-sections">
-.v20-hero,.v20-features{display:none!important}
-</style>
-
+<link rel="stylesheet" href="elite-club.css?v=26">
 </head>
-<body>
-<div class="v20-intro" id="v20Intro">
-  <button id="v20Skip">SKIP INTRO</button>
-  <img src="nkj-serenity-logo-transparent.png" alt="NKJ Serenity">
-  <small>ENTERING NKJ SERENITY COMMAND CENTER</small>
-</div>
-
-<header class="v20-header">
-  <a class="v20-brand" href="index.html"><img src="nkj-serenity-logo-transparent.png" alt="NKJ Serenity"><div><strong><span>NKJ</span> SERENITY</strong><small>OFFICIAL ESPORTS SQUAD</small></div></a>
-  <button class="v20-menu" id="v20Menu">☰</button>
-  <nav class="v20-nav" id="v20Nav">
-    <a class="active" href="index.html">HOME</a><a href="matches.html">MATCH</a><a href="competitive.html">ROSTER</a><a href="tournament.html">TOURNAMENT</a><a href="tv.html">SERENITY TV</a><a href="family.html">FAMILY</a><a href="achievement.html">ACHIEVEMENT</a>
-<a href="store.html">STORE</a>
-  </nav>
-  <div class="v20-actions"><div class="v20-status"><span class="v20-dot" id="v20CloudDot"></span><span id="v20CloudText">SYSTEM ONLINE</span></div><a class="v20-login" href="admin.html">ADMIN</a></div>
+<body class="v26-home">
+<header class="el-header">
+  <div class="el-shell el-nav">
+    <a class="el-brand" href="index.html"><img src="nkj-serenity-logo-transparent.png"><div><b>NKJ SERENITY</b><small>T4BEPUANG UNITY</small></div></a>
+    <nav class="el-links">
+      <a class="active" href="index.html">HOME</a>
+      <a href="matches.html">MATCH</a>
+      <a href="competitive.html">ROSTER</a>
+      <a href="tournament.html">TOURNAMENT</a>
+      <a href="achievement.html">ACHIEVEMENT</a>
+      <a href="news.html">NEWS</a>
+      <a href="tv.html">MEDIA</a>
+      <a href="partners.html">PARTNERS</a>
+      <a href="history.html">HISTORY</a>
+      <a href="family.html">FAMILY</a>
+      <a href="store.html">STORE</a>
+    </nav>
+    <a class="el-admin" href="admin.html">ADMIN</a>
+  </div>
 </header>
 
-<section id="t4bUnityHero" class="t4b-unity-hero">
-  <div class="t4b-hero-bg"></div>
-  <div class="t4b-hero-shade"></div>
-  <div class="t4b-hero-content">
-    <div class="t4b-eyebrow">NKJ SERENITY • OFFICIAL ESPORTS SQUAD</div>
-    <h1 id="t4bHeroTitle">T4BEPUANG <span>UNITY</span></h1>
-    <p id="t4bHeroSubtitle">DIFFERENT INDIVIDUALS, SAME GOAL.</p>
-    <div class="t4b-hero-actions">
-      <a href="matches.html" class="t4b-btn t4b-btn-primary">EXPLORE SERENITY</a>
-      <a href="tv.html" class="t4b-btn">WATCH TRAILER</a>
+<main>
+<section class="el-hero">
+  <div class="el-hero-bg"></div>
+  <div class="el-shell el-hero-grid">
+    <div>
+      <div class="el-kicker">OFFICIAL ESPORTS ORGANIZATION • SINCE 2024</div>
+      <h1>T4BEPUANG <span>UNITY</span></h1>
+      <p id="eliteHeroText">Competitive spirit, family culture, and long-term ambition. NKJ SERENITY is built around discipline, progression, and one connected esports ecosystem.</p>
+      <div class="el-actions">
+        <a class="el-btn primary" href="competitive.html">MEET THE TEAM</a>
+        <a class="el-btn" href="news.html">LATEST NEWS</a>
+      </div>
+    </div>
+    <aside class="el-next">
+      <div class="el-next-top"><strong>NEXT MATCH</strong><span id="eliteMatchDate">TBA</span></div>
+      <div class="el-next-match">
+        <div class="el-team"><img src="nkj-serenity-logo-transparent.png"><b>NKJ SERENITY</b></div>
+        <div class="el-vs">VS</div>
+        <div class="el-team"><img id="eliteOppLogo" src="nkj-serenity-logo-transparent.png"><b id="eliteOppName">TBA</b></div>
+      </div>
+      <div class="el-next-meta" id="eliteMatchMeta">MATCH SCHEDULE</div>
+      <div class="el-countdown" id="eliteCountdown">00D : 00H : 00M : 00S</div>
+    </aside>
+  </div>
+</section>
+
+<section class="el-section">
+  <div class="el-shell">
+    <div class="el-stats">
+      <div class="el-stat"><small>COMPETITIVE UNIT</small><b>5</b></div>
+      <div class="el-stat"><small>WAR UNIT</small><b>15</b></div>
+      <div class="el-stat"><small>ACTIVE IDENTITY</small><b>T4BEPUANG</b></div>
+      <div class="el-stat"><small>OFFICIAL MEDIA</small><b>NEWSROOM</b></div>
     </div>
   </div>
-  <div class="t4b-hero-bottom">MORE THAN A GAME • A LASTING LEGACY</div>
 </section>
 
-<section class="t4b-feature-grid">
-  <a class="t4b-card" href="tournament.html">
-    <img src="visual-tournament.jpg" alt="Tournament">
-    <div class="t4b-card-overlay"></div>
-    <div class="t4b-card-copy"><h3>TOURNAMENT</h3><p>BRACKET & REGISTRATION</p></div>
-    <span>→</span>
-  </a>
-  <a class="t4b-card" href="tv.html">
-    <img src="visual-tv.jpg" alt="Serenity TV">
-    <div class="t4b-card-overlay"></div>
-    <div class="t4b-card-copy"><h3>SERENITY TV</h3><p>WATCH OUR CONTENT</p></div>
-    <span>→</span>
-  </a>
-  <a class="t4b-card" href="family.html">
-    <img src="visual-family.jpg" alt="Family Wall">
-    <div class="t4b-card-overlay"></div>
-    <div class="t4b-card-copy"><h3>FAMILY WALL</h3><p>OUR MOMENT</p></div>
-    <span>→</span>
-  </a>
-  <a class="t4b-card" href="store.html">
-    <img src="visual-store.jpg" alt="NKJ Store">
-    <div class="t4b-card-overlay"></div>
-    <div class="t4b-card-copy"><h3>NKJ STORE</h3><p>OFFICIAL MERCHANDISE</p></div>
-    <span>→</span>
-  </a>
-</section>
-
-
-
-
-
-
-
-
-<main>
-
-
-<section class="v20-statbar v20-reveal">
-  <div class="v20-stat"><small>COMPETITIVE UNIT</small><b><span>05</span> PLAYERS</b></div>
-  <div class="v20-stat"><small>WAR UNIT</small><b><span>15</span> SLOTS</b></div>
-  <div class="v20-stat"><small>IDENTITY</small><b>ONE <span>FAMILY</span></b></div>
-  <div class="v20-stat"><small>ESTABLISHED</small><b>SINCE <span>2024</span></b></div>
-</section>
-
-<section class="v20-main-grid v20-reveal">
-  <article class="v20-panel">
-    <div class="v20-panel-head"><div><div class="v20-section-kicker">BATTLE SCHEDULE</div><h2>NEXT <span>MATCH</span></h2></div><a href="matches.html">OPEN MATCH CENTER →</a></div>
-    <div id="v14NextMatch"><div style="min-height:210px;display:grid;place-items:center;color:#777">SYNCING MATCH DATA...</div></div>
-  </article>
-  <aside class="v20-panel">
-    <div class="v20-panel-head"><div><div class="v20-section-kicker">LATEST UPDATE</div><h2>ANNOUNCEMENT</h2></div></div>
-    <div id="v14Announcements"></div>
-  </aside>
-</section>
-
-<section class="v20-panel v20-recent v20-reveal">
-  <div class="v20-panel-head"><div><div class="v20-section-kicker">RESULT ARCHIVE</div><h2>RECENT <span>MATCHES</span></h2></div><a href="matches.html">VIEW ALL →</a></div>
-  <div class="matchgrid" id="v14RecentMatches"></div>
-</section>
-
-
-
-<section class="v20-road v20-reveal">
-  <div class="v20-section-kicker">MISSION TIMELINE</div><h2 style="font-size:36px;margin:7px 0 0">ROAD TO <span style="color:var(--red)">PBNC</span></h2>
-  <div class="v20-road-grid">
-    <div class="v20-step"><small>PHASE 01</small><b>BUILD THE FAMILY</b><span>Strengthen identity, chemistry and competitive culture.</span></div>
-    <div class="v20-step"><small>PHASE 02</small><b>DOMINATE THE GRIND</b><span>Training, war matches and tournament consistency.</span></div>
-    <div class="v20-step"><small>PHASE 03</small><b>CLIMB THE STAGE</b><span>Push through regional and divisional competition.</span></div>
-    <div class="v20-step"><small>FINAL MISSION</small><b>ROAD TO PBNC</b><span>One squad. One family. One destination.</span></div>
+<section class="el-section">
+  <div class="el-shell">
+    <div class="el-head"><div><div class="el-kicker">LATEST STORIES</div><h2>NEWSROOM</h2></div><p>Official updates, match reports, tournament stories, announcements, and team activity.</p></div>
+    <div class="el-news-grid" id="eliteNewsGrid"><div class="el-card"><div class="el-card-copy"><small>NEWS</small><h3>Belum ada berita.</h3></div></div></div>
   </div>
 </section>
 
-<section class="v21-wrap">
-<div class="v21-livebar">
-<div><small>LIVE STATUS</small><b><span class="v21-dot"></span><span id="v21Online">SYSTEM ONLINE</span></b></div>
-<div><small>MATCH DATA</small><b><span id="v21Matches">—</span> MATCHES</b></div>
-<div><small>COMPETITIVE</small><b><span id="v21Players">5</span> PLAYERS</b></div>
-<div><small>WAR UNIT</small><b><span>15</span> SLOTS</b></div>
-<div><small>MISSION</small><b>ROAD TO <span>PBNC</span></b></div>
-</div>
-
-<div class="v21-command">
-<article class="v21-panel"><div class="v21-head"><div><div class="v21-k">BATTLE SCHEDULE</div><h2 class="v21-h">NEXT <span>MATCH</span></h2></div><a href="matches.html">MATCH CENTER →</a></div><div id="v21NextMatchMirror"></div></article>
-<aside class="v21-panel"><div class="v21-head"><div><div class="v21-k">TEAM INTELLIGENCE</div><h2 class="v21-h">LIVE <span>STATS</span></h2></div></div><div class="v21-intel"><div class="v21-intelgrid"><div class="v21-stat"><small>TOTAL MATCH</small><b id="v21Matches2">SYNC</b></div><div class="v21-stat"><small>WIN RATE</small><b><span id="v21Win">—</span></b></div><div class="v21-stat"><small>ACTIVE ROSTER</small><b id="v21Players2">5</b></div><div class="v21-stat"><small>TOURNAMENT</small><b id="v21Tours">—</b></div></div></div></aside>
-</div>
-
-<div class="v21-grid">
-<section class="v21-panel v21-box"><div class="v21-head"><div><div class="v21-k">PLAYER DATABASE</div><h2 class="v21-h">ROSTER <span>SPOTLIGHT</span></h2></div><a href="competitive.html">FULL ROSTER →</a></div><div class="v21-body"><div class="v21-list" id="v21Roster"><div class="v21-item"><img src="nkj-serenity-logo-transparent.png"><div><b>COMPETITIVE UNIT</b><small>SYNCING DATA</small></div><em>ACTIVE</em></div></div></div></section>
-<section class="v21-panel v21-box"><div class="v21-head"><div><div class="v21-k">LATEST UPDATE</div><h2 class="v21-h">ANNOUNCEMENT</h2></div></div><div class="v21-body"><p style="color:#858891;font-size:9px">Announcement tetap terhubung dengan sistem homepage yang sudah ada.</p></div></section>
-<section class="v21-panel v21-box"><div class="v21-head"><div><div class="v21-k">ARENA PULSE</div><h2 class="v21-h">TOURNAMENT</h2></div><a href="tournament.html">OPEN ARENA →</a></div><div class="v21-body"><div class="v21-list" id="v21TourList"><div class="v21-item"><img src="nkj-serenity-logo-transparent.png"><div><b>TOURNAMENT CENTER</b><small>SYNCING DATA</small></div><em>READY</em></div></div></div></section>
-</div>
-
-<div class="v21-road">
-<section class="v21-panel"><div class="v21-head"><div><div class="v21-k">MISSION CONTROL</div><h2 class="v21-h">ROAD TO <span>PBNC</span></h2></div></div><div class="v21-roadline"><div class="v21-step"><small>PHASE 01</small><b>BUILD THE FAMILY</b><span>Identity and chemistry.</span></div><div class="v21-step"><small>PHASE 02</small><b>DOMINATE THE GRIND</b><span>Training and war consistency.</span></div><div class="v21-step"><small>PHASE 03</small><b>CLIMB THE STAGE</b><span>Regional competition.</span></div><div class="v21-step"><small>FINAL MISSION</small><b>PBNC</b><span>One squad. One destination.</span></div></div></section>
-<aside class="v21-panel"><div class="v21-head"><div><div class="v21-k">ACHIEVEMENT VAULT</div><h2 class="v21-h">TROPHY <span>ROOM</span></h2></div></div><div class="v21-trophies"><div class="v21-trophy"><strong>01</strong><b>CHAMPION MOMENT</b><small>ACHIEVEMENT</small></div><div class="v21-trophy"><strong>02</strong><b>PBRS JOURNEY</b><small>HISTORY</small></div><div class="v21-trophy"><strong>03</strong><b>TEAM MILESTONE</b><small>PROGRESS</small></div><div class="v21-trophy"><strong>∞</strong><b>ALWAYS FORWARD</b><small>NEXT TARGET</small></div></div></aside>
-</div>
+<section class="el-section">
+  <div class="el-shell">
+    <div class="el-head"><div><div class="el-kicker">ORGANIZATION</div><h2>EXPLORE THE TEAM</h2></div><p>One clean ecosystem for competitive, tournament, achievement, media, family, and store.</p></div>
+    <div class="el-grid3">
+      <a class="el-card" href="competitive.html"><img src="visual-roster.jpg"><div class="el-card-copy"><small>01 / TEAM</small><h3>COMPETITIVE ROSTER</h3><p>Meet the active NKJ SERENITY competitive unit.</p></div></a>
+      <a class="el-card" href="tournament.html"><img src="visual-tournament.jpg"><div class="el-card-copy"><small>02 / ARENA</small><h3>TOURNAMENT CENTER</h3><p>Registration, brackets, and tournament journey.</p></div></a>
+      <a class="el-card" href="achievement.html"><img src="visual-tournament-banner.jpg"><div class="el-card-copy"><small>03 / LEGACY</small><h3>ACHIEVEMENT VAULT</h3><p>Track trophies, milestones, and competitive legacy.</p></div></a>
+      <a class="el-card" href="tv.html"><img src="visual-tv.jpg"><div class="el-card-copy"><small>04 / MEDIA</small><h3>SERENITY MEDIA</h3><p>Highlights, video content, and official coverage.</p></div></a>
+      <a class="el-card" href="family.html"><img src="visual-family.jpg"><div class="el-card-copy"><small>05 / COMMUNITY</small><h3>FAMILY WALL</h3><p>The people, memories, and community behind the team.</p></div></a>
+      <a class="el-card" href="store.html"><img src="visual-store.jpg"><div class="el-card-copy"><small>06 / STORE</small><h3>NKJ STORE</h3><p>Official team products and digital items.</p></div></a>
+    </div>
+  </div>
 </section>
-<section class="v20-sponsors"><span>OFFICIAL PARTNERS</span><div id="v14SponsorGrid"></div></section>
+
+<section class="el-section">
+  <div class="el-shell">
+    <div class="el-head"><div><div class="el-kicker">MORE</div><h2>CLUB PAGES</h2></div><p>Additional pages inspired by modern esports organizations.</p></div>
+    <div class="el-quick">
+      <a href="partners.html"><small>COMMERCIAL</small><b>PARTNERS</b></a>
+      <a href="history.html"><small>ORGANIZATION</small><b>HISTORY</b></a>
+      <a href="news.html"><small>EDITORIAL</small><b>NEWSROOM</b></a>
+      <a href="matches.html"><small>COMPETITIVE</small><b>MATCH CENTER</b></a>
+    </div>
+  </div>
+</section>
 </main>
 
-<footer class="v20-footer">
-  <div><strong>NKJ SERENITY</strong><small>OFFICIAL ESPORTS SQUAD</small></div>
-  <div id="homeFooterText">ALWAYS FORWARD</div>
-  <div>© 2026 NKJ SERENITY • ALL SYSTEMS OPERATIONAL</div>
-</footer>
+<footer class="el-footer"><div class="el-shell el-footer-row"><span>© 2026 NKJ SERENITY</span><span>T4BEPUANG UNITY • ALWAYS FORWARD</span></div></footer>
 
-<div id="v18AnnouncementModal" style="display:none"></div>
 <script src="cloud-sync.js"></script>
-<script src="v14-home.js?v=20.0"></script>
-<script src="homepage-v17.js?v=20.0"></script>
-<script src="v20-home.js?v=20.0"></script>
-<script src="pwa.js"></script>
-<script src="v21-command-center.js?v=21"></script>
-
-
-
-
-
-
-
-
-
-
-
-<script src="v23-t4bepuang-unity.js?v=23"></script>
-</body>
-</html>
+<script>
+(function(){
+ const KEY='serenity155Data', A=x=>Array.isArray(x)?x:[];
+ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ function local(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}}
+ function dt(m){let r=m.datetime||m.dateTime||m.startAt||m.start||m.date||m.matchDate||'';let t=m.time||m.matchTime||'';let d=r?new Date(r):null;if(d&&isNaN(d)&&t)d=new Date(r+' '+t);return d&&!isNaN(d)?d:null}
+ function matches(d){return A(d.matches||d.matchSchedule||d.schedule||d.matchAgenda||d.upcomingMatches)}
+ function nextMatch(d){
+   let now=new Date(), x=matches(d).filter(m=>!/finish|selesai|completed|done|cancel/i.test(String(m.status||''))).map(m=>({m,d:dt(m)})).filter(x=>!x.d||x.d>=new Date(now.getTime()-21600000));
+   x.sort((a,b)=>a.d&&b.d?a.d-b.d:a.d?-1:1); return x[0]?.m||null;
+ }
+ function renderMatch(d){
+   let m=nextMatch(d);if(!m)return;
+   let opp=m.opponent||m.awayTeam||m.team2||m.enemy||m.enemyTeam||'TBA';
+   let logo=m.opponentLogo||m.awayLogo||m.logo2||m.enemyLogo||'nkj-serenity-logo-transparent.png';
+   let md=dt(m);
+   document.getElementById('eliteOppName').textContent=opp;
+   document.getElementById('eliteOppLogo').src=logo;
+   document.getElementById('eliteMatchDate').textContent=md?md.toLocaleString('id-ID',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}).toUpperCase():'TBA';
+   document.getElementById('eliteMatchMeta').textContent=[m.event||m.tournament||m.competition||'MATCH',m.format||m.mode||m.bestOf||''].filter(Boolean).join(' • ');
+   if(md){function tick(){let diff=Math.max(0,md-new Date()),dd=Math.floor(diff/86400000),hh=Math.floor(diff/3600000)%24,mm=Math.floor(diff/60000)%60,ss=Math.floor(diff/1000)%60;document.getElementById('eliteCountdown').textContent=`${String(dd).padStart(2,'0')}D : ${String(hh).padStart(2,'0')}H : ${String(mm).padStart(2,'0')}M : ${String(ss).padStart(2,'0')}S`}tick();setInterval(tick,1000)}
+ }
+ function renderNews(d){
+   let n=A(d.news).filter(x=>x.published!==false).sort((a,b)=>new Date(b.date||0)-new Date(a.date||0)).slice(0,3);
+   let g=document.getElementById('eliteNewsGrid');if(!g)return;
+   g.innerHTML=n.length?n.map(x=>`<a class="el-news-card" href="news.html">${x.image?`<img src="${esc(x.image)}" alt="">`:''}<div class="el-news-copy"><div class="el-news-tag">${esc(x.category||'TEAM')}</div><h3>${esc(x.title||'UNTITLED NEWS')}</h3><p>${esc(x.excerpt||x.body||'').slice(0,140)}</p></div></a>`).join(''):'<div class="el-card"><div class="el-card-copy"><small>NEWSROOM</small><h3>Belum ada berita.</h3><p>Tambahkan dari Admin → Newsroom Management.</p></div></div>';
+ }
+ function render(d){renderMatch(d);renderNews(d)}
+ render(local());
+ if(typeof serenityCloudLoad==='function')Promise.resolve(serenityCloudLoad()).then(d=>d&&render(d)).catch(()=>{});
+ window.addEventListener('storage',e=>{if(!e.key||e.key===KEY)render(local())});
+})();
+</script>
+</body></html>
