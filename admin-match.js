@@ -128,7 +128,7 @@ function edit(i){
 async function doLogin(){
   const email=($("matchAdminUser").value||"").trim(),btn=$("matchAdminLoginBtn");
   $("matchAdminLoginStatus").textContent="Mengirim kode OTP ke Gmail...";
-  try{await serenityAuthSendEmailOtp(email);$("matchAdminLoginStatus").textContent="Kode OTP sudah dikirim. Cek Gmail lalu masukkan kode 6 digit.";serenityOtpCooldownStart(btn,$("matchAdminLoginStatus"),60);$("matchAdminLoginBtnOtp")?.focus()}
+  try{const otpResult=await serenityAuthSendEmailOtp(email);$("matchAdminLoginStatus").textContent="Kode OTP sudah dikirim. Cek Gmail lalu masukkan kode 8 digit.";serenityOtpCooldownStart(btn,$("matchAdminLoginStatus"),60);$("matchAdminLoginBtnOtp")?.focus()}
   catch(e){const msg=String(e?.message||e);console.error(e);$("matchAdminLoginStatus").textContent=/rate limit/i.test(msg)?"Pengiriman OTP sedang dibatasi Supabase. Tunggu beberapa saat lalu coba lagi.":"Gagal mengirim OTP: "+msg}
 }
 async function verifyMatchOtp(){

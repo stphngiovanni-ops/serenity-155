@@ -68,9 +68,9 @@ async function serenityAuthSendEmailOtp(email){
 }
 async function serenityAuthVerifyEmailOtp(email,token){
   const normalized=(email||"").trim().toLowerCase();
-  const code=String(token||"").replace(/\D/g,"").slice(0,6);
+  const code=String(token||"").replace(/\D/g,"").slice(0,8);
   if(!normalized || !normalized.includes("@")) throw new Error("Masukkan alamat Gmail admin.");
-  if(code.length!==6) throw new Error("Kode OTP harus 6 digit.");
+  if(code.length!==8) throw new Error("Kode OTP harus 8 digit.");
   const session=await serenityAuthRequest("/auth/v1/verify",{
     method:"POST",
     body:JSON.stringify({email:normalized,token:code,type:"email"})

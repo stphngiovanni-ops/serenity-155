@@ -3,7 +3,7 @@ const $=id=>document.getElementById(id);
 async function sendTournamentOtp(){
  const email=($("tourAdminUser").value||"").trim(),btn=$("tourAdminLoginBtn");
  $("tourAdminLoginStatus").textContent="Mengirim kode OTP ke Gmail...";
- try{await serenityAuthSendEmailOtp(email);$("tourAdminLoginStatus").textContent="Kode OTP sudah dikirim. Cek Gmail lalu masukkan kode 6 digit.";serenityOtpCooldownStart(btn,$("tourAdminLoginStatus"),60);$("tourAdminLoginBtnOtp")?.focus()}
+ try{const otpResult=await serenityAuthSendEmailOtp(email);$("tourAdminLoginStatus").textContent="Kode OTP sudah dikirim. Cek Gmail lalu masukkan kode 8 digit.";serenityOtpCooldownStart(btn,$("tourAdminLoginStatus"),60);$("tourAdminLoginBtnOtp")?.focus()}
  catch(e){const msg=String(e?.message||e);console.error(e);$("tourAdminLoginStatus").textContent=/rate limit/i.test(msg)?"Pengiriman OTP sedang dibatasi Supabase. Tunggu beberapa saat lalu coba lagi.":"Gagal mengirim OTP: "+msg}
 }
 async function verifyTournamentOtp(){

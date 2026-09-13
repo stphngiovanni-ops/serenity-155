@@ -200,8 +200,8 @@ async function login(){
   const email=($("loginUser").value||"").trim(),btn=$("loginBtn");
   $("loginStatus").textContent="Mengirim kode OTP ke Gmail...";
   try{
-    await serenityAuthSendEmailOtp(email);
-    $("loginStatus").textContent="Jika Gmail Admin benar, kode OTP akan dikirim. Masukkan 6 digit kode dari email.";
+    const otpResult=await serenityAuthSendEmailOtp(email);
+    $("loginStatus").textContent="Jika Gmail Admin benar, kode OTP akan dikirim. Masukkan 8 digit kode dari email.";
     serenityOtpCooldownStart(btn,$("loginStatus"),60);$("loginBtnOtp")?.focus();
   }catch(e){
     const msg=String(e?.message||e);console.error(e);
