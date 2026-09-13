@@ -60,8 +60,11 @@ async function serenityAuthSendEmailOtp(email){
     headers:{"Content-Type":"application/json","apikey":SERENITY_SUPABASE_KEY},
     body:JSON.stringify({email:normalized})
   });
-  if(!r.ok) throw new Error("Layanan OTP sedang tidak tersedia.");
-  return {ok:true};
+  let result={};
+  try{ result=await r.json(); }catch(_){}
+  if(r.status===429 || result.state==="limited") throw new Error("Layanan OTP sedang dibatasi. Tunggu beberapa saat lalu coba sekali lagi.");
+  if(!r.ok || result.state==="unavailable") throw new Error("OTP belum berhasil dikirim. Coba lagi beberapa saat.");
+  return result;
 }
 async function serenityAuthVerifyEmailOtp(email,token){
   const normalized=(email||"").trim().toLowerCase();
