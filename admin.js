@@ -355,16 +355,34 @@ function getRoster(group){
   return group==="war"?data.warRoster:data.competitiveRoster;
 }
 function saveSilent(){
+  const serialized=JSON.stringify(data);
   try{
+    // Jangan menggandakan payload besar ke lastGood karena localStorage browser biasanya hanya ~5 MB.
+    // Backup utama sekarang dilakukan versioned di Supabase sebelum cloud save.
     const previous=localStorage.getItem("serenity155Data");
-    if(previous){try{const p=JSON.parse(previous);if(p&&typeof p==="object"&&Object.keys(p).length>2)localStorage.setItem("serenity155Data:lastGood",previous)}catch(e){}}
-    localStorage.setItem("serenity155Data",JSON.stringify(data));
+    if(previous && previous.length < 700000 && serialized.length < 700000){
+      try{
+        const p=JSON.parse(previous);
+        if(p&&typeof p==="object"&&Object.keys(p).length>2) localStorage.setItem("serenity155Data:lastGood",previous);
+      }catch(_){}
+    }else{
+      try{localStorage.removeItem("serenity155Data:lastGood")}catch(_){}
+    }
+    localStorage.setItem("serenity155Data",serialized);
     return true;
   }catch(e){
-    console.error("Local save failed",e);
+    // Bila quota penuh, buang backup lokal besar lalu coba sekali lagi. Data cloud tidak disentuh di tahap ini.
     if(e && (e.name==="QuotaExceededError" || e.code===22 || e.code===1014)){
-      throw new Error("Penyimpanan browser penuh. Foto roster perlu dikompres.");
+      try{
+        localStorage.removeItem("serenity155Data:lastGood");
+        localStorage.setItem("serenity155Data",serialized);
+        return true;
+      }catch(e2){
+        console.error("Local save retry failed",e2);
+        throw new Error("Penyimpanan browser penuh. Hapus data cache lama atau kurangi ukuran foto.");
+      }
     }
+    console.error("Local save failed",e);
     throw e;
   }
 }
@@ -546,7 +564,7 @@ async function saveAll(){
     $("saveStatus").textContent="Tersimpan ONLINE ✓";
   }catch(e){
     console.error(e);
-    $("saveStatus").textContent="Gagal simpan online. Coba lagi.";
+    $("saveStatus").textContent="Gagal simpan: "+(e?.message||e);
   }
   setTimeout(()=>$("saveStatus").textContent="",6000);
 }

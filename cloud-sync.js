@@ -172,20 +172,48 @@ async function serenityCloudLoad(){
   return rows?.[0]?.data||null;
 }
 async function serenityAdminCloudSave(data){
-  const token=await serenityAuthGetAccessToken();
+  const payload=JSON.stringify({data});
+  async function doSave(token){
+    const controller=new AbortController();
+    const timer=setTimeout(()=>controller.abort(),30000);
+    try{
+      return await fetch(SERENITY_SUPABASE_URL+"/functions/v1/serenity-admin-save",{
+        method:"POST",
+        headers:{
+          "apikey":SERENITY_SUPABASE_KEY,
+          "Authorization":"Bearer "+token,
+          "Content-Type":"application/json"
+        },
+        body:payload,
+        signal:controller.signal
+      });
+    }finally{clearTimeout(timer)}
+  }
+
+  let token=await serenityAuthGetAccessToken();
   if(!token) throw new Error("Sesi admin habis. Silakan login ulang.");
-  const r=await fetch(SERENITY_SUPABASE_URL+"/functions/v1/serenity-admin-save",{
-    method:"POST",
-    headers:{
-      "apikey":SERENITY_SUPABASE_KEY,
-      "Authorization":"Bearer "+token,
-      "Content-Type":"application/json"
-    },
-    body:JSON.stringify({data})
-  });
+  let r;
+  try{r=await doSave(token)}
+  catch(e){
+    if(e?.name==="AbortError") throw new Error("Server terlalu lama merespons. Coba simpan lagi.");
+    throw new Error("Koneksi ke cloud gagal. Periksa internet lalu coba lagi.");
+  }
+
+  // Bila token ditolak, refresh session sekali lalu ulangi save otomatis.
+  if(r.status===401){
+    const refreshed=await serenityAuthRefresh();
+    token=refreshed?.access_token||"";
+    if(!token) throw new Error("Sesi admin habis. Silakan login ulang.");
+    try{r=await doSave(token)}
+    catch(e){
+      if(e?.name==="AbortError") throw new Error("Server terlalu lama merespons. Coba simpan lagi.");
+      throw new Error("Koneksi ke cloud gagal. Periksa internet lalu coba lagi.");
+    }
+  }
+
   const text=await r.text();
   let body={};try{body=text?JSON.parse(text):{}}catch(e){body={error:text}}
-  if(!r.ok) throw new Error(body?.error||("Cloud save gagal ("+r.status+")"));
+  if(!r.ok) throw new Error(body?.error||("Cloud save gagal (HTTP "+r.status+")"));
   return body;
 }
 serenityAuthCaptureRedirect();
