@@ -216,4 +216,42 @@ async function serenityAdminCloudSave(data){
   if(!r.ok) throw new Error(body?.error||("Cloud save gagal (HTTP "+r.status+")"));
   return body;
 }
+async function serenityAdminCloudPatch(patch){
+  const payload=JSON.stringify({mode:"patch",patch});
+  async function doSave(token){
+    const controller=new AbortController();
+    const timer=setTimeout(()=>controller.abort(),20000);
+    try{
+      return await fetch(SERENITY_SUPABASE_URL+"/functions/v1/serenity-admin-save",{
+        method:"POST",
+        headers:{
+          "apikey":SERENITY_SUPABASE_KEY,
+          "Authorization":"Bearer "+token,
+          "Content-Type":"application/json"
+        },
+        body:payload,
+        signal:controller.signal
+      });
+    }finally{clearTimeout(timer)}
+  }
+  let token=await serenityAuthGetAccessToken();
+  if(!token) throw new Error("Sesi admin habis. Silakan login ulang.");
+  let r;
+  try{r=await doSave(token)}
+  catch(e){
+    if(e?.name==="AbortError") throw new Error("Server terlalu lama merespons (20 detik). Coba lagi.");
+    throw new Error("Koneksi ke cloud gagal. Periksa internet lalu coba lagi.");
+  }
+  if(r.status===401){
+    const refreshed=await serenityAuthRefresh();
+    token=refreshed?.access_token||"";
+    if(!token) throw new Error("Sesi admin habis. Silakan login ulang.");
+    r=await doSave(token);
+  }
+  const text=await r.text();
+  let body={};try{body=text?JSON.parse(text):{}}catch(e){body={error:text}}
+  if(!r.ok) throw new Error(body?.error||("Cloud patch gagal (HTTP "+r.status+")"));
+  return body;
+}
+
 serenityAuthCaptureRedirect();

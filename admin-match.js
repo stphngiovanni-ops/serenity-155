@@ -26,14 +26,37 @@ async function loadOnline(){
   return false;
 }
 async function save(){
-  localStorage.setItem(KEY,JSON.stringify(data));
-  if(typeof serenityAdminCloudSave!=="function") throw new Error("Secure cloud client tidak tersedia.");
-  await serenityAdminCloudSave(data);
+  // Simpan lokal bila muat, tetapi kegagalan localStorage tidak boleh menggagalkan cloud save.
+  try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){console.warn("LocalStorage penuh, lanjut save cloud",e)}
+  if(typeof serenityAdminCloudPatch!=="function") throw new Error("Secure match cloud client tidak tersedia. Refresh halaman Admin Match.");
+  await serenityAdminCloudPatch({matches:data.matches});
   return true;
 }
 function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
 function imageFile(file){
- return new Promise((res,rej)=>{if(!file)return res("");const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file)})
+  return new Promise((resolve,reject)=>{
+    if(!file)return resolve("");
+    if(!/^image\//i.test(file.type||"")) return reject(new Error("File logo harus berupa gambar."));
+    const reader=new FileReader();
+    reader.onerror=()=>reject(new Error("Gagal membaca file logo."));
+    reader.onload=()=>{
+      const img=new Image();
+      img.onerror=()=>reject(new Error("Logo tidak dapat diproses."));
+      img.onload=()=>{
+        const max=512;
+        const scale=Math.min(1,max/Math.max(img.width||1,img.height||1));
+        const w=Math.max(1,Math.round(img.width*scale));
+        const h=Math.max(1,Math.round(img.height*scale));
+        const c=document.createElement("canvas");c.width=w;c.height=h;
+        const ctx=c.getContext("2d",{alpha:true});ctx.clearRect(0,0,w,h);ctx.drawImage(img,0,0,w,h);
+        let out=c.toDataURL("image/webp",0.78);
+        if(out.length>260000) out=c.toDataURL("image/webp",0.62);
+        resolve(out);
+      };
+      img.src=reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
 }
 function reset(){
  editing=-1;pendingLogo="";
@@ -91,9 +114,9 @@ async function submit(){
    $("matchSaveStatus").textContent="Match & skor tersimpan ONLINE ✓";
  }catch(e){
    console.error(e);
-   $("matchSaveStatus").textContent="Gagal simpan online. Coba lagi.";
+   $("matchSaveStatus").textContent="Gagal simpan: "+(e?.message||e);
  }
- setTimeout(()=>$("matchSaveStatus").textContent="",3200);
+ setTimeout(()=>$("matchSaveStatus").textContent="",8000);
 }
 function edit(i){
  const m=data.matches[i];if(!m)return;
@@ -141,18 +164,19 @@ $("matchAdminLoginBtn").onclick=e=>{e.preventDefault();doLogin()};
 $("matchAdminLoginBtnVerify")?.addEventListener("click",verifyMatchOtp);
 $("matchAdminLoginBtnOtp")?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();verifyMatchOtp()}});
 $("matchAdminLogout").onclick=async()=>{await serenityAuthLogout();location.reload()};
-$("opponentLogo").onchange=async e=>{const f=e.target.files?.[0];if(!f)return;pendingLogo=await imageFile(f);$("opponentLogoPreview").src=pendingLogo;$("opponentLogoPreview").hidden=false};
+$("opponentLogo").onchange=async e=>{const f=e.target.files?.[0];if(!f)return;try{$("matchSaveStatus").textContent="Mengoptimalkan logo...";pendingLogo=await imageFile(f);$("opponentLogoPreview").src=pendingLogo;$("opponentLogoPreview").hidden=false;$("matchSaveStatus").textContent="Logo siap disimpan ✓";}catch(err){$("matchSaveStatus").textContent="Gagal proses logo: "+(err?.message||err)}};
 $("clearOpponentLogo").onclick=()=>{pendingLogo="";$("opponentLogo").value="";$("opponentLogoPreview").hidden=true};
 $("addMatch").onclick=submit;$("saveMatchData").onclick=async()=>{
+ const btn=$("saveMatchData"); if(btn.disabled)return; btn.disabled=true;
  try{
    $("matchSaveStatus").textContent="Menyimpan data match online...";
    await save();
    $("matchSaveStatus").textContent="Data Match tersimpan ONLINE ✓";
  }catch(e){
    console.error(e);
-   $("matchSaveStatus").textContent="Gagal simpan online. Coba lagi.";
- }
- setTimeout(()=>$("matchSaveStatus").textContent="",3200);
+   $("matchSaveStatus").textContent="Gagal simpan: "+(e?.message||e);
+ }finally{btn.disabled=false}
+ setTimeout(()=>$("matchSaveStatus").textContent="",8000);
 };$("cancelMatchEdit").onclick=reset;
 document.body.addEventListener("click",async e=>{
  const t=e.target;
@@ -170,11 +194,11 @@ document.body.addEventListener("click",async e=>{
      console.error(err);
      $("matchSaveStatus").textContent="Gagal mengubah NEXT MATCH.";
    }
-   setTimeout(()=>$("matchSaveStatus").textContent="",3200);
+   setTimeout(()=>$("matchSaveStatus").textContent="",8000);
  }
  if(t.dataset.deleteMatchLogo!==undefined){data.matches[+t.dataset.deleteMatchLogo].logo="";save().catch(console.error);render()}
 });
-document.body.addEventListener("change",async e=>{if(e.target.dataset.changeMatchLogo!==undefined){const f=e.target.files?.[0];if(!f)return;data.matches[+e.target.dataset.changeMatchLogo].logo=await imageFile(f);save().catch(console.error);render()}});
+document.body.addEventListener("change",async e=>{if(e.target.dataset.changeMatchLogo!==undefined){const f=e.target.files?.[0];if(!f)return;try{$("matchSaveStatus").textContent="Mengoptimalkan & menyimpan logo...";data.matches[+e.target.dataset.changeMatchLogo].logo=await imageFile(f);await save();render();$("matchSaveStatus").textContent="Logo match tersimpan ONLINE ✓";}catch(err){console.error(err);$("matchSaveStatus").textContent="Gagal simpan logo: "+(err?.message||err)}}});
 const editNextBtn=$("editCurrentNextMatch");
 if(editNextBtn){
  editNextBtn.addEventListener("click",e=>{
