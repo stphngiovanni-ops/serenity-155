@@ -13,6 +13,8 @@
 <link rel="stylesheet" href="v13-theme.css?v=13.0">
 <link rel="stylesheet" href="v20-brand-lock.css?v=20.3">
 <link rel="stylesheet" href="v21-command-center.css?v=21">
+<link rel="stylesheet" href="v22-esports-os.css?v=22">
+<script src="cloud-sync.js?v=26.6.1-secure"></script>
 </head>
 <body class="admin-page admin-special-page">
 <div id="serenityLoader" aria-label="Loading NKJ SERENITY">
@@ -28,10 +30,10 @@
     <div class="admin-login-card">
       <img src="assets/nkj-serenity-logo-transparent.png" data-serenity-logo="1" alt="NKJ SERENITY">
       <p class="eyebrow">NKJ SERENITY</p><h1>TOURNAMENT ADMIN</h1>
-      <label>Username</label><input id="tourAdminUser" autocomplete="username" placeholder="admin">
+      <label>Email Admin</label><input id="tourAdminUser" type="email" autocomplete="username" value="stphngiovanni@gmail.com" readonly>
       <label>Password</label><input id="tourAdminPass" type="password" autocomplete="current-password">
       <button class="btn primary" id="tourAdminLoginBtn" type="button">LOGIN</button>
-      <div class="status" id="tourAdminLoginStatus"></div>
+      <div class="status" id="tourAdminLoginStatus"></div><p class="hint">Menggunakan akun Supabase Auth yang sama dengan Admin Utama.</p>
       <a class="admin-back-link" href="admin.html">← Kembali ke Admin Utama</a>
     </div>
   </div>
@@ -80,7 +82,7 @@
   </div>
 
 <script src="logo-manager.js"></script>
-<script src="admin-tournament-page.js"></script>
+<script src="admin-tournament-page.js?v=26.6.1-secure"></script>
 <script src="tournament-admin.js?v=21.1"></script>
 <script src="bracket-admin.js"></script>
 <script src="v12-loader.js"></script>

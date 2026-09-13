@@ -5,14 +5,16 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Match Admin | NKJ SERENITY</title>
 <link rel="stylesheet" href="styles.css">
-<script src="cloud-sync.js"></script><script src="cloud-boot.js?v=matchsync10"></script>
+<script src="cloud-sync.js?v=26.6.1-secure"></script><script src="cloud-boot.js?v=matchsync10"></script>
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icons/icon-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="NKJ SERENITY">
 <link rel="stylesheet" href="v13-theme.css?v=13.0">
-<link rel="stylesheet" href="v20-brand-lock.css?v=20.2">
+<link rel="stylesheet" href="v20-brand-lock.css?v=20.3">
+<link rel="stylesheet" href="v21-command-center.css?v=21">
+<link rel="stylesheet" href="v22-esports-os.css?v=22">
 </head>
 <body class="admin-page admin-special-page">
 <div id="serenityLoader" aria-label="Loading NKJ SERENITY">
@@ -29,10 +31,10 @@
       <img src="assets/nkj-serenity-logo-transparent.png" data-serenity-logo="1" alt="NKJ SERENITY">
       <p class="eyebrow">NKJ SERENITY</p>
       <h1>MATCH ADMIN</h1>
-      <label>Username</label><input id="matchAdminUser" autocomplete="username" placeholder="admin">
+      <label>Email Admin</label><input id="matchAdminUser" type="email" autocomplete="username" value="stphngiovanni@gmail.com" readonly>
       <label>Password</label><input id="matchAdminPass" type="password" autocomplete="current-password">
       <button class="btn primary" id="matchAdminLoginBtn" type="button">LOGIN</button>
-      <div class="status" id="matchAdminLoginStatus"></div>
+      <div class="status" id="matchAdminLoginStatus"></div><p class="hint">Menggunakan akun Supabase Auth yang sama dengan Admin Utama.</p>
       <a class="admin-back-link" href="admin.html">← Kembali ke Admin Utama</a>
     </div>
   </div>
@@ -97,7 +99,7 @@
   </div>
 
 <script src="logo-manager.js"></script>
-<script src="admin-match.js?v=matchsync112"></script>
+<script src="admin-match.js?v=26.6.1-secure"></script>
 <script src="v12-loader.js"></script>
 <button id="pwaInstallBtn" class="pwa-install-btn" type="button" hidden>INSTALL <span>SERENITY APP</span></button>
 <script src="/pwa.js"></script>

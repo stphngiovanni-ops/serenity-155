@@ -2,7 +2,6 @@
 (function(){
 const $=id=>document.getElementById(id);
 const KEY="serenity155Data";
-const PASSWORD="serenity_mei25";
 let data={matches:[]},editing=-1,pendingLogo="";
 
 function load(){
@@ -28,10 +27,8 @@ async function loadOnline(){
 }
 async function save(){
   localStorage.setItem(KEY,JSON.stringify(data));
-  const pass=sessionStorage.getItem("serenity155AdminPass")||sessionStorage.getItem("serenityMatchAdminPass")||PASSWORD;
-  if(typeof serenityAdminCloudSave==="function"){
-    await serenityAdminCloudSave(data,pass);
-  }
+  if(typeof serenityAdminCloudSave!=="function") throw new Error("Secure cloud client tidak tersedia.");
+  await serenityAdminCloudSave(data);
   return true;
 }
 function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
@@ -129,24 +126,20 @@ function edit(i){
 }
 
 async function doLogin(){
-  const user=($("matchAdminUser").value||"").trim().toLowerCase();
+  const email=($("matchAdminUser").value||"").trim().toLowerCase();
   const pass=($("matchAdminPass").value||"");
-  const validUser=(user==="admin" || user==="rudiahmad111020@gmail.com");
-  if(validUser && pass===PASSWORD){
-    try{
-      sessionStorage.setItem("serenityMatchAdmin","1");
-      sessionStorage.setItem("serenityMatchAdminPass",pass);
-      sessionStorage.setItem("serenity155AdminPass",pass);
-    }catch(e){}
-    $("matchAdminLoginStatus").textContent="Login berhasil ✓";
+  $("matchAdminLoginStatus").textContent="Memverifikasi akun...";
+  try{
+    const session=await serenityAuthSignIn(email,pass);
+    const user=session?.user||await serenityAuthGetUser();
+    if(!user || String(user.email||"").toLowerCase()!==SERENITY_ADMIN_EMAIL) throw new Error("Akun ini tidak diizinkan.");
+    $("matchAdminLoginStatus").textContent="Login aman berhasil ✓";
     $("matchAdminLogin").hidden=true;
     $("matchAdminView").hidden=false;
-    $("matchAdminLoginStatus").textContent="Mengambil data Match online...";
-    await loadOnline();
-    render();
-    $("matchAdminLoginStatus").textContent="Login berhasil • Data ONLINE ✓";
-  }else{
-    $("matchAdminLoginStatus").textContent="Username/email atau password salah.";
+    await loadOnline();render();
+  }catch(e){
+    console.error(e);
+    $("matchAdminLoginStatus").textContent="Login gagal: "+(e?.message||e);
   }
 }
 $("matchAdminLoginBtn").onclick=(e)=>{e.preventDefault();doLogin();};
@@ -155,7 +148,7 @@ $("matchAdminLoginBtn").onclick=(e)=>{e.preventDefault();doLogin();};
     if(e.key==="Enter"){e.preventDefault();doLogin();}
   });
 });
-$("matchAdminLogout").onclick=()=>{sessionStorage.removeItem("serenityMatchAdmin");location.reload()};
+$("matchAdminLogout").onclick=async()=>{await serenityAuthLogout();location.reload()};
 $("opponentLogo").onchange=async e=>{const f=e.target.files?.[0];if(!f)return;pendingLogo=await imageFile(f);$("opponentLogoPreview").src=pendingLogo;$("opponentLogoPreview").hidden=false};
 $("clearOpponentLogo").onclick=()=>{pendingLogo="";$("opponentLogo").value="";$("opponentLogoPreview").hidden=true};
 $("addMatch").onclick=submit;$("saveMatchData").onclick=async()=>{
@@ -229,5 +222,7 @@ if(sessionStorage.getItem("serenityMatchAdmin")==="1"){
   $("matchAdminView").hidden=false;
   loadOnline().then(render);
 }
+
+(async()=>{try{const u=await serenityAuthGetUser();if(u&&String(u.email||"").toLowerCase()===SERENITY_ADMIN_EMAIL){$("matchAdminLogin").hidden=true;$("matchAdminView").hidden=false;await loadOnline();render();}}catch(e){}})();
 })();
 
