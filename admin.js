@@ -137,7 +137,7 @@ function resetCrop(){
 }
 
 
-function imagePreserveAspect(file,maxSide=1800,quality=.92){
+function imagePreserveAspect(file,maxSide=640,quality=.80){
   return new Promise((resolve,reject)=>{
     if(!file){resolve("");return}
     const reader=new FileReader();
@@ -159,6 +159,40 @@ function imagePreserveAspect(file,maxSide=1800,quality=.92){
     reader.onerror=reject;
     reader.readAsDataURL(file);
   });
+}
+
+
+function compactSponsorDataURL(src,maxSide=640,quality=.80,maxChars=220000){
+  return new Promise(resolve=>{
+    if(!src || !/^data:image\//i.test(src)){resolve(src||"");return}
+    const img=new Image();
+    img.onload=()=>{
+      const render=(side,q)=>{
+        const scale=Math.min(1,side/Math.max(img.width,img.height));
+        const w=Math.max(1,Math.round(img.width*scale));
+        const h=Math.max(1,Math.round(img.height*scale));
+        const c=document.createElement("canvas");c.width=w;c.height=h;
+        const ctx=c.getContext("2d");ctx.clearRect(0,0,w,h);ctx.drawImage(img,0,0,w,h);
+        try{return c.toDataURL("image/webp",q)}catch(e){return src}
+      };
+      if(src.length<=maxChars && Math.max(img.width,img.height)<=maxSide){resolve(src);return}
+      let out=render(maxSide,quality);
+      if(out.length>maxChars) out=render(480,.72);
+      if(out.length>maxChars) out=render(360,.66);
+      resolve(out||src);
+    };
+    img.onerror=()=>resolve(src);
+    img.src=src;
+  });
+}
+
+async function compactSponsorLogos(){
+  const list=Array.isArray(data.sponsors)?data.sponsors:[];
+  for(const sp of list){
+    if(sp && sp.logo && /^data:image\//i.test(sp.logo)){
+      sp.logo=await compactSponsorDataURL(sp.logo,640,.80,220000);
+    }
+  }
 }
 
 
@@ -555,9 +589,12 @@ async function saveAll(){
   data.about1=$("about1").value;data.about2=$("about2").value;
   data.contact={email:$("email").value,instagram:$("instagram").value,youtube:$("youtube").value};
   try{
+    $("saveStatus").textContent="Mengoptimalkan logo sponsor...";
+    await compactSponsorLogos();
     $("saveStatus").textContent="Mengoptimalkan foto roster...";
     await compactRosterPhotos();
     const sizeMB=approxDataMB();
+    if(sizeMB>4.5) throw new Error("Ukuran data masih terlalu besar ("+sizeMB.toFixed(1)+" MB). Hapus/ganti gambar yang terlalu besar lalu coba lagi.");
     saveSilent();
     $("saveStatus").textContent="Menyimpan online... ("+sizeMB.toFixed(1)+" MB)";
     if(typeof serenityAdminCloudSave==="function") await serenityAdminCloudSave(data);
@@ -605,7 +642,7 @@ document.addEventListener("DOMContentLoaded",async()=>{
   $("playerPhoto").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,360,450,.68);if(cropped){pendingPlayerPhoto=cropped;$("playerPhotoPreview").src=pendingPlayerPhoto;$("playerPhotoPreview").hidden=false}else{$("playerPhoto").value=""}});
   $("achPhoto").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,1200,850,.82);if(cropped){pendingAchPhoto=cropped;$("achPhotoPreview").src=pendingAchPhoto;$("achPhotoPreview").hidden=false}else{$("achPhoto").value=""}});
   $("opponentLogo")?.addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const cropped=await imageToDataURL(f,700,700,.88);if(cropped){pendingOpponentLogo=cropped;$("opponentLogoPreview").src=pendingOpponentLogo;$("opponentLogoPreview").hidden=false}else{$("opponentLogo").value=""}});
-  $("sponsorLogo").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const logo=await imagePreserveAspect(f,1800,.92);if(logo){pendingSponsorLogo=logo;$("sponsorLogoPreview").src=logo;$("sponsorLogoPreview").hidden=false}else{$("sponsorLogo").value=""}});
+  $("sponsorLogo").addEventListener("change",async e=>{const f=e.target.files?.[0];if(!f)return;const logo=await imagePreserveAspect(f,640,.80);if(logo){pendingSponsorLogo=logo;$("sponsorLogoPreview").src=logo;$("sponsorLogoPreview").hidden=false}else{$("sponsorLogo").value=""}});
   $("clearPlayerPhoto").addEventListener("click",()=>{pendingPlayerPhoto="";$("playerPhoto").value="";$("playerPhotoPreview").hidden=true});
   $("clearAchPhoto").addEventListener("click",()=>{pendingAchPhoto="";$("achPhoto").value="";$("achPhotoPreview").hidden=true});
   $("clearOpponentLogo")?.addEventListener("click",()=>{pendingOpponentLogo="";if($("opponentLogo"))$("opponentLogo").value="";if($("opponentLogoPreview"))$("opponentLogoPreview").hidden=true});
@@ -640,7 +677,7 @@ document.addEventListener("DOMContentLoaded",async()=>{
       const cropped=await imageToDataURL(f,360,450,.68);if(cropped){getRoster(group)[index].photo=cropped;try{saveSilent()}catch(e){};renderLists()}
     } else if(t.matches("[data-change-ach-photo]")){const cropped=await imageToDataURL(f,1200,850,.82);if(cropped){data.achievements[Number(t.dataset.changeAchPhoto)].photo=cropped;try{saveSilent()}catch(e){};renderLists()}}
     else if(t.matches("[data-change-match-logo]")){const cropped=await imageToDataURL(f,700,700,.88);if(cropped){data.matches[Number(t.dataset.changeMatchLogo)].logo=cropped;try{saveSilent()}catch(e){};renderLists()}}
-    else if(t.matches("[data-change-sponsor-logo]")){const logo=await imagePreserveAspect(f,1800,.92);if(logo){data.sponsors[Number(t.dataset.changeSponsorLogo)].logo=logo;try{saveSilent()}catch(e){};renderLists()}}
+    else if(t.matches("[data-change-sponsor-logo]")){const logo=await imagePreserveAspect(f,640,.80);if(logo){data.sponsors[Number(t.dataset.changeSponsorLogo)].logo=logo;try{saveSilent()}catch(e){};renderLists()}}
   });
 
 });
