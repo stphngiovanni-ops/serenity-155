@@ -1,23 +1,20 @@
 (function(){
 const $=id=>document.getElementById(id);
-async function doLogin(){
-  const email=($("tourAdminUser").value||"").trim();
-  $("tourAdminLoginStatus").textContent="Mengirim link verifikasi ke Gmail...";
-  try{
-    await serenityAuthSendMagicLink(email);
-    $("tourAdminLoginStatus").textContent="Link verifikasi sudah dikirim. Buka Gmail lalu klik link untuk masuk.";
-  }catch(e){
-    console.error(e);
-    $("tourAdminLoginStatus").textContent="Gagal mengirim link: "+(e?.message||e);
-  }
+async function sendTournamentOtp(){
+ const email=($("tourAdminUser").value||"").trim(),btn=$("tourAdminLoginBtn");
+ $("tourAdminLoginStatus").textContent="Mengirim kode OTP ke Gmail...";
+ try{await serenityAuthSendEmailOtp(email);$("tourAdminLoginStatus").textContent="Kode OTP sudah dikirim. Cek Gmail lalu masukkan kode 6 digit.";serenityOtpCooldownStart(btn,$("tourAdminLoginStatus"),60);$("tourAdminLoginBtnOtp")?.focus()}
+ catch(e){const msg=String(e?.message||e);console.error(e);$("tourAdminLoginStatus").textContent=/rate limit/i.test(msg)?"Pengiriman OTP sedang dibatasi Supabase. Tunggu beberapa saat lalu coba lagi.":"Gagal mengirim OTP: "+msg}
 }
-$("tourAdminLoginBtn").onclick=e=>{e.preventDefault();doLogin()};
-doLogin()}});
+async function verifyTournamentOtp(){
+ const email=($("tourAdminUser").value||"").trim(),code=$("tourAdminLoginBtnOtp")?.value||"";
+ $("tourAdminLoginStatus").textContent="Memverifikasi OTP...";
+ try{const session=await serenityAuthVerifyEmailOtp(email,code);const user=session?.user||await serenityAuthGetUser();if(!user||String(user.email||"").toLowerCase()!==SERENITY_ADMIN_EMAIL)throw new Error("Akun ini tidak diizinkan.");$("tourAdminLogin").hidden=true;$("tourAdminView").hidden=false}
+ catch(e){console.error(e);$("tourAdminLoginStatus").textContent="OTP gagal: "+(e?.message||e)}
+}
+$("tourAdminLoginBtn").onclick=e=>{e.preventDefault();sendTournamentOtp()};
+$("tourAdminLoginBtnVerify")?.addEventListener("click",verifyTournamentOtp);
+$("tourAdminLoginBtnOtp")?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();verifyTournamentOtp()}});
 $("tourAdminLogout").onclick=async()=>{await serenityAuthLogout();location.reload()};
-(async()=>{try{
-  const user=await serenityAuthGetUser();
-  if(user&&String(user.email||"").toLowerCase()===SERENITY_ADMIN_EMAIL){
-    $("tourAdminLogin").hidden=true;$("tourAdminView").hidden=false;
-  }else{$("tourAdminView").hidden=true}
-}catch(e){$("tourAdminView").hidden=true}})();
+(async()=>{try{const user=await serenityAuthGetUser();if(user&&String(user.email||"").toLowerCase()===SERENITY_ADMIN_EMAIL){$("tourAdminLogin").hidden=true;$("tourAdminView").hidden=false}else $("tourAdminView").hidden=true}catch(e){$("tourAdminView").hidden=true}})();
 })();

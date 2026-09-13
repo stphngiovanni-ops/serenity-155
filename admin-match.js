@@ -126,19 +126,20 @@ function edit(i){
 }
 
 async function doLogin(){
-  const email=($("matchAdminUser").value||"").trim();
-  $("matchAdminLoginStatus").textContent="Mengirim link verifikasi ke Gmail...";
-  try{
-    await serenityAuthSendMagicLink(email);
-    $("matchAdminLoginStatus").textContent="Link verifikasi sudah dikirim. Buka Gmail lalu klik link untuk masuk.";
-  }catch(e){
-    console.error(e);
-    $("matchAdminLoginStatus").textContent="Gagal mengirim link: "+(e?.message||e);
-  }
+  const email=($("matchAdminUser").value||"").trim(),btn=$("matchAdminLoginBtn");
+  $("matchAdminLoginStatus").textContent="Mengirim kode OTP ke Gmail...";
+  try{await serenityAuthSendEmailOtp(email);$("matchAdminLoginStatus").textContent="Kode OTP sudah dikirim. Cek Gmail lalu masukkan kode 6 digit.";serenityOtpCooldownStart(btn,$("matchAdminLoginStatus"),60);$("matchAdminLoginBtnOtp")?.focus()}
+  catch(e){const msg=String(e?.message||e);console.error(e);$("matchAdminLoginStatus").textContent=/rate limit/i.test(msg)?"Pengiriman OTP sedang dibatasi Supabase. Tunggu beberapa saat lalu coba lagi.":"Gagal mengirim OTP: "+msg}
 }
-$("matchAdminLoginBtn").onclick=(e)=>{e.preventDefault();doLogin();};
-
-});
+async function verifyMatchOtp(){
+  const email=($("matchAdminUser").value||"").trim(),code=$("matchAdminLoginBtnOtp")?.value||"";
+  $("matchAdminLoginStatus").textContent="Memverifikasi OTP...";
+  try{const session=await serenityAuthVerifyEmailOtp(email,code);const user=session?.user||await serenityAuthGetUser();if(!user||String(user.email||"").toLowerCase()!==SERENITY_ADMIN_EMAIL)throw new Error("Akun ini tidak diizinkan.");$("matchAdminLogin").hidden=true;$("matchAdminView").hidden=false;await loadOnline();render()}
+  catch(e){console.error(e);$("matchAdminLoginStatus").textContent="OTP gagal: "+(e?.message||e)}
+}
+$("matchAdminLoginBtn").onclick=e=>{e.preventDefault();doLogin()};
+$("matchAdminLoginBtnVerify")?.addEventListener("click",verifyMatchOtp);
+$("matchAdminLoginBtnOtp")?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();verifyMatchOtp()}});
 $("matchAdminLogout").onclick=async()=>{await serenityAuthLogout();location.reload()};
 $("opponentLogo").onchange=async e=>{const f=e.target.files?.[0];if(!f)return;pendingLogo=await imageFile(f);$("opponentLogoPreview").src=pendingLogo;$("opponentLogoPreview").hidden=false};
 $("clearOpponentLogo").onclick=()=>{pendingLogo="";$("opponentLogo").value="";$("opponentLogoPreview").hidden=true};

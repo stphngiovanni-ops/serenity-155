@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-<script src="cloud-sync.js?v=26.6.2-gmail"></script><script src="cloud-boot.js?v=26.6.2-gmail"></script>
+<script src="cloud-sync.js?v=26.6.3-otp"></script><script src="cloud-boot.js?v=26.6-secure"></script>
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icons/icon-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -38,10 +38,10 @@
       <label>Email Admin</label>
       <input id="loginUser" value="stphngiovanni@gmail.com" type="email" autocomplete="username" readonly>
       
-      <button class="btn primary" id="loginBtn" type="button" style="width:100%">KIRIM LINK VERIFIKASI GMAIL</button>
+      <button class="btn primary" id="loginBtn" type="button" style="width:100%">KIRIM KODE OTP GMAIL</button><div style="margin-top:12px"><label>Kode OTP 6 Digit</label><input id="loginBtnOtp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000" style="letter-spacing:.35em;text-align:center;font-size:20px;font-weight:700"><button class="btn primary" id="loginBtnVerify" type="button" style="width:100%;margin-top:10px">VERIFIKASI & MASUK ADMIN</button></div>
       
       
-      <div class="status" id="loginStatus"></div><p class="hint" style="margin-top:10px">Tanpa password • Link verifikasi dikirim ke Gmail admin.</p>
+      <div class="status" id="loginStatus"></div><p class="hint" style="margin-top:10px">Tanpa password • Kirim OTP ke Gmail admin, lalu masukkan kode 6 digit.</p>
       
     </div>
   </div>
@@ -371,17 +371,17 @@
     </div>
   </div>
 
-  <script src="admin.js?v=26.6.2-gmail"></script><script src="store-admin.js?v=26.6.2-gmail"></script>
+  <script src="admin.js?v=26.6.3-otp"></script><script src="store-admin.js?v=26.6.3-otp"></script>
 <script src="logo-manager.js"></script>
-<script src="logo-admin.js?v=26.6.2-gmail"></script>
+<script src="logo-admin.js?v=26.6.3-otp"></script>
 <script src="nkj-logo-manager.js"></script>
-<script src="nkj-logo-admin.js?v=26.6.2-gmail"></script>
+<script src="nkj-logo-admin.js?v=26.6.3-otp"></script>
 <script src="v12-loader.js"></script>
 <button id="pwaInstallBtn" class="pwa-install-btn" type="button" hidden>INSTALL <span>SERENITY APP</span></button>
 <script src="/pwa.js"></script>
-<script src="announcement-admin.js?v=26.6.2-gmail"></script>
+<script src="announcement-admin.js?v=26.6.3-otp"></script>
 <script src="v13-theme.js?v=13.0"></script>
-<script src="news-admin.js?v=26.6.2-gmail"></script>
+<script src="news-admin.js?v=26.6.3-otp"></script>
 
 <script id="v242-admin-login-hotfix">
 (function(){

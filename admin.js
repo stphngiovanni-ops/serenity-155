@@ -197,43 +197,26 @@ function imageToDataURL(file,maxW=900,maxH=900,quality=.82){
   return openCropEditor(file,mode);
 }
 async function login(){
-  const email=($("loginUser").value||"").trim();
-  $("loginStatus").textContent="Mengirim link verifikasi ke Gmail...";
+  const email=($("loginUser").value||"").trim(),btn=$("loginBtn");
+  $("loginStatus").textContent="Mengirim kode OTP ke Gmail...";
   try{
-    await serenityAuthSendMagicLink(email);
-    $("loginStatus").textContent="Link verifikasi sudah dikirim. Buka Gmail lalu klik link untuk masuk.";
+    await serenityAuthSendEmailOtp(email);
+    $("loginStatus").textContent="Kode OTP sudah dikirim. Cek Gmail lalu masukkan 6 digit kode.";
+    serenityOtpCooldownStart(btn,$("loginStatus"),60);$("loginBtnOtp")?.focus();
   }catch(e){
-    console.error(e);
-    $("loginStatus").textContent="Gagal mengirim link: "+(e?.message||e);
+    const msg=String(e?.message||e);console.error(e);
+    $("loginStatus").textContent=/rate limit/i.test(msg)?"Pengiriman OTP sedang dibatasi Supabase. Tunggu beberapa saat lalu coba lagi.":"Gagal mengirim OTP: "+msg;
   }
 }
-async function signupAdmin(){
-  const email=($("loginUser").value||"").trim();
-  const password=$("loginPass").value||"";
-  $("loginStatus").textContent="Mengaktifkan akun admin...";
+async function verifyAdminOtp(){
+  const email=($("loginUser").value||"").trim(),code=$("loginBtnOtp")?.value||"";
+  $("loginStatus").textContent="Memverifikasi OTP...";
   try{
-    const result=await serenityAuthSignUp(email,password);
-    if(result?.access_token){
-      $("loginStatus").textContent="Akun admin aktif dan login berhasil ✓";
-      showAdmin();
-    }else{
-      $("loginStatus").textContent="Link konfirmasi telah dikirim ke email admin. Buka email lalu konfirmasi.";
-    }
-  }catch(e){
-    console.error(e);
-    $("loginStatus").textContent="Aktivasi gagal: "+(e?.message||e);
-  }
-}
-async function sendMagicLogin(){
-  const email=($("loginUser").value||"").trim();
-  $("loginStatus").textContent="Mengirim link login...";
-  try{
-    await serenityAuthSendMagicLink(email);
-    $("loginStatus").textContent="Link login telah dikirim ke email admin.";
-  }catch(e){
-    console.error(e);
-    $("loginStatus").textContent="Gagal mengirim link: "+(e?.message||e);
-  }
+    const session=await serenityAuthVerifyEmailOtp(email,code);
+    const user=session?.user||await serenityAuthGetUser();
+    if(!user||String(user.email||"").toLowerCase()!==SERENITY_ADMIN_EMAIL) throw new Error("Akun ini tidak diizinkan.");
+    showAdmin();
+  }catch(e){console.error(e);$("loginStatus").textContent="OTP gagal: "+(e?.message||e)}
 }
 function showAdmin(){
   $("loginView").hidden=true;$("loginView").style.display="none";
@@ -573,7 +556,7 @@ document.addEventListener("DOMContentLoaded",async()=>{
   $("cropModal").querySelector(".crop-backdrop").addEventListener("click",()=>closeCropEditor(""));
   document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("cropModal").hidden)closeCropEditor("")});
 
-  $("loginBtn").addEventListener("click",login);
+  $("loginBtn").addEventListener("click",login);$("loginBtnVerify")?.addEventListener("click",verifyAdminOtp);$("loginBtnOtp")?.addEventListener("keydown",e=>{if(e.key==="Enter")verifyAdminOtp()});
   $("logoutBtn").addEventListener("click",async()=>{await serenityAuthLogout();location.reload()});
   $("addPlayer").addEventListener("click",addPlayer);$("addAchievement").addEventListener("click",addAchievement);$("addSponsor").addEventListener("click",addSponsor);
   $("saveMatch")?.addEventListener("click",saveMatch);$("cancelMatchEdit")?.addEventListener("click",resetMatchForm);

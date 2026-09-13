@@ -49,12 +49,40 @@ async function serenityAuthSignUp(email,password){
 }
 async function serenityAuthSendMagicLink(email){
   const normalized=(email||"").trim().toLowerCase();
-  if(normalized!==SERENITY_ADMIN_EMAIL) throw new Error("Email ini bukan akun admin yang diizinkan.");
+  if(normalized!==SERENITY_ADMIN_EMAIL) throw new Error("Hanya email admin yang diizinkan.");
   const redirect=encodeURIComponent(location.origin+location.pathname);
-  return serenityAuthRequest("/auth/v1/otp?redirect_to="+redirect,{
-    method:"POST",body:JSON.stringify({email:normalized,create_user:false})
-  });
+  return serenityAuthRequest("/auth/v1/otp?redirect_to="+redirect,{method:"POST",body:JSON.stringify({email:normalized,create_user:true})});
 }
+async function serenityAuthSendEmailOtp(email){
+  const normalized=(email||"").trim().toLowerCase();
+  if(normalized!==SERENITY_ADMIN_EMAIL) throw new Error("Email ini bukan akun admin yang diizinkan.");
+  return serenityAuthRequest("/auth/v1/otp",{method:"POST",body:JSON.stringify({email:normalized,create_user:false})});
+}
+async function serenityAuthVerifyEmailOtp(email,token){
+  const normalized=(email||"").trim().toLowerCase();
+  const code=String(token||"").replace(/\D/g,"").slice(0,6);
+  if(normalized!==SERENITY_ADMIN_EMAIL) throw new Error("Email ini bukan akun admin yang diizinkan.");
+  if(code.length!==6) throw new Error("Kode OTP harus 6 digit.");
+  const session=await serenityAuthRequest("/auth/v1/verify",{method:"POST",body:JSON.stringify({email:normalized,token:code,type:"email"})});
+  if(!session?.access_token) throw new Error("OTP tidak valid atau sudah kedaluwarsa.");
+  serenityAuthStoreSession(session);
+  return session;
+}
+function serenityOtpCooldownStart(button,statusEl,seconds=60){
+  let remaining=seconds;
+  button.disabled=true;
+  const original=button.dataset.originalText||button.textContent;
+  button.dataset.originalText=original;
+  button.textContent=`KIRIM ULANG (${remaining}s)`;
+  const timer=setInterval(()=>{
+    remaining--;
+    if(remaining<=0){
+      clearInterval(timer);button.disabled=false;button.textContent=original;
+      if(statusEl) statusEl.textContent="Kode bisa dikirim ulang jika diperlukan.";
+    }else button.textContent=`KIRIM ULANG (${remaining}s)`;
+  },1000);
+}
+
 async function serenityAuthRefresh(){
   const s=serenityAuthReadSession();
   if(!s?.refresh_token) return null;
