@@ -209,12 +209,6 @@ if(refreshNextBtn){
  });
 }
 
-if(sessionStorage.getItem("serenityMatchAdmin")==="1"){
-  $("matchAdminLogin").hidden=true;
-  $("matchAdminView").hidden=false;
-  loadOnline().then(render);
-}
-
 (async()=>{try{const u=await serenityAuthGetUser();if(u&&await serenityAuthIsAuthorized()){$("matchAdminLogin").hidden=true;$("matchAdminView").hidden=false;await loadOnline();render();}}catch(e){}})();
 })();
 

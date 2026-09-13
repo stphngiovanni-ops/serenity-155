@@ -613,5 +613,4 @@ document.addEventListener("DOMContentLoaded",async()=>{
     else if(t.matches("[data-change-sponsor-logo]")){const logo=await imagePreserveAspect(f,1800,.92);if(logo){data.sponsors[Number(t.dataset.changeSponsorLogo)].logo=logo;try{saveSilent()}catch(e){};renderLists()}}
   });
 
-  try{if(sessionStorage.getItem("serenity155Admin")==="1")showAdmin()}catch(e){}
 });

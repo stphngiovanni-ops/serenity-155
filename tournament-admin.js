@@ -1,116 +1,77 @@
-
 (function(){
-const $=id=>document.getElementById(id);if(!$("addTournament"))return;
-let data=[];let editIndex=-1;
-try{data=JSON.parse(localStorage.getItem("serenity155Tournaments")||"[]")}catch(e){}
+  const $=id=>document.getElementById(id);
+  const API=SERENITY_SUPABASE_URL+"/functions/v1/serenity-tournament-admin";
+  let editingId=null;
+  let tournaments=[];
 
-function save(){localStorage.setItem("serenity155Tournaments",JSON.stringify(data))}
-function readFile(file){return new Promise((res,rej)=>{if(!file)return res("");const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file)})}
-function esc(v=""){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-
-function clearForm(){
-  editIndex=-1;
-  $("tourName").value="";
-  $("tourGame").value="POINT BLANK";
-  $("tourDate").value="";
-  $("tourStatus").value="open";
-  $("tourSlots").value=32;
-  $("tourRegistered").value=0;
-  $("tourFee").value="";
-  $("tourPrize").value="";
-  $("tourFormat").value="";
-  $("tourPoster").value="";
-  $("addTournament").textContent="+ TAMBAH TOURNAMENT";
-  const cancel=$("cancelTournamentEdit"); if(cancel) cancel.remove();
-}
-
-function render(){
-  $("tournamentAdminList").innerHTML=data.length?data.map((t,i)=>`
-    <div class="edit-row">
-      <div>
-        <b>${esc(t.name)}</b><br>
-        <small>${esc(t.date||"TBA")} • ${esc(String(t.status||"").toUpperCase())} • Slot ${t.registered||0}/${t.slots||0} • ${esc(t.prize||"TBA")}</small>
-      </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end">
-        <button class="small-btn" data-tour-edit="${i}" type="button">EDIT</button>
-        <button class="small-btn danger" data-tour-remove="${i}" type="button">HAPUS</button>
-      </div>
-    </div>`).join(""):'<p class="hint">Belum ada tournament tersimpan.</p>'
-}
-
-async function collect(existingPoster=""){
-  const file=$("tourPoster").files?.[0];
-  const poster=file?await readFile(file):existingPoster;
-  return {
-    id: editIndex>=0 && data[editIndex]?.id ? data[editIndex].id : "tour-"+Date.now(),
-    name:$("tourName").value.trim(),
-    game:$("tourGame").value.trim()||"POINT BLANK",
-    date:$("tourDate").value,
-    status:$("tourStatus").value,
-    slots:+$("tourSlots").value||0,
-    registered:+$("tourRegistered").value||0,
-    fee:$("tourFee").value.trim(),
-    prize:$("tourPrize").value.trim(),
-    format:$("tourFormat").value.trim(),
-    poster
-  };
-}
-
-$("addTournament").onclick=async()=>{
-  const name=$("tourName").value.trim();
-  if(!name)return alert("Nama tournament wajib diisi.");
-  if(editIndex>=0){
-    const item=await collect(data[editIndex]?.poster||"");
-    data[editIndex]=item;
-    save(); render(); clearForm();
-    alert("Tournament berhasil diperbarui.");
-  }else{
-    const item=await collect("");
-    data.unshift(item);
-    save(); render(); clearForm();
+  async function api(body){
+    const token=await serenityAuthGetAccessToken();
+    if(!token) throw new Error("Sesi admin habis. Silakan login ulang.");
+    const r=await fetch(API,{method:"POST",headers:{"apikey":SERENITY_SUPABASE_KEY,"Authorization":"Bearer "+token,"Content-Type":"application/json"},body:JSON.stringify(body)});
+    let out={}; try{out=await r.json()}catch(_){out={}}
+    if(r.status===401||r.status===403) throw new Error("Akses Admin tidak valid. Silakan login ulang.");
+    if(!r.ok) throw new Error(out.error||("Request gagal ("+r.status+")"));
+    return out;
   }
-};
-
-function startEdit(i){
-  const t=data[i]; if(!t)return;
-  editIndex=i;
-  $("tourName").value=t.name||"";
-  $("tourGame").value=t.game||"POINT BLANK";
-  $("tourDate").value=t.date||"";
-  $("tourStatus").value=t.status||"open";
-  $("tourSlots").value=t.slots||0;
-  $("tourRegistered").value=t.registered||0;
-  $("tourFee").value=t.fee||"";
-  $("tourPrize").value=t.prize||"";
-  $("tourFormat").value=t.format||"";
-  $("tourPoster").value="";
-  $("addTournament").textContent="SIMPAN PERUBAHAN";
-
-  if(!$("cancelTournamentEdit")){
-    const btn=document.createElement("button");
-    btn.id="cancelTournamentEdit";
-    btn.type="button";
-    btn.className="small-btn";
-    btn.textContent="BATAL EDIT";
-    btn.style.marginLeft="8px";
-    $("addTournament").insertAdjacentElement("afterend",btn);
-    btn.onclick=clearForm;
+  const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+  function statusText(v){return String(v||"OPEN").toUpperCase()}
+  function formToTournament(){
+    return {
+      id:editingId||undefined,
+      name:$("tourName")?.value.trim()||"",
+      game:$("tourGame")?.value.trim()||"POINT BLANK",
+      event_date:$("tourDate")?.value||null,
+      max_teams:Number($("tourSlots")?.value||16),
+      fee:0,
+      prize:$("tourPrize")?.value.trim()||"",
+      status:statusText($("tourStatus")?.value||"OPEN"),
+      description:$("tourFormat")?.value.trim()||"",
+      banner_url:""
+    };
   }
-  $("tourName").scrollIntoView({behavior:"smooth",block:"center"});
-  $("tourName").focus();
-}
-
-document.body.addEventListener("click",e=>{
-  const edit=e.target.dataset.tourEdit;
-  const remove=e.target.dataset.tourRemove;
-  if(edit!==undefined){startEdit(+edit);return}
-  if(remove!==undefined){
-    const i=+remove, name=data[i]?.name||"tournament";
-    if(!confirm(`Hapus tournament "${name}"?`))return;
-    data.splice(i,1);
-    save();render();
-    if(editIndex===i)clearForm();
+  function resetForm(){
+    editingId=null;
+    if($("tourName")) $("tourName").value="";
+    if($("tourGame")) $("tourGame").value="POINT BLANK";
+    if($("tourDate")) $("tourDate").value="";
+    if($("tourStatus")) $("tourStatus").value="open";
+    if($("tourSlots")) $("tourSlots").value="32";
+    if($("tourRegistered")) $("tourRegistered").value="0";
+    if($("tourFee")) $("tourFee").value="";
+    if($("tourPrize")) $("tourPrize").value="";
+    if($("tourFormat")) $("tourFormat").value="";
+    if($("addTournament")) $("addTournament").textContent="+ TAMBAH TOURNAMENT";
   }
-});
-render();
+  function render(){
+    const box=$("tournamentAdminList"); if(!box) return;
+    if(!tournaments.length){box.innerHTML='<p class="hint">Belum ada tournament.</p>';return}
+    box.innerHTML=tournaments.map(t=>`<div class="edit-row"><div><b>${esc(t.name)}</b><br><small>${esc(t.game||"POINT BLANK")} • ${esc(t.event_date||"DATE TBA")} • ${esc(t.status||"OPEN")} • SLOT ${esc(t.max_teams||16)}</small></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="small-btn" type="button" data-tour-edit="${esc(t.id)}">EDIT</button><button class="small-btn danger" type="button" data-tour-delete="${esc(t.id)}">HAPUS</button></div></div>`).join("");
+  }
+  async function load(){
+    const out=await api({op:"list"}); tournaments=Array.isArray(out.tournaments)?out.tournaments:[]; render();
+  }
+  async function save(){
+    const t=formToTournament(); if(!t.name){alert("Nama tournament wajib diisi.");return}
+    const btn=$("addTournament"); if(btn){btn.disabled=true;btn.textContent="MENYIMPAN..."}
+    try{await api({op:"save_tournament",tournament:t}); resetForm(); await load()}
+    catch(e){console.error(e);alert(e.message||e)}
+    finally{if(btn){btn.disabled=false;if(!editingId)btn.textContent="+ TAMBAH TOURNAMENT"}}
+  }
+  function edit(id){
+    const t=tournaments.find(x=>String(x.id)===String(id)); if(!t)return; editingId=t.id;
+    if($("tourName")) $("tourName").value=t.name||"";
+    if($("tourGame")) $("tourGame").value=t.game||"POINT BLANK";
+    if($("tourDate")) $("tourDate").value=t.event_date?String(t.event_date).slice(0,10):"";
+    if($("tourStatus")) {const v=String(t.status||"open").toLowerCase(); $("tourStatus").value=["open","upcoming","ongoing","finished"].includes(v)?v:"open"}
+    if($("tourSlots")) $("tourSlots").value=t.max_teams||16;
+    if($("tourPrize")) $("tourPrize").value=t.prize||"";
+    if($("tourFormat")) $("tourFormat").value=t.description||"";
+    if($("addTournament")) $("addTournament").textContent="SIMPAN PERUBAHAN";
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+  async function del(id){if(!confirm("Hapus tournament ini?"))return; try{await api({op:"delete_tournament",id}); if(String(editingId)===String(id))resetForm(); await load()}catch(e){alert(e.message||e)}}
+  $("addTournament")?.addEventListener("click",save);
+  document.body.addEventListener("click",e=>{const t=e.target;if(t?.dataset?.tourEdit)edit(t.dataset.tourEdit);if(t?.dataset?.tourDelete)del(t.dataset.tourDelete)});
+  async function boot(){try{const user=await serenityAuthGetUser();if(user&&await serenityAuthIsAuthorized())await load()}catch(e){console.error("Tournament admin load",e)}}
+  boot();
 })();
