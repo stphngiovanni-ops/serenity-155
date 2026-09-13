@@ -49,9 +49,11 @@ async function serenityAuthSignUp(email,password){
 }
 async function serenityAuthSendMagicLink(email){
   const normalized=(email||"").trim().toLowerCase();
-  if(normalized!==SERENITY_ADMIN_EMAIL) throw new Error("Hanya email admin yang diizinkan.");
+  if(normalized!==SERENITY_ADMIN_EMAIL) throw new Error("Email ini bukan akun admin yang diizinkan.");
   const redirect=encodeURIComponent(location.origin+location.pathname);
-  return serenityAuthRequest("/auth/v1/otp?redirect_to="+redirect,{method:"POST",body:JSON.stringify({email:normalized,create_user:true})});
+  return serenityAuthRequest("/auth/v1/otp?redirect_to="+redirect,{
+    method:"POST",body:JSON.stringify({email:normalized,create_user:false})
+  });
 }
 async function serenityAuthRefresh(){
   const s=serenityAuthReadSession();

@@ -198,17 +198,13 @@ function imageToDataURL(file,maxW=900,maxH=900,quality=.82){
 }
 async function login(){
   const email=($("loginUser").value||"").trim();
-  const password=$("loginPass").value||"";
-  $("loginStatus").textContent="Memverifikasi akun...";
+  $("loginStatus").textContent="Mengirim link verifikasi ke Gmail...";
   try{
-    const session=await serenityAuthSignIn(email,password);
-    const user=session?.user||await serenityAuthGetUser();
-    if(!user || String(user.email||"").toLowerCase()!==SERENITY_ADMIN_EMAIL) throw new Error("Akun ini tidak diizinkan.");
-    $("loginStatus").textContent="Login aman berhasil ✓";
-    showAdmin();
+    await serenityAuthSendMagicLink(email);
+    $("loginStatus").textContent="Link verifikasi sudah dikirim. Buka Gmail lalu klik link untuk masuk.";
   }catch(e){
     console.error(e);
-    $("loginStatus").textContent="Login gagal: "+(e?.message||e);
+    $("loginStatus").textContent="Gagal mengirim link: "+(e?.message||e);
   }
 }
 async function signupAdmin(){
@@ -577,7 +573,7 @@ document.addEventListener("DOMContentLoaded",async()=>{
   $("cropModal").querySelector(".crop-backdrop").addEventListener("click",()=>closeCropEditor(""));
   document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("cropModal").hidden)closeCropEditor("")});
 
-  $("loginBtn").addEventListener("click",login);$("loginPass").addEventListener("keydown",e=>{if(e.key==="Enter")login()});$("signupAdminBtn")?.addEventListener("click",signupAdmin);$("magicLoginBtn")?.addEventListener("click",sendMagicLogin);
+  $("loginBtn").addEventListener("click",login);
   $("logoutBtn").addEventListener("click",async()=>{await serenityAuthLogout();location.reload()});
   $("addPlayer").addEventListener("click",addPlayer);$("addAchievement").addEventListener("click",addAchievement);$("addSponsor").addEventListener("click",addSponsor);
   $("saveMatch")?.addEventListener("click",saveMatch);$("cancelMatchEdit")?.addEventListener("click",resetMatchForm);

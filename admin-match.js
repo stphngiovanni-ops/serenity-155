@@ -126,27 +126,18 @@ function edit(i){
 }
 
 async function doLogin(){
-  const email=($("matchAdminUser").value||"").trim().toLowerCase();
-  const pass=($("matchAdminPass").value||"");
-  $("matchAdminLoginStatus").textContent="Memverifikasi akun...";
+  const email=($("matchAdminUser").value||"").trim();
+  $("matchAdminLoginStatus").textContent="Mengirim link verifikasi ke Gmail...";
   try{
-    const session=await serenityAuthSignIn(email,pass);
-    const user=session?.user||await serenityAuthGetUser();
-    if(!user || String(user.email||"").toLowerCase()!==SERENITY_ADMIN_EMAIL) throw new Error("Akun ini tidak diizinkan.");
-    $("matchAdminLoginStatus").textContent="Login aman berhasil ✓";
-    $("matchAdminLogin").hidden=true;
-    $("matchAdminView").hidden=false;
-    await loadOnline();render();
+    await serenityAuthSendMagicLink(email);
+    $("matchAdminLoginStatus").textContent="Link verifikasi sudah dikirim. Buka Gmail lalu klik link untuk masuk.";
   }catch(e){
     console.error(e);
-    $("matchAdminLoginStatus").textContent="Login gagal: "+(e?.message||e);
+    $("matchAdminLoginStatus").textContent="Gagal mengirim link: "+(e?.message||e);
   }
 }
 $("matchAdminLoginBtn").onclick=(e)=>{e.preventDefault();doLogin();};
-["matchAdminUser","matchAdminPass"].forEach(id=>{
-  $(id).addEventListener("keydown",e=>{
-    if(e.key==="Enter"){e.preventDefault();doLogin();}
-  });
+
 });
 $("matchAdminLogout").onclick=async()=>{await serenityAuthLogout();location.reload()};
 $("opponentLogo").onchange=async e=>{const f=e.target.files?.[0];if(!f)return;pendingLogo=await imageFile(f);$("opponentLogoPreview").src=pendingLogo;$("opponentLogoPreview").hidden=false};

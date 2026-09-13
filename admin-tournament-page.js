@@ -1,23 +1,18 @@
 (function(){
 const $=id=>document.getElementById(id);
 async function doLogin(){
-  const email=($("tourAdminUser").value||"").trim().toLowerCase();
-  const pass=($("tourAdminPass").value||"");
-  $("tourAdminLoginStatus").textContent="Memverifikasi akun...";
+  const email=($("tourAdminUser").value||"").trim();
+  $("tourAdminLoginStatus").textContent="Mengirim link verifikasi ke Gmail...";
   try{
-    const session=await serenityAuthSignIn(email,pass);
-    const user=session?.user||await serenityAuthGetUser();
-    if(!user || String(user.email||"").toLowerCase()!==SERENITY_ADMIN_EMAIL) throw new Error("Akun ini tidak diizinkan.");
-    $("tourAdminLogin").hidden=true;
-    $("tourAdminView").hidden=false;
-    $("tourAdminLoginStatus").textContent="Login aman berhasil ✓";
+    await serenityAuthSendMagicLink(email);
+    $("tourAdminLoginStatus").textContent="Link verifikasi sudah dikirim. Buka Gmail lalu klik link untuk masuk.";
   }catch(e){
     console.error(e);
-    $("tourAdminLoginStatus").textContent="Login gagal: "+(e?.message||e);
+    $("tourAdminLoginStatus").textContent="Gagal mengirim link: "+(e?.message||e);
   }
 }
 $("tourAdminLoginBtn").onclick=e=>{e.preventDefault();doLogin()};
-$("tourAdminPass").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();doLogin()}});
+doLogin()}});
 $("tourAdminLogout").onclick=async()=>{await serenityAuthLogout();location.reload()};
 (async()=>{try{
   const user=await serenityAuthGetUser();
