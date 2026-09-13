@@ -1,6 +1,6 @@
 
 const DEFAULT_DATA = {
-  about1: "NKJ SERENITY adalah squad esports yang dibangun dari kekompakan, disiplin, komunikasi, dan mental kompetitif. Kami bertanding bukan hanya untuk menang, tetapi untuk membangun nama, keluarga, dan perjalanan yang layak dikenang.",
+  about1: "SERENITY 155 adalah squad esports yang dibangun dari kekompakan, disiplin, komunikasi, dan mental kompetitif. Kami bertanding bukan hanya untuk menang, tetapi untuk membangun nama, keluarga, dan perjalanan yang layak dikenang.",
   about2: "Website ini menampilkan profil resmi squad, perjalanan turnamen, roster aktif, sponsor, jadwal pertandingan, serta pencapaian SERENITY.",
   competitiveRoster: [
     {name:"ZEED", role:"RIFLER", detail:"ENTRY • AGGRESSIVE", photo:""},
@@ -200,55 +200,6 @@ function renderRoster(targetId, players, groupName){
   }
 
   const matchList=document.getElementById("matchList");
-
-  // NEXT MATCH / BATTLE SCHEDULE — fully controlled by Admin Match.
-  const upcomingMatches=(d.matches||[]).filter(m=>String(m.status||"").toUpperCase()!=="COMPLETED" && String(m.status||"").toUpperCase()!=="FINISHED");
-  const nextMatch=(d.matches||[]).find(m=>m.featured) || upcomingMatches.sort((a,b)=>new Date(a.date||0)-new Date(b.date||0))[0];
-
-  const opponentName=document.getElementById("opponentName");
-  const opponentLogoBox=document.getElementById("opponentLogoBox");
-  const gameName=document.getElementById("gameName");
-  const matchFormat=document.getElementById("matchFormat");
-  const streamLabel=document.getElementById("streamLabel");
-  const countdown=document.getElementById("countdown");
-  const matchDateLabel=document.getElementById("matchDateLabel");
-
-  if(nextMatch){
-    if(opponentName) opponentName.textContent=nextMatch.opponent||"OPPONENT";
-    if(opponentLogoBox){
-      opponentLogoBox.innerHTML=nextMatch.logo?`<img src="${nextMatch.logo}" alt="${escapeHtml(nextMatch.opponent||"Opponent")}">`:"?";
-    }
-    if(gameName) gameName.textContent=nextMatch.game||"POINT BLANK";
-    if(matchFormat) matchFormat.textContent=nextMatch.format||"MATCH";
-    if(streamLabel) streamLabel.textContent=nextMatch.stream||"LIVE STREAM";
-
-    const target=new Date(nextMatch.date);
-    if(matchDateLabel){
-      matchDateLabel.textContent=!isNaN(target)
-        ? new Intl.DateTimeFormat("id-ID",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}).format(target)+" WIB"
-        : (nextMatch.date||"DATE TBA");
-    }
-    if(countdown){
-      if(window.__serenityNextMatchTimer) clearInterval(window.__serenityNextMatchTimer);
-      const tick=()=>{
-        const diff=target-new Date();
-        if(isNaN(target)){countdown.textContent="DATE TBA";return}
-        if(diff<=0){countdown.textContent="MATCH TIME";return}
-        const days=Math.floor(diff/86400000);
-        const hours=Math.floor(diff/3600000)%24;
-        const mins=Math.floor(diff/60000)%60;
-        const secs=Math.floor(diff/1000)%60;
-        countdown.textContent=`${String(days).padStart(2,"0")}D : ${String(hours).padStart(2,"0")}H : ${String(mins).padStart(2,"0")}M : ${String(secs).padStart(2,"0")}S`;
-      };
-      tick(); window.__serenityNextMatchTimer=setInterval(tick,1000);
-    }
-  }else{
-    if(opponentName) opponentName.textContent="OPPONENT";
-    if(opponentLogoBox) opponentLogoBox.textContent="?";
-    if(countdown) countdown.textContent="NO UPCOMING MATCH";
-    if(matchDateLabel) matchDateLabel.textContent="SET FROM MATCH ADMIN";
-  }
-
   if(matchList){
     matchList.innerHTML="";
     [...d.matches].sort((a,b)=>new Date(a.date)-new Date(b.date)).forEach(m=>{
@@ -256,7 +207,7 @@ function renderRoster(targetId, players, groupName){
       card.className="match-mini-card"+(m.featured?" featured":"");
       const logo=m.logo?`<img src="${m.logo}" alt="${escapeHtml(m.opponent)}">`:"?";
       card.innerHTML=`<div class="match-mini-top"><span class="match-status ${escapeHtml(m.status)}">${escapeHtml(m.status)}</span>${m.featured?'<span class="featured-tag">NEXT MATCH</span>':""}</div>
-      <div class="match-mini-main"><div class="match-mini-logo">${logo}</div><div><h3>NKJ SERENITY <span style="color:#657080">VS</span> ${escapeHtml(m.opponent)}</h3><p>${escapeHtml(m.game)} • ${escapeHtml(m.format)}</p></div></div>
+      <div class="match-mini-main"><div class="match-mini-logo">${logo}</div><div><h3>SERENITY 155 <span style="color:#657080">VS</span> ${escapeHtml(m.opponent)}</h3><p>${escapeHtml(m.game)} • ${escapeHtml(m.format)}</p></div></div>
       <div class="match-mini-bottom"><span>${fmtDate(m.date)}</span><span>${escapeHtml(m.stream||"")}</span></div>`;
       matchList.appendChild(card);
     });
@@ -272,7 +223,7 @@ function renderRoster(targetId, players, groupName){
   const media=document.getElementById("detailModalMedia"),title=document.getElementById("detailModalTitle"),text=document.getElementById("detailModalText"),eyebrow=document.getElementById("detailModalEyebrow");
   function openModal(photo,fallback,heading,subheading,body){
     media.innerHTML=photo?`<img src="${photo}" alt="${escapeHtml(heading)}">`:`<div class="modal-initial">${escapeHtml(fallback||"?")}</div>`;
-    title.textContent=heading||"DETAIL";eyebrow.textContent=subheading||"NKJ SERENITY";text.textContent=body||"";
+    title.textContent=heading||"DETAIL";eyebrow.textContent=subheading||"SERENITY 155";text.textContent=body||"";
     modal.hidden=false;document.body.style.overflow="hidden";
   }
   function closeModal(){modal.hidden=true;document.body.style.overflow=""}

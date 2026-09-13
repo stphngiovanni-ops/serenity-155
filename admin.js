@@ -40,7 +40,17 @@ function migrate(x){
   x.sponsors=(x.sponsors||[]).map(v=>typeof v==="string"?{name:v,logo:""}:{name:v.name||"SPONSOR",logo:v.logo||""});
   return x;
 }
-function loadData(){try{data=migrate(JSON.parse(localStorage.getItem("serenity155Data"))||cloneDefault())}catch(e){data=cloneDefault()}}
+function loadData(){
+  const useful=x=>!!(x&&typeof x==="object"&&!Array.isArray(x)&&["competitiveRoster","warRoster","matches","sponsors","achievements","news","contact","homeText","about1","about2"].some(k=>Object.prototype.hasOwnProperty.call(x,k)));
+  try{
+    let parsed=JSON.parse(localStorage.getItem("serenity155Data")||"null");
+    if(!useful(parsed)){
+      const backup=JSON.parse(localStorage.getItem("serenity155Data:lastGood")||"null");
+      parsed=useful(backup)?backup:cloneDefault();
+    }
+    data=migrate(parsed);
+  }catch(e){data=cloneDefault()}
+}
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
 let cropState={
   file:null,img:null,mode:"player",resolve:null,
@@ -346,6 +356,8 @@ function getRoster(group){
 }
 function saveSilent(){
   try{
+    const previous=localStorage.getItem("serenity155Data");
+    if(previous){try{const p=JSON.parse(previous);if(p&&typeof p==="object"&&Object.keys(p).length>2)localStorage.setItem("serenity155Data:lastGood",previous)}catch(e){}}
     localStorage.setItem("serenity155Data",JSON.stringify(data));
     return true;
   }catch(e){
