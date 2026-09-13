@@ -310,7 +310,7 @@ function playerRow(p,i,group){
 }
 function renderLists(){
   if($("competitiveCounter")) $("competitiveCounter").textContent=`${data.competitiveRoster.length} / 5`;
-  if($("warCounter")) $("warCounter").textContent=`${data.warRoster.length} / 12`;
+  if($("warCounter")) $("warCounter").textContent=`${data.warRoster.length} / 15`;
   if($("competitiveRosterList")) $("competitiveRosterList").innerHTML=data.competitiveRoster.map((p,i)=>playerRow(p,i,"competitive")).join("");
   if($("warRosterList")) $("warRosterList").innerHTML=data.warRoster.map((p,i)=>playerRow(p,i,"war")).join("");
 
