@@ -1,4 +1,3 @@
-const SERENITY_CLOUD_SAVE_SECRET="serenity_mei25"; // server-side Edge Function secret; login password remains separate
 
 const DEFAULT_DATA={
   homeText:{eyebrow:"NKJ SERENITY • SINCE 2024",hero:"ALWAYS FORWARD",footer:"ALWAYS FORWARD"},
@@ -197,8 +196,54 @@ function imageToDataURL(file,maxW=900,maxH=900,quality=.82){
   const mode=(maxW===1200&&maxH===850)?"achievement":(maxW===700&&maxH===700)?"logo":"player";
   return openCropEditor(file,mode);
 }
-function login(){if(($("loginUser").value||"").trim()==="admin"&&($("loginPass").value||"")==="NKJSerenity2026!"){try{sessionStorage.setItem("serenity155Admin","1");sessionStorage.setItem("serenity155AdminPass",$("loginPass").value)}catch(e){}showAdmin()}else $("loginStatus").textContent="Username atau password salah."}
-function showAdmin(){$("loginView").hidden=true;$("loginView").style.display="none";$("adminView").hidden=false;$("adminView").style.display="block";loadData();fillForm();renderLists()}
+async function login(){
+  const email=($("loginUser").value||"").trim();
+  const password=$("loginPass").value||"";
+  $("loginStatus").textContent="Memverifikasi akun...";
+  try{
+    const session=await serenityAuthSignIn(email,password);
+    const user=session?.user||await serenityAuthGetUser();
+    if(!user || String(user.email||"").toLowerCase()!==SERENITY_ADMIN_EMAIL) throw new Error("Akun ini tidak diizinkan.");
+    $("loginStatus").textContent="Login aman berhasil ✓";
+    showAdmin();
+  }catch(e){
+    console.error(e);
+    $("loginStatus").textContent="Login gagal: "+(e?.message||e);
+  }
+}
+async function signupAdmin(){
+  const email=($("loginUser").value||"").trim();
+  const password=$("loginPass").value||"";
+  $("loginStatus").textContent="Mengaktifkan akun admin...";
+  try{
+    const result=await serenityAuthSignUp(email,password);
+    if(result?.access_token){
+      $("loginStatus").textContent="Akun admin aktif dan login berhasil ✓";
+      showAdmin();
+    }else{
+      $("loginStatus").textContent="Link konfirmasi telah dikirim ke email admin. Buka email lalu konfirmasi.";
+    }
+  }catch(e){
+    console.error(e);
+    $("loginStatus").textContent="Aktivasi gagal: "+(e?.message||e);
+  }
+}
+async function sendMagicLogin(){
+  const email=($("loginUser").value||"").trim();
+  $("loginStatus").textContent="Mengirim link login...";
+  try{
+    await serenityAuthSendMagicLink(email);
+    $("loginStatus").textContent="Link login telah dikirim ke email admin.";
+  }catch(e){
+    console.error(e);
+    $("loginStatus").textContent="Gagal mengirim link: "+(e?.message||e);
+  }
+}
+function showAdmin(){
+  $("loginView").hidden=true;$("loginView").style.display="none";
+  $("adminView").hidden=false;$("adminView").style.display="block";
+  loadData();fillForm();renderLists()
+}
 
 function featuredHomepageMatch(){
   data.matches=Array.isArray(data.matches)?data.matches:[];
@@ -242,8 +287,7 @@ async function saveHomeNextMatch(){
   try{
     saveSilent();
     $("homeNextStatus").textContent="Menyimpan Next Match online...";
-    const pass=SERENITY_CLOUD_SAVE_SECRET;
-    if(typeof serenityAdminCloudSave==="function") await serenityAdminCloudSave(data,pass);
+    if(typeof serenityAdminCloudSave==="function") await serenityAdminCloudSave(data);
     $("homeNextStatus").textContent="Next Match tersimpan ONLINE ✓";
     if(typeof renderLists==="function")renderLists();
   }catch(e){
@@ -384,7 +428,7 @@ async function addPlayer(){
 
     $("saveStatus").textContent="Menyimpan roster online...";
     if(typeof serenityAdminCloudSave==="function"){
-      await serenityAdminCloudSave(data,SERENITY_CLOUD_SAVE_SECRET);
+      await serenityAdminCloudSave(data);
     }
   }catch(e){
     console.error(e);
@@ -507,8 +551,7 @@ async function saveAll(){
     const sizeMB=approxDataMB();
     saveSilent();
     $("saveStatus").textContent="Menyimpan online... ("+sizeMB.toFixed(1)+" MB)";
-    const pass=SERENITY_CLOUD_SAVE_SECRET;
-    if(typeof serenityAdminCloudSave==="function") await serenityAdminCloudSave(data,pass);
+    if(typeof serenityAdminCloudSave==="function") await serenityAdminCloudSave(data);
     $("saveStatus").textContent="Tersimpan ONLINE ✓";
   }catch(e){
     console.error(e);
@@ -518,7 +561,12 @@ async function saveAll(){
 }
 function resetAll(){if(confirm("Reset seluruh data ke default?")){data=cloneDefault();saveSilent();fillForm();renderLists();if($("matchDate"))resetMatchForm();$("saveStatus").textContent="Data direset."}}
 
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener("DOMContentLoaded",async()=>{
+  try{
+    const user=await serenityAuthGetUser();
+    if(user && String(user.email||"").toLowerCase()===SERENITY_ADMIN_EMAIL) showAdmin();
+  }catch(e){}
+
   $("cropZoom").addEventListener("input",e=>{cropState.zoom=Number(e.target.value);drawCrop()});
   $("cropX").addEventListener("input",e=>{cropState.x=Number(e.target.value);drawCrop()});
   $("cropY").addEventListener("input",e=>{cropState.y=Number(e.target.value);drawCrop()});
@@ -529,8 +577,8 @@ document.addEventListener("DOMContentLoaded",()=>{
   $("cropModal").querySelector(".crop-backdrop").addEventListener("click",()=>closeCropEditor(""));
   document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("cropModal").hidden)closeCropEditor("")});
 
-  $("loginBtn").addEventListener("click",login);$("loginPass").addEventListener("keydown",e=>{if(e.key==="Enter")login()});
-  $("logoutBtn").addEventListener("click",()=>{try{sessionStorage.removeItem("serenity155Admin")}catch(e){}location.reload()});
+  $("loginBtn").addEventListener("click",login);$("loginPass").addEventListener("keydown",e=>{if(e.key==="Enter")login()});$("signupAdminBtn")?.addEventListener("click",signupAdmin);$("magicLoginBtn")?.addEventListener("click",sendMagicLogin);
+  $("logoutBtn").addEventListener("click",async()=>{await serenityAuthLogout();location.reload()});
   $("addPlayer").addEventListener("click",addPlayer);$("addAchievement").addEventListener("click",addAchievement);$("addSponsor").addEventListener("click",addSponsor);
   $("saveMatch")?.addEventListener("click",saveMatch);$("cancelMatchEdit")?.addEventListener("click",resetMatchForm);
   $("saveAll").addEventListener("click",saveAll);$("resetAll").addEventListener("click",resetAll);

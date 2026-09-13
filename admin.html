@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-<script src="cloud-sync.js"></script><script src="cloud-boot.js?v=26.5"></script>
+<script src="cloud-sync.js?v=26.6-secure"></script><script src="cloud-boot.js?v=26.6-secure"></script>
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icons/icon-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -35,12 +35,14 @@
       <img src="assets/nkj-serenity-logo-transparent.png" data-serenity-logo="1" alt="NKJ SERENITY">
       <h1>ADMIN <span style="color:#ef1725">155</span></h1>
       <p>Panel pengelolaan website NKJ SERENITY</p>
-      <label>Username</label>
-      <input id="loginUser" value="admin" autocomplete="username">
-      <label>Password</label>
-      <input id="loginPass" type="password" placeholder="Masukkan password" autocomplete="current-password">
-      <button class="btn primary" id="loginBtn" type="button" style="width:100%">LOGIN</button>
-      <div class="status" id="loginStatus"></div>
+      <label>Email Admin</label>
+      <input id="loginUser" value="stphngiovanni@gmail.com" type="email" autocomplete="username" readonly>
+      <label>Password Supabase Auth</label>
+      <input id="loginPass" type="password" placeholder="Masukkan password admin baru" autocomplete="current-password">
+      <button class="btn primary" id="loginBtn" type="button" style="width:100%">LOGIN AMAN</button>
+      <button class="btn ghost" id="signupAdminBtn" type="button" style="width:100%;margin-top:8px">AKTIFKAN / BUAT AKUN ADMIN</button>
+      <button class="btn ghost" id="magicLoginBtn" type="button" style="width:100%;margin-top:8px">KIRIM LINK LOGIN KE EMAIL</button>
+      <div class="status" id="loginStatus"></div><p class="hint" style="margin-top:10px">Login sekarang memakai Supabase Auth. Password tidak lagi disimpan di JavaScript website.</p>
       
     </div>
   </div>
@@ -58,7 +60,7 @@
     </div>
 
     <div class="notice">
-      Perubahan disimpan di browser ini menggunakan Local Storage. Cocok untuk versi offline/demo. Untuk admin online multi-perangkat diperlukan backend/database.
+      ADMIN SECURE MODE • Perubahan disimpan ke database Supabase menggunakan sesi Auth yang valid. Password admin tidak disimpan di source website.
     </div>
 
     <section class="admin-card full" id="homepageTextManagement">
@@ -370,17 +372,17 @@
     </div>
   </div>
 
-  <script src="admin.js?v=26.5.1-rosterfix"></script><script src="store-admin.js?v=26.5.1-rosterfix"></script>
+  <script src="admin.js?v=26.6-secure"></script><script src="store-admin.js?v=26.6-secure"></script>
 <script src="logo-manager.js"></script>
-<script src="logo-admin.js"></script>
+<script src="logo-admin.js?v=26.6-secure"></script>
 <script src="nkj-logo-manager.js"></script>
-<script src="nkj-logo-admin.js"></script>
+<script src="nkj-logo-admin.js?v=26.6-secure"></script>
 <script src="v12-loader.js"></script>
 <button id="pwaInstallBtn" class="pwa-install-btn" type="button" hidden>INSTALL <span>SERENITY APP</span></button>
 <script src="/pwa.js"></script>
-<script src="announcement-admin.js?v=26.5.1-rosterfix"></script>
+<script src="announcement-admin.js?v=26.6-secure"></script>
 <script src="v13-theme.js?v=13.0"></script>
-<script src="news-admin.js?v=26.5.1-rosterfix"></script>
+<script src="news-admin.js?v=26.6-secure"></script>
 
 <script id="v242-admin-login-hotfix">
 (function(){

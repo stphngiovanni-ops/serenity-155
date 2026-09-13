@@ -31,7 +31,7 @@ async function save(){
  btn.disabled=true; btn.textContent='MENYIMPAN...';
  try{
    if(typeof serenityAdminCloudSave!=='function') throw new Error('Cloud save tidak tersedia');
-   await serenityAdminCloudSave(d,'serenity_mei25');
+   await serenityAdminCloudSave(d);
    localStorage.setItem('serenity155Data',JSON.stringify(d));
    reset();render();
    alert('Berita berhasil disimpan ONLINE.');
@@ -53,7 +53,7 @@ async function del(i){
  d.news.splice(i,1);
  if(!write(d))return;
  try{
-   if(typeof serenityAdminCloudSave==='function') await serenityAdminCloudSave(d,'serenity_mei25');
+   if(typeof serenityAdminCloudSave==='function') await serenityAdminCloudSave(d);
  }catch(e){
    console.error('Delete news cloud save failed',e);
    alert('Berita terhapus di browser, tetapi sinkronisasi online gagal.');

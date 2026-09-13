@@ -25,8 +25,7 @@
   async function saveCloud(list){
     const site=setLocal(list);
     if(typeof serenityAdminCloudSave==="function"){
-      const pass="serenity_mei25";
-      await serenityAdminCloudSave(site,pass);
+      await serenityAdminCloudSave(site);
     }
     return site;
   }
