@@ -16,5 +16,5 @@ $("tourAdminLoginBtn").onclick=e=>{e.preventDefault();sendTournamentOtp()};
 $("tourAdminLoginBtnVerify")?.addEventListener("click",verifyTournamentOtp);
 $("tourAdminLoginBtnOtp")?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();verifyTournamentOtp()}});
 $("tourAdminLogout").onclick=async()=>{await serenityAuthLogout();location.reload()};
-(async()=>{try{const user=await serenityAuthGetUser();if(user){$("tourAdminLogin").hidden=true;$("tourAdminView").hidden=false}else $("tourAdminView").hidden=true}catch(e){$("tourAdminView").hidden=true}})();
+(async()=>{try{const user=await serenityAuthGetUser();if(user&&await serenityAuthIsAuthorized()){$("tourAdminLogin").hidden=true;$("tourAdminView").hidden=false}else $("tourAdminView").hidden=true}catch(e){$("tourAdminView").hidden=true}})();
 })();

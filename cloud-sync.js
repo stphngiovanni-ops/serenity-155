@@ -32,14 +32,12 @@ async function serenityAuthRequest(path,options={}){
 }
 async function serenityAuthSignIn(email,password){
   const normalized=(email||"").trim().toLowerCase();
-  if(normalized!==SERENITY_ADMIN_EMAIL) throw new Error("Email ini bukan akun admin yang diizinkan.");
   const s=await serenityAuthRequest("/auth/v1/token?grant_type=password",{method:"POST",body:JSON.stringify({email:normalized,password})});
   serenityAuthStoreSession(s);
   return s;
 }
 async function serenityAuthSignUp(email,password){
   const normalized=(email||"").trim().toLowerCase();
-  if(normalized!==SERENITY_ADMIN_EMAIL) throw new Error("Hanya email admin yang diizinkan.");
   if(!password || password.length<10) throw new Error("Gunakan password baru minimal 10 karakter.");
   const redirect=(location.origin+location.pathname);
   const s=await serenityAuthRequest("/auth/v1/signup",{method:"POST",body:JSON.stringify({email:normalized,password,options:{emailRedirectTo:redirect}})});
@@ -48,7 +46,6 @@ async function serenityAuthSignUp(email,password){
 }
 async function serenityAuthSendMagicLink(email){
   const normalized=(email||"").trim().toLowerCase();
-  if(normalized!==SERENITY_ADMIN_EMAIL) throw new Error("Hanya email admin yang diizinkan.");
   const redirect=encodeURIComponent(location.origin+location.pathname);
   return serenityAuthRequest("/auth/v1/otp?redirect_to="+redirect,{method:"POST",body:JSON.stringify({email:normalized,create_user:true})});
 }
@@ -77,6 +74,11 @@ async function serenityAuthVerifyEmailOtp(email,token){
   });
   if(!session?.access_token) throw new Error("OTP tidak valid atau sudah kedaluwarsa.");
   serenityAuthStoreSession(session);
+  const authorized=await serenityAuthIsAuthorized();
+  if(!authorized){
+    serenityAuthStoreSession(null);
+    throw new Error("Akun ini tidak memiliki akses Admin.");
+  }
   return session;
 }
 function serenityOtpCooldownStart(button,statusEl,seconds=60){
@@ -92,6 +94,27 @@ function serenityOtpCooldownStart(button,statusEl,seconds=60){
       if(statusEl) statusEl.textContent="Kode bisa dikirim ulang jika diperlukan.";
     }else button.textContent=`KIRIM ULANG (${remaining}s)`;
   },1000);
+}
+
+async function serenityAuthIsAuthorized(){
+  const token=await serenityAuthGetAccessToken();
+  if(!token) return false;
+  try{
+    const r=await fetch(SERENITY_SUPABASE_URL+"/functions/v1/serenity-admin-otp",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "apikey":SERENITY_SUPABASE_KEY,
+        "Authorization":"Bearer "+token
+      },
+      body:JSON.stringify({action:"check"})
+    });
+    const body=await r.json().catch(()=>({}));
+    return !!(r.ok && body?.authorized===true);
+  }catch(e){
+    console.error("Admin authorization check failed",e);
+    return false;
+  }
 }
 
 async function serenityAuthRefresh(){

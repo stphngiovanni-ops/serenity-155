@@ -543,7 +543,7 @@ function resetAll(){if(confirm("Reset seluruh data ke default?")){data=cloneDefa
 document.addEventListener("DOMContentLoaded",async()=>{
   try{
     const user=await serenityAuthGetUser();
-    if(user && String(user.email||"").toLowerCase()===SERENITY_ADMIN_EMAIL) showAdmin();
+    if(user && await serenityAuthIsAuthorized()) showAdmin();
   }catch(e){}
 
   $("cropZoom").addEventListener("input",e=>{cropState.zoom=Number(e.target.value);drawCrop()});

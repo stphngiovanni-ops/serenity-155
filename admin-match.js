@@ -215,6 +215,6 @@ if(sessionStorage.getItem("serenityMatchAdmin")==="1"){
   loadOnline().then(render);
 }
 
-(async()=>{try{const u=await serenityAuthGetUser();if(u&&String(u.email||"").toLowerCase()===SERENITY_ADMIN_EMAIL){$("matchAdminLogin").hidden=true;$("matchAdminView").hidden=false;await loadOnline();render();}}catch(e){}})();
+(async()=>{try{const u=await serenityAuthGetUser();if(u&&await serenityAuthIsAuthorized()){$("matchAdminLogin").hidden=true;$("matchAdminView").hidden=false;await loadOnline();render();}}catch(e){}})();
 })();
 
