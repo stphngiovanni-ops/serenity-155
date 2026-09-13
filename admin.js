@@ -201,7 +201,7 @@ async function login(){
   $("loginStatus").textContent="Mengirim kode OTP ke Gmail...";
   try{
     await serenityAuthSendEmailOtp(email);
-    $("loginStatus").textContent="Kode OTP sudah dikirim. Cek Gmail lalu masukkan 6 digit kode.";
+    $("loginStatus").textContent="Jika Gmail Admin benar, kode OTP akan dikirim. Masukkan 6 digit kode dari email.";
     serenityOtpCooldownStart(btn,$("loginStatus"),60);$("loginBtnOtp")?.focus();
   }catch(e){
     const msg=String(e?.message||e);console.error(e);
@@ -214,7 +214,7 @@ async function verifyAdminOtp(){
   try{
     const session=await serenityAuthVerifyEmailOtp(email,code);
     const user=session?.user||await serenityAuthGetUser();
-    if(!user||String(user.email||"").toLowerCase()!==SERENITY_ADMIN_EMAIL) throw new Error("Akun ini tidak diizinkan.");
+    if(!user) throw new Error("Sesi login tidak valid.");
     showAdmin();
   }catch(e){console.error(e);$("loginStatus").textContent="OTP gagal: "+(e?.message||e)}
 }

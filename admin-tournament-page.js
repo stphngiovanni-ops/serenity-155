@@ -9,12 +9,12 @@ async function sendTournamentOtp(){
 async function verifyTournamentOtp(){
  const email=($("tourAdminUser").value||"").trim(),code=$("tourAdminLoginBtnOtp")?.value||"";
  $("tourAdminLoginStatus").textContent="Memverifikasi OTP...";
- try{const session=await serenityAuthVerifyEmailOtp(email,code);const user=session?.user||await serenityAuthGetUser();if(!user||String(user.email||"").toLowerCase()!==SERENITY_ADMIN_EMAIL)throw new Error("Akun ini tidak diizinkan.");$("tourAdminLogin").hidden=true;$("tourAdminView").hidden=false}
+ try{const session=await serenityAuthVerifyEmailOtp(email,code);const user=session?.user||await serenityAuthGetUser();if(!user) throw new Error("Sesi login tidak valid.");$("tourAdminLogin").hidden=true;$("tourAdminView").hidden=false}
  catch(e){console.error(e);$("tourAdminLoginStatus").textContent="OTP gagal: "+(e?.message||e)}
 }
 $("tourAdminLoginBtn").onclick=e=>{e.preventDefault();sendTournamentOtp()};
 $("tourAdminLoginBtnVerify")?.addEventListener("click",verifyTournamentOtp);
 $("tourAdminLoginBtnOtp")?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();verifyTournamentOtp()}});
 $("tourAdminLogout").onclick=async()=>{await serenityAuthLogout();location.reload()};
-(async()=>{try{const user=await serenityAuthGetUser();if(user&&String(user.email||"").toLowerCase()===SERENITY_ADMIN_EMAIL){$("tourAdminLogin").hidden=true;$("tourAdminView").hidden=false}else $("tourAdminView").hidden=true}catch(e){$("tourAdminView").hidden=true}})();
+(async()=>{try{const user=await serenityAuthGetUser();if(user){$("tourAdminLogin").hidden=true;$("tourAdminView").hidden=false}else $("tourAdminView").hidden=true}catch(e){$("tourAdminView").hidden=true}})();
 })();

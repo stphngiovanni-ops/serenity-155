@@ -134,7 +134,7 @@ async function doLogin(){
 async function verifyMatchOtp(){
   const email=($("matchAdminUser").value||"").trim(),code=$("matchAdminLoginBtnOtp")?.value||"";
   $("matchAdminLoginStatus").textContent="Memverifikasi OTP...";
-  try{const session=await serenityAuthVerifyEmailOtp(email,code);const user=session?.user||await serenityAuthGetUser();if(!user||String(user.email||"").toLowerCase()!==SERENITY_ADMIN_EMAIL)throw new Error("Akun ini tidak diizinkan.");$("matchAdminLogin").hidden=true;$("matchAdminView").hidden=false;await loadOnline();render()}
+  try{const session=await serenityAuthVerifyEmailOtp(email,code);const user=session?.user||await serenityAuthGetUser();if(!user) throw new Error("Sesi login tidak valid.");$("matchAdminLogin").hidden=true;$("matchAdminView").hidden=false;await loadOnline();render()}
   catch(e){console.error(e);$("matchAdminLoginStatus").textContent="OTP gagal: "+(e?.message||e)}
 }
 $("matchAdminLoginBtn").onclick=e=>{e.preventDefault();doLogin()};

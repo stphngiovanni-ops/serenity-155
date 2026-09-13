@@ -1,6 +1,5 @@
 const SERENITY_SUPABASE_URL="https://vcmbthekmltociajzsdx.supabase.co";
 const SERENITY_SUPABASE_KEY="sb_publishable_MjSTXwI71RW99XaYTP4fCA_U9uDj5pA";
-const SERENITY_ADMIN_EMAIL="stphngiovanni@gmail.com";
 const SERENITY_SESSION_KEY="serenitySecureAdminSessionV1";
 
 function serenityAuthReadSession(){
@@ -55,15 +54,24 @@ async function serenityAuthSendMagicLink(email){
 }
 async function serenityAuthSendEmailOtp(email){
   const normalized=(email||"").trim().toLowerCase();
-  if(normalized!==SERENITY_ADMIN_EMAIL) throw new Error("Email ini bukan akun admin yang diizinkan.");
-  return serenityAuthRequest("/auth/v1/otp",{method:"POST",body:JSON.stringify({email:normalized,create_user:false})});
+  if(!normalized || !normalized.includes("@")) throw new Error("Masukkan alamat Gmail admin.");
+  const r=await fetch(SERENITY_SUPABASE_URL+"/functions/v1/serenity-admin-otp",{
+    method:"POST",
+    headers:{"Content-Type":"application/json","apikey":SERENITY_SUPABASE_KEY},
+    body:JSON.stringify({email:normalized})
+  });
+  if(!r.ok) throw new Error("Layanan OTP sedang tidak tersedia.");
+  return {ok:true};
 }
 async function serenityAuthVerifyEmailOtp(email,token){
   const normalized=(email||"").trim().toLowerCase();
   const code=String(token||"").replace(/\D/g,"").slice(0,6);
-  if(normalized!==SERENITY_ADMIN_EMAIL) throw new Error("Email ini bukan akun admin yang diizinkan.");
+  if(!normalized || !normalized.includes("@")) throw new Error("Masukkan alamat Gmail admin.");
   if(code.length!==6) throw new Error("Kode OTP harus 6 digit.");
-  const session=await serenityAuthRequest("/auth/v1/verify",{method:"POST",body:JSON.stringify({email:normalized,token:code,type:"email"})});
+  const session=await serenityAuthRequest("/auth/v1/verify",{
+    method:"POST",
+    body:JSON.stringify({email:normalized,token:code,type:"email"})
+  });
   if(!session?.access_token) throw new Error("OTP tidak valid atau sudah kedaluwarsa.");
   serenityAuthStoreSession(session);
   return session;
